@@ -1,0 +1,6 @@
+# Vagrant setting
+
+# Setting for VirtualBox VMs
+#$vb_memory = 2048
+#$vb_cpus = 2
+$shared_folder_type = "nfs"

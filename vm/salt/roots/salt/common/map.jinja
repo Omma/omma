@@ -1,0 +1,12 @@
+{% set common = salt['grains.filter_by']({
+  'Debian': {
+    'zsh_bin': '/usr/bin/zsh',
+    'vim': 'vim',
+    'ctags': 'exuberant-ctags'
+  },
+  'RedHat': {
+    'zsh_bin': '/bin/zsh',
+    'vim': 'vim-enhanced',
+    'ctags': 'ctags',
+  },
+}, merge=salt['pillar.get']('common:lookup')) %}

@@ -1,0 +1,8 @@
+{% for alias, config in pillar['ssh'].get('config', {}).items() %}
+Host {{ alias }}
+  {% if config['host'] is defined %}Hostname {{ config.get('host') }}{% endif %}
+  {% if config['user'] is defined %}User {{ config.get('user') }}{% endif %}
+  {% if config['port'] is defined %}Port {{ config.get('port') }}{% endif %}
+  {% if config['id'] is defined %}identityfile {{ config.get('id') }}{% endif %}
+
+{%- endfor -%}
