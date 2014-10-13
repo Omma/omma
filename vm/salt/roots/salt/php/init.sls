@@ -30,12 +30,24 @@ build-essential:
     - watch_in:
       - service: php5-fpm
 
-{% for config in ['time'] %}
+{% for config in ['time', 'dev'] %}
 {{ config }}-config:
   file.managed:
     - name: /etc/php5/mods-available/{{ config }}.ini
     - source: salt://php/templates/{{ config }}.ini
     - watch_in:
       - service: php5-fpm
+
+{% for module in ['fpm', 'cli'] %}
+{{ config }}-config-{{ module }}:
+    file.symlink:
+    - name: /etc/php5/{{ module }}/conf.d/30-{{ config }}.ini
+    - target: /etc/php5/mods-available/{{ config }}.ini
+    - watch:
+      - file: {{ config }}-config
+    - watch_in:
+      - service: php5-fpm
+{% endfor %}
+
 
 {% endfor %}

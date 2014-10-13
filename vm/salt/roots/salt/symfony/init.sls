@@ -47,3 +47,9 @@ symfony:
       - file: /etc/nginx/sites-available/symfony.conf
     - watch_in:
       - service: nginx
+
+/vagrant/app/config/parameters.yml:
+  file.managed:
+    - source: salt://symfony/templates/parameters.yml
+    - template: jinja
+    - replace: false

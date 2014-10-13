@@ -1,5 +1,5 @@
 base:
   '*':
     - users
-    #- ssh
-    #- php
+    - ssh
+    - php

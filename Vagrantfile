@@ -18,7 +18,6 @@ if File.exist?(CONFIG)
 Vagrant.configure("2") do |config|
   ## Choose your base box
   config.vm.box = "ubuntu/trusty64"
-  config
 
   ## For masterless, mount your file roots file root
   config.vm.synced_folder "vm/salt/roots/", "/srv/"
@@ -32,40 +31,19 @@ Vagrant.configure("2") do |config|
     vb.cpus = $vb_cpus
   end
 
+  # If true, then any SSH connections made will enable agent forwarding.
+  # Default value: false
+  config.ssh.forward_agent = true
+
   ## Set your salt configs here
   config.vm.provision :salt do |salt|
-
-    # user data
-    salt.pillar({
-      "users" => {
-        "root" => { "home" => "/root" },
-        "vagrant" => { "home" => "/home/vagrant" }
-      }
-    })
-
-    # php config
-    salt.pillar({
-      "php" => {
-        "fpm" => {
-          "max_children"      => 5,
-          "start_servers"     => 2,
-          "min_spare_servers" => 1,
-          "max_spare_servers" => 3
-        }
-      }
-    })
-
-    # ssh config
-    salt.pillar({
-      "ssh" => {
-        "port" => 22
-      }
-    })
-
     ## Minion config is set to ``file_client: local`` for masterless
     salt.minion_config = "vm/salt/minion"
     salt.colorize = true
     salt.log_level = "warning"
+
+    salt.install_type = "git"
+    salt.install_args = "v2014.1.12"
 
     ## Installs our example formula in "salt/roots/salt"
     salt.run_highstate = true
