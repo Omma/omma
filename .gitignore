@@ -13,3 +13,4 @@
 /bin/
 /composer.phar
 /.vagrant
+/config.rb
