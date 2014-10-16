@@ -1,4 +1,6 @@
 php_packages:
+  pkgrepo.managed:
+    - ppa: ondrej/php5-5.6
   pkg.installed:
     - pkgs:
       - php5-cli
@@ -14,6 +16,8 @@ php_packages:
 php5-fpm:
   pkg:
     - installed
+    - require:
+      - pkg: php_packages
   service:
     - running
   watch:

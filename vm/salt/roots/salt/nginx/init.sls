@@ -1,6 +1,8 @@
 nginx:
+  pkgrepo.managed:
+    - ppa: nginx/stable
   pkg:
-    - installed
+    - latest
   service:
     - running
     - watch:
@@ -20,7 +22,6 @@ nginx:
       - pkg: nginx
     - watch_in:
       - service: nginx
-
 
 /etc/nginx/php.conf:
   file.managed:
