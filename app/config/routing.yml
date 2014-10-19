@@ -1,0 +1,5 @@
+omma_frontend:
+    resource: "@OmmaFrontendBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
