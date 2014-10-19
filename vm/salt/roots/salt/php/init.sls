@@ -1,6 +1,8 @@
 php_packages:
   pkgrepo.managed:
     - ppa: ondrej/php5-5.6
+    - require:
+      - pkg: python-software-properties
   pkg.installed:
     - pkgs:
       - php5-cli
@@ -25,7 +27,6 @@ php5-fpm:
 
 build-essential:
   pkg.installed: []
-
 
 /etc/php5/fpm/pool.d/www.conf:
   file.managed:

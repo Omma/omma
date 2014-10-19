@@ -1,6 +1,8 @@
 nginx:
   pkgrepo.managed:
     - ppa: nginx/stable
+    - require:
+      - pkg: python-software-properties
   pkg:
     - latest
   service:
@@ -26,6 +28,13 @@ nginx:
 /etc/nginx/php.conf:
   file.managed:
     - source: salt://nginx/php.conf
+    - template: jinja
+    - watch_in:
+      - service: nginx
+
+/etc/nginx/fastcgi_params:
+  file.managed:
+    - source: salt://nginx/fastcgi_params
     - template: jinja
     - watch_in:
       - service: nginx

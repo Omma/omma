@@ -51,6 +51,9 @@ dotdeb:
 git:
   pkg.installed: []
 
+python-software-properties:
+  pkg.installed: []
+
 packages:
   pkg.installed:
     - pkgs:
