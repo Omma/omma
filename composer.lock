@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "dc30411ca331f679845496f839b4bb1a",
+    "hash": "5276f61daa76c8035338c94b07df8816",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2935,38 +2935,24 @@
         },
         {
             "name": "phing/phing",
-            "version": "dev-master",
+            "version": "2.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phingofficial/phing.git",
-                "reference": "6ff3ba75f8377382896bc29553235dedfdb0d6d5"
+                "reference": "345e8716122cf6c6b59c4894701d8b736f27fca9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/phing/zipball/6ff3ba75f8377382896bc29553235dedfdb0d6d5",
-                "reference": "6ff3ba75f8377382896bc29553235dedfdb0d6d5",
+                "url": "https://api.github.com/repos/phingofficial/phing/zipball/345e8716122cf6c6b59c4894701d8b736f27fca9",
+                "reference": "345e8716122cf6c6b59c4894701d8b736f27fca9",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.0"
             },
             "require-dev": {
-                "ext-pdo_sqlite": "*",
-                "lastcraft/simpletest": "@dev",
-                "pdepend/pdepend": "1.x",
-                "pear-pear.php.net/http_request2": "2.2.x",
-                "pear-pear.php.net/net_growl": "2.7.x",
-                "pear-pear.php.net/pear_packagefilemanager": "1.7.x",
-                "pear-pear.php.net/pear_packagefilemanager2": "1.0.x",
-                "pear-pear.php.net/xml_serializer": "0.20.x",
-                "pear/pear_exception": "@dev",
-                "pear/versioncontrol_git": "@dev",
-                "pear/versioncontrol_svn": "@dev",
                 "phpdocumentor/phpdocumentor": "2.x",
-                "phploc/phploc": "2.x",
-                "phpunit/phpunit": ">=3.7",
-                "sebastian/phpcpd": "2.x",
-                "squizlabs/php_codesniffer": "1.5.x"
+                "phpunit/phpunit": ">=3.7"
             },
             "suggest": {
                 "pdepend/pdepend": "PHP version of JDepend",
@@ -2985,11 +2971,6 @@
                 "bin/phing"
             ],
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.9.x-dev"
-                }
-            },
             "autoload": {
                 "classmap": [
                     "classes/phing/"
@@ -3004,12 +2985,13 @@
             ],
             "authors": [
                 {
-                    "name": "Phing Community",
-                    "homepage": "http://www.phing.info/trac/wiki/Development/Contributors"
+                    "name": "Michiel Rook",
+                    "email": "mrook@php.net",
+                    "role": "Lead"
                 },
                 {
-                    "name": "Michiel Rook",
-                    "email": "mrook@php.net"
+                    "name": "Phing Community",
+                    "homepage": "http://www.phing.info/trac/wiki/Development/Contributors"
                 }
             ],
             "description": "PHing Is Not GNU make; it's a PHP project build system or build tool based on Apache Ant.",
@@ -3020,7 +3002,7 @@
                 "task",
                 "tool"
             ],
-            "time": "2014-10-15 19:18:30"
+            "time": "2014-07-18 10:23:54"
         },
         {
             "name": "phploc/phploc",
@@ -4106,7 +4088,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "phing/phing": 20,
         "squizlabs/php_codesniffer": 5,
         "apigen/apigen": 5
     },

@@ -21,7 +21,7 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
-        "phing/phing": "2.9.*@dev",
+        "phing/phing": "2.8.2",
         "phpunit/phpunit": "~4.3",
         "phploc/phploc": "2.0.6",
         "pdepend/pdepend" : "2.0.3",
