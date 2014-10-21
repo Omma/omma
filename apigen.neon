@@ -1,0 +1,13 @@
+extensions:
+	- php
+	
+destination: build/apigen
+exclude:
+	- */tests/*
+	
+source:
+	- src/
+	
+main: Omma
+title: Omma API
+templateTheme: default
