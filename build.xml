@@ -109,7 +109,9 @@
     </target>
 
     <target name="apigen" description="Generate API documentation using apigen">
-        <exec executable="${project.basedir}/bin/apigen"/>
+        <exec executable="${project.basedir}/bin/apigen">
+            <arg line="generate" />
+        </exec>
     </target>
 
     <target name="phpunit" description="Run unit tests with PHPUnit">
