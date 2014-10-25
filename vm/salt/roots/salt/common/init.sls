@@ -41,6 +41,12 @@ dotdeb:
     - template: jinja
 {% endif %}
 
+{% if grains['os_family'] == "Debian" %}
+debconf-utils:
+  pkg.installed: []
+
+{% endif %}
+
 
 /usr/bin/archey:
   file.managed:

@@ -1,8 +1,14 @@
+# add ppa key to avoid unicode errors (https://github.com/saltstack/salt/issues/8421)
+ondrej-ppa-key:
+  cmd.run:
+    - name: "apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C > /dev/null 2&>1"
+
 php_packages:
   pkgrepo.managed:
     - ppa: ondrej/php5-5.6
     - require:
       - pkg: python-software-properties
+      - cmd: ondrej-ppa-key
   pkg.installed:
     - pkgs:
       - php5-cli

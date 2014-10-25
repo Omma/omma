@@ -16,6 +16,8 @@ mysql-pw-conf:
     - data:
         'mysql-server/root_password': {'type': 'password', 'value': '' }
         'mysql-server/root_password_again': {'type': 'password', 'value': '' }
+    - require:
+      - pkg: debconf-utils
 
 /etc/salt/minion.d/mysql.conf:
   file.managed:
