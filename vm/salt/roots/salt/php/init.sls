@@ -20,6 +20,7 @@ php_packages:
       - php5-xsl
       - php5-gearman
       - php5-mcrypt
+      - php5-ldap
 
 php5-fpm:
   pkg:

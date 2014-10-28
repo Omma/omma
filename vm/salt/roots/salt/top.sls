@@ -7,3 +7,4 @@ base:
     - mysql
     - phpmyadmin
     - symfony
+    - ldap
