@@ -11,7 +11,7 @@ end
 
 if File.exist?(CONFIG)
    require CONFIG
- end
+end
 
 
 
@@ -27,6 +27,9 @@ Vagrant.configure("2") do |config|
   #config.vm.network "forwarded_port", guest: 80, host: 8080
   #config.vm.network "private_network", type: "dhcp"
   config.vm.synced_folder ".", "/vagrant", type: $shared_folder_type, mount_options: $mount_options
+  if $shared_folder_type == "nfs"
+    config.bindfs.bind_folder "/vagrant", "/vagrant"
+  end
 
   if Vagrant.has_plugin?("vagrant-hostmanager")
     config.hostmanager.enabled = true
@@ -50,6 +53,9 @@ Vagrant.configure("2") do |config|
   # If true, then any SSH connections made will enable agent forwarding.
   # Default value: false
   config.ssh.forward_agent = true
+
+  config.vm.provision "shell",
+    inline: "add-apt-repository -y ppa:ondrej/php5-5.6 && apt-get -q update"
 
   ## Set your salt configs here
   config.vm.provision :salt do |salt|

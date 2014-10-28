@@ -1,7 +1,7 @@
 # add ppa key to avoid unicode errors (https://github.com/saltstack/salt/issues/8421)
 ondrej-ppa-key:
   cmd.run:
-    - name: "apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C > /dev/null 2&>1"
+    - name: "apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C > /dev/null 2&>1 && apt-get -q update"
 
 php_packages:
   pkgrepo.managed:
