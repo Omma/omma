@@ -1,5 +1,9 @@
-omma_frontend:
-    resource: "@OmmaFrontendBundle/Controller/"
+omma_user:
+    resource: "@OmmaUserBundle/Controller/"
     type:     annotation
     prefix:   /
 
+omma_app:
+    resource: "@OmmaAppBundle/Controller/"
+    type:     annotation
+    prefix:   /

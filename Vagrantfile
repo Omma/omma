@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
   config.ssh.forward_agent = true
 
   config.vm.provision "shell",
-    inline: "add-apt-repository -y ppa:ondrej/php5-5.6 && apt-get -q update"
+    inline: "apt-get install -y software-properties-common python-software-properties && add-apt-repository -y ppa:ondrej/php5-5.6 && apt-get -q update"
 
   ## Set your salt configs here
   config.vm.provision :salt do |salt|
