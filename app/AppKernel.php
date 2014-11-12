@@ -25,10 +25,11 @@ class AppKernel extends Kernel
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
             new Omma\AppBundle\OmmaAppBundle(),
             new Omma\UserBundle\OmmaUserBundle(),
+            new \Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-            $budnles[] = new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle();
+            $bundles[] = new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
