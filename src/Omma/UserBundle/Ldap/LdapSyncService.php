@@ -3,10 +3,10 @@ namespace Omma\UserBundle\Ldap;
 
 use Application\Sonata\UserBundle\Entity\Group;
 use Application\Sonata\UserBundle\Entity\User;
+use Omma\UserBundle\Entity\GroupEntityManager;
+use Omma\UserBundle\Entity\UserEntityManager;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
-use Sonata\UserBundle\Entity\GroupManager;
-use Sonata\UserBundle\Entity\UserManager;
 
 /**
  * Sync users from LDAP directory with database
@@ -27,19 +27,19 @@ class LdapSyncService implements LoggerAwareInterface
     protected $logger;
 
     /**
-     * @var UserManager
+     * @var UserEntityManager
      */
     private $userManager;
 
     /**
-     * @var GroupManager
+     * @var GroupEntityManager
      */
     private $groupManager;
 
     public function __construct(
         LdapDirectory $directory,
-        UserManager $userManager,
-        GroupManager $groupManager,
+        UserEntityManager $userManager,
+        GroupEntityManager $groupManager,
         LoggerInterface $logger = null)
     {
         $this->directory = $directory;
@@ -148,11 +148,10 @@ class LdapSyncService implements LoggerAwareInterface
         $user = $this->userManager->findUserByUsername($data['username']);
         if (null !== $user) {
             // don't sync user with different ldap id
-            if (null !== $user->getLdapId()) {
+            if (strlen($user->getLdapId()) > 0) {
                 if (null !== $this->logger) {
-                    $this->logger->warning(sprintf("found conflict with existing user %s (id: %d)",
-                            $user->getUsername(), $user->getId())
-                    );
+                    $this->logger->warning(sprintf("found conflict with existing user %s (id: %d). Skipping",
+                        $user->getUsername(), $user->getId()));
                 }
 
                 return null;
@@ -189,17 +188,46 @@ class LdapSyncService implements LoggerAwareInterface
 
         $this->groupManager->updateGroup($group);
 
-        foreach ($data['members'] as $member) {
+        $members = (array) $data['members'];
+        $memberList = array();
+
+        foreach ($members as $member) {
             if (!isset($users[$member])) {
                 continue;
             }
             $user = $users[$member];
+            $memberList[] = $user;
             if (null !== $this->logger) {
                 $this->logger->info(sprintf("adding user '%s' to group '%s'", $user, $group));
             }
             $user->addGroup($group);
             $this->userManager->updateUser($user);
-            // @TODO: remove from groups
+        }
+
+        // remove other ldap members from group
+        $query = $this->userManager->createQueryBuilder("u")
+            ->select("u")
+            ->where(":group MEMBER OF u.groups AND u.ldapId != ''")
+            ->setParameter("group", $group)
+        ;
+        if (!empty($members)) {
+            $query
+                ->andWhere("u NOT IN (:members)")
+                ->setParameter("members", $memberList)
+            ;
+        }
+        /** @var User[] $result */
+        $result = $query
+            ->getQuery()
+            ->getResult()
+        ;
+
+        foreach ($result as $user) {
+            if (null !== $this->logger) {
+                $this->logger->info(sprintf("removing user '%s' from group '%s'", $user, $group));
+            }
+            $user->removeGroup($group);
+            $this->userManager->updateUser($user);
         }
 
         return $group;
@@ -227,11 +255,10 @@ class LdapSyncService implements LoggerAwareInterface
         $group = $this->groupManager->findGroupByName($data['name']);
         if (null !== $group) {
             // don't sync group with different ldap id
-            if (null !== $group->getLdapId()) {
+            if (strlen($group->getLdapId()) > 0) {
                 if (null !== $this->logger) {
-                    $this->logger->warning(sprintf("found conflict with existing user %s (id: %d)", $group->getName(),
-                            $group->getId()
-                    ));
+                    $this->logger->warning(sprintf("found conflict with existing group %s (id: %d). Skipping",
+                        $group->getName(), $group->getId()));
                 }
 
                 return null;
