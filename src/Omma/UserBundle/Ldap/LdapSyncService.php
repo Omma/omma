@@ -68,14 +68,23 @@ class LdapSyncService implements LoggerAwareInterface
         }
         // @TODO: Delete old users
 
+        $groupList = array();
         $groups = $this->directory->getGroups();
         foreach ($groups as $dn => $data) {
             if (null !== $this->logger) {
                 $this->logger->info(sprintf("Syncing group %s", $dn));
             }
-            $this->syncGroup($data, $userList);
+            $groupList[] = $this->syncGroup($data, $userList);
         }
-        // @TODO: Delete old groups
+
+        // Delete old groups
+        $groups = $this->groupManager->createQueryBuilder("g")
+            ->select("g")
+            ->where("g.ldapId != '' AND g.ldapId NOT IN (:groups)")
+            ->setParameter("groups", $groupList)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     /**
@@ -119,6 +128,7 @@ class LdapSyncService implements LoggerAwareInterface
         $user->setFirstname($data['firstname']);
         $user->setLastname($data['lastname']);
         $user->setPlainPassword("ldapuser");
+        $user->setEnabled(true);
 
         $this->userManager->updateUser($user);
 
