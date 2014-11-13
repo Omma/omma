@@ -1,1 +1,25 @@
 services:
+    omma.user.ldap.config:
+        class: Omma\UserBundle\Ldap\LdapConfig
+        private: true
+        arguments:
+            - [] # config
+
+    omma.user.ldap.directory:
+        class: Omma\UserBundle\Ldap\LdapDirectory
+        arguments:
+            - @omma.user.ldap.config
+
+    omma.user.ldap.sync_service:
+        class: Omma\UserBundle\Ldap\LdapSyncService
+        tags:
+            - { name: monolog.logger }
+        arguments:
+            - @omma.user.ldap.directory
+            - @sonata.user.orm.user_manager
+            - @?logger
+
+    omma.user.logging.processor.psr:
+        class: Monolog\Processor\PsrLogMessageProcessor
+        tags:
+            - { name: monolog.processor, method: __invoke }

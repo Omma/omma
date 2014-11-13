@@ -18,4 +18,23 @@ abstract class User extends BaseUser
      */
     protected $ldapId;
 
+    /**
+     * @return string
+     */
+    public function getLdapId()
+    {
+        return $this->ldapId;
+    }
+
+    /**
+     * @param string $ldapId
+     *
+     * @return self
+     */
+    public function setLdapId($ldapId)
+    {
+        $this->ldapId = $ldapId;
+
+        return $this;
+    }
 }
