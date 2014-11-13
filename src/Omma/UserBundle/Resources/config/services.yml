@@ -16,9 +16,17 @@ services:
             - { name: monolog.logger }
         arguments:
             - @omma.user.ldap.directory
-            - @sonata.user.orm.user_manager
-            - @sonata.user.orm.group_manager
+            - @omma.user.orm.user_manager
+            - @omma.user.orm.group_manager
             - @?logger
+
+    omma.user.orm.user_manager:
+        class: Omma\UserBundle\Entity\UserEntityManager
+        parent: sonata.user.orm.user_manager
+
+    omma.user.orm.group_manager:
+        class: Omma\UserBundle\Entity\GroupEntityManager
+        parent: sonata.user.orm.group_manager
 
     omma.user.logging.processor.psr:
         class: Monolog\Processor\PsrLogMessageProcessor
