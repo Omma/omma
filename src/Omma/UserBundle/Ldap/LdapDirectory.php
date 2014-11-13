@@ -1,14 +1,13 @@
 <?php
 namespace Omma\UserBundle\Ldap;
 
-use Application\Sonata\UserBundle\Entity\User;
 use Toyota\Component\Ldap\Core\Manager;
 use Toyota\Component\Ldap\Core\Node;
 use Toyota\Component\Ldap\Core\SearchResult;
 use Toyota\Component\Ldap\Platform\Native\Driver;
 
 /**
- *
+ * Handles communication with ldap directory
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

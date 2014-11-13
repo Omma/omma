@@ -1,9 +1,7 @@
 <?php
 namespace Omma\UserBundle\Command;
 
-use Monolog\Logger;
 use Omma\UserBundle\Ldap\LdapSyncService;
-use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
