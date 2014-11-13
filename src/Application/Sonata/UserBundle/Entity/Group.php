@@ -11,7 +11,7 @@
 
 namespace Application\Sonata\UserBundle\Entity;
 
-use Sonata\UserBundle\Entity\BaseGroup as BaseGroup;
+use Omma\UserBundle\Entity\Group as BaseGroup;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

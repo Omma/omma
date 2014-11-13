@@ -17,6 +17,7 @@ services:
         arguments:
             - @omma.user.ldap.directory
             - @sonata.user.orm.user_manager
+            - @sonata.user.orm.group_manager
             - @?logger
 
     omma.user.logging.processor.psr:
