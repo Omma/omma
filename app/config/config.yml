@@ -105,3 +105,22 @@ fos_user:
 
     service:
         user_manager: sonata.user.orm.user_manager                      # If you're using doctrine orm (use sonata.user.mongodb.group_manager for mongodb)
+
+omma_user:
+    ldap:
+        hostname: localhost
+        bindName: cn=admin,dc=omma,dc=local
+        bindPassword: install
+        baseDn: dc=omma,dc=local
+        users:
+            dn: ou=users,dc=omma,dc=local
+            mapping:
+                username: uid
+                email: mail
+                firstname: givenName
+                lastname: sn
+        groups:
+            dn: ou=groups,dc=omma,dc=local
+            mapping:
+                name: cn
+                members: memberUid
