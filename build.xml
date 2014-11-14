@@ -140,4 +140,14 @@
         <chown file="./build" user="jenkins.jenkins" />
     </target>
 
+    <target name="phpcs-fixer" description="run php-cs-fixer on src">
+        <exec executable="${project.basedir}/bin/php-cs-fixer" logoutput="true">
+            <arg value="fix" />
+            <arg path="${project.basedir}/src" />
+            <arg value="--level=symfony" />
+            <arg value="--fixers=-concat_without_spaces" />
+            <arg value="-vv" />
+        </exec>
+    </target>
+
 </project>

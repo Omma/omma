@@ -15,7 +15,6 @@ use Psr\Log\LoggerInterface;
  */
 class LdapSyncService implements LoggerAwareInterface
 {
-
     /**
      * @var LdapDirectory
      */
@@ -40,8 +39,8 @@ class LdapSyncService implements LoggerAwareInterface
         LdapDirectory $directory,
         UserEntityManager $userManager,
         GroupEntityManager $groupManager,
-        LoggerInterface $logger = null)
-    {
+        LoggerInterface $logger = null
+    ) {
         $this->directory = $directory;
         $this->userManager = $userManager;
         $this->logger = $logger;
@@ -160,8 +159,13 @@ class LdapSyncService implements LoggerAwareInterface
             // don't sync user with different ldap id
             if (strlen($user->getLdapId()) > 0) {
                 if (null !== $this->logger) {
-                    $this->logger->warning(sprintf("found conflict with existing user %s (id: %d). Skipping",
-                        $user->getUsername(), $user->getId()));
+                    $this->logger->warning(
+                        sprintf(
+                            "found conflict with existing user %s (id: %d). Skipping",
+                            $user->getUsername(),
+                            $user->getId()
+                        )
+                    );
                 }
 
                 return null;
@@ -223,8 +227,7 @@ class LdapSyncService implements LoggerAwareInterface
         if (!empty($members)) {
             $query
                 ->andWhere("u NOT IN (:members)")
-                ->setParameter("members", $memberList)
-            ;
+                ->setParameter("members", $memberList);
         }
         /** @var User[] $result */
         $result = $query
@@ -267,8 +270,13 @@ class LdapSyncService implements LoggerAwareInterface
             // don't sync group with different ldap id
             if (strlen($group->getLdapId()) > 0) {
                 if (null !== $this->logger) {
-                    $this->logger->warning(sprintf("found conflict with existing group %s (id: %d). Skipping",
-                        $group->getName(), $group->getId()));
+                    $this->logger->warning(
+                        sprintf(
+                            "found conflict with existing group %s (id: %d). Skipping",
+                            $group->getName(),
+                            $group->getId()
+                        )
+                    );
                 }
 
                 return null;

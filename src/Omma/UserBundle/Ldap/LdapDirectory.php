@@ -44,8 +44,12 @@ class LdapDirectory
 
         $userConfig = $this->config->getUserConfig();
         $filter = $userConfig['filter'];
-        $result = $this->getManager()->search($userConfig['dn'], $filter, true,
-            array_values($userConfig['mapping']));
+        $result = $this->getManager()->search(
+            $userConfig['dn'],
+            $filter,
+            true,
+            array_values($userConfig['mapping'])
+        );
         $users = $this->mapResult($result, $userConfig['mapping']);
 
         return $users;
@@ -59,8 +63,12 @@ class LdapDirectory
 
         $groupConfig = $this->config->getGroupConfig();
         $filter = $groupConfig['filter'];
-        $result = $this->getManager()->search($groupConfig['dn'], $filter, true,
-            array_values($groupConfig['mapping']));
+        $result = $this->getManager()->search(
+            $groupConfig['dn'],
+            $filter,
+            true,
+            array_values($groupConfig['mapping'])
+        );
 
         return $this->mapResult($result, $groupConfig['mapping'], array("members"));
     }
@@ -77,10 +85,10 @@ class LdapDirectory
             "hostname" => $this->config->getHostname(),
             "base_dn"  => $this->config->getBaseDn(),
             "options"  => array(
-                LDAP_OPT_NETWORK_TIMEOUT => 5,
+                LDAP_OPT_NETWORK_TIMEOUT  => 5,
                 LDAP_OPT_PROTOCOL_VERSION => 3,
-                LDAP_OPT_REFERRALS => 0, // avoid problems with ActiveDircectory
-            )
+                LDAP_OPT_REFERRALS        => 0, // avoid problems with ActiveDircectory
+            ),
         );
         if (null !== $this->config->getPort()) {
             $params['port'] = $this->config->getPort();

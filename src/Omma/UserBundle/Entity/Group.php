@@ -11,7 +11,6 @@ use Sonata\UserBundle\Entity\BaseGroup;
  */
 class Group extends BaseGroup
 {
-
     /**
      * @var string
      * @ORM\Column(type="string")
