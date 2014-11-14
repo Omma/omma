@@ -8,3 +8,4 @@ base:
     - phpmyadmin
     - symfony
     - ldap
+    - nodejs
