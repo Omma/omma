@@ -1,6 +1,7 @@
 require 'fileutils'
 CONFIG = File.join(File.dirname(__FILE__), "config.rb")
 
+$vb_gui = false
 $vb_memory = 2048
 $vb_cpus = 2
 $shared_folder_type = "nfs"
@@ -45,7 +46,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provider "vmware_fusion" do |v|
-    v.gui = true
+    v.gui = $vb_gui
     v.vmx["memsize"] = $vb_memory
     v.vmx["numvcpus"] = $vb_cpus
   end

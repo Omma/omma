@@ -38,3 +38,12 @@ source ~/.profile
 {% endif %}
 
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
+export LANG="en_US.UTF-8"
+
+{% if user == "vagrant" %}
+# Fix SSH auth socket location so agent forwarding works with tmux
+if [[ -S "$SSH_AUTH_SOCK" && ! -h "$SSH_AUTH_SOCK" ]]; then
+    ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock;
+fi
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock;
+{% endif %}
