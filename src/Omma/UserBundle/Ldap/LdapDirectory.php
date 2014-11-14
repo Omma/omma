@@ -1,9 +1,13 @@
 <?php
 namespace Omma\UserBundle\Ldap;
 
+use Application\Sonata\UserBundle\Entity\User;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Toyota\Component\Ldap\Core\Manager;
 use Toyota\Component\Ldap\Core\Node;
 use Toyota\Component\Ldap\Core\SearchResult;
+use Toyota\Component\Ldap\Exception\BindException;
 use Toyota\Component\Ldap\Platform\Native\Driver;
 
 /**
@@ -34,6 +38,18 @@ class LdapDirectory
     public function isEnabled()
     {
         return $this->config->isEnabled();
+    }
+
+    public function authenticate(User $user, UsernamePasswordToken $token)
+    {
+        if (!$this->config->isEnabled()) {
+            throw new BadCredentialsException("Ldap not enabled");
+        }
+        try {
+            $this->getManager($token->getUsername(), $token->getCredentials());
+        } catch (BindException $e) {
+            throw new BadCredentialsException("Ldap login failed");
+        }
     }
 
     public function getUsers()
@@ -74,11 +90,15 @@ class LdapDirectory
     }
 
     /**
+     * @param null|string $username
+     * @param null|string $password
+     *
      * @return Manager
      */
-    protected function getManager()
+    protected function getManager($username = null, $password = null)
     {
-        if (null !== $this->manager) {
+        // return cached manager for configured bind dn, when no username is provided
+        if (null !== $this->manager and null === $username) {
             return $this->manager;
         }
         $params = array(
@@ -98,13 +118,20 @@ class LdapDirectory
         }
         $manager = new Manager($params, new Driver());
         $manager->connect();
-        if (null !== $this->config->getBindName()) {
+
+        if (null !== $username) {
+            $manager->bind($username, $password);
+        }elseif (null !== $this->config->getBindName()) {
             $manager->bind($this->config->getBindName(), $this->config->getBindPassword());
         } else {
             $manager->bind();
         }
 
-        return $this->manager = $manager;
+        if (null === $username) {
+            $this->manager = $manager;
+        }
+
+        return $manager;
     }
 
     /**

@@ -32,3 +32,16 @@ services:
         class: Monolog\Processor\PsrLogMessageProcessor
         tags:
             - { name: monolog.processor, method: __invoke }
+
+    omma.user.security.authentication_provider.ldap:
+        class: Omma\UserBundle\Security\LdapAuthtenticationProvider
+        arguments:
+            - ~ # user provider
+            - @security.user_checker
+            - ~ # provider shared key
+            - @security.encoder_factory
+            - %security.authentication.hide_user_not_found%
+            - @omma.user.ldap.directory
+
+    omma.user.security.listener.ldap:
+        class: Omma\UserBundle\Security\LdapSecurityListener

@@ -21,6 +21,7 @@ security:
         admin:
             pattern:            /admin(.*)
             context:            user
+            ldap:               true
             form_login:
                 provider:       fos_userbundle
                 login_path:     /admin/login
@@ -40,6 +41,7 @@ security:
         main:
             pattern:             .*
             context:             user
+            ldap:                true
             form_login:
                 provider:       fos_userbundle
                 login_path:     /login
