@@ -1,0 +1,126 @@
+@blue: #1f54ff;  
+@font-color: #333;
+
+
+/*Basics*/
+h2 {
+    font-size: 1.7em;
+    text-decoration: underline;
+}
+a {
+    color: @blue;   
+    &:hover {
+	    color:@font-color;
+	    text-decoration: none;
+    }
+}
+
+
+
+/*Header*/
+header {
+    margin-bottom: 40px;
+    
+    .logo {
+	    width: 220px;
+	    padding-top: 20px;
+	}
+	ul.top-navi {
+		padding-top: 20px;
+		list-style-type: none;
+		
+		li {
+		    display: inline;
+		    margin-left: 20px;
+		    
+		    a {
+			    color: #333;
+			}
+		}
+	}
+}
+
+
+
+
+            
+          
+/*Left-Col*/          
+          
+.left-col {
+	.naechste-events {
+		.list-group {
+			a {
+			    padding: 15px 10px;
+			    
+			    &.active {
+			    background-color: @blue;
+				}
+			}
+			p:first-child {
+			    font-size: 1.1em;
+			    line-height: .9em;
+			}
+		}
+	}
+}                        
+                        
+/*Right-Col*/                        
+                        
+
+
+.right-col {
+	
+	ul.nav.nav-tabs li a {
+	    font-size: 1.2em;   
+	}
+	
+	.tab-pane {
+	    padding-top: 50px;   
+	    
+	    &#agenda {
+	    	.input-group {
+			    margin-bottom: 20px;   
+			    
+			    .input-group-addon i {
+				    color: @blue;
+				}
+				
+				.input-group-addon.done i {
+				    color:white;
+				}
+				
+				.input-group-addon.done {
+				    background-color: @blue;
+				}
+			}
+			.add {
+			    margin-bottom: 60px;   
+			}
+		}
+	}
+	
+}
+                        
+ 
+                    
+                    
+                    
+/*Footer*/                    
+footer {
+    background-color:@blue;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    color: white;
+}
+@media screen and (max-width:991px) {
+    footer {
+        position: relative;
+        bottom: 0px;
+        
+        .col-md-6 {
+        	text-align: center;
+		}
+    }
+}

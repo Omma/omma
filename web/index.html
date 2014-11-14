@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>OMMA &gt; Open Meeting Manager</title>
+	
+	<!--CSS-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">  
+      
+	<!--JavaScript-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+	
+	
+      
+      
+
+
+
+
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+      
+      <style>
+            
+      </style>
+      
+      
+  </head>
+  <body>
+      
+      <div class="container">
+        <header>
+      
+            <div class="row">
+                <div class="col-xs-4">
+                    <img class="logo" src="assets/img/logo.png" />
+                </div>  
+                <div class="col-xs-8 text-right">
+                    <ul class="top-navi">
+                        <li><a href=""><i class="fa fa-plus"> </i> Veranstaltung erstellen</a></li>
+                        <li><a href=""><i class="fa fa-user"> </i> Profil verwalten</a></li>
+                        <li><a href=""><i class="fa fa-power-off"> </i> Ausloggen</a></li>
+                    </ul>
+                </div>
+
+            </div>
+      
+        </header>
+          
+        <div class="row">
+            
+            
+            <div class="col-md-4 left-col">
+                
+                
+                <div class="kalender">
+                
+                
+                    <h2>Kalenderansicht</h2>
+                    <a href=""><p><i class="fa fa-backward"> </i> Zurück zur Übersicht</p></a>
+                    <br>
+
+                    ###kalender###
+                
+                </div>
+                <br>
+                <div class="naechste-events">
+                    <h2>Folgende Veranstaltungen</h2>
+                    
+               
+                    <div class="list-group">
+                        
+                        <a href="#" class="list-group-item active">
+                            <p>1</p>
+                            <p class="list-group-item-text"><small>datum, zeit</small></p>
+                      </a>
+                         <a href="#" class="list-group-item ">
+                            <p>2</p>
+                            <p class="list-group-item-text"><small>datum, zeit</small></p>
+                      </a>
+                        
+                      
+                    </div>
+                        
+                        
+                        
+                </div>
+                <br>
+                <div class="naechset-events">
+                    <h2>Ausstehende ToDos</h2>
+                    
+                    <ul class="todos">
+                        <li>eins</li>
+                        <li>zwo</li>
+                    </ul>
+                </div>
+                
+                
+                
+                
+                
+            </div>
+
+            <div class="col-md-8 right-col">
+                
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                    <li class="active"><a href="#agenda" data-toggle="tab">Agenda</a></li>
+                    <li><a href="#todos" data-toggle="tab">To Dos</a></li>
+                    <li><a href="#protokoll" data-toggle="tab">Protokoll</a></li>
+                    <li><a href="#dateien" data-toggle="tab">Dateien</a></li>
+                    <li><a href="#teilnehmer" data-toggle="tab">Teilnehmer</a></li>
+                </ul>
+                
+        
+                
+                <div class="tab-content">
+                    
+                    
+                    <div class="tab-pane active" id="agenda">
+                        
+                        <h1>agenda</h1>
+                        
+                        
+                        <!--
+                        <div class="input-group input-group-lg add">
+                              <input type="text" class="form-control" placeholder="Agendapunkt der Liste hinzufügen">
+                              <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">Hinzufügen</button>
+                              </span>
+                        </div>
+                        
+                        
+                       <div class="input-group input-group-lg">
+                              <span class="input-group-addon">1.</span>
+                              <input type="text" class="form-control" placeholder="Username" value="Begrüßung">
+                              <span class="input-group-addon done"><i class="fa fa-check"> </i></span>
+                        </div>
+                        <div class="input-group input-group-lg">
+                              <span class="input-group-addon">2.</span>
+                              <input type="text" class="form-control" placeholder="Username" value="Vorstellung des Programms">
+                              <span class="input-group-addon done"><i class="fa fa-check"> </i></span>
+                        </div>
+                        <div class="input-group input-group-lg">
+                              <span class="input-group-addon">3.</span>
+                              <input type="text" class="form-control" placeholder="Username" value="Aktuelle Probleme">
+                              <span class="input-group-addon"><i class="fa fa-check"> </i></span>
+                        </div>
+                        <div class="input-group input-group-lg">
+                              <span class="input-group-addon">4.</span>
+                              <input type="text" class="form-control" placeholder="Username" value="Gegenmaßnahmen">
+                              <span class="input-group-addon"><i class="fa fa-check"> </i></span>
+                        </div>
+                        <div class="input-group input-group-lg">
+                              <span class="input-group-addon">5.</span>
+                              <input type="text" class="form-control" placeholder="Username" value="Zielsetzungen">
+                              <span class="input-group-addon"><i class="fa fa-check"> </i></span>
+                        </div>
+                        -->
+                        
+                    </div>
+                    
+                    
+                    
+                    <div class="tab-pane" id="todos">
+                        <h1>todos</h1>
+                    </div>
+                    <div class="tab-pane" id="protokoll">
+                        <h1>protokoll</h1>
+                    </div>
+                    <div class="tab-pane" id="dateien">
+                        <h1>dateien</h1>
+                    </div>
+                    <div class="tab-pane" id="teilnehmer">
+                        <h1>teilnehmer</h1>
+                    </div>
+                </div>
+
+ 
+ 
+   
+                
+                
+                
+                
+                
+            </div>
+
+
+
+        </div>          
+          
+  
+      
+      
+      </div><!--container-->
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    Eine Studienarbeit aus dem Fach Praktikum Programmieren
+                </div>
+                <div class="col-md-6">
+                    Von Florian Pfitzer, Adrian Wöltche und Johannes Höhn
+                </div>
+            </div>
+        </div>  
+    </footer>
+  </body>
+</html>

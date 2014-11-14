@@ -14,3 +14,4 @@
 /composer.phar
 /.vagrant
 /config.rb
+/node_modules/
