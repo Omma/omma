@@ -60,9 +60,9 @@ class LdapConfig
             "hostname"     => null,
             "port"         => null,
             "security"     => null,
-            "bindName"     => null,
-            "bindPassword" => null,
-            "baseDn"       => null,
+            "bind_name"     => null,
+            "bind_password" => null,
+            "base_dn"       => null,
             "users"        => array(),
             "groups"       => array(),
         );
@@ -70,10 +70,10 @@ class LdapConfig
         $this->hostname = $config['hostname'];
         $this->port = $config['port'];
         $this->security = $config['security'];
-        $this->bindName = $config['bindName'];
-        $this->bindPassword = $config['bindPassword'];
+        $this->bindName = $config['bind_name'];
+        $this->bindPassword = $config['bind_password'];
 
-        $baseDn = $config['baseDn'];
+        $baseDn = $config['base_dn'];
 
         // convert dns name to into LDAP dn
         if (strlen($baseDn) > 0 && stripos($baseDn, "=") === false) {

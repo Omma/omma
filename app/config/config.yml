@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: ldap.yml }
 
 framework:
     #esi:             ~
@@ -104,21 +105,5 @@ fos_user:
         group_manager: omma.user.orm.group_manager
     service:
         user_manager: omma.user.orm.user_manager
-omma_user:
-    ldap:
-        hostname: localhost
-        bindName: cn=admin,dc=omma,dc=local
-        bindPassword: install
-        baseDn: dc=omma,dc=local
-        users:
-            dn: ou=users,dc=omma,dc=local
-            mapping:
-                username: uid
-                email: mail
-                firstname: givenName
-                lastname: sn
-        groups:
-            dn: ou=groups,dc=omma,dc=local
-            mapping:
-                name: cn
-                members: memberUid
+
+omma_user: ~
