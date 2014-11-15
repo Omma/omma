@@ -115,7 +115,7 @@
     </target>
 
     <target name="phpunit" description="Run unit tests with PHPUnit">
-        <exec executable="${project.basedir}/bin/phpunit" logoutput="true">
+        <exec executable="${project.basedir}/bin/phpunit" logoutput="true" checkreturn="true">
             <arg line="--log-junit ${project.basedir}/build/logs/phpunit.xml" />
             <arg line="--coverage-clover ${project.basedir}/build/logs/clover.xml" />
             <arg line="--coverage-html ${project.basedir}/build/coverage" />
