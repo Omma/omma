@@ -21,6 +21,7 @@ php_packages:
       - php5-gearman
       - php5-mcrypt
       - php5-ldap
+      - php5-sqlite
 
 php5-fpm:
   pkg:

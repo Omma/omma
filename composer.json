@@ -21,7 +21,8 @@
         "tiesa/ldap": "dev-master#0759f17996fbb434ee5155dc527b95d8059c6d41",
         "sonata-project/user-bundle": "~2.2",
         "sonata-project/doctrine-orm-admin-bundle": "~2.3",
-        "sonata-project/easy-extends-bundle": "~2.1"
+        "sonata-project/easy-extends-bundle": "~2.1",
+        "raulfraile/ladybug-bundle": "~1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
@@ -34,7 +35,9 @@
         "sebastian/phpcpd": "2.0.1",
         "mayflower/php-codebrowser": "~1.1",
         "apigen/apigen": "4.0.0-RC3",
-        "fabpot/php-cs-fixer": "~1.0"
+        "fabpot/php-cs-fixer": "~1.0",
+        "liip/functional-test-bundle": "dev-master",
+        "doctrine/doctrine-fixtures-bundle": "2.2.*"
     },
     "scripts": {
         "post-root-package-install": [

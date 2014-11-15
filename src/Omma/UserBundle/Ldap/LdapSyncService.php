@@ -36,7 +36,7 @@ class LdapSyncService implements LoggerAwareInterface
     private $groupManager;
 
     public function __construct(
-        LdapDirectory $directory,
+        LdapDirectoryInterface $directory,
         UserEntityManager $userManager,
         GroupEntityManager $groupManager,
         LoggerInterface $logger = null
@@ -65,8 +65,32 @@ class LdapSyncService implements LoggerAwareInterface
             $user = $this->syncUser($data);
             $userList[$user->getUsername()] = $user;
         }
-        // @TODO: Delete old users
 
+        // Delete old users
+        $query = $this->userManager->createQueryBuilder("u")
+            ->select("u")
+            ->where("u.ldapId != '' and u.enabled = 1")
+        ;
+        if (!empty($userList)) {
+            $query
+                ->andWhere("u NOT IN (:users)")
+                ->setParameter("users", array_values($userList)) // can't be an associative array
+            ;
+        }
+        /** @var User[] $users */
+        $users = $query
+            ->getQuery()
+            ->getResult()
+        ;
+        foreach ($users as $user) {
+            if (null !== $this->logger) {
+                $this->logger->warning(sprintf("disabling user '%s'", $user));
+            }
+            $user->setEnabled(false);
+            $this->userManager->updateUser($user);
+        }
+
+        // sync groups
         $groupList = array();
         $groups = $this->directory->getGroups();
         foreach ($groups as $dn => $data) {
@@ -77,13 +101,27 @@ class LdapSyncService implements LoggerAwareInterface
         }
 
         // Delete old groups
-        $groups = $this->groupManager->createQueryBuilder("g")
+        $query = $this->groupManager->createQueryBuilder("g")
             ->select("g")
-            ->where("g.ldapId != '' AND g.ldapId NOT IN (:groups)")
-            ->setParameter("groups", $groupList)
+            ->where("g.ldapId != ''")
+        ;
+        if (!empty($groupList)) {
+            $query
+                ->andWhere("g NOT IN (:groups)")
+                ->setParameter("groups", array_values($groupList))
+            ;
+        }
+        $groups = $query
             ->getQuery()
             ->getResult()
         ;
+
+        foreach ($groups as $group) {
+            if (null !== $this->logger) {
+                $this->logger->warning(sprintf("deleting group '%s'", $group));
+            }
+            $this->groupManager->deleteGroup($group);
+        }
     }
 
     /**
@@ -156,21 +194,6 @@ class LdapSyncService implements LoggerAwareInterface
         /** @var User $user */
         $user = $this->userManager->findUserByUsername($data['username']);
         if (null !== $user) {
-            // don't sync user with different ldap id
-            if (strlen($user->getLdapId()) > 0) {
-                if (null !== $this->logger) {
-                    $this->logger->warning(
-                        sprintf(
-                            "found conflict with existing user %s (id: %d). Skipping",
-                            $user->getUsername(),
-                            $user->getId()
-                        )
-                    );
-                }
-
-                return null;
-            }
-
             if (null !== $this->logger) {
                 $this->logger->info(sprintf("updating db user %s (id: %d)", $user, $user->getId()));
             }
@@ -267,21 +290,6 @@ class LdapSyncService implements LoggerAwareInterface
         /** @var Group $group */
         $group = $this->groupManager->findGroupByName($data['name']);
         if (null !== $group) {
-            // don't sync group with different ldap id
-            if (strlen($group->getLdapId()) > 0) {
-                if (null !== $this->logger) {
-                    $this->logger->warning(
-                        sprintf(
-                            "found conflict with existing group %s (id: %d). Skipping",
-                            $group->getName(),
-                            $group->getId()
-                        )
-                    );
-                }
-
-                return null;
-            }
-
             if (null !== $this->logger) {
                 $this->logger->info(sprintf("updating db group %s (id: %d)", $group, $group->getId()));
             }

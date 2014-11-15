@@ -10,12 +10,7 @@ use Toyota\Component\Ldap\Core\SearchResult;
 use Toyota\Component\Ldap\Exception\BindException;
 use Toyota\Component\Ldap\Platform\Native\Driver;
 
-/**
- * Handles communication with ldap directory
- *
- * @author Florian Pfitzer <pfitzer@w3p.cc>
- */
-class LdapDirectory
+class LdapDirectory implements LdapDirectoryInterface
 {
     /**
      * @var LdapConfig
@@ -46,7 +41,7 @@ class LdapDirectory
             throw new BadCredentialsException("Ldap not enabled");
         }
         try {
-            $this->getManager($token->getUsername(), $token->getCredentials());
+            $this->getManager($user->getLdapId(), $token->getCredentials());
         } catch (BindException $e) {
             throw new BadCredentialsException("Ldap login failed");
         }
@@ -121,7 +116,7 @@ class LdapDirectory
 
         if (null !== $username) {
             $manager->bind($username, $password);
-        }elseif (null !== $this->config->getBindName()) {
+        } elseif (null !== $this->config->getBindName()) {
             $manager->bind($this->config->getBindName(), $this->config->getBindPassword());
         } else {
             $manager->bind();

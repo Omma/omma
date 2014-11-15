@@ -3,6 +3,7 @@ namespace Omma\UserBundle\Security;
 
 use Application\Sonata\UserBundle\Entity\User;
 use Omma\UserBundle\Ldap\LdapDirectory;
+use Omma\UserBundle\Ldap\LdapDirectoryInterface;
 use Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
@@ -28,8 +29,8 @@ class LdapAuthtenticationProvider extends DaoAuthenticationProvider
         UserCheckerInterface $userChecker,
         $providerKey,
         EncoderFactoryInterface $encoderFactory,
-        $hideUserNotFoundExceptions = true,
-        LdapDirectory $ldapDirectory
+        LdapDirectoryInterface $ldapDirectory,
+        $hideUserNotFoundExceptions = true
     ) {
         parent::__construct($userProvider, $userChecker, $providerKey, $encoderFactory, $hideUserNotFoundExceptions);
 

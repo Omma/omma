@@ -13,7 +13,7 @@ class Group extends BaseGroup
 {
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $ldapId;
 
