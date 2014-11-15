@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new Omma\AppBundle\OmmaAppBundle(),
             new Omma\UserBundle\OmmaUserBundle(),
             new \Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+            new Omma\MeetingBundle\OmmaMeetingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
