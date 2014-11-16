@@ -36,6 +36,7 @@ abstract class User extends BaseUser
      */
     public function __construct()
     {
+    	parent::__construct();
         $this->meetings = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
     }

@@ -27,8 +27,9 @@ class Group extends BaseGroup
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($name)
     {
+    	parent::__construct($name);
         $this->meetings = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
