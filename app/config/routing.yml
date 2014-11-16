@@ -1,8 +1,3 @@
-omma_meeting:
-    resource: "@OmmaMeetingBundle/Controller/"
-    type: annotation
-    prefix:   /
-
 omma_user:
     resource: "@OmmaUserBundle/Controller/"
     type:     annotation

@@ -1,6 +1,6 @@
 <?php
 
-namespace Omma\MeetingBundle\Entity;
+namespace Omma\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table("omma_meeting_recurring_exception")
  * @ORM\Entity
+ *
+ * @author Adrian Woeltche
  */
 class MeetingRecurringException
 {
