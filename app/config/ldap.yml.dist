@@ -1,0 +1,18 @@
+omma_user:
+    ldap:
+        hostname: localhost
+        bind_name: cn=admin,dc=omma,dc=local
+        bind_password: install
+        base_dn: dc=omma,dc=local
+        users:
+            dn: ou=users,dc=omma,dc=local
+            mapping:
+                username: uid
+                email: mail
+                firstname: givenName
+                lastname: sn
+        groups:
+            dn: ou=groups,dc=omma,dc=local
+            mapping:
+                name: cn
+                members: memberUid

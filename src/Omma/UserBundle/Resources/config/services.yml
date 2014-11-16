@@ -1,1 +1,49 @@
 services:
+    omma.user.ldap.config:
+        class: Omma\UserBundle\Ldap\LdapConfig
+        private: true
+        arguments:
+            - [] # config
+
+    omma.user.ldap.directory:
+        class: Omma\UserBundle\Ldap\LdapDirectory
+        arguments:
+            - @omma.user.ldap.config
+
+    omma.user.ldap.sync_service:
+        class: Omma\UserBundle\Ldap\LdapSyncService
+        tags:
+            - { name: monolog.logger }
+        arguments:
+            - @omma.user.ldap.directory
+            - @omma.user.orm.user_manager
+            - @omma.user.orm.group_manager
+            - @?logger
+
+    omma.user.orm.user_manager:
+        class: Omma\UserBundle\Entity\UserEntityManager
+        public: true
+        parent: sonata.user.orm.user_manager
+
+    omma.user.orm.group_manager:
+        class: Omma\UserBundle\Entity\GroupEntityManager
+        public: true
+        parent: sonata.user.orm.group_manager
+
+    omma.user.logging.processor.psr:
+        class: Monolog\Processor\PsrLogMessageProcessor
+        tags:
+            - { name: monolog.processor, method: __invoke }
+
+    omma.user.security.authentication_provider.ldap:
+        class: Omma\UserBundle\Security\LdapAuthtenticationProvider
+        arguments:
+            - ~ # user provider
+            - @security.user_checker
+            - ~ # provider shared key
+            - @security.encoder_factory
+            - @omma.user.ldap.directory
+            - %security.authentication.hide_user_not_found%
+
+    omma.user.security.listener.ldap:
+        class: Omma\UserBundle\Security\LdapSecurityListener
