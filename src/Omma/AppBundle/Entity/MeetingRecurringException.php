@@ -9,10 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table("omma_meeting_recurring_exception")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  *
  * @author Adrian Woeltche
  */
-class MeetingRecurringException
+class MeetingRecurringException extends Base
 {
     /**
      * @var integer
@@ -37,61 +38,4 @@ class MeetingRecurringException
      * @ORM\Column(name="date", type="datetime")
      */
     protected $date;
-
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     * @return MeetingRecurringException
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * Set meetingRecurringId
-     *
-     * @param \Omma\MeetingBundle\Entity\MeetingRecurring $meetingRecurringId
-     * @return MeetingRecurringException
-     */
-    public function setMeetingRecurringId(\Omma\MeetingBundle\Entity\MeetingRecurring $meetingRecurringId = null)
-    {
-        $this->meetingRecurringId = $meetingRecurringId;
-
-        return $this;
-    }
-
-    /**
-     * Get meetingRecurringId
-     *
-     * @return \Omma\MeetingBundle\Entity\MeetingRecurring
-     */
-    public function getMeetingRecurringId()
-    {
-        return $this->meetingRecurringId;
-    }
 }
