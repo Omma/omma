@@ -38,7 +38,7 @@ class Base
 
     private function initReader()
     {
-        if(!isset($this->reader)) {
+        if (!isset($this->reader)) {
             $this->reader = new AnnotationReader();
         }
     }
@@ -50,9 +50,9 @@ class Base
         $reflectionObject = new \ReflectionObject($this);
         $properties = $reflectionObject->getProperties();
 
-        foreach($properties as $property) {
+        foreach ($properties as $property) {
             $annotation = preg_match(self::MATCH_VAR, $property->getDocComment(), $match);
-            if(isset($annotation) && $match[1] == 'ArrayCollection') {
+            if (isset($annotation) && $match[1] == 'ArrayCollection') {
                 $this->__set($property->getName(), new ArrayCollection());
             }
         }
@@ -60,9 +60,9 @@ class Base
 
     public function __call($name, $arguments)
     {
-        if(strpos($name, 'get') !== false) {
+        if (strpos($name, 'get') !== false) {
             return $this->__get(lcfirst(substr($name, 3)));
-        } else if(strpos($name, 'set') !== false && count($arguments) == 1) {
+        } else if (strpos($name, 'set') !== false && count($arguments) == 1) {
             $this->__set(lcfirst(substr($name, 3)), $arguments[0]);
         }
     }
@@ -71,12 +71,12 @@ class Base
     {
         $this->initReader();
 
-        if(property_exists($this, $name)) {
+        if (property_exists($this, $name)) {
             $property = new \ReflectionProperty($this, $name);
             $property->setAccessible($name);
             $annotation = preg_match(self::MATCH_VAR, $property->getDocComment(), $match);
 
-            if(isset($annotation) && $match[1] == '\DateTime') {
+            if (isset($annotation) && $match[1] == '\DateTime') {
                 $property->setValue($this, (!empty($value)) ? new \DateTime($value) : null);
             } else {
                 $property->setValue($this, (!empty($value)) ? $value : null);
@@ -86,7 +86,7 @@ class Base
 
     public function __get($name)
     {
-        if(property_exists($this, $name)) {
+        if (property_exists($this, $name)) {
             $property = new \ReflectionProperty($this, $name);
             $property->setAccessible($name);
             return $property->getValue($this);
@@ -120,11 +120,11 @@ class Base
         $properties = $reflectionObject->getProperties();
 
         $arr = array();
-        foreach($properties as $property) {
+        foreach ($properties as $property) {
             $property->setAccessible(true);
             $annotation = $this->reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\Column');
 
-            if(isset($annotation)) {
+            if (isset($annotation)) {
                 $arr[$property->getName()] = $property->getValue($this);
             }
         }
