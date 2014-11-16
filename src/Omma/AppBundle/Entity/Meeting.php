@@ -65,12 +65,18 @@ class Meeting
      * @ORM\Column(name="date_end", type="datetime")
      */
     protected $dateEnd;
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->meetingRecurrings = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -93,57 +99,11 @@ class Meeting
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set prev
-     *
-     * @param \Omma\MeetingBundle\Entity\Meeting $prev
-     * @return Meeting
-     */
-    public function setPrev(\Omma\MeetingBundle\Entity\Meeting $prev = null)
-    {
-        $this->prev = $prev;
-
-        return $this;
-    }
-
-    /**
-     * Get prev
-     *
-     * @return \Omma\MeetingBundle\Entity\Meeting
-     */
-    public function getPrev()
-    {
-        return $this->prev;
-    }
-
-    /**
-     * Set next
-     *
-     * @param \Omma\MeetingBundle\Entity\Meeting $next
-     * @return Meeting
-     */
-    public function setNext(\Omma\MeetingBundle\Entity\Meeting $next = null)
-    {
-        $this->next = $next;
-
-        return $this;
-    }
-
-    /**
-     * Get next
-     *
-     * @return \Omma\MeetingBundle\Entity\Meeting
-     */
-    public function getNext()
-    {
-        return $this->next;
     }
 
     /**
@@ -162,7 +122,7 @@ class Meeting
     /**
      * Get dateStart
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getDateStart()
     {
@@ -185,7 +145,7 @@ class Meeting
     /**
      * Get dateEnd
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getDateEnd()
     {
@@ -193,65 +153,81 @@ class Meeting
     }
 
     /**
-     * Set meetingRecurring
+     * Add meetingRecurrings
      *
-     * @param \Omma\MeetingBundle\Entity\MeetingRecurring $meetingRecurring
+     * @param \Omma\AppBundle\Entity\MeetingRecurring $meetingRecurrings
      * @return Meeting
      */
-    public function setMeetingRecurring(\Omma\MeetingBundle\Entity\MeetingRecurring $meetingRecurring = null)
+    public function addMeetingRecurring(\Omma\AppBundle\Entity\MeetingRecurring $meetingRecurrings)
     {
-        $this->meetingRecurring = $meetingRecurring;
+        $this->meetingRecurrings[] = $meetingRecurrings;
 
         return $this;
     }
 
     /**
-     * Get meetingRecurring
+     * Remove meetingRecurrings
      *
-     * @return \Omma\MeetingBundle\Entity\MeetingRecurring
+     * @param \Omma\AppBundle\Entity\MeetingRecurring $meetingRecurrings
      */
-    public function getMeetingRecurring()
+    public function removeMeetingRecurring(\Omma\AppBundle\Entity\MeetingRecurring $meetingRecurrings)
     {
-        return $this->meetingRecurring;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->meetingRecurring = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add meetingRecurring
-     *
-     * @param \Omma\MeetingBundle\Entity\MeetingRecurring $meetingRecurring
-     * @return Meeting
-     */
-    public function addMeetingRecurring(\Omma\MeetingBundle\Entity\MeetingRecurring $meetingRecurring)
-    {
-        $this->meetingRecurring[] = $meetingRecurring;
-
-        return $this;
-    }
-
-    /**
-     * Remove meetingRecurring
-     *
-     * @param \Omma\MeetingBundle\Entity\MeetingRecurring $meetingRecurring
-     */
-    public function removeMeetingRecurring(\Omma\MeetingBundle\Entity\MeetingRecurring $meetingRecurring)
-    {
-        $this->meetingRecurring->removeElement($meetingRecurring);
+        $this->meetingRecurrings->removeElement($meetingRecurrings);
     }
 
     /**
      * Get meetingRecurrings
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getMeetingRecurrings()
     {
         return $this->meetingRecurrings;
+    }
+
+    /**
+     * Set prev
+     *
+     * @param \Omma\AppBundle\Entity\Meeting $prev
+     * @return Meeting
+     */
+    public function setPrev(\Omma\AppBundle\Entity\Meeting $prev = null)
+    {
+        $this->prev = $prev;
+
+        return $this;
+    }
+
+    /**
+     * Get prev
+     *
+     * @return \Omma\AppBundle\Entity\Meeting 
+     */
+    public function getPrev()
+    {
+        return $this->prev;
+    }
+
+    /**
+     * Set next
+     *
+     * @param \Omma\AppBundle\Entity\Meeting $next
+     * @return Meeting
+     */
+    public function setNext(\Omma\AppBundle\Entity\Meeting $next = null)
+    {
+        $this->next = $next;
+
+        return $this;
+    }
+
+    /**
+     * Get next
+     *
+     * @return \Omma\AppBundle\Entity\Meeting 
+     */
+    public function getNext()
+    {
+        return $this->next;
     }
 }

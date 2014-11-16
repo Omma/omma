@@ -59,38 +59,22 @@ class MeetingRecurring
      */
     protected $type;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->meetingRecurringExceptions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set meetingId
-     *
-     * @param integer $meetingId
-     * @return MeetingRecurring
-     */
-    public function setMeetingId($meetingId)
-    {
-        $this->meetingId = $meetingId;
-
-        return $this;
-    }
-
-    /**
-     * Get meetingId
-     *
-     * @return integer
-     */
-    public function getMeetingId()
-    {
-        return $this->meetingId;
     }
 
     /**
@@ -109,7 +93,7 @@ class MeetingRecurring
     /**
      * Get dateStart
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getDateStart()
     {
@@ -132,7 +116,7 @@ class MeetingRecurring
     /**
      * Get dateEnd
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getDateEnd()
     {
@@ -155,27 +139,43 @@ class MeetingRecurring
     /**
      * Get type
      *
-     * @return string
+     * @return string 
      */
     public function getType()
     {
         return $this->type;
     }
+
     /**
-     * Constructor
+     * Set meetingId
+     *
+     * @param \Omma\AppBundle\Entity\Meeting $meetingId
+     * @return MeetingRecurring
      */
-    public function __construct()
+    public function setMeetingId(\Omma\AppBundle\Entity\Meeting $meetingId)
     {
-        $this->meetingRecurringExceptions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->meetingId = $meetingId;
+
+        return $this;
+    }
+
+    /**
+     * Get meetingId
+     *
+     * @return \Omma\AppBundle\Entity\Meeting 
+     */
+    public function getMeetingId()
+    {
+        return $this->meetingId;
     }
 
     /**
      * Add meetingRecurringExceptions
      *
-     * @param \Omma\MeetingBundle\Entity\MeetingRecurringException $meetingRecurringExceptions
+     * @param \Omma\AppBundle\Entity\MeetingRecurringException $meetingRecurringExceptions
      * @return MeetingRecurring
      */
-    public function addMeetingRecurringException(\Omma\MeetingBundle\Entity\MeetingRecurringException $meetingRecurringExceptions)
+    public function addMeetingRecurringException(\Omma\AppBundle\Entity\MeetingRecurringException $meetingRecurringExceptions)
     {
         $this->meetingRecurringExceptions[] = $meetingRecurringExceptions;
 
@@ -185,9 +185,9 @@ class MeetingRecurring
     /**
      * Remove meetingRecurringExceptions
      *
-     * @param \Omma\MeetingBundle\Entity\MeetingRecurringException $meetingRecurringExceptions
+     * @param \Omma\AppBundle\Entity\MeetingRecurringException $meetingRecurringExceptions
      */
-    public function removeMeetingRecurringException(\Omma\MeetingBundle\Entity\MeetingRecurringException $meetingRecurringExceptions)
+    public function removeMeetingRecurringException(\Omma\AppBundle\Entity\MeetingRecurringException $meetingRecurringExceptions)
     {
         $this->meetingRecurringExceptions->removeElement($meetingRecurringExceptions);
     }
@@ -195,7 +195,7 @@ class MeetingRecurring
     /**
      * Get meetingRecurringExceptions
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getMeetingRecurringExceptions()
     {

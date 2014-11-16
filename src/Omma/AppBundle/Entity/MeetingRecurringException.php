@@ -42,7 +42,7 @@ class MeetingRecurringException
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -65,7 +65,7 @@ class MeetingRecurringException
     /**
      * Get date
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getDate()
     {
@@ -75,10 +75,10 @@ class MeetingRecurringException
     /**
      * Set meetingRecurringId
      *
-     * @param \Omma\MeetingBundle\Entity\MeetingRecurring $meetingRecurringId
+     * @param \Omma\AppBundle\Entity\MeetingRecurring $meetingRecurringId
      * @return MeetingRecurringException
      */
-    public function setMeetingRecurringId(\Omma\MeetingBundle\Entity\MeetingRecurring $meetingRecurringId = null)
+    public function setMeetingRecurringId(\Omma\AppBundle\Entity\MeetingRecurring $meetingRecurringId)
     {
         $this->meetingRecurringId = $meetingRecurringId;
 
@@ -88,7 +88,7 @@ class MeetingRecurringException
     /**
      * Get meetingRecurringId
      *
-     * @return \Omma\MeetingBundle\Entity\MeetingRecurring
+     * @return \Omma\AppBundle\Entity\MeetingRecurring 
      */
     public function getMeetingRecurringId()
     {
