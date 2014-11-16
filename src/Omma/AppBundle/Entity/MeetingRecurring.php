@@ -70,7 +70,7 @@ class MeetingRecurring
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -93,7 +93,7 @@ class MeetingRecurring
     /**
      * Get dateStart
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateStart()
     {
@@ -116,7 +116,7 @@ class MeetingRecurring
     /**
      * Get dateEnd
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateEnd()
     {
@@ -139,7 +139,7 @@ class MeetingRecurring
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
@@ -162,7 +162,7 @@ class MeetingRecurring
     /**
      * Get meetingId
      *
-     * @return \Omma\AppBundle\Entity\Meeting 
+     * @return \Omma\AppBundle\Entity\Meeting
      */
     public function getMeetingId()
     {
@@ -195,7 +195,7 @@ class MeetingRecurring
     /**
      * Get meetingRecurringExceptions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMeetingRecurringExceptions()
     {
