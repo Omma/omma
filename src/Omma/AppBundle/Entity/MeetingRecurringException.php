@@ -38,11 +38,10 @@ class MeetingRecurringException
      */
     protected $date;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -65,7 +64,7 @@ class MeetingRecurringException
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -88,7 +87,7 @@ class MeetingRecurringException
     /**
      * Get meetingRecurringId
      *
-     * @return \Omma\AppBundle\Entity\MeetingRecurring 
+     * @return \Omma\AppBundle\Entity\MeetingRecurring
      */
     public function getMeetingRecurringId()
     {

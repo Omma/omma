@@ -5,9 +5,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Sonata\UserBundle\Entity\BaseGroup;
 
 /**
+ * @author Florian Pfitzer <pfitzer@w3p.cc>, Adrian Woeltche
  *
- *
- * @author Florian Pfitzer <pfitzer@w3p.cc>
+ * @ORM\MappedSuperclass
  */
 class Group extends BaseGroup
 {
@@ -18,6 +18,36 @@ class Group extends BaseGroup
     protected $ldapId;
 
     /**
+     * @var \Omma\AppBundle\Entity\Meeting
+     *
+     * @ORM\ManyToMany(targetEntity="\Omma\AppBundle\Entity\Meeting", mappedBy="groups")
+     */
+    protected $meetings;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->meetings = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set ldapId
+     *
+     * @param string $ldapId
+     * @return Group
+     */
+    public function setLdapId($ldapId)
+    {
+        $this->ldapId = $ldapId;
+
+        return $this;
+    }
+
+    /**
+     * Get ldapId
+     *
      * @return string
      */
     public function getLdapId()
@@ -26,14 +56,35 @@ class Group extends BaseGroup
     }
 
     /**
-     * @param string $ldapId
+     * Add meetings
      *
-     * @return self
+     * @param \Omma\AppBundle\Entity\Meeting $meetings
+     * @return Group
      */
-    public function setLdapId($ldapId)
+    public function addMeeting(\Omma\AppBundle\Entity\Meeting $meetings)
     {
-        $this->ldapId = $ldapId;
+        $this->meetings[] = $meetings;
 
         return $this;
+    }
+
+    /**
+     * Remove meetings
+     *
+     * @param \Omma\AppBundle\Entity\Meeting $meetings
+     */
+    public function removeMeeting(\Omma\AppBundle\Entity\Meeting $meetings)
+    {
+        $this->meetings->removeElement($meetings);
+    }
+
+    /**
+     * Get meetings
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMeetings()
+    {
+        return $this->meetings;
     }
 }

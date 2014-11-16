@@ -24,11 +24,34 @@ class Meeting
     protected $id;
 
     /**
+     * @var \Application\Sonata\UserBundle\Entity\User
+     *
+     * @ORM\ManyToMany(targetEntity="\Application\Sonata\UserBundle\Entity\User", inversedBy="meetings")
+     * @ORM\JoinTable(name="omma_meeting_users")
+     */
+    protected $users;
+
+    /**
+     * @var \Application\Sonata\UserBundle\Entity\Group
+     *
+     * @ORM\ManyToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Group", inversedBy="meetings")
+     * @ORM\JoinTable(name="omma_meeting_groups")
+     */
+    protected $groups;
+
+    /**
      * @var MeetingRecurring
      *
      * @ORM\OneToMany(targetEntity="MeetingRecurring", mappedBy="meetingId", orphanRemoval=true)
      */
     protected $meetingRecurrings;
+
+    /**
+     * @var Task
+     *
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="meeting", orphanRemoval=true)
+     */
+    protected $tasks;
 
     /**
      * @var string
@@ -65,18 +88,21 @@ class Meeting
      * @ORM\Column(name="date_end", type="datetime")
      */
     protected $dateEnd;
+
     /**
      * Constructor
      */
     public function __construct()
     {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->meetingRecurrings = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -99,7 +125,7 @@ class Meeting
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -122,7 +148,7 @@ class Meeting
     /**
      * Get dateStart
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateStart()
     {
@@ -145,11 +171,77 @@ class Meeting
     /**
      * Get dateEnd
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateEnd()
     {
         return $this->dateEnd;
+    }
+
+    /**
+     * Add users
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $users
+     * @return Meeting
+     */
+    public function addUser(\Application\Sonata\UserBundle\Entity\User $users)
+    {
+        $this->users[] = $users;
+
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $users
+     */
+    public function removeUser(\Application\Sonata\UserBundle\Entity\User $users)
+    {
+        $this->users->removeElement($users);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * Add groups
+     *
+     * @param \Application\Sonata\UserBundle\Entity\Group $groups
+     * @return Meeting
+     */
+    public function addGroup(\Application\Sonata\UserBundle\Entity\Group $groups)
+    {
+        $this->groups[] = $groups;
+
+        return $this;
+    }
+
+    /**
+     * Remove groups
+     *
+     * @param \Application\Sonata\UserBundle\Entity\Group $groups
+     */
+    public function removeGroup(\Application\Sonata\UserBundle\Entity\Group $groups)
+    {
+        $this->groups->removeElement($groups);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 
     /**
@@ -178,7 +270,7 @@ class Meeting
     /**
      * Get meetingRecurrings
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMeetingRecurrings()
     {
@@ -201,7 +293,7 @@ class Meeting
     /**
      * Get prev
      *
-     * @return \Omma\AppBundle\Entity\Meeting 
+     * @return \Omma\AppBundle\Entity\Meeting
      */
     public function getPrev()
     {
@@ -224,10 +316,43 @@ class Meeting
     /**
      * Get next
      *
-     * @return \Omma\AppBundle\Entity\Meeting 
+     * @return \Omma\AppBundle\Entity\Meeting
      */
     public function getNext()
     {
         return $this->next;
+    }
+
+    /**
+     * Add tasks
+     *
+     * @param \Omma\AppBundle\Entity\Task $tasks
+     * @return Meeting
+     */
+    public function addTask(\Omma\AppBundle\Entity\Task $tasks)
+    {
+        $this->tasks[] = $tasks;
+
+        return $this;
+    }
+
+    /**
+     * Remove tasks
+     *
+     * @param \Omma\AppBundle\Entity\Task $tasks
+     */
+    public function removeTask(\Omma\AppBundle\Entity\Task $tasks)
+    {
+        $this->tasks->removeElement($tasks);
+    }
+
+    /**
+     * Get tasks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
     }
 }
