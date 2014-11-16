@@ -62,7 +62,7 @@ class Base
     {
         if (strpos($name, 'get') !== false) {
             return $this->__get(lcfirst(substr($name, 3)));
-        } else if (strpos($name, 'set') !== false && count($arguments) == 1) {
+        } elseif (strpos($name, 'set') !== false && count($arguments) == 1) {
             $this->__set(lcfirst(substr($name, 3)), $arguments[0]);
         }
     }
