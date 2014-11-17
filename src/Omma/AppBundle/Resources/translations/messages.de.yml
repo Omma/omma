@@ -1,0 +1,5 @@
+app:
+    username: Benutzername
+    password: Passwort
+    remember_me: Login merken
+    login: einloggen
