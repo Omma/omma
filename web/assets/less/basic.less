@@ -1,8 +1,13 @@
 @import "variables";
 
 
+		 
+	        
+	        
+        
 /*Basics*/
 body, html {padding-bottom: 50px;}
+.container {min-width: 730px;}
 h2 {
     font-size: 1.7em;
     text-decoration: underline;
@@ -106,56 +111,68 @@ header {
 /*Left-Col*/          
           
 .left-col {
-
-
+	.row>div {
+    	margin-bottom: 30px;
+    }
+	h2 {
+        color: @grey;
+        font-size: 1.2em;
+        text-decoration: none;
+        font-weight: bold;
+        margin-top: 17px;
+    }
 	/*Kalender*/
-	.gldp-default {
-		top:0px !important;
-		left: 0px !important;
-		margin-top: -20px;
-		
-		.core {
-			background: none;
+	.kalender {
+	
+		max-width: 280px !important;
+	
+		.gldp-default {
+			top:0px !important;
+			left: 0px !important;
+			margin-top: -20px;
 			
-			&.border {
-				border: none;
-				color: #333;
+			.core {
+				background: none;
 				
-				&.special {
-					background: @grey;
-					border-radius: 50%;
+				&.border {
+					border: none;
+					color: #333;
+					
+					&.special {
+						background: @grey;
+						border-radius: 50%;
+					}
+				}
+				
+				&.border.dow {
+					cursor: default !important;
+					background: @blue !important; 
+					margin-bottom: 10px;
+					color: white;
+				}
+				
+				&.border.selected, &.border:hover {
+					background: @blue;
+					color: white;
+					border-radius: 3px;
 				}
 			}
 			
-			&.border.dow {
-				cursor: default !important;
-				background: @blue !important; 
-				margin-bottom: 10px;
-				color: white;
-			}
-			
-			&.border.selected, &.border:hover {
-				background: @blue;
-				color: white;
-				border-radius: 3px;
-			}
-		}
-		
-		/*Leiste mit Monaten und Pfeilen */
-		.monyear {
-			color: @font-color !important;
-			
-			&.title {
-				color: @grey !important;
-				cursor: default;
-			}
-			
-			&:hover {
-				background: none !important;
+			/*Leiste mit Monaten und Pfeilen */
+			.monyear {
+				color: @font-color !important;
+				
+				&.title {
+					color: @grey !important;
+					cursor: default;
+				}
+				
+				&:hover {
+					background: none !important;
+				}
 			}
 		}
 	}
-
 
 
 
@@ -175,6 +192,18 @@ header {
 			}
 		}
 	}
+	
+	
+	@media (min-width:992px) {
+        .row>div {
+        	display: block !important;
+	        width: 100%;
+	        max-width: 100%;
+        }
+        .kalender {
+        	margin: 0 auto;
+        }
+    }
 } 
 
 
@@ -238,6 +267,7 @@ footer {
     bottom: 0px;
     width: 100%;
     color: white;
+    display: none;
 }
 @media screen and (max-width:991px) {
     footer {

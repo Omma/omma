@@ -3,6 +3,9 @@ body,
 html {
   padding-bottom: 50px;
 }
+.container {
+  min-width: 730px;
+}
 h2 {
   font-size: 1.7em;
   text-decoration: underline;
@@ -83,43 +86,56 @@ header .form-group .tt-suggestion strong.tt-highlight {
   /*Kalender*/
   /*Nächste Events*/
 }
-.left-col .gldp-default {
+.left-col .row > div {
+  margin-bottom: 30px;
+}
+.left-col h2 {
+  color: #777777;
+  font-size: 1.2em;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 17px;
+}
+.left-col .kalender {
+  max-width: 280px !important;
+}
+.left-col .kalender .gldp-default {
   top: 0px !important;
   left: 0px !important;
   margin-top: -20px;
   /*Leiste mit Monaten und Pfeilen */
 }
-.left-col .gldp-default .core {
+.left-col .kalender .gldp-default .core {
   background: none;
 }
-.left-col .gldp-default .core.border {
+.left-col .kalender .gldp-default .core.border {
   border: none;
   color: #333;
 }
-.left-col .gldp-default .core.border.special {
+.left-col .kalender .gldp-default .core.border.special {
   background: #777777;
   border-radius: 50%;
 }
-.left-col .gldp-default .core.border.dow {
+.left-col .kalender .gldp-default .core.border.dow {
   cursor: default !important;
   background: #1f54ff !important;
   margin-bottom: 10px;
   color: white;
 }
-.left-col .gldp-default .core.border.selected,
-.left-col .gldp-default .core.border:hover {
+.left-col .kalender .gldp-default .core.border.selected,
+.left-col .kalender .gldp-default .core.border:hover {
   background: #1f54ff;
   color: white;
   border-radius: 3px;
 }
-.left-col .gldp-default .monyear {
+.left-col .kalender .gldp-default .monyear {
   color: #333333 !important;
 }
-.left-col .gldp-default .monyear.title {
+.left-col .kalender .gldp-default .monyear.title {
   color: #777777 !important;
   cursor: default;
 }
-.left-col .gldp-default .monyear:hover {
+.left-col .kalender .gldp-default .monyear:hover {
   background: none !important;
 }
 .left-col .naechste-events .list-group a {
@@ -131,6 +147,16 @@ header .form-group .tt-suggestion strong.tt-highlight {
 .left-col .naechste-events .list-group p:first-child {
   font-size: 1.1em;
   line-height: .9em;
+}
+@media (min-width: 992px) {
+  .left-col .row > div {
+    display: block !important;
+    width: 100%;
+    max-width: 100%;
+  }
+  .left-col .kalender {
+    margin: 0 auto;
+  }
 }
 /*Right-Col*/
 .right-col ul.nav.nav-tabs li a {
@@ -161,6 +187,7 @@ footer {
   bottom: 0px;
   width: 100%;
   color: white;
+  display: none;
 }
 @media screen and (max-width: 991px) {
   footer {

@@ -34,8 +34,8 @@ module.exports = function (grunt) {
         },
         concat: {
         	dist: {
-              src: ['assets/js/ctrl/*.js', 'assets/js/model/*.js'],
-			      dest: 'assets/js/view_controller.js'
+              src: ['web/web/assets/js/ctrl/*.js', 'web/web/assets/js/model/*.js'],
+			      dest: 'web/web/assets/js/view_controller.js'
             }
 	    },
 			  
@@ -54,14 +54,14 @@ module.exports = function (grunt) {
 	    /*uglify: {
 	      my_target: {
 	        files: {
-	          'assets/js/script.min.js': ['assets/js/script.js']
+	          'web/web/assets/js/script.min.js': ['web/assets/js/script.js']
 	        }
 	      }
 	    },
 	    cssmin: {
 	      combine: {
 	        files: {
-	          'assets/css/style.min.css': ['assets/css/style.css']
+	          'web/assets/css/style.min.css': ['web/assets/css/style.css']
 	        }
 	      }
 	    },*/
@@ -71,7 +71,7 @@ module.exports = function (grunt) {
                     paths: ["css"]
                 },
                 files: {
-                    "assets/css/style.css": "assets/less/*.less"
+                    "web/assets/css/style.css": "web/assets/less/*.less"
                 }
             }
         },
@@ -79,7 +79,7 @@ module.exports = function (grunt) {
             // Watch less files for linting
             less : {
                 files : [
-                    "assets/less/*.less"
+                    "web/assets/less/*.less"
                 ],
                 tasks: [
                     'less:dev'
@@ -88,9 +88,9 @@ module.exports = function (grunt) {
             concat : {
                 files : [
                     [
-                    	'assets/js/ctrl/*.js', 
-                    	'assets/js/model/*.js', 
-                    	'assets/js/script.js'
+                    	'web/assets/js/ctrl/*.js', 
+                    	'web/assets/js/model/*.js', 
+                    	'web/assets/js/script.js'
                     ]
                 ],
                 tasks : [
@@ -99,7 +99,7 @@ module.exports = function (grunt) {
             },
             /*uglify : {
                 files : [
-                    'assets/js/script.js'
+                    'web/assets/js/script.js'
                 ],
                 tasks : [
                     'uglify'
@@ -107,7 +107,7 @@ module.exports = function (grunt) {
             },
             cssmin : {
                 files : [
-                    'assets/css/style.css'
+                    'web/assets/css/style.css'
                 ],
                 tasks : [
                     'cssmin'
@@ -124,7 +124,7 @@ module.exports = function (grunt) {
                     '<%= watch.concat.files %>',
                     /*'<%= watch.uglify.files %>',*/
                     /*'<%= watch.cssmin.files %>',*/
-                    '**/*.html' 
+                    'web/**/*.html' 
                 ]
             }
         }
