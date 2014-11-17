@@ -1,4 +1,8 @@
 /*Basics*/
+body,
+html {
+  padding-bottom: 50px;
+}
 h2 {
   font-size: 1.7em;
   text-decoration: underline;
@@ -13,6 +17,8 @@ a:hover {
 /*Header*/
 header {
   margin-bottom: 40px;
+  /* Menü <991px display:block */
+  /*Typeahead*/
 }
 header .logo {
   width: 220px;
@@ -29,7 +35,93 @@ header ul.top-navi li {
 header ul.top-navi li a {
   color: #333;
 }
+@media (max-width: 991px) {
+  header ul.top-navi li {
+    display: block;
+    padding: 8px 0px;
+  }
+}
+header .form-group input.form-control.typeahead {
+  width: 220px;
+  margin-top: 20px;
+}
+header .form-group input.form-control.typeahead:focus {
+  border-color: none;
+  box-shadow: 1px 1px 5px #1f54ff;
+  /* noch in rgba */
+}
+header .form-group .tt-dropdown-menu {
+  background-color: #ffffff;
+  text-align: left;
+  width: 100%;
+  border: 1px solid #777777;
+  border-top: none;
+  border-bottom-left-radius: 3px;
+}
+header .form-group .tt-suggestion {
+  border-bottom: 1px solid #777777;
+  padding: 15px 8px;
+  cursor: pointer;
+  color: #777;
+}
+header .form-group .tt-suggestion:last-child {
+  border-bottom: none;
+}
+header .form-group .tt-suggestion:hover {
+  background-color: #1f54ff;
+  color: #ffffff;
+}
+header .form-group .tt-suggestion:hover strong.tt-highlight {
+  color: #ffffff;
+}
+header .form-group .tt-suggestion strong.tt-highlight {
+  color: #1f54ff;
+  font-weight: normal;
+}
 /*Left-Col*/
+.left-col {
+  /*Kalender*/
+  /*Nächste Events*/
+}
+.left-col .gldp-default {
+  top: 0px !important;
+  left: 0px !important;
+  margin-top: -20px;
+  /*Leiste mit Monaten und Pfeilen */
+}
+.left-col .gldp-default .core {
+  background: none;
+}
+.left-col .gldp-default .core.border {
+  border: none;
+  color: #333;
+}
+.left-col .gldp-default .core.border.special {
+  background: #777777;
+  border-radius: 50%;
+}
+.left-col .gldp-default .core.border.dow {
+  cursor: default !important;
+  background: #1f54ff !important;
+  margin-bottom: 10px;
+  color: white;
+}
+.left-col .gldp-default .core.border.selected,
+.left-col .gldp-default .core.border:hover {
+  background: #1f54ff;
+  color: white;
+  border-radius: 3px;
+}
+.left-col .gldp-default .monyear {
+  color: #333333 !important;
+}
+.left-col .gldp-default .monyear.title {
+  color: #777777 !important;
+  cursor: default;
+}
+.left-col .gldp-default .monyear:hover {
+  background: none !important;
+}
 .left-col .naechste-events .list-group a {
   padding: 15px 10px;
 }
@@ -79,3 +171,4 @@ footer {
     text-align: center;
   }
 }
+
