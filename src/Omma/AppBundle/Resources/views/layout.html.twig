@@ -3,6 +3,8 @@
 
 {% block body %}
     <div class="container">
+        <a href="{{ path("omma_switch_language", {language: "de_DE"}) }}">Deutsch</a>
+        <a href="{{ path("omma_switch_language", {language: "en_US"}) }}">English</a>
         {% block content %}
         {% endblock %}
     </div>
