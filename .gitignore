@@ -1,5 +1,6 @@
 .buildpath
 .project
+/.idea
 /.settings
 /web/bundles/
 /app/bootstrap.php.cache
