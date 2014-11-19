@@ -1,0 +1,45 @@
+services:
+    omma.app.entity_manager:
+        alias: doctrine.orm.default_entity_manager
+
+    omma.app.manager.agenda:
+        class: Omma\AppBundle\Entity\AgendaEntityManager
+        arguments:
+            - @omma.app.entity_manager
+            - Omma\AppBundle\Entity\Agenda
+
+    omma.app.manager.file:
+        class: Omma\AppBundle\Entity\FileEntityManager
+        arguments:
+            - @omma.app.entity_manager
+            - Omma\AppBundle\Entity\File
+
+    omma.app.manager.meeting:
+        class: Omma\AppBundle\Entity\MeetingEntityManager
+        arguments:
+            - @omma.app.entity_manager
+            - Omma\AppBundle\Entity\Meeting
+
+    omma.app.manager.meeting_recurring:
+        class: Omma\AppBundle\Entity\MeetingRecurringEntityManager
+        arguments:
+            - @omma.app.entity_manager
+            - Omma\AppBundle\Entity\MeetingRecurring
+
+    omma.app.manager.meeting_recurring_exception:
+        class: Omma\AppBundle\Entity\MeetingRecurringExceptionEntityManager
+        arguments:
+            - @omma.app.entity_manager
+            - Omma\AppBundle\Entity\MeetingRecurringException
+
+    omma.app.manager.protocol:
+        class: Omma\AppBundle\Entity\ProtocolEntityManager
+        arguments:
+            - @omma.app.entity_manager
+            - Omma\AppBundle\Entity\Protocol
+
+    omma.app.manager.task:
+        class: Omma\AppBundle\Entity\TaskEntityManager
+        arguments:
+            - @omma.app.entity_manager
+            - Omma\AppBundle\Entity\Task
