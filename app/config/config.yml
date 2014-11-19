@@ -29,6 +29,7 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
 
 # Assetic Configuration
 assetic:
@@ -105,5 +106,15 @@ fos_user:
         group_manager: omma.user.orm.group_manager
     service:
         user_manager: omma.user.orm.user_manager
+
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener: true
+    view:
+        view_response_listener: 'force'
+
+sensio_framework_extra:
+    view:    { annotations: false }
 
 omma_user: ~
