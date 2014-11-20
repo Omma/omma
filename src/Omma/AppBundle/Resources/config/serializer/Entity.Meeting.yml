@@ -1,0 +1,2 @@
+Omma\AppBundle\Entity\Meeting:
+    access_type: public_method
