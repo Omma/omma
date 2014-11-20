@@ -35,12 +35,61 @@ class Group extends BaseGroup
     protected $id;
 
     /**
+     * @var \Omma\AppBundle\Entity\Meeting
+     *
+     * @ORM\ManyToMany(targetEntity="\Omma\AppBundle\Entity\Meeting", mappedBy="groups")
+     */
+    protected $meetings;
+
+    /**
+     * Constructor
+     */
+    public function __construct($name)
+    {
+    	parent::__construct($name);
+        $this->meetings = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
-     * @return integer $id
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Add meetings
+     *
+     * @param \Omma\AppBundle\Entity\Meeting $meetings
+     * @return Group
+     */
+    public function addMeeting(\Omma\AppBundle\Entity\Meeting $meetings)
+    {
+        $this->meetings[] = $meetings;
+
+        return $this;
+    }
+
+    /**
+     * Remove meetings
+     *
+     * @param \Omma\AppBundle\Entity\Meeting $meetings
+     */
+    public function removeMeeting(\Omma\AppBundle\Entity\Meeting $meetings)
+    {
+        $this->meetings->removeElement($meetings);
+    }
+
+    /**
+     * Get meetings
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMeetings()
+    {
+        return $this->meetings;
     }
 }

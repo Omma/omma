@@ -23,7 +23,7 @@ class File extends Base
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var Meeting
@@ -31,21 +31,21 @@ class File extends Base
      * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="files")
      * @ORM\JoinColumn(name="meeting_id", referencedColumnName="id", nullable=false)
      */
-    protected $meeting;
+    private $meeting;
 
     /**
      * @var Protocol
      *
      * @ORM\OneToOne(targetEntity="Protocol", mappedBy="file")
      */
-    protected $protocol;
+    private $protocol;
 
     /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="File", mappedBy="parent")
      */
-    protected $subFiles;
+    private $subFiles;
 
     /**
      * @var File
@@ -53,19 +53,186 @@ class File extends Base
      * @ORM\ManyToOne(targetEntity="File", inversedBy="subFiles")
      * @ORM\JoinColumn(name="parent", referencedColumnName="id")
      */
-    protected $parent;
+    private $parent;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="type", type="boolean")
      */
-    protected $type;
+    private $type;
 
     /**
      * @var string
      *
      * @ORM\Column(name="url", type="text")
      */
-    protected $url;
+    private $url;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->subFiles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set type
+     *
+     * @param boolean $type
+     * @return File
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return boolean
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set url
+     *
+     * @param string $url
+     * @return File
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Set meeting
+     *
+     * @param \Omma\AppBundle\Entity\Meeting $meeting
+     * @return File
+     */
+    public function setMeeting(\Omma\AppBundle\Entity\Meeting $meeting)
+    {
+        $this->meeting = $meeting;
+
+        return $this;
+    }
+
+    /**
+     * Get meeting
+     *
+     * @return \Omma\AppBundle\Entity\Meeting
+     */
+    public function getMeeting()
+    {
+        return $this->meeting;
+    }
+
+    /**
+     * Set protocol
+     *
+     * @param \Omma\AppBundle\Entity\Protocol $protocol
+     * @return File
+     */
+    public function setProtocol(\Omma\AppBundle\Entity\Protocol $protocol = null)
+    {
+        $this->protocol = $protocol;
+
+        return $this;
+    }
+
+    /**
+     * Get protocol
+     *
+     * @return \Omma\AppBundle\Entity\Protocol
+     */
+    public function getProtocol()
+    {
+        return $this->protocol;
+    }
+
+    /**
+     * Add subFiles
+     *
+     * @param \Omma\AppBundle\Entity\File $subFiles
+     * @return File
+     */
+    public function addSubFile(\Omma\AppBundle\Entity\File $subFiles)
+    {
+        $this->subFiles[] = $subFiles;
+
+        return $this;
+    }
+
+    /**
+     * Remove subFiles
+     *
+     * @param \Omma\AppBundle\Entity\File $subFiles
+     */
+    public function removeSubFile(\Omma\AppBundle\Entity\File $subFiles)
+    {
+        $this->subFiles->removeElement($subFiles);
+    }
+
+    /**
+     * Get subFiles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSubFiles()
+    {
+        return $this->subFiles;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Omma\AppBundle\Entity\File $parent
+     * @return File
+     */
+    public function setParent(\Omma\AppBundle\Entity\File $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Omma\AppBundle\Entity\File
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
 }

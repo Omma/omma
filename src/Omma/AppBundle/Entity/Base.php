@@ -22,18 +22,16 @@ class Base
      *
      * @var \DateTime
      */
-    protected $created;
+    private $created;
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var \DateTime
      */
-    protected $updated;
+    private $updated;
 
-    /**
-     * @var AnnotationReader
-     */
+    /*
     private $reader;
 
     private function initReader()
@@ -94,6 +92,7 @@ class Base
 
         return null;
     }
+    */
 
     /**
      * @ORM\PrePersist
@@ -112,6 +111,7 @@ class Base
         $this->updated = new \DateTime();
     }
 
+    /*
     public function toArray()
     {
         $this->initReader();
@@ -130,5 +130,52 @@ class Base
         }
 
         return $arr;
+    }
+    */
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Base
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     * @return Base
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 }
