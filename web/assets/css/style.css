@@ -159,8 +159,10 @@ header .form-group .tt-suggestion strong.tt-highlight {
   }
 }
 /*Right-Col*/
-.right-col ul.nav.nav-tabs li a {
-  font-size: 1.2em;
+@media (max-width: 1191px) {
+  .right-col ul.nav.nav-tabs li a {
+    font-size: 1.2em;
+  }
 }
 .right-col .tab-pane {
   padding-top: 50px;

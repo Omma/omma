@@ -10,53 +10,52 @@ $(document).ready(function() {
 
     /* Kalender */
 
-    /*
-
-    so kommt json rein: 
-
-    var arr = [
-     {
-     "date": "2014-11-19 12:14:09",
-     "title": "test1",
-     "url": "http://www.teasdst.de"
-     },
-     {
-     "date": "2014-11-19 12:14:09",
-     "title": "test1",
-     "url": "http://www.teasdst.de"
-     },
-     ];*/
-
-    var events = [
+    /*var arr = [
         {
-            date: new Date(2014, 10, 15),
-            title: 'test1',
-            url: 'http://www.teasdst.de'
+            "date": "2014-11-19 12:14:09",
+            "title": "test1",
+            "url": "http://www.teasdst.de"
         },
         {
-            date: new Date(2014, 10, 13),
-            title: 'test2',
-            url: 'http://www.test.de'
+            "date": "2014-11-19 12:14:09",
+            "title": "test1",
+            "url": "http://www.teasdst.de"
+        },
+    ];*/
+
+    var arr = [
+        {
+            "date": new Date(2014,3,14),
+            "title": "test1",
+            "url": "http://www.teasdst.de"
+        },
+        {
+            "date": new Date(2014,3,14),
+            "title": "test1",
+            "url": "http://www.teasdst.de"
         },
     ];
 
-    $.getJSON( "/web/temp_jsons/calendar-left-col.json", function( data ) {
 
-        $.each(data, function() {
+   /* $.getJSON( "/web/temp_jsons/calendar-left-col.json", function( data ) {
+        var date = new Date(2014,12,23);
+        event = {
+            date: date,
+            title: data.title,
+            url: data.url
+        }
+        console.log(data);
 
-            var date_time = new Date(2014, 10, 15);
-
-            var event = {
-                date: date_time,
-                title: data.title,
-                url: data.url
-            }
-            events.push(event);
-        });
-    });
+    });*/
 
 
-    //Vorselektiertes Datum
+    //var d = Date.parse('2011-01-26T13:51:50.417')
+    	// d = Date
+
+    	//alert(d);
+
+
+
     var date = {
         year: new Date().getFullYear(),
         month: new Date().getMonth(),
@@ -64,43 +63,21 @@ $(document).ready(function() {
     }
 
     $('input#calendar-left-col').glDatePicker(
-    {
-        showAlways: true,
-        selectedDate: new Date(date.year, date.month, date.day),
-        specialDates: events,
-        onClick: function(target, cell, date, data) {
-            //console.log($(this));
-            //alert...
-        }
-    });
+        {
+            showAlways: true,
+            selectedDate: new Date(date.year, date.month, date.day),
+            specialDates: arr,
+            onClick: function(target, cell, date, data) {
+                //console.log($(this));
+                //alert...
+            }
 
-
-
-
-
+    )
 
 
 
 
     /* Nächste Events */
-    $.getJSON( "/web/temp_jsons/next-events-left-col.json", function( data ) {
-        var i=0;
-        $.each( data, function( key,value ) {
-            if(key==0)
-                var active = "active";
-
-            $('.left-col div.naechste-events .list-group').append(
-                "<a href=\""+value.url+"\" class=\"list-group-item "+active+"\">" +
-                    "<p>"+value.title+"</p>" +
-                    "<p class=\"list-group-item-text\"><small>"+value.date+"</small></p>" +
-                "</a>"
-
-            );
-            console.log(value);
-        });
-    });
-
-
 
 
 

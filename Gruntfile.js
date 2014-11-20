@@ -34,8 +34,8 @@ module.exports = function (grunt) {
         },
         concat: {
         	dist: {
-              src: ['web/web/assets/js/ctrl/*.js', 'web/web/assets/js/model/*.js'],
-			      dest: 'web/web/assets/js/view_controller.js'
+              src: ['web/assets/js/ctrl/*.js', 'web/assets/js/model/*.js'],
+			      dest: 'web/assets/js/view_controller.js'
             }
 	    },
 			  
@@ -54,7 +54,7 @@ module.exports = function (grunt) {
 	    /*uglify: {
 	      my_target: {
 	        files: {
-	          'web/web/assets/js/script.min.js': ['web/assets/js/script.js']
+	          'web/assets/js/script.min.js': ['web/assets/js/script.js']
 	        }
 	      }
 	    },
