@@ -1,5 +1,4 @@
 <?php
-
 namespace Omma\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -15,81 +14,81 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Task extends Base
 {
+
     /**
-     * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @var integer
      */
     private $id;
 
     /**
-     * @var Meeting
-     *
      * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="tasks")
      * @ORM\JoinColumn(name="meeting_id", referencedColumnName="id", nullable=false)
+     *
+     * @var Meeting
      */
     private $meeting;
 
     /**
-     * @var \Application\Sonata\UserBundle\Entity\User
-     *
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\User", inversedBy="tasks")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *
+     * @var \Application\Sonata\UserBundle\Entity\User
      */
     private $user;
 
     /**
-     * @var Agenda
-     *
      * @ORM\OneToOne(targetEntity="Agenda", inversedBy="task")
      * @ORM\JoinColumn(name="agenda_id", referencedColumnName="id")
+     *
+     * @var Agenda
      */
     private $agenda;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="task", type="string", length=255)
+     *
+     * @var string
      */
     private $task;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="description", type="text")
+     *
+     * @var string
      */
     private $description;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="type", type="string", length=255)
+     *
+     * @var string
      */
     private $type;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date", type="datetime")
+     *
+     * @var \DateTime
      */
     private $date;
 
     /**
-     * @var integer
-     *
      * @ORM\Column(name="priority", type="integer")
+     *
+     * @var integer
      */
     private $priority;
 
     /**
-     * @var integer
-     *
      * @ORM\Column(name="status", type="integer")
+     *
+     * @var integer
      */
     private $status;
-
 
     /**
      * Get id
@@ -307,5 +306,4 @@ class Task extends Base
     {
         return $this->agenda;
     }
-
 }

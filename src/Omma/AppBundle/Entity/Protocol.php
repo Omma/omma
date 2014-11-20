@@ -1,5 +1,4 @@
 <?php
-
 namespace Omma\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -15,45 +14,45 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Protocol extends Base
 {
+
     /**
-     * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @var integer
      */
     private $id;
 
     /**
-     * @var Meeting
-     *
      * @ORM\OneToOne(targetEntity="Meeting", inversedBy="protocol")
      * @ORM\JoinColumn(name="meeting_id", referencedColumnName="id", nullable=false)
+     *
+     * @var Meeting
      */
     private $meeting;
 
     /**
-     * @var File
-     *
      * @ORM\OneToOne(targetEntity="File", inversedBy="protocol")
      * @ORM\JoinColumn(name="file_id", referencedColumnName="id")
+     *
+     * @var File
      */
     private $file;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="text", type="text")
+     *
+     * @var string
      */
     private $text;
 
     /**
-     * @var boolean
-     *
      * @ORM\Column(name="final", type="boolean")
+     *
+     * @var boolean
      */
     private $final;
-
 
     /**
      * Get id
@@ -156,5 +155,4 @@ class Protocol extends Base
     {
         return $this->file;
     }
-
 }

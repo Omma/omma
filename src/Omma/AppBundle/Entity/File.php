@@ -1,5 +1,4 @@
 <?php
-
 namespace Omma\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -16,56 +15,57 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class File extends Base
 {
+
     /**
-     * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @var integer
      */
     private $id;
 
     /**
-     * @var Meeting
-     *
      * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="files")
      * @ORM\JoinColumn(name="meeting_id", referencedColumnName="id", nullable=false)
+     *
+     * @var Meeting
      */
     private $meeting;
 
     /**
-     * @var Protocol
-     *
      * @ORM\OneToOne(targetEntity="Protocol", mappedBy="file")
+     *
+     * @var Protocol
      */
     private $protocol;
 
     /**
-     * @var ArrayCollection
-     *
      * @ORM\OneToMany(targetEntity="File", mappedBy="parent")
+     *
+     * @var ArrayCollection
      */
     private $subFiles;
 
     /**
-     * @var File
-     *
      * @ORM\ManyToOne(targetEntity="File", inversedBy="subFiles")
      * @ORM\JoinColumn(name="parent", referencedColumnName="id")
+     *
+     * @var File
      */
     private $parent;
 
     /**
-     * @var boolean
-     *
      * @ORM\Column(name="type", type="boolean")
+     *
+     * @var boolean
      */
     private $type;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="url", type="text")
+     *
+     * @var string
      */
     private $url;
 
@@ -234,5 +234,4 @@ class File extends Base
     {
         return $this->parent;
     }
-
 }

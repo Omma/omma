@@ -5,15 +5,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Sonata\UserBundle\Entity\BaseGroup;
 
 /**
- * @author Florian Pfitzer <pfitzer@w3p.cc>, Adrian Woeltche
- *
  * @ORM\MappedSuperclass
+ *
+ * @author Florian Pfitzer <pfitzer@w3p.cc>, Adrian Woeltche
  */
 abstract class Group extends BaseGroup
 {
+
     /**
-     * @var string
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
      */
     protected $ldapId;
 

@@ -1,5 +1,4 @@
 <?php
-
 namespace Omma\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -16,56 +15,57 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Agenda extends Base
 {
+
     /**
-     * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @var integer
      */
     private $id;
 
     /**
-     * @var Meeting
-     *
      * @ORM\OneToOne(targetEntity="Meeting", inversedBy="agenda")
      * @ORM\JoinColumn(name="meeting_id", referencedColumnName="id", nullable=false)
+     *
+     * @var Meeting
      */
     private $meeting;
 
     /**
-     * @var Task
-     *
      * @ORM\OneToOne(targetEntity="Task", mappedBy="agenda")
+     *
+     * @var Task
      */
     private $task;
 
     /**
-     * @var ArrayCollection
-     *
      * @ORM\OneToMany(targetEntity="Agenda", mappedBy="parent")
+     *
+     * @var ArrayCollection
      */
     private $subItems;
 
     /**
-     * @var Agenda
-     *
      * @ORM\ManyToOne(targetEntity="Agenda", inversedBy="subItems")
      * @ORM\JoinColumn(name="parent", referencedColumnName="id")
+     *
+     * @var Agenda
      */
     private $parent;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="item", type="string", length=255)
+     *
+     * @var string
      */
     private $item;
 
     /**
-     * @var integer
-     *
      * @ORM\Column(name="sortingOrder", type="integer")
+     *
+     * @var integer
      */
     private $sortingOrder;
 
@@ -234,5 +234,4 @@ class Agenda extends Base
     {
         return $this->parent;
     }
-
 }

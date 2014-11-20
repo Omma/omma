@@ -1,5 +1,4 @@
 <?php
-
 namespace Omma\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -15,30 +14,30 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MeetingRecurringException extends Base
 {
+
     /**
-     * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @var integer
      */
     private $id;
 
     /**
-     * @var MeetingRecurring
-     *
      * @ORM\ManyToOne(targetEntity="MeetingRecurring", inversedBy="meetingRecurringException")
      * @ORM\JoinColumn(name="meeting_recurring_id", referencedColumnName="id", nullable=false)
+     *
+     * @var MeetingRecurring
      */
     private $meetingRecurringId;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date", type="datetime")
+     *
+     * @var \DateTime
      */
     private $date;
-
 
     /**
      * Get id
@@ -95,5 +94,4 @@ class MeetingRecurringException extends Base
     {
         return $this->meetingRecurringId;
     }
-
 }

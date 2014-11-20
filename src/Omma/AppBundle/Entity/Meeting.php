@@ -1,5 +1,4 @@
 <?php
-
 namespace Omma\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -16,99 +15,102 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Meeting extends Base
 {
+
     /**
-     * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @var integer
+     *
+     *
      */
     private $id;
 
     /**
-     * @var \Application\Sonata\UserBundle\Entity\User
-     *
      * @ORM\ManyToMany(targetEntity="\Application\Sonata\UserBundle\Entity\User", inversedBy="meetings")
      * @ORM\JoinTable(name="omma_meeting_users")
+     *
+     * @var \Application\Sonata\UserBundle\Entity\User
      */
     private $users;
 
     /**
-     * @var \Application\Sonata\UserBundle\Entity\Group
-     *
      * @ORM\ManyToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Group", inversedBy="meetings")
      * @ORM\JoinTable(name="omma_meeting_groups")
+     *
+     * @var \Application\Sonata\UserBundle\Entity\Group
      */
     private $groups;
 
     /**
-     * @var MeetingRecurring
-     *
      * @ORM\OneToMany(targetEntity="MeetingRecurring", mappedBy="meetingId", orphanRemoval=true)
+     *
+     * @var MeetingRecurring
      */
     private $meetingRecurrings;
 
     /**
-     * @var ArrayCollection
-     *
      * @ORM\OneToMany(targetEntity="Task", mappedBy="meeting", orphanRemoval=true)
+     *
+     * @var ArrayCollection
      */
     private $tasks;
 
     /**
-     * @var Agenda
-     *
      * @ORM\OneToOne(targetEntity="Agenda", mappedBy="meeting", orphanRemoval=true)
+     *
+     * @var Agenda
      */
     private $agenda;
 
     /**
-     * @var Protocol
-     *
      * @ORM\OneToOne(targetEntity="Protocol", mappedBy="meeting", orphanRemoval=true)
+     *
+     * @var Protocol
      */
     private $protocol;
 
     /**
-     * @var ArrayCollection
-     *
      * @ORM\OneToMany(targetEntity="File", mappedBy="meeting", orphanRemoval=true)
+     *
+     * @var ArrayCollection
      */
     private $files;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @var string
      */
     private $name;
 
     /**
-     * @var Meeting
-     *
      * @ORM\OneToOne(targetEntity="Meeting", inversedBy="next")
      * @ORM\JoinColumn(name="prev", referencedColumnName="id")
+     *
+     * @var Meeting
      */
     private $prev;
 
     /**
-     * @var Meeting
-     *
      * @ORM\OneToOne(targetEntity="Meeting", mappedBy="prev")
+     *
+     * @var Meeting
      */
     private $next;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date_start", type="datetime")
+     *
+     * @var \DateTime
      */
     private $dateStart;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date_end", type="datetime")
+     *
+     * @var \DateTime
      */
     private $dateEnd;
 
@@ -459,5 +461,4 @@ class Meeting extends Base
     {
         return $this->next;
     }
-
 }
