@@ -3357,16 +3357,16 @@
         },
         {
             "name": "fabpot/php-cs-fixer",
-            "version": "v1.0",
+            "version": "v1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "ca95dbf448807420c0d78d447c250263c71080cf"
+                "reference": "08a10b726562480180bf42d4370e0df95284cd1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/ca95dbf448807420c0d78d447c250263c71080cf",
-                "reference": "ca95dbf448807420c0d78d447c250263c71080cf",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/08a10b726562480180bf42d4370e0df95284cd1b",
+                "reference": "08a10b726562480180bf42d4370e0df95284cd1b",
                 "shasum": ""
             },
             "require": {
@@ -3385,7 +3385,7 @@
             "type": "application",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -3404,7 +3404,7 @@
                 }
             ],
             "description": "A script to automatically fix Symfony Coding Standard",
-            "time": "2014-11-12 19:31:29"
+            "time": "2014-11-17 08:23:03"
         },
         {
             "name": "kdyby/console",
