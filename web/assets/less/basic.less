@@ -1,16 +1,40 @@
 @import "variables";
 
 
-		 
+
+
+
+
+
+
 	        
 	        
         
 /*Basics*/
-body, html {padding-bottom: 50px;}
+body, html {
+  padding-bottom: 50px;
+  background-color: #eee;
+}
 .container {min-width: 730px;}
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 2.5em;
+  color: @font-color;
+}
 h2 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
     font-size: 1.7em;
-    text-decoration: underline;
+    margin-bottom: 20px;
+  color: @font-color;
+}
+h3 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 1.3em;
+  margin-bottom: 20px;
+  color: @font-color;
 }
 a {
     color: @blue;   
@@ -19,7 +43,10 @@ a {
 	    text-decoration: none;
     }
 }
-
+.btn.btn-omma {
+  background-color: @blue;
+  color: @white;
+}
 
 
 /*Header*/
@@ -51,8 +78,7 @@ header {
 			}
 		}
 	}
-	
-	
+
 	/*Typeahead*/
 	.form-group {
 		input.form-control.typeahead {
@@ -61,7 +87,7 @@ header {
 		    
 			&:focus {
 			    border-color: none;
-			    box-shadow: 1px 1px 5px @blue; /* noch in rgba */
+			    box-shadow: 1px 1px 5px @light-blue;
 			}
 		}
 		
@@ -114,13 +140,7 @@ header {
 	.row>div {
     	margin-bottom: 30px;
     }
-	h2 {
-        color: @grey;
-        font-size: 1.2em;
-        text-decoration: none;
-        font-weight: bold;
-        margin-top: 17px;
-    }
+
 	/*Kalender*/
 	.kalender {
 	
@@ -181,6 +201,7 @@ header {
 		.list-group {
 			a {
 			    padding: 15px 10px;
+                background-color: @light-blue;
 			    
 			    &.active {
 			    background-color: @blue;
@@ -225,9 +246,17 @@ header {
 
 .right-col {
 
-    ul.nav.nav-tabs li a {
-      font-size: 1.1em;
+    ul.nav.nav-tabs li {
+
+      &.active a {
+        background-color: @light-blue;
+      }
+      a {
+        font-size: 1.1em;
+      }
     }
+
+
 	
 	.tab-pane {
 	    padding-top: 50px;   
@@ -255,9 +284,43 @@ header {
 	}
 	
 }
-                        
- 
-                    
+
+
+/*Login*/
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+
+  .checkbox {
+      margin-bottom: 30px;
+    font-weight: normal;
+  }
+  .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+
+    &:focus {
+      z-index: 2;
+    }
+  }
+  input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
                     
                     
 /*Footer*/                    

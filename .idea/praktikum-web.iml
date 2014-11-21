@@ -14,6 +14,7 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="praktikum-web node_modules" level="project" />
   </component>
 </module>
 
