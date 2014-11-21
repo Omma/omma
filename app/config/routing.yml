@@ -8,6 +8,10 @@ omma_app:
     type:     annotation
     prefix:   /
 
+omma_app_rest:
+    resource: "@OmmaAppBundle/Resources/config/routing.yml"
+    type: rest
+
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
@@ -20,3 +24,4 @@ _sonata_admin:
 sonata_user:
     resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
     prefix: /admin
+

@@ -1,0 +1,7 @@
+Omma\AppBundle\Entity\Base:
+    exclusion_policy: ALL
+    properties:
+        created:
+            expose: true
+        updated:
+            expose: true

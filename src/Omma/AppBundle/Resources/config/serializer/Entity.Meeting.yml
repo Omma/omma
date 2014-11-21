@@ -1,0 +1,11 @@
+Omma\AppBundle\Entity\Meeting:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        name:
+            expose: true
+        dateStart:
+            expose: true
+        dateEnd:
+            expose: true

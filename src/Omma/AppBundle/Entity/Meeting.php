@@ -3,6 +3,8 @@ namespace Omma\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Meeting
@@ -80,6 +82,7 @@ class Meeting extends Base
 
     /**
      * @ORM\Column(name="name", type="string", length=255)
+     * @NotBlank()
      *
      * @var string
      */
@@ -102,6 +105,8 @@ class Meeting extends Base
 
     /**
      * @ORM\Column(name="date_start", type="datetime")
+     * @NotBlank()
+     * @DateTime()
      *
      * @var \DateTime
      */
@@ -109,7 +114,8 @@ class Meeting extends Base
 
     /**
      * @ORM\Column(name="date_end", type="datetime")
-     *
+     * @NotBlank()
+     * @DateTime()
      * @var \DateTime
      */
     private $dateEnd;

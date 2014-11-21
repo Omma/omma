@@ -9,3 +9,4 @@ base:
     - symfony
     - ldap
     - nodejs
+    - dev

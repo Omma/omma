@@ -37,7 +37,8 @@ class Group extends BaseGroup
 
     /**
      *
-     * @var \Omma\AppBundle\Entity\Meeting @ORM\ManyToMany(targetEntity="\Omma\AppBundle\Entity\Meeting", mappedBy="groups")
+     * @var \Omma\AppBundle\Entity\Meeting
+     * @ORM\ManyToMany(targetEntity="\Omma\AppBundle\Entity\Meeting", mappedBy="groups")
      */
     protected $meetings;
 

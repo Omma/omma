@@ -29,6 +29,7 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
 
 # Assetic Configuration
 assetic:
@@ -105,5 +106,35 @@ fos_user:
         group_manager: omma.user.orm.group_manager
     service:
         user_manager: omma.user.orm.user_manager
+
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener: true
+    routing_loader:
+        default_format: json
+    access_denied_listener:
+        # all requests using the 'json' format will return a 403 on an access denied violation
+        json: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            xml: true
+            json: true
+        templating_formats:
+            html: true
+        force_redirects:
+            html: false
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: twig
+    exception:
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+        messages:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+
+sensio_framework_extra:
+    view:    { annotations: false }
 
 omma_user: ~
