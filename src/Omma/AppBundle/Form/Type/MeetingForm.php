@@ -4,7 +4,6 @@ namespace Omma\AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  *
@@ -17,7 +16,12 @@ class MeetingForm extends AbstractType
     {
         $builder
             ->add("name", "text", array(
-                "constraints" => array(new NotBlank())
+            ))
+            ->add("dateStart", "datetime", array(
+                "widget" => "single_text",
+            ))
+            ->add("dateEnd", "datetime", array(
+                "widget" => "single_text",
             ))
         ;
     }
@@ -31,6 +35,6 @@ class MeetingForm extends AbstractType
 
     public function getName()
     {
-        return "meeting";
+        return "";
     }
 }
