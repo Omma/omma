@@ -51,7 +51,7 @@ end
 
 namespace :deploy do
   task :restart, :except => { :no_release => true } do
-    run "#{sudo} /etc/init.d/php5-fpm reload"
+    run "#{sudo} /usr/sbin/service php5-fpm reload"
   end
 end
 
