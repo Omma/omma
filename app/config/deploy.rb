@@ -25,6 +25,7 @@ set :model_manager, "doctrine"
 
 role :web,        domain                         # Your HTTP server, Apache/etc
 role :app,        domain, :primary => true       # This may be the same as your `Web` server
+role :db,         domain, :primary => true       # This may be the same as your `Web` server
 
 set  :keep_releases,  3
 
