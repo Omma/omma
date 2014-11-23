@@ -9,17 +9,37 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  *
- *
- * @author Florian Pfitzer <pfitzer@w3p.cc>
+ * @author Florian Pfitzer <pfitzer@w3p.cc>, Adrian Woeltche
  */
 class MeetingController extends FOSRestController implements ClassResourceInterface
 {
+
     public function cgetAction()
     {
         return $this->get("omma.app.manager.meeting")->findAll();
     }
 
     /**
+     *
+     * @param \DateTime $dateStart
+     * @param \DateTime $dateEnd
+     */
+    public function getRangeAction(\DateTime $dateStart, \DateTime $dateEnd)
+    {
+        $query = $this->get("omma.app.manager.meeting")->createQueryBuilder("m");
+        $query->select("m")
+            ->where("m.dateStart BETWEEN :dateStart AND :dateEnd")
+            ->setParameter("dateStart", $dateStart)
+            ->setParameter("dateEnd", $dateEnd)
+            ->andWhere("m.dateEnd BETWEEN :dateStart AND :dateEnd")
+            ->setParameter("dateStart", $dateStart)
+            ->setParameter("dateEnd", $dateEnd);
+
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     *
      * @param Request $request
      *
      * @return \Symfony\Component\Form\Form
@@ -30,6 +50,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
+     *
      * @param Request $request
      * @param Meeting $meeting
      *
@@ -48,6 +69,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
+     *
      * @param Request $request
      * @param Meeting $meeting
      *
@@ -58,7 +80,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
         $new = null === $meeting->getId();
         $form = $this->createForm(new MeetingForm(), $meeting, array(
             "method" => $new ? "POST" : "PUT",
-            "csrf_protection" => false,
+            "csrf_protection" => false
         ));
         $form->handleRequest($request);
 
