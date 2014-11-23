@@ -46,7 +46,7 @@ class Meeting extends Base
     private $groups;
 
     /**
-     * @ORM\OneToMany(targetEntity="MeetingRecurring", mappedBy="meetingId", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="MeetingRecurring", mappedBy="meeting", orphanRemoval=true)
      *
      * @var MeetingRecurring
      */

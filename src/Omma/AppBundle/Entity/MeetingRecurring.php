@@ -26,12 +26,12 @@ class MeetingRecurring extends Base
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="meetingRecurring")
+     * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="meetingRecurrings")
      * @ORM\JoinColumn(name="meeting_id", referencedColumnName="id", nullable=false)
      *
      * @var Meeting
      */
-    private $meetingId;
+    private $meeting;
 
     /**
      * @ORM\OneToMany(targetEntity="MeetingRecurringException", mappedBy="meetingRecurringId")
@@ -149,26 +149,26 @@ class MeetingRecurring extends Base
     }
 
     /**
-     * Set meetingId
+     * Set meeting
      *
-     * @param \Omma\AppBundle\Entity\Meeting $meetingId
+     * @param \Omma\AppBundle\Entity\Meeting $meeting
      * @return MeetingRecurring
      */
-    public function setMeetingId(\Omma\AppBundle\Entity\Meeting $meetingId)
+    public function setMeeting(\Omma\AppBundle\Entity\Meeting $meeting)
     {
-        $this->meetingId = $meetingId;
+        $this->meeting = $meeting;
 
         return $this;
     }
 
     /**
-     * Get meetingId
+     * Get meeting
      *
      * @return \Omma\AppBundle\Entity\Meeting
      */
-    public function getMeetingId()
+    public function getMeeting()
     {
-        return $this->meetingId;
+        return $this->meeting;
     }
 
     /**

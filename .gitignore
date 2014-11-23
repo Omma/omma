@@ -6,6 +6,7 @@
 /app/bootstrap.php.cache
 /app/cache/*
 /app/config/parameters.yml
+/app/config/ldap.yml
 /app/logs/*
 /backups/
 !app/cache/.gitkeep
