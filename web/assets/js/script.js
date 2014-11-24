@@ -60,7 +60,10 @@ $(document).ready(function() {
 
 
     /* Nächste Events */
-    $.getJSON( "/web/temp_jsons/next-events-left-col.json", function( data ) {
+
+    //wird neuerdings von kalender auf startseie erledigt
+
+    /*$.getJSON( "/web/temp_jsons/next-events-left-col.json", function( data ) {
         var i=0;
         $.each( data, function( key,value ) {
             if(key==0)
@@ -76,10 +79,9 @@ $(document).ready(function() {
                     "<p>"+value.title+"</p>" +
                     "<p class=\"list-group-item-text\"><small>"+date+"</small></p>" +
                 "</a>"
-
             );
         });
-    });
+    });*/
 
 
 

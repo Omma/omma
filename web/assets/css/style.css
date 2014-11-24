@@ -197,6 +197,45 @@ header .form-group .tt-suggestion strong.tt-highlight {
 .right-col .tab-pane#agenda .add {
   margin-bottom: 60px;
 }
+/*Startpage*/
+.events-list a.event {
+  background-color: #777777;
+  border: 2px solid #1f54ff;
+}
+#cal-week-box {
+  z-index: 5;
+  display: none !important;
+}
+.cal-day-today span[data-cal-date] {
+  color: #333333;
+}
+.cal-day-today {
+  background-color: rgba(31, 84, 255, 0.08);
+}
+.cal-month-day.cal-day-inmonth:hover {
+  background-color: rgba(31, 84, 255, 0.08);
+  color: blue;
+}
+.cal-event-list .event.pull-left {
+  display: none;
+}
+#cal-slide-content {
+  background-image: none;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5) inset;
+}
+#cal-slide-content a.event-item {
+  color: #1f54ff;
+}
+#cal-slide-content a.event-item:hover {
+  color: #333333;
+}
+.btn.btn-omma.active {
+  background-color: red;
+  /*verlauf in buttons*/
+}
+.btn.btn-omma-default {
+  background-color: #777777;
+}
 /*Login*/
 .form-signin {
   max-width: 330px;
