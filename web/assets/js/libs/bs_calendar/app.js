@@ -3,7 +3,18 @@
 	"use strict";
 
 	var options = {
-		events_source: 'temp_jsons/events.json.php',
+		events_source: function(start, end) {
+			var events = [];
+			$.ajax("temp_jsons/events.json.php?from=" + moment(start).format() + "&to=" + moment(end).format(), {
+				dataType: 'json',
+				async: false,
+				success: function(data) {
+					events = data.result;
+				}
+			});
+
+			return events;
+		},
 		view: 'month',
 		tmpl_path: 'assets/js/libs/bs_calendar/tmpls/',
 		tmpl_cache: false,
