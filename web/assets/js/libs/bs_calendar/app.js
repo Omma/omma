@@ -3,7 +3,7 @@
 	"use strict";
 
 	var options = {
-		events_source: 'events.json.php',
+		events_source: 'temp_jsons/events.json.php',
 		view: 'month',
 		tmpl_path: 'assets/js/libs/bs_calendar/tmpls/',
 		tmpl_cache: false,
@@ -15,7 +15,7 @@
 			var list = $('#eventlist');
 			list.html('');
 
-            $('.left-col div.naechste-events .list-group').html('');
+            //$('.left-col div.naechste-events .list-group').html('');
 			$.each(events, function(key, val) {
 
 
@@ -25,12 +25,12 @@
                     var active = "active";
 
 
-                $('.left-col div.naechste-events .list-group').append(
+                /*$('.left-col div.naechste-events .list-group').append(
                     "<a href=\""+val.url+"\" class=\"list-group-item "+active+"\">" +
                     "<p>"+val.title+"</p>" +
                     "<p class=\"list-group-item-text\"><small>"+date+"</small></p>" +
                     "</a>"
-                );
+                );*/
 
 			});
 		},

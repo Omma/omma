@@ -63,7 +63,7 @@ $(document).ready(function() {
 
     //wird neuerdings von kalender auf startseie erledigt
 
-    /*$.getJSON( "/web/temp_jsons/next-events-left-col.json", function( data ) {
+    $.getJSON( "/web/temp_jsons/next-events-left-col.json", function( data ) {
         var i=0;
         $.each( data, function( key,value ) {
             if(key==0)
@@ -81,7 +81,7 @@ $(document).ready(function() {
                 "</a>"
             );
         });
-    });*/
+    });
 
 
 
@@ -104,9 +104,31 @@ $(document).ready(function() {
      Typeahead Suche
      ************************************************************/
 
+    var matching_exp = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+        'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
+        'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+        'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+        'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+        'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+        'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+        'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+        'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+    ];
+
+
+
     var substringMatcher = function(strs) {
         return function findMatches(q, cb) {
+
+
+            $.getJSON( "temp_jsons/typeahead.json", function( data ) {
+                matching_exp = data;
+            });
+
+
             var matches, substringRegex;
+
+
 
             // an array that will be populated with substring matches
             matches = [];
@@ -128,16 +150,7 @@ $(document).ready(function() {
         };
     };
 
-    var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-        'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-        'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-        'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-        'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-        'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-        'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-        'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-        'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-    ];
+
 
     $('input.typeahead').typeahead({
             hint: true,
@@ -145,9 +158,12 @@ $(document).ready(function() {
             minLength: 1
         },
         {
-            name: 'states',
+            name: 'matching_exp',
             displayKey: 'value',
-            source: substringMatcher(states)
+            source: substringMatcher(matching_exp)
         });
 
 })
+
+
+
