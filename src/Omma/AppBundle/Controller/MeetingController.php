@@ -57,7 +57,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     {
         $new = null === $meeting->getId();
         $form = $this->createForm(new MeetingForm(), $meeting, array(
-            "method" => $new ? "POST" : "PUT",
+            "method"          => $new ? "POST" : "PUT",
             "csrf_protection" => false,
         ));
         $form->handleRequest($request);

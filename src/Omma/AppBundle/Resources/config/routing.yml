@@ -7,4 +7,5 @@ omma_app_meeting_agenda:
     resource: "@OmmaAppBundle/Controller/MeetingAgendaController.php"
     type: rest
     name_prefix: omma_app_
+    parent: omma_app_meeting
 
