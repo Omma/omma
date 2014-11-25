@@ -81,6 +81,10 @@ locale-gen:
 en_US.UTF-8:
   locale.system
 
+Europe/Berlin:
+  timezone.system:
+    - utc: True
+
 include:
   - common.git
   - common.oh-my-zsh

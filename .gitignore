@@ -1,5 +1,6 @@
 .buildpath
 .project
+/.idea
 /.settings
 /web/bundles/
 /.idea
@@ -7,6 +8,7 @@
 /app/cache/*
 /app/config/parameters.yml
 /app/logs/*
+/backups/
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 /build/
@@ -16,3 +18,4 @@
 /.vagrant
 /config.rb
 /node_modules/
+deployment.*

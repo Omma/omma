@@ -24,5 +24,8 @@ class OmmaUserExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . "/../Resources/config"));
         $loader->load("services.yml");
+
+        $container->getDefinition("omma.user.ldap.config")
+            ->replaceArgument(0, $config['ldap']);
     }
 }

@@ -1,0 +1,9 @@
+Omma\AppBundle\Entity\Protocol:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        text:
+            expose: true
+        final:
+            expose: true

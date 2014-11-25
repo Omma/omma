@@ -1,0 +1,11 @@
+Omma\AppBundle\Entity\Agenda:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        item:
+            expose: true
+        sortingOrder:
+            expose: true
+        subItems:
+            expose: true

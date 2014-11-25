@@ -1,0 +1,16 @@
+omma_app_meeting:
+    resource: "@OmmaAppBundle/Controller/MeetingController.php"
+    type: rest
+    name_prefix: omma_app_
+
+omma_app_meeting_agenda:
+    resource: "@OmmaAppBundle/Controller/MeetingAgendaController.php"
+    type: rest
+    name_prefix: omma_app_
+    parent: omma_app_meeting
+
+omma_app_meeting_protocol:
+    resource: Omma\AppBundle\Controller\MeetingProtocolController
+    type: rest
+    name_prefix: omma_app_
+    parent: omma_app_meeting

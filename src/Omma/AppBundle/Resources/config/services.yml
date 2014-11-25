@@ -1,1 +1,7 @@
 services:
+    omma.app.request.listener.locale:
+        class: Omma\AppBundle\EventListener\Request\LocaleListener
+        tags:
+            - { name: kernel.event_subscriber }
+        arguments:
+            - %omma.languages%
