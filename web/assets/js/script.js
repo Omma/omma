@@ -1,6 +1,6 @@
-
-
 $(document).ready(function() {
+
+    "use strict";
 
     /************************************************************
      LEFT-COL
@@ -9,7 +9,7 @@ $(document).ready(function() {
 
     /* Kalender */
 
-    $.getJSON("/web/temp_jsons/calendar-left-col.json", function (data) {
+    $.getJSON("/web/temp_jsons/calendar-left-col.json?start="+get_current_month().start+"&end="+get_current_month().end, function (data) {
 
         var events = new Array();
 
@@ -43,15 +43,15 @@ $(document).ready(function() {
         }
 
         $('input#calendar-left-col').glDatePicker(
-        {
-            showAlways: true,
-            selectedDate: new Date(date.year, date.month, date.day),
-            specialDates: events,
-            onClick: function(target, cell, date, data) {
-                //console.log($(this));
-                //alert...
-            }
-        });
+            {
+                showAlways: true,
+                selectedDate: new Date(date.year, date.month, date.day),
+                specialDates: events,
+                onClick: function() {
+
+                    alert("K");
+                }
+            });
 
     });
 
@@ -60,10 +60,7 @@ $(document).ready(function() {
 
 
     /* Nächste Events */
-
-    //wird neuerdings von kalender auf startseie erledigt
-
-    $.getJSON( "/web/temp_jsons/next-events-left-col.json", function( data ) {
+    $.getJSON( "/web/temp_jsons/next-events-left-col.json?start="+get_current_month().start, function( data ) {
         var i=0;
         $.each( data, function( key,value ) {
             if(key==0)
@@ -76,8 +73,8 @@ $(document).ready(function() {
 
             $('.left-col div.naechste-events .list-group').append(
                 "<a href=\""+value.url+"\" class=\"list-group-item "+active+"\">" +
-                    "<p>"+value.title+"</p>" +
-                    "<p class=\"list-group-item-text\"><small>"+date+"</small></p>" +
+                "<p>"+value.title+"</p>" +
+                "<p class=\"list-group-item-text\"><small>"+date+"</small></p>" +
                 "</a>"
             );
         });
@@ -88,15 +85,25 @@ $(document).ready(function() {
 
 
     /* Todos */
-    $.getJSON( "/web/temp_jsons/todos-left-col.json", function( data ) {
+    $.getJSON( "/web/temp_jsons/todos-left-col.json?start="+get_current_month().start, function( data ) {
         $.each( data, function( key,value ) {
             $('.left-col ul.todos').append("<li><a href=\""+value.url+"\">"+value.title+"</li>");
         });
     });
 
 
+    function get_current_month() {
 
+        var start = moment().startOf("month").toISOString();
+        var end = moment().endOf("month").toISOString();
 
+        var month = {
+            "start":start,
+            "end": end
+        };
+
+        return month;
+    }
 
 
 
@@ -104,7 +111,41 @@ $(document).ready(function() {
      Typeahead Suche
      ************************************************************/
 
-    var matching_exp = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+    var substringMatcher = function(strs) {
+        return function findMatches(q, cb) {
+
+
+
+
+
+           /* $('input.typeahead').typeahead({
+                source: function (query, process) {
+                    source: substringMatcher(states)
+                }
+
+            });*/
+
+           // $('input.typeahead').typeahead().source = s;
+            //$('input.typeahead').data('ttTypeahead').dropdown.datasets[0].source = s
+
+
+            var matches, substringRegex;
+
+            matches = [];
+
+            var substrRegex = new RegExp(q, 'i');
+
+            $.each(strs, function(i, str) {
+                if (substrRegex.test(str)) {
+                    matches.push({ value: str });
+                }
+            });
+
+            cb(matches);
+        };
+    };
+
+    var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
         'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
         'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
         'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
@@ -115,55 +156,143 @@ $(document).ready(function() {
         'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
     ];
 
+    var s = ['North Dakota',
+        'Ohio', 'Oklahoma', 'Ocregon', 'Pennsylvania', 'Rhode Island',
+        'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+        'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+    ];
+
+    //var source = $.getJSON( "/web/temp_jsons/todos-left-col.json?start="+get_current_month().start, function( data ) {
+    function typeahead_get_events() {
+        return "";
+    }
 
 
-    var substringMatcher = function(strs) {
-        return function findMatches(q, cb) {
-
-
-            $.getJSON( "temp_jsons/typeahead.json", function( data ) {
-                matching_exp = data;
-            });
-
-
-            var matches, substringRegex;
 
 
 
-            // an array that will be populated with substring matches
-            matches = [];
+    $('input.typeahead').typeahead(
+        {
+        hint: true,
+        highlight: true,
+        minLength: 1
+    },
+    {
+        name: 'states',
+        displayKey: 'value',
+        source: substringMatcher(states)
+    });
 
-            // regex used to determine if a string contains the substring `q`
-            substrRegex = new RegExp(q, 'i');
 
-            // iterate through the pool of strings and for any string that
-            // contains the substring `q`, add it to the `matches` array
-            $.each(strs, function(i, str) {
-                if (substrRegex.test(str)) {
-                    // the typeahead jQuery plugin expects suggestions to a
-                    // JavaScript object, refer to typeahead docs for more info
-                    matches.push({ value: str });
+
+
+    /************************************************************
+     Kalender Startseite
+     ************************************************************/
+
+
+    var day = moment().format("YYYY-MM-DD");
+
+    var options = {
+        events_source: function(start, end) {
+
+            var events = [];
+            $.ajax("temp_jsons/events_dt.json.php?from=" + moment(start).format() + "&to=" + moment(end).format(), {
+                dataType: 'json',
+                async: false,
+                success: function(data) {
+                    events = [];
+
+
+                    //parse date
+                    $.each(data.result, function() {
+                        var obj = $(this)[0];
+
+                        var start = (moment(obj.start).unix())*1000;
+                        var end = moment(obj.end).unix()*1000;
+
+                        var event = {
+                            id: obj.id,
+                            title: obj.title,
+                            url: obj.url,
+                            start: start,
+                            end: end
+                        }
+                        events.push(event);
+                    })
                 }
             });
+            return events;
+        },
+        view: 'month',
+        tmpl_path: 'assets/js/libs/bs_calendar/tmpls/',
+        tmpl_cache: false,
+        day: day,
+        onAfterEventsLoad: function(events) {
+            if(!events) {
+                return;
+            }
+            var list = $('#eventlist');
+            list.html('');
 
-            cb(matches);
-        };
+            //$('.left-col div.naechste-events .list-group').html('');
+            $.each(events, function(key, val) {
+
+
+                var date = "datum von event";
+
+                if(key==0)
+                    var active = "active";
+
+
+                /*$('.left-col div.naechste-events .list-group').append(
+                 "<a href=\""+val.url+"\" class=\"list-group-item "+active+"\">" +
+                 "<p>"+val.title+"</p>" +
+                 "<p class=\"list-group-item-text\"><small>"+date+"</small></p>" +
+                 "</a>"
+                 );*/
+
+            });
+        },
+        onAfterViewLoad: function(view) {
+            $('.page-header h2').text(this.getTitle());
+            $('.btn-group button').removeClass('active');
+            $('button[data-calendar-view="' + view + '"]').addClass('active');
+        },
+        classes: {
+            months: {
+                general: 'label'
+            }
+        }
     };
 
+    var calendar = $('#calendar').calendar(options);
 
-
-    $('input.typeahead').typeahead({
-            hint: true,
-            highlight: true,
-            minLength: 1
-        },
-        {
-            name: 'matching_exp',
-            displayKey: 'value',
-            source: substringMatcher(matching_exp)
+    $('.btn-group button[data-calendar-nav]').each(function() {
+        var $this = $(this);
+        $this.click(function() {
+            calendar.navigate($this.data('calendar-nav'));
         });
+    });
+
+    $('.btn-group button[data-calendar-view]').each(function() {
+        var $this = $(this);
+        $this.click(function() {
+            calendar.view($this.data('calendar-view'));
+        });
+    });
+
+
+
+
+
+    calendar.setLanguage("de-DE");
+    /* alternativen
+     default: en-US)</option>
+     <option value="fr-FR">French</option>
+     <option value="de-DE">German</option>
+     */
+    calendar.view();
+
 
 })
-
-
-

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,25 +12,14 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+
+    <!--BS Calendar-->
+    <link rel="stylesheet" href="assets/css/calendar.css">
     <link href="assets/css/style.css" rel="stylesheet">
-
-    <!--JavaScript-->
-    <script src="assets/js/libs/jquery.min.js"></script>
-    <script src="assets/js/libs/bootstrap.min.js"></script>
-    <script src="assets/js/libs/angular.min.js"></script>
-
-
-    <script src="assets/js/libs/moment.js"></script>
-    <script src="assets/js/libs/typeahead.bundle.js"></script>
-
-
-    <script src="assets/js/script.js"></script>
-
-
     <link href="assets/css/glDatePicker.default.css" rel="stylesheet" type="text/css">
 
 
-    <script src="assets/js/libs/glDatePicker.min.js"></script>
+
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -58,7 +49,7 @@
 
 
                 <div class="form-group">
-                    <input class="typeahead form-control" type="text" placeholder="Veranstaltung suchen">
+                    <input id="tags" class="typeahead form-control" type="text" placeholder="Veranstaltung suchen">
                 </div>
 
 
@@ -124,6 +115,17 @@
 
                 <div class="tab-pane active" id="datum-uhrzeit">
                     <h1>datum-uhrzeit</h1>
+
+
+
+
+
+
+
+
+
+
+
                 </div>
                 <div class="tab-pane" id="agenda">
                     <h1>agenda</h1>
@@ -164,6 +166,24 @@
         </div>
     </div>
 </footer>
+
+<!--JavaScript-->
+<script src="assets/js/libs/jquery.min.js"></script>
+<script src="assets/js/libs/bootstrap.min.js"></script>
+<script src="assets/js/libs/angular.min.js"></script>
+
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+<script src="assets/js/libs/moment.js"></script>
+
+<script src="assets/js/libs/glDatePicker.min.js"></script>
+
+<script type="text/javascript" src="assets/js/libs/bs_calendar/underscore-min.js"></script>
+<script type="text/javascript" src="assets/js/libs/bs_calendar/jstz.min.js"></script>
+<script type="text/javascript" src="assets/js/libs/bs_calendar/language/de-DE.js"></script>
+<script type="text/javascript" src="assets/js/libs/bs_calendar/calendar.js"></script>
+<script type="text/javascript" src="assets/js/libs/typeahead.bundle.js"></script>
+<script src="assets/js/script.js"></script>
 
 </body>
 </html>
