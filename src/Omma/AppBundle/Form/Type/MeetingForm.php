@@ -33,6 +33,11 @@ class MeetingForm extends AbstractType
         ));
     }
 
+    public function getParent()
+    {
+        return new BaseForm();
+    }
+
     public function getName()
     {
         return "";

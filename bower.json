@@ -1,0 +1,23 @@
+{
+  "name": "omma",
+  "version": "0.0.0",
+  "authors": [
+    "Florian Pfitzer <pfitzer@w3p.cc>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.4",
+    "bootstrap": "~3.3.1",
+    "restangular": "~1.4.0",
+    "angular-route": "~1.3.4"
+  }
+}

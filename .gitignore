@@ -19,3 +19,4 @@
 /config.rb
 /node_modules/
 deployment.*
+/web/assets/components/
