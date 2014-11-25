@@ -39,7 +39,8 @@
         "apigen/apigen": "4.0.0-RC3",
         "fabpot/php-cs-fixer": "~1.0",
         "liip/functional-test-bundle": "dev-master",
-        "doctrine/doctrine-fixtures-bundle": "2.2.*"
+        "doctrine/doctrine-fixtures-bundle": "2.2.*",
+        "h4cc/alice-fixtures-bundle": "dev-master"
     },
     "scripts": {
         "post-root-package-install": [

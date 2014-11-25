@@ -1,0 +1,6 @@
+Omma\AppBundle\Entity\Meeting:
+    meeting{1..10}:
+        name: <word()>
+        dateStart: <dateTimeBetween("2014-01-01", "2015-12-31")>
+        dateEnd: <dateTimeBetween(@self->dateStart, @self->dateStart ->format("Y-m-d H:i:s")." +1 day")>
+        users: ["<numberBetween(1, 2)>"]

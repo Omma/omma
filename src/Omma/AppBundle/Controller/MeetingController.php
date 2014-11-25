@@ -16,7 +16,21 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
 
     public function cgetAction()
     {
-        return $this->get("omma.app.manager.meeting")->findAll();
+        $user = $this->get("security.context")
+            ->getToken()
+            ->getUser();
+
+        if ($this->get("security.context")->isGranted("ROLE_SUPER_ADMIN")) {
+            return $this->get("omma.app.manager.meeting")->findAll();
+        } else {
+            $query = $this->get("omma.app.manager.meeting")->createQueryBuilder("m");
+            $query->select("m")
+                ->innerJoin("m.users", "u")
+                ->where("u.id = :userId")
+                ->setParameter("userId", $user->getId());
+
+            return $query->getQuery()->getResult();
+        }
     }
 
     /**
@@ -26,14 +40,22 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      */
     public function getRangeAction(\DateTime $dateStart, \DateTime $dateEnd)
     {
+        $user = $this->get("security.context")
+            ->getToken()
+            ->getUser();
+
         $query = $this->get("omma.app.manager.meeting")->createQueryBuilder("m");
         $query->select("m")
             ->where("m.dateStart BETWEEN :dateStart AND :dateEnd")
-            ->setParameter("dateStart", $dateStart)
-            ->setParameter("dateEnd", $dateEnd)
             ->andWhere("m.dateEnd BETWEEN :dateStart AND :dateEnd")
             ->setParameter("dateStart", $dateStart)
             ->setParameter("dateEnd", $dateEnd);
+
+        if (! $this->get("security.context")->isGranted("ROLE_SUPER_ADMIN")) {
+            $query->innerJoin("m.users", "u")
+                ->andWhere("u.id = :userId")
+                ->setParameter("userId", $user->getId());
+        }
 
         return $query->getQuery()->getResult();
     }
@@ -46,7 +68,15 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      */
     public function cpostAction(Request $request)
     {
-        return $this->processForm($request, new Meeting());
+        $user = $this->get("security.context")
+            ->getToken()
+            ->getUser();
+
+        $meeting = new Meeting();
+        $meeting->addUser($user);
+        $user->addMeeting($meeting);
+
+        return $this->processForm($request, $meeting);
     }
 
     /**

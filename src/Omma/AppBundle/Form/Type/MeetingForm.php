@@ -7,29 +7,26 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  *
- *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 class MeetingForm extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add("name", "text", array(
-            ))
+        $builder->add("name", "text", array())
             ->add("dateStart", "datetime", array(
-                "widget" => "single_text",
-            ))
+            "widget" => "single_text"
+        ))
             ->add("dateEnd", "datetime", array(
-                "widget" => "single_text",
-            ))
-        ;
+            "widget" => "single_text"
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            "data_class" => "Omma\AppBundle\Entity\Meeting"
+            "data_class" => "Omma\\AppBundle\\Entity\\Meeting"
         ));
     }
 

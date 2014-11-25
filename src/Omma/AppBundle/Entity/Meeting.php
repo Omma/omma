@@ -116,6 +116,7 @@ class Meeting extends Base
      * @ORM\Column(name="date_end", type="datetime")
      * @NotBlank()
      * @DateTime()
+     *
      * @var \DateTime
      */
     private $dateEnd;
