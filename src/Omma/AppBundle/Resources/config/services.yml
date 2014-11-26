@@ -5,3 +5,8 @@ services:
             - { name: kernel.event_subscriber }
         arguments:
             - %omma.languages%
+
+    omma.app.form.type.rest_base:
+        class: Omma\AppBundle\Form\Type\RestBaseForm
+        tags:
+            - { name: form.type, alias: omma_rest_base }
