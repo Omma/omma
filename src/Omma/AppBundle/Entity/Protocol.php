@@ -2,6 +2,7 @@
 namespace Omma\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Protocol
@@ -42,13 +43,14 @@ class Protocol extends Base
 
     /**
      * @ORM\Column(name="text", type="text")
+     * @NotBlank()
      *
      * @var string
      */
     private $text;
 
     /**
-     * @ORM\Column(name="final", type="boolean")
+     * @ORM\Column(name="final", type="boolean", nullable=true)
      *
      * @var boolean
      */
@@ -105,7 +107,7 @@ class Protocol extends Base
      *
      * @return boolean
      */
-    public function getFinal()
+    public function isFinal()
     {
         return $this->final;
     }

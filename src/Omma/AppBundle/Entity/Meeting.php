@@ -60,7 +60,7 @@ class Meeting extends Base
     private $tasks;
 
     /**
-     * @ORM\OneToOne(targetEntity="Agenda", mappedBy="meeting", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Agenda", mappedBy="meeting", orphanRemoval=true)
      *
      * @var Agenda
      */

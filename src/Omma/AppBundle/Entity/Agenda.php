@@ -3,6 +3,7 @@ namespace Omma\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Agenda
@@ -26,7 +27,7 @@ class Agenda extends Base
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Meeting", inversedBy="agenda")
+     * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="agendas")
      * @ORM\JoinColumn(name="meeting_id", referencedColumnName="id", nullable=false)
      *
      * @var Meeting
@@ -41,7 +42,7 @@ class Agenda extends Base
     private $task;
 
     /**
-     * @ORM\OneToMany(targetEntity="Agenda", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Agenda", mappedBy="parent", cascade={"remove"})
      *
      * @var ArrayCollection
      */
@@ -57,6 +58,7 @@ class Agenda extends Base
 
     /**
      * @ORM\Column(name="item", type="string", length=255)
+     * @NotBlank()
      *
      * @var string
      */
@@ -64,6 +66,7 @@ class Agenda extends Base
 
     /**
      * @ORM\Column(name="sortingOrder", type="integer")
+     * @NotBlank()
      *
      * @var integer
      */
