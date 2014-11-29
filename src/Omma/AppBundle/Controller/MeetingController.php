@@ -6,6 +6,7 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use Omma\AppBundle\Entity\Meeting;
 use Omma\AppBundle\Form\Type\MeetingForm;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  *
@@ -14,6 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 class MeetingController extends FOSRestController implements ClassResourceInterface
 {
 
+    /**
+     * @Security("is_fully_authenticated()")
+     */
     public function cgetAction()
     {
         $user = $this->get("security.context")
@@ -34,6 +38,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
+     * @Security("is_fully_authenticated()")
      *
      * @param \DateTime $dateStart
      * @param \DateTime $dateEnd
@@ -61,6 +66,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
+     * @Security("is_fully_authenticated()")
      *
      * @param Request $request
      *
@@ -80,6 +86,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
+     * @Security("is_fully_authenticated()")
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -91,6 +98,12 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
         return $this->processForm($request, $meeting);
     }
 
+    /**
+     * @Security("is_fully_authenticated()")
+     *
+     * @param Meeting $meeting
+     * @return \FOS\RestBundle\View\View
+     */
     public function deleteAction(Meeting $meeting)
     {
         $this->get("omma.app.manager.meeting")->delete($meeting);
@@ -99,6 +112,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
+     * @Security("is_fully_authenticated()")
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -123,6 +137,12 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
         return $this->view($form, 400);
     }
 
+    /**
+     * @Security("is_fully_authenticated()")
+     *
+     * @param Meeting $meeting
+     * @return Meeting
+     */
     public function getAction(Meeting $meeting)
     {
         return $meeting;
