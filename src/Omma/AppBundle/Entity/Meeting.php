@@ -64,7 +64,7 @@ class Meeting extends Base
      *
      * @var Agenda
      */
-    private $agenda;
+    private $agendas;
 
     /**
      * @ORM\OneToOne(targetEntity="Protocol", mappedBy="meeting", orphanRemoval=true)
@@ -345,29 +345,6 @@ class Meeting extends Base
     }
 
     /**
-     * Set agenda
-     *
-     * @param \Omma\AppBundle\Entity\Agenda $agenda
-     * @return Meeting
-     */
-    public function setAgenda(\Omma\AppBundle\Entity\Agenda $agenda = null)
-    {
-        $this->agenda = $agenda;
-
-        return $this;
-    }
-
-    /**
-     * Get agenda
-     *
-     * @return \Omma\AppBundle\Entity\Agenda
-     */
-    public function getAgenda()
-    {
-        return $this->agenda;
-    }
-
-    /**
      * Set protocol
      *
      * @param \Omma\AppBundle\Entity\Protocol $protocol
@@ -467,5 +444,38 @@ class Meeting extends Base
     public function getNext()
     {
         return $this->next;
+    }
+
+    /**
+     * Add agendas
+     *
+     * @param \Omma\AppBundle\Entity\Agenda $agendas
+     * @return Meeting
+     */
+    public function addAgenda(\Omma\AppBundle\Entity\Agenda $agendas)
+    {
+        $this->agendas[] = $agendas;
+
+        return $this;
+    }
+
+    /**
+     * Remove agendas
+     *
+     * @param \Omma\AppBundle\Entity\Agenda $agendas
+     */
+    public function removeAgenda(\Omma\AppBundle\Entity\Agenda $agendas)
+    {
+        $this->agendas->removeElement($agendas);
+    }
+
+    /**
+     * Get agendas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAgendas()
+    {
+        return $this->agendas;
     }
 }
