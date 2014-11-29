@@ -16,6 +16,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 class MeetingRecurring extends Base
 {
 
+    const TYPE_DAY = 1;
+
+    const TYPE_WEEK = 2;
+
+    const TYPE_MONTH = 3;
+
+    const TYPE_YEAR = 4;
+
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -55,11 +63,18 @@ class MeetingRecurring extends Base
     private $dateEnd;
 
     /**
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(name="type", type="integer")
      *
-     * @var string
+     * @var integer
      */
     private $type;
+
+    /**
+     * @ORM\Column(name="recurring", type="integer")
+     *
+     * @var integer
+     */
+    private $recurring;
 
     /**
      * Constructor
@@ -202,5 +217,28 @@ class MeetingRecurring extends Base
     public function getMeetingRecurringExceptions()
     {
         return $this->meetingRecurringExceptions;
+    }
+
+    /**
+     * Set recurring
+     *
+     * @param integer $recurring
+     * @return MeetingRecurring
+     */
+    public function setRecurring($recurring)
+    {
+        $this->recurring = $recurring;
+
+        return $this;
+    }
+
+    /**
+     * Get recurring
+     *
+     * @return integer
+     */
+    public function getRecurring()
+    {
+        return $this->recurring;
     }
 }

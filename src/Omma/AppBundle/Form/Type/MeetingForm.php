@@ -14,13 +14,15 @@ class MeetingForm extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add("name", "text", array())
+        $builder->add("name", "text")
             ->add("dateStart", "datetime", array(
             "widget" => "single_text"
         ))
             ->add("dateEnd", "datetime", array(
             "widget" => "single_text"
-        ));
+        ))
+            ->add("prev", "integer")
+            ->add("next", "integer");
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

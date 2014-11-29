@@ -86,7 +86,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("is_fully_authenticated()")
+     * @Security("is_fully_authenticated() and is_granted('edit', meeting)")
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -99,7 +99,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("is_fully_authenticated()")
+     * @Security("is_fully_authenticated() and is_granted('edit', meeting)")
      *
      * @param Meeting $meeting
      * @return \FOS\RestBundle\View\View
@@ -112,7 +112,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("is_fully_authenticated()")
+     * @Security("is_fully_authenticated() and is_granted('edit', meeting)")
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -138,7 +138,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("is_fully_authenticated()")
+     * @Security("is_fully_authenticated() and is_granted('view', meeting)")
      *
      * @param Meeting $meeting
      * @return Meeting

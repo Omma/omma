@@ -4,6 +4,7 @@ namespace Omma\AppBundle\Voter;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Omma\AppBundle\Entity\Meeting;
 
 /**
  * Meeting Voter
@@ -60,8 +61,18 @@ class MeetingVoter implements VoterInterface
 
         switch ($attribute) {
             case self::VIEW:
+                if ($object instanceof Meeting) {
+                    if ($object->getUsers()->contains($user)) {
+                        return VoterInterface::ACCESS_GRANTED;
+                    }
+                }
                 break;
             case self::EDIT:
+                if ($object instanceof Meeting) {
+                    if ($object->getUsers()->contains($user)) {
+                        return VoterInterface::ACCESS_GRANTED;
+                    }
+                }
                 break;
         }
 
