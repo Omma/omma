@@ -20,10 +20,6 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      */
     public function cgetAction()
     {
-        $user = $this->get("security.context")
-            ->getToken()
-            ->getUser();
-
         if ($this->get("security.context")->isGranted("ROLE_SUPER_ADMIN")) {
             return $this->get("omma.app.manager.meeting")->findAll();
         } else {
@@ -31,7 +27,8 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
             $query->select("m")
                 ->innerJoin("m.users", "u")
                 ->where("u.id = :userId")
-                ->setParameter("userId", $user->getId());
+                ->setParameter("userId", $this->getUser()
+                ->getId());
 
             return $query->getQuery()->getResult();
         }
@@ -45,10 +42,6 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      */
     public function getRangeAction(\DateTime $dateStart, \DateTime $dateEnd)
     {
-        $user = $this->get("security.context")
-            ->getToken()
-            ->getUser();
-
         $query = $this->get("omma.app.manager.meeting")->createQueryBuilder("m");
         $query->select("m")
             ->where("m.dateStart BETWEEN :dateStart AND :dateEnd")
@@ -59,7 +52,8 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
         if (! $this->get("security.context")->isGranted("ROLE_SUPER_ADMIN")) {
             $query->innerJoin("m.users", "u")
                 ->andWhere("u.id = :userId")
-                ->setParameter("userId", $user->getId());
+                ->setParameter("userId", $this->getUser()
+                ->getId());
         }
 
         return $query->getQuery()->getResult();
@@ -74,13 +68,9 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      */
     public function cpostAction(Request $request)
     {
-        $user = $this->get("security.context")
-            ->getToken()
-            ->getUser();
-
         $meeting = new Meeting();
-        $meeting->addUser($user);
-        $user->addMeeting($meeting);
+        $meeting->addUser($this->getUser());
+        $this->getUser()->addMeeting($meeting);
 
         return $this->processForm($request, $meeting);
     }

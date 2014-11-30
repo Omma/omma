@@ -3774,16 +3774,16 @@
         },
         {
             "name": "fabpot/php-cs-fixer",
-            "version": "v1.1",
+            "version": "v1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "08a10b726562480180bf42d4370e0df95284cd1b"
+                "reference": "7aa4cff18c037935d07c27281a01fd4248a002c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/08a10b726562480180bf42d4370e0df95284cd1b",
-                "reference": "08a10b726562480180bf42d4370e0df95284cd1b",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/7aa4cff18c037935d07c27281a01fd4248a002c1",
+                "reference": "7aa4cff18c037935d07c27281a01fd4248a002c1",
                 "shasum": ""
             },
             "require": {
@@ -3802,7 +3802,7 @@
             "type": "application",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -3821,7 +3821,7 @@
                 }
             ],
             "description": "A script to automatically fix Symfony Coding Standard",
-            "time": "2014-11-17 08:23:03"
+            "time": "2014-11-30 13:11:14"
         },
         {
             "name": "fzaninotto/faker",
