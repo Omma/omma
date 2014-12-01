@@ -1,15 +1,10 @@
 @import "variables";
+@import "../components/bootstrap/less/bootstrap.less";
 
+@brand-primary: @blue;
 
+@btn-default-color: @white;
 
-
-
-
-
-
-	        
-	        
-        
 /*Basics*/
 body, html {
   padding-bottom: 50px;
@@ -37,22 +32,18 @@ h3 {
   color: @font-color;
 }
 a {
-    color: @blue;   
+    color: @blue;
     &:hover {
 	    color:@font-color;
 	    text-decoration: none;
     }
-}
-.btn.btn-omma {
-  background-color: @blue;
-  color: @white;
 }
 
 
 /*Header*/
 header {
     margin-bottom: 40px;
-    
+
     .logo {
 	    width: 220px;
 	    padding-top: 20px;
@@ -61,16 +52,16 @@ header {
 	ul.top-navi {
 		padding-top: 20px;
 		list-style-type: none;
-		
+
 		li {
 		    display: inline;
 		    margin-left: 20px;
-		    
+
 		    a {
 			    color: #333;
 			}
 		}
-		
+
 		@media (max-width:991px) {
 			li {
 				display: block;
@@ -86,13 +77,13 @@ header {
 		input.form-control.typeahead {
 			width: 220px;
 		    margin-top: 20px;
-		    
+
 			&:focus {
 			    border-color: none;
 			    box-shadow: 1px 1px 5px @light-blue;
 			}
 		}
-		
+
 		.tt-dropdown-menu {
 		    background-color: @white;
 		    text-align: left;
@@ -106,38 +97,38 @@ header {
 		    padding: 15px 8px;
 		    cursor: pointer;
 		    color: #777;
-		    
+
 		    &:last-child {
 			    border-bottom: none;
 			}
-			
+
 			&:hover {
 			    background-color: @blue;
 			    color: @white;
-			    
+
 			    strong.tt-highlight {
 				    color: @white;
 				}
 			}
-			
+
 			strong.tt-highlight {
 			    color: @blue;
 			    font-weight: normal;
-			}	
-			
+			}
+
 		}
-	
-	}	
+
+	}
 }
 
 
-      
 
 
-            
-          
-/*Left-Col*/          
-          
+
+
+
+/*Left-Col*/
+
 .left-col {
 	.row>div {
     	margin-bottom: 30px;
@@ -145,50 +136,50 @@ header {
 
 	/*Kalender*/
 	.kalender {
-	
+
 		max-width: 280px !important;
-	
+
 		.gldp-default {
 			top:0px !important;
 			left: 0px !important;
 			margin-top: -20px;
-			
+
 			.core {
 				background: none;
-				
+
 				&.border {
 					border: none;
 					color: #333;
-					
+
 					&.special {
 						background: @grey;
 						border-radius: 50%;
 					}
 				}
-				
+
 				&.border.dow {
 					cursor: default !important;
-					background: @blue !important; 
+					background: @blue !important;
 					margin-bottom: 10px;
 					color: white;
 				}
-				
+
 				&.border.selected, &.border:hover {
 					background: @blue;
 					color: white;
 					border-radius: 3px;
 				}
 			}
-			
+
 			/*Leiste mit Monaten und Pfeilen */
 			.monyear {
 				color: @font-color !important;
-				
+
 				&.title {
 					color: @grey !important;
 					cursor: default;
 				}
-				
+
 				&:hover {
 					background: none !important;
 				}
@@ -204,7 +195,7 @@ header {
 			a {
 			    padding: 15px 10px;
                 background-color: @light-blue;
-			    
+
 			    &.active {
 			    background-color: @blue;
 				}
@@ -215,8 +206,8 @@ header {
 			}
 		}
 	}
-	
-	
+
+
 	@media (min-width:992px) {
         .row>div {
         	display: block !important;
@@ -227,7 +218,7 @@ header {
         	margin: 0 auto;
         }
     }
-} 
+}
 
 
 
@@ -240,10 +231,10 @@ header {
 
 
 
-                       
-                        
-/*Right-Col*/                        
-                        
+
+
+/*Right-Col*/
+
 
 
 .right-col {
@@ -259,32 +250,32 @@ header {
     }
 
 
-	
+
 	.tab-pane {
-	    padding-top: 50px;   
-	    
+	    padding-top: 50px;
+
 	    &#agenda {
 	    	.input-group {
-			    margin-bottom: 20px;   
-			    
+			    margin-bottom: 20px;
+
 			    .input-group-addon i {
 				    color: @blue;
 				}
-				
+
 				.input-group-addon.done i {
 				    color:white;
 				}
-				
+
 				.input-group-addon.done {
 				    background-color: @blue;
 				}
 			}
 			.add {
-			    margin-bottom: 60px;   
+			    margin-bottom: 60px;
 			}
 		}
 	}
-	
+
 }
 
 /*Startpage*/

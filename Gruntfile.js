@@ -38,8 +38,8 @@ module.exports = function (grunt) {
 			      dest: 'web/assets/js/view_controller.js'
             }
 	    },
-			  
-       
+
+
 	    /*uglify: {
 	      my_target: {
 	        files: {
@@ -60,7 +60,7 @@ module.exports = function (grunt) {
                     paths: ["css"]
                 },
                 files: {
-                    "web/assets/css/style.css": "web/assets/less/*.less"
+                    "web/assets/css/style.css": "web/assets/less/basic.less"
                 }
             }
         },
@@ -77,8 +77,8 @@ module.exports = function (grunt) {
             concat : {
                 files : [
                     [
-                    	'web/assets/js/ctrl/*.js', 
-                    	'web/assets/js/model/*.js', 
+                    	'web/assets/js/ctrl/*.js',
+                    	'web/assets/js/model/*.js',
                     	'web/assets/js/script.js'
                     ]
                 ],
@@ -102,7 +102,7 @@ module.exports = function (grunt) {
                     'cssmin'
                 ]
             },*/
-            
+
             // Live reload
             reload : {
                 options : {
@@ -113,7 +113,7 @@ module.exports = function (grunt) {
                     '<%= watch.concat.files %>',
                     /*'<%= watch.uglify.files %>',*/
                     /*'<%= watch.cssmin.files %>',*/
-                    'web/**/*.html' 
+                    'web/**/*.html'
                 ]
             }
         }
