@@ -20,3 +20,4 @@
 /node_modules/
 deployment.*
 /web/assets/components/
+/web/assets/css/style.css
