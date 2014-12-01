@@ -1,11 +1,14 @@
 {% extends "OmmaAppBundle::layout.html.twig" %}
 
 {% block content %}
-    <form action="{{ path("omma_security_check") }}" method="post" id="login" class="form-inline">
+
+    <form action="{{ path("omma_security_check") }}" method="post" id="login" class="form-inline form-signin">
+        <h2 class="form-signin-heading">Bitte melden Sie sich an</h2>
+
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
         <div class="control-group{% if error %} error{% endif %}">
             <div class="controls">
-                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="{% trans %}app.username{% endtrans %}" />
+                <input type="text" id="username" name="_username" value="{{ last_username }}" autofocus="autofocus" required="required" placeholder="{% trans %}app.username{% endtrans %}" />
 
                 {% if error %}
                     <span class="help-block">
@@ -25,6 +28,6 @@
                 {% trans %}app.remember_me{% endtrans %}
             </label>
         </div>
-        <input type="submit" class="btn btn-default" value="{% trans %}app.login{% endtrans %}" />
+        <input type="submit" class="btn btn-lg btn-omma btn-block" value="{% trans %}app.login{% endtrans %}" />
     </form>
 {% endblock %}
