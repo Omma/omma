@@ -26,6 +26,18 @@ class OmmaAppExtension extends Extension
         $loader->load("services.yml");
         $loader->load("orm.yml");
 
-        $container->setParameter("omma.languages", $config['languages']);
+        // fallback to locales without territory (e.g. en, de)
+        // available locales will look like en_US, en, de_DE, de
+        $languages = array();
+        foreach ($config['languages'] as $language) {
+            $availableLocales[] = $language;
+            // if language contains an underscore
+            if (false !== ($pos = strpos($language, "_"))) {
+                $availableLocales[] = substr($language, 0, $pos);
+                continue;
+            }
+        }
+
+        $container->setParameter("omma.languages", $languages);
     }
 }
