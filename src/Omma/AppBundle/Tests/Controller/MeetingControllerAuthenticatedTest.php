@@ -3,7 +3,7 @@ namespace Omma\AppBundle\Tests\Controller;
 
 use Omma\AppBundle\Tests\AbstractAuthenticatedTest;
 
-class MeetingControllerTest extends AbstractAuthenticatedTest
+class MeetingControllerAuthenticatedTest extends AbstractAuthenticatedTest
 {
 
     public function testCget()

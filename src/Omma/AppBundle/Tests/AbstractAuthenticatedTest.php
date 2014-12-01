@@ -15,11 +15,11 @@ abstract class AbstractAuthenticatedTest extends WebTestCase
             $fixtureManager->load(require (__DIR__ . "/../DataFixtures/Alice/OmmaDataFixtureSet.php"));
             self::$fixtureLoaded = true;
         }
-
+        
         $authentication = $this->getContainer()->getParameter("liip_functional_test.authentication");
         $userManager = $this->getContainer()->get("omma.user.orm.user_manager");
         $user = $userManager->findUserByUsername($authentication["username"]);
-
+        
         $this->loginAs($user, "user");
     }
 }

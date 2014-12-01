@@ -1,10 +1,10 @@
 <?php
-
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
+
     public function registerBundles()
     {
         $bundles = array(
@@ -27,10 +27,13 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Omma\AppBundle\OmmaAppBundle(),
             new Omma\UserBundle\OmmaUserBundle(),
-            new \Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+            new \Application\Sonata\UserBundle\ApplicationSonataUserBundle()
         );
-
-        if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+        
+        if (in_array($this->getEnvironment(), array(
+            'dev',
+            'test'
+        ))) {
             $bundles[] = new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
@@ -38,16 +41,24 @@ class AppKernel extends Kernel
             $bundles[] = new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle();
             $bundles[] = new h4cc\AliceFixturesBundle\h4ccAliceFixturesBundle();
         }
-
-        if (in_array($this->getEnvironment(), array('test'))) {
+        
+        if (in_array($this->getEnvironment(), array(
+            'test'
+        ))) {
             $bundles[] = new Liip\FunctionalTestBundle\LiipFunctionalTestBundle();
         }
-
+        
         return $bundles;
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
+        $loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
+    }
+
+    public function init()
+    {
+        date_default_timezone_set('Europe/Berlin'); // required for MAMP
+        parent::init();
     }
 }
