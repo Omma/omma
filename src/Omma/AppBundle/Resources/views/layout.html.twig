@@ -3,13 +3,13 @@
 {% block stylesheets %}
     <!--CSS-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
-    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ asset("assets/css/font-awesome.min.css") }}" rel="stylesheet">
 
     <!--BS Calendar-->
-    <link rel="stylesheet" href="assets/css/calendar.css">
+    <link rel="stylesheet" href="{{ asset("assets/css/calendar.css") }}">
 
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/glDatePicker.default.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset("assets/css/style.css") }}" rel="stylesheet">
+    <link href="{{ asset("assets/css/glDatePicker.default.css") }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block title %}OMMA &gt; Open Meeting Manager{% endblock %}
@@ -23,21 +23,21 @@
     <![endif]-->
 
     <!--JavaScript-->
-    <script src="assets/js/libs/jquery.min.js"></script>
-    <script src="assets/js/libs/bootstrap.min.js"></script>
-    <script src="assets/js/libs/angular.min.js"></script>
+    <script src="{{ asset("assets/js/libs/jquery.min.js") }}"></script>
+    <script src="{{ asset("assets/js/libs/bootstrap.min.js") }}"></script>
+    <script src="{{ asset("assets/js/libs/angular.min.js") }}"></script>
 
 
-    <script src="assets/js/libs/moment.js"></script>
+    <script src="{{ asset("assets/js/libs/moment.js") }}"></script>
 
-    <script src="assets/js/libs/glDatePicker.min.js"></script>
+    <script src="{{ asset("assets/js/libs/glDatePicker.min.js") }}"></script>
 
-    <script type="text/javascript" src="assets/js/libs/bs_calendar/underscore-min.js"></script>
-    <script type="text/javascript" src="assets/js/libs/bs_calendar/jstz.min.js"></script>
-    <script type="text/javascript" src="assets/js/libs/bs_calendar/language/de-DE.js"></script>
-    <script type="text/javascript" src="assets/js/libs/bs_calendar/calendar.js"></script>
-    <script type="text/javascript" src="assets/js/libs/typeahead.bundle.js"></script>
-    <script src="assets/js/script.js"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/libs/bs_calendar/underscore-min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/libs/bs_calendar/jstz.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/libs/bs_calendar/language/de-DE.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/libs/bs_calendar/calendar.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/libs/typeahead.bundle.js") }}"></script>
+    <script src="{{ asset("assets/js/script.js") }}"></script>
 
 {% endblock %}
 
