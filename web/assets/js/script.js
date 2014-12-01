@@ -86,6 +86,7 @@ $(document).ready(function() {
 
     /* Todos */
     $.getJSON( "/web/temp_jsons/todos-left-col.json?start="+get_current_month().start, function( data ) {
+        alert("K");
         $.each( data, function( key,value ) {
             $('.left-col ul.todos').append("<li><a href=\""+value.url+"\">"+value.title+"</li>");
         });
@@ -222,6 +223,7 @@ $(document).ready(function() {
                     })
                 }
             });
+
             return events;
         },
         view: 'month',

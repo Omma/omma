@@ -2,32 +2,29 @@
 
 {% block content %}
 
-    <form action="{{ path("omma_security_check") }}" method="post" id="login" class="form-inline form-signin">
+    <form action="{{ path("omma_security_check") }}" method="post" class="form-signin {% if error %} error{% endif %}" role="form">
+
+        {% if error %}
+            <div class="alert alert-danger">
+                {{ error.message|trans({},'messages') }}
+
+            </div>
+        {% endif %}
+
         <h2 class="form-signin-heading">Bitte melden Sie sich an</h2>
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-        <div class="control-group{% if error %} error{% endif %}">
-            <div class="controls">
-                <input type="text" id="username" name="_username" value="{{ last_username }}" autofocus="autofocus" required="required" placeholder="{% trans %}app.username{% endtrans %}" />
+        <input type="text" class="form-control" name="_username" value="{{ last_username }}" autofocus="autofocus" required="required" placeholder="{% trans %}app.username{% endtrans %}">
+        <input type="password" class="form-control" id="inputPassword" name="_password" required="required" placeholder="{% trans %}app.password{% endtrans %}" />
 
-                {% if error %}
-                    <span class="help-block">
-                    {{ error.message|trans({},'messages') }}
-
-                </span>
-                {% endif %}
-            </div>
-        </div>
-        <div class="control-group">
-            <input type="password" id="password" name="_password" required="required" placeholder="{% trans %}app.password{% endtrans %}" />
-        </div>
-        <div class="control-group">
-
-            <label class="checkbox">
-                <input type="checkbox" id="remember_me" name="_remember_me" checked="checked" />
-                {% trans %}app.remember_me{% endtrans %}
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me" id="remember_me" name="_remember_me" checked="checked" /> {% trans %}app.remember_me{% endtrans %}
             </label>
         </div>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
         <input type="submit" class="btn btn-primary btn-lg btn-block" value="{% trans %}app.login{% endtrans %}" />
     </form>
+
+
 {% endblock %}
