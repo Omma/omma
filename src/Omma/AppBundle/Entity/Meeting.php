@@ -24,18 +24,15 @@ class Meeting extends Base
      * @ORM\GeneratedValue(strategy="AUTO")
      *
      * @var integer
-     *
-     *
      */
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\Application\Sonata\UserBundle\Entity\User", inversedBy="meetings")
-     * @ORM\JoinTable(name="omma_meeting_users")
+     * @ORM\OneToMany(targetEntity="Omma\AppBundle\Entity\Attendee", mappedBy="meeting")
      *
-     * @var \Application\Sonata\UserBundle\Entity\User
+     * @var ArrayCollection
      */
-    private $users;
+    private $attendees;
 
     /**
      * @ORM\ManyToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Group", inversedBy="meetings")
@@ -62,9 +59,9 @@ class Meeting extends Base
     /**
      * @ORM\OneToMany(targetEntity="Agenda", mappedBy="meeting", orphanRemoval=true)
      *
-     * @var Agenda
+     * @var ArrayCollection
      */
-    private $agenda;
+    private $agendas;
 
     /**
      * @ORM\OneToOne(targetEntity="Protocol", mappedBy="meeting", orphanRemoval=true)
@@ -125,11 +122,12 @@ class Meeting extends Base
      */
     public function __construct()
     {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->meetingRecurrings = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->files = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->attendees = new ArrayCollection();
+        $this->groups = new ArrayCollection();
+        $this->meetingRecurrings = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
+        $this->agendas = new ArrayCollection();
+        $this->files = new ArrayCollection();
     }
 
     /**
@@ -209,6 +207,58 @@ class Meeting extends Base
     public function getDateEnd()
     {
         return $this->dateEnd;
+    }
+
+    /**
+     * @param Attendee[] $attendees
+     *
+     * @return $this
+     */
+    public function setAttendees($attendees)
+    {
+        $this->attendees->clear();
+        foreach ($attendees as $attendee) {
+            $this->addAttendee($attendee);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Attendee $attendee
+     *
+     * @return $this
+     */
+    public function addAttendee(Attendee $attendee)
+    {
+        if (!$this->attendees->contains($attendee)) {
+            $this->attendees->add($attendee);
+            $attendee->setMeeting($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Attendee $attendee
+     *
+     * @return $this
+     */
+    public function removeAttendee(Attendee $attendee)
+    {
+        if ($this->attendees->removeElement($attendee)) {
+            $attendee->setMeeting(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Attendee[]
+     */
+    public function getAttendees()
+    {
+        return $this->attendees;
     }
 
     /**
@@ -344,27 +394,57 @@ class Meeting extends Base
     }
 
     /**
-     * Set agenda
-     *
-     * @param \Omma\AppBundle\Entity\Agenda $agenda
-     * @return Meeting
+     * @return Agenda[]
      */
-    public function setAgenda(\Omma\AppBundle\Entity\Agenda $agenda = null)
+    public function getAgendas()
     {
-        $this->agenda = $agenda;
+        return $this->agendas;
+    }
+
+    /**
+     * @param Agenda[] $agendas
+     *
+     * @return $this
+     */
+    public function setAgendas(array $agendas)
+    {
+        $this->agendas->clear();
+        foreach ($agendas as $agenda) {
+            $this->addAgenda($agenda);
+        }
 
         return $this;
     }
 
     /**
-     * Get agenda
+     * @param Agenda $agenda
      *
-     * @return \Omma\AppBundle\Entity\Agenda
+     * @return $this
      */
-    public function getAgenda()
+    public function addAgenda(Agenda $agenda)
     {
-        return $this->agenda;
+        if (!$this->agendas->contains($agenda)) {
+            $this->agendas->add($agenda);
+            $agenda->setMeeting($this);
+        }
+
+        return $this;
     }
+
+    /**
+     * @param Agenda $agenda
+     *
+     * @return $this
+     */
+    public function removeAgenda(Agenda $agenda)
+    {
+        if ($this->agendas->removeElement($agenda)) {
+            $agenda->setMeeting(null);
+        }
+
+        return $this;
+    }
+
 
     /**
      * Set protocol
