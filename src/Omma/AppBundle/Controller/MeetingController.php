@@ -66,7 +66,6 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      *
      * @param Request $request
      *            Request
-     *            
      * @return \Symfony\Component\Form\Form
      */
     public function cpostAction(Request $request)
@@ -87,7 +86,6 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      *            Request
      * @param Meeting $meeting
      *            Meeting
-     *            
      * @return \FOS\RestBundle\View\View
      */
     public function putAction(Request $request, Meeting $meeting)
@@ -100,7 +98,6 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      *
      * @param Meeting $meeting
      *            Meeting
-     *            
      * @return \FOS\RestBundle\View\View
      */
     public function deleteAction(Meeting $meeting)
@@ -117,7 +114,6 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      *            Request
      * @param Meeting $meeting
      *            Meeting
-     *            
      * @return \FOS\RestBundle\View\View
      */
     protected function processForm(Request $request, Meeting $meeting)
@@ -143,7 +139,6 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      *
      * @param Meeting $meeting
      *            Meeting
-     *            
      * @return Meeting
      */
     public function getAction(Meeting $meeting)
