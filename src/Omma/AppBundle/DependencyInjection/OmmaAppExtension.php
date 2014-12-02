@@ -28,7 +28,7 @@ class OmmaAppExtension extends Extension
 
         // fallback to locales without territory (e.g. en, de)
         // available locales will look like en_US, en, de_DE, de
-        $languages = array();
+        $availableLocales = array();
         foreach ($config['languages'] as $language) {
             $availableLocales[] = $language;
             // if language contains an underscore
@@ -38,6 +38,6 @@ class OmmaAppExtension extends Extension
             }
         }
 
-        $container->setParameter("omma.languages", $languages);
+        $container->setParameter("omma.languages", $availableLocales);
     }
 }
