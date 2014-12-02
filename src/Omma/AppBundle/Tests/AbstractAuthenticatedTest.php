@@ -8,6 +8,14 @@ abstract class AbstractAuthenticatedTest extends WebTestCase
 
     private static $fixtureLoaded = false;
 
+    protected function login($username)
+    {
+        $userManager = $this->getContainer()->get("omma.user.orm.user_manager");
+        $user = $userManager->findUserByUsername($username);
+        
+        $this->loginAs($user, "user");
+    }
+
     public function setUp()
     {
         if (! self::$fixtureLoaded) {
@@ -16,10 +24,19 @@ abstract class AbstractAuthenticatedTest extends WebTestCase
             self::$fixtureLoaded = true;
         }
         
-        $authentication = $this->getContainer()->getParameter("liip_functional_test.authentication");
-        $userManager = $this->getContainer()->get("omma.user.orm.user_manager");
-        $user = $userManager->findUserByUsername($authentication["username"]);
+        $this->login("admin");
+    }
+
+    public function pushContent($path, $parameters, $method = 'POST', $authentication = false, $success = true)
+    {
+        $client = $this->makeClient($authentication);
+        $client->request($method, $path, $parameters);
         
-        $this->loginAs($user, "user");
+        $content = $client->getResponse()->getContent();
+        if (is_bool($success)) {
+            $this->isSuccessful($client->getResponse(), $success);
+        }
+        
+        return $content;
     }
 }

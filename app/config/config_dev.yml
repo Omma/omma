@@ -34,6 +34,7 @@ assetic:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+
 h4cc_alice_fixtures:
     locale: de_DE
     seed: 1
