@@ -29,7 +29,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
                 ->innerJoin("m.users", "u")
                 ->where("u.id = :userId")
                 ->setParameter("userId", $user->getId());
-
+            
             return $query->getQuery()->getResult();
         }
     }
@@ -37,8 +37,8 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     /**
      * @Security("is_fully_authenticated()")
      *
-     * @param \DateTime $dateStart
-     * @param \DateTime $dateEnd
+     * @param \DateTime $dateStart            
+     * @param \DateTime $dateEnd            
      */
     public function getRangeAction(\DateTime $dateStart, \DateTime $dateEnd)
     {
@@ -49,39 +49,39 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
             ->andWhere("m.dateEnd BETWEEN :dateStart AND :dateEnd")
             ->setParameter("dateStart", $dateStart)
             ->setParameter("dateEnd", $dateEnd);
-
+        
         if (! $this->get("security.context")->isGranted("ROLE_SUPER_ADMIN")) {
             $query->innerJoin("m.users", "u")
                 ->andWhere("u.id = :userId")
                 ->setParameter("userId", $user->getId());
         }
-
+        
         return $query->getQuery()->getResult();
     }
 
     /**
      * @Security("is_fully_authenticated()")
      *
-     * @param Request $request
+     * @param Request $request            
      *
      * @return \Symfony\Component\Form\Form
      */
     public function cpostAction(Request $request)
     {
         $user = $this->getUser();
-
+        
         $meeting = new Meeting();
         $meeting->addUser($user);
         $user->addMeeting($meeting);
-
+        
         return $this->processForm($request, $meeting);
     }
 
     /**
      * @Security("is_fully_authenticated() and is_granted('edit', meeting)")
      *
-     * @param Request $request
-     * @param Meeting $meeting
+     * @param Request $request            
+     * @param Meeting $meeting            
      *
      * @return \FOS\RestBundle\View\View
      */
@@ -93,21 +93,21 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     /**
      * @Security("is_fully_authenticated() and is_granted('edit', meeting)")
      *
-     * @param Meeting $meeting
+     * @param Meeting $meeting            
      * @return \FOS\RestBundle\View\View
      */
     public function deleteAction(Meeting $meeting)
     {
         $this->get("omma.app.manager.meeting")->delete($meeting);
-
+        
         return $this->view("");
     }
 
     /**
      * @Security("is_fully_authenticated() and is_granted('edit', meeting)")
      *
-     * @param Request $request
-     * @param Meeting $meeting
+     * @param Request $request            
+     * @param Meeting $meeting            
      *
      * @return \FOS\RestBundle\View\View
      */
@@ -119,20 +119,20 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
             "csrf_protection" => false
         ));
         $form->handleRequest($request);
-
+        
         if ($form->isValid()) {
             $this->get("omma.app.manager.meeting")->save($meeting);
-
+            
             return $this->view($meeting);
         }
-
+        
         return $this->view($form, 400);
     }
 
     /**
      * @Security("is_fully_authenticated() and is_granted('view', meeting)")
      *
-     * @param Meeting $meeting
+     * @param Meeting $meeting            
      * @return Meeting
      */
     public function getAction(Meeting $meeting)
