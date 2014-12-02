@@ -1,10 +1,22 @@
-["Alabama", "Alaska", "Arizona", "Arkansas", "California",
-    "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii",
-    "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana",
-    "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
-    "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
-    "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota",
-    "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island",
-    "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
-    "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+[
+    {
+        "title": "Alabama",
+        "date": "2014-05-12 13:14:23",
+        "url": "http://test.de"
+    },
+    {
+        "title": "Alaska",
+        "date": "2014-05-12 13:14:23",
+        "url": "http://test.de"
+    },
+    {
+        "title": "Arizona",
+        "date": "2014-05-12 13:14:23",
+        "url": "http://test.de"
+    },
+    {
+        "title": "Arkansas",
+        "date": "2014-05-12 13:14:23",
+        "url": "http://test.de"
+    }
 ]

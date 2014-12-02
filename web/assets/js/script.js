@@ -27,35 +27,75 @@ $(document).ready(function() {
 
             var event = {
                 date: date_time,
-                title: element.title,
-                url: element.url
+                data: {title: element.title, url: element.url}
             }
 
             events.push(event);
         });
 
 
+
+
+
+
         //Vorselektiertes Datum
         var date = {
             year: new Date().getFullYear(),
             month: new Date().getMonth(),
-            day: new Date().getDate(),
+            day: new Date().getDate()
         }
 
-        $('input#calendar-left-col').glDatePicker(
-            {
-                showAlways: true,
-                selectedDate: new Date(date.year, date.month, date.day),
-                specialDates: events,
-                onClick: function() {
+        $('input#calendar-left-col').glDatePicker({
 
-                    alert("K");
+            showAlways: true,
+            selectedDate: new Date(date.year, date.month, date.day),
+            monthNames: ["jan", "feb", "märz", "apr", "mai", "jun", "juli", "aug", "sept", "okt", "nov", "dez"],
+            dowNames: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
+            dowOffset: 1,
+
+
+            specialDates: events,
+
+            nextPrevCallback: function(){alert("K")},
+
+            onClick: function(target, cell, date, data) {
+
+
+                $('.day-events').slideDown();
+
+                if(data != null) {
+
+                    $('.day-events #insert-events .no-events').slideUp();
+                    var clicked_date = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate();
+                    var list = "";
+
+                    $.each(events, function( index, value ) {
+                        var date = value.date;
+                        var obj_date = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate();
+
+                        if(obj_date == clicked_date) {
+                            list += "<li><a href=\""+value.data.url+"\">"+value.data.title+"</a></li>";
+                        }
+
+                    });
+
+                    $('.day-events #insert-events ul').slideUp();
+                    $('.day-events #insert-events ul').html(list);
+                    $('.day-events #insert-events ul').slideDown();
+
                 }
-            });
-
+                else {
+                    $('.day-events #insert-events ul').slideUp();
+                    $('.day-events #insert-events .no-events').slideDown();
+                }
+            }
+        });
     });
 
-
+//get JSONs
+    $('body').on('mousedown', 'a.next-arrow', function() {
+        alert("K");
+    })
 
 
 
@@ -86,7 +126,6 @@ $(document).ready(function() {
 
     /* Todos */
     $.getJSON( "/temp_jsons/todos-left-col.json?start="+get_current_month().start, function( data ) {
-        alert("K");
         $.each( data, function( key,value ) {
             $('.left-col ul.todos').append("<li><a href=\""+value.url+"\">"+value.title+"</li>");
         });
@@ -116,60 +155,36 @@ $(document).ready(function() {
         return function findMatches(q, cb) {
 
 
+            if (q != '') {
+                $.getJSON("/temp_jsons/typeahead.json?q=" + q, function (data) {
+
+                    var matches = [];
+
+                    var substrRegex = new RegExp(q, 'i');
+
+                    $.each(data, function (i, str) {
+
+                        if (substrRegex.test(str.title)) {
+                            var value = "<a href=\"" + str.url + "\">";
+                            value += str.title + "<br />";
+                            value += "<small>";
+                            value += moment(str.date).format("DD.MM.YYYY [um] HH:mm");
+                            value += "</small></a>";
+                            matches.push({value: value});
+                        }
+                    });
+                    cb(matches);
+                });
 
 
 
-           /* $('input.typeahead').typeahead({
-                source: function (query, process) {
-                    source: substringMatcher(states)
-                }
-
-            });*/
-
-           // $('input.typeahead').typeahead().source = s;
-            //$('input.typeahead').data('ttTypeahead').dropdown.datasets[0].source = s
-
-
-            var matches, substringRegex;
-
-            matches = [];
-
-            var substrRegex = new RegExp(q, 'i');
-
-            $.each(strs, function(i, str) {
-                if (substrRegex.test(str)) {
-                    matches.push({ value: str });
-                }
-            });
-
-            cb(matches);
-        };
-    };
-
-    var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-        'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-        'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-        'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-        'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-        'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-        'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-        'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-        'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-    ];
-
-    var s = ['North Dakota',
-        'Ohio', 'Oklahoma', 'Ocregon', 'Pennsylvania', 'Rhode Island',
-        'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-        'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-    ];
-
-    //var source = $.getJSON( "/web/temp_jsons/todos-left-col.json?start="+get_current_month().start, function( data ) {
-    function typeahead_get_events() {
-        return "";
+            }
+        }
     }
 
 
 
+    var events = []
 
 
     $('input.typeahead').typeahead(
@@ -181,7 +196,7 @@ $(document).ready(function() {
     {
         name: 'states',
         displayKey: 'value',
-        source: substringMatcher(states)
+        source: substringMatcher(events)
     });
 
 
