@@ -42,6 +42,7 @@ security:
             pattern:             .*
             context:             user
             ldap:                true
+            http_basic:          ~
             form_login:
                 provider:       fos_userbundle
                 login_path:     /login
