@@ -112,7 +112,7 @@ fos_rest:
     body_listener: true
     format_listener: true
     routing_loader:
-        default_format: json
+        default_format: html
     access_denied_listener:
         # all requests using the 'json' format will return a 403 on an access denied violation
         json: true

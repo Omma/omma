@@ -10,6 +10,7 @@
 
     <link href="{{ asset("assets/css/style.css") }}" rel="stylesheet">
     <link href="{{ asset("assets/css/glDatePicker.default.css") }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset("assets/components/angular-loading-bar/build/loading-bar.min.css") }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block title %}OMMA &gt; Open Meeting Manager{% endblock %}
@@ -23,9 +24,12 @@
     <![endif]-->
 
     <!--JavaScript-->
-    <script src="{{ asset("assets/js/libs/jquery.min.js") }}"></script>
-    <script src="{{ asset("assets/js/libs/bootstrap.min.js") }}"></script>
-    <script src="{{ asset("assets/js/libs/angular.min.js") }}"></script>
+    <script src="{{ asset("assets/components/jquery/dist/jquery.min.js") }}"></script>
+    <script src="{{ asset("assets/components/bootstrap/dist/js/bootstrap.min.js") }}"></script>
+    <script src="{{ asset("assets/components/angular/angular.min.js") }}"></script>
+    <script src="{{ asset("assets/components/restangular/dist/restangular.min.js") }}"></script>
+    <script src="{{ asset("assets/components/angular-loading-bar/build/loading-bar.min.js") }}"></script>
+    <script src="{{ asset("assets/components/angular-ui-tree/dist/angular-ui-tree.min.js") }}"></script>
 
 
     <script src="{{ asset("assets/js/libs/moment.js") }}"></script>
@@ -38,6 +42,7 @@
     <script type="text/javascript" src="{{ asset("assets/js/libs/bs_calendar/calendar.js") }}"></script>
     <script type="text/javascript" src="{{ asset("assets/js/libs/typeahead.bundle.js") }}"></script>
     <script src="{{ asset("assets/js/script.js") }}"></script>
+    <script src="{{ asset("assets/js/angular_test.js") }}"></script>
 
 {% endblock %}
 
@@ -45,23 +50,22 @@
 
 <div class="container">
     <header>
-
         <div class="row">
             <div class="col-xs-4">
-                <img class="logo" src="assets/img/logo.png"/>
+                <a href="{{ path("omma_index") }}"><img class="logo" src="{{ asset("assets/img/logo.png") }}"/></a>
             </div>
             <div class="col-xs-8 text-right">
+                {% if app.user %}
                 <ul class="top-navi">
                     <li><a href=""><i class="fa fa-plus"> </i> Veranstaltung erstellen</a></li>
                     <li><a href=""><i class="fa fa-user"> </i> Profil verwalten</a></li>
-                    <li><a href=""><i class="fa fa-power-off"> </i> Ausloggen</a></li>
+                    <li><a href="{{ path("omma_logout") }}"><i class="fa fa-power-off"> </i> Ausloggen</a></li>
                 </ul>
-
 
                 <div class="form-group">
                     <input id="tags" class="typeahead form-control" type="text" placeholder="Veranstaltung suchen">
                 </div>
-
+                {% endif %}
 
             </div>
 
@@ -75,7 +79,55 @@
         </div>
     </noscript>
 
-    {% block content %}
+    {% block container %}
+    <div class="row hide-if-no-js">
+        <div class="col-md-4 left-col">
+            <div class="row">
+                <div class="col-xs-5">
+                    <div class="kalender">
+                        <input id="calendar-left-col" type="text" gldp-id="left-col-date" style="visibility:hidden"/>
+
+                        <div gldp-el="left-col-date"
+                             style="width:100%; height:300px; position:relative; top:0px;left:0px;">
+                        </div>
+
+
+                        <div class="day-events" style="display: none">
+                            <h4>Events an diesem Tag:</h4>
+                            <div id="insert-events">
+                                <div class="no-events" style="display: none;">Keine Events an diesem Tag</div>
+                                <ul></ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="naechste-events">
+                        <h3>Folgende Veranstaltungen</h3>
+
+                        <div class="list-group"></div>
+
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="todos">
+                        <h3>Ausstehende ToDos</h3>
+                        <ul class="todos"></ul>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="col-md-8 right-col">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
     {% endblock %}
 </div>
 {% endblock %}

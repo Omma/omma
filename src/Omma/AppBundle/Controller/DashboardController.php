@@ -20,6 +20,8 @@ class DashboardController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        return array(
+            "meetings" => $this->get("omma.app.manager.meeting")->findAll(), // @TODO: remove
+        );
     }
 }
