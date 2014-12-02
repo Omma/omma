@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  *
  * @RouteResource("Protocol")
- * 
+ *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 class MeetingProtocolController extends FOSRestController implements ClassResourceInterface

@@ -37,8 +37,10 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     /**
      * @Security("is_fully_authenticated()")
      *
-     * @param \DateTime $dateStart            
-     * @param \DateTime $dateEnd            
+     * @param \DateTime $dateStart
+     *            Start Date
+     * @param \DateTime $dateEnd
+     *            End Date
      */
     public function getRangeAction(\DateTime $dateStart, \DateTime $dateEnd)
     {
@@ -62,8 +64,9 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     /**
      * @Security("is_fully_authenticated()")
      *
-     * @param Request $request            
-     *
+     * @param Request $request
+     *            Request
+     *            
      * @return \Symfony\Component\Form\Form
      */
     public function cpostAction(Request $request)
@@ -80,9 +83,11 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     /**
      * @Security("is_fully_authenticated() and is_granted('edit', meeting)")
      *
-     * @param Request $request            
-     * @param Meeting $meeting            
-     *
+     * @param Request $request
+     *            Request
+     * @param Meeting $meeting
+     *            Meeting
+     *            
      * @return \FOS\RestBundle\View\View
      */
     public function putAction(Request $request, Meeting $meeting)
@@ -93,7 +98,9 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     /**
      * @Security("is_fully_authenticated() and is_granted('edit', meeting)")
      *
-     * @param Meeting $meeting            
+     * @param Meeting $meeting
+     *            Meeting
+     *            
      * @return \FOS\RestBundle\View\View
      */
     public function deleteAction(Meeting $meeting)
@@ -106,9 +113,11 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     /**
      * @Security("is_fully_authenticated() and is_granted('edit', meeting)")
      *
-     * @param Request $request            
-     * @param Meeting $meeting            
-     *
+     * @param Request $request
+     *            Request
+     * @param Meeting $meeting
+     *            Meeting
+     *            
      * @return \FOS\RestBundle\View\View
      */
     protected function processForm(Request $request, Meeting $meeting)
@@ -132,7 +141,9 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     /**
      * @Security("is_fully_authenticated() and is_granted('view', meeting)")
      *
-     * @param Meeting $meeting            
+     * @param Meeting $meeting
+     *            Meeting
+     *            
      * @return Meeting
      */
     public function getAction(Meeting $meeting)
