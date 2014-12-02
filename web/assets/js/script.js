@@ -9,7 +9,7 @@ $(document).ready(function() {
 
     /* Kalender */
 
-    $.getJSON("/web/temp_jsons/calendar-left-col.json?start="+get_current_month().start+"&end="+get_current_month().end, function (data) {
+    $.getJSON("/temp_jsons/calendar-left-col.json?start="+get_current_month().start+"&end="+get_current_month().end, function (data) {
 
         var events = new Array();
 
@@ -60,7 +60,7 @@ $(document).ready(function() {
 
 
     /* Nächste Events */
-    $.getJSON( "/web/temp_jsons/next-events-left-col.json?start="+get_current_month().start, function( data ) {
+    $.getJSON( "/temp_jsons/next-events-left-col.json?start="+get_current_month().start, function( data ) {
         var i=0;
         $.each( data, function( key,value ) {
             if(key==0)
@@ -85,7 +85,7 @@ $(document).ready(function() {
 
 
     /* Todos */
-    $.getJSON( "/web/temp_jsons/todos-left-col.json?start="+get_current_month().start, function( data ) {
+    $.getJSON( "/temp_jsons/todos-left-col.json?start="+get_current_month().start, function( data ) {
         alert("K");
         $.each( data, function( key,value ) {
             $('.left-col ul.todos').append("<li><a href=\""+value.url+"\">"+value.title+"</li>");
