@@ -37,9 +37,10 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
         
         $this->assertSame("TestMeeting", $meeting->getName());
         
-        $this->assertSame("2014-01-01 08:00:00", $meeting->getDateStart()
-            ->format("Y-m-d H:i:s"));
-        $this->assertSame("2014-01-01 09:30:00", $meeting->getDateEnd()
-            ->format("Y-m-d H:i:s"));
+        $dateStart = $meeting->getDateStart()->format("Y-m-d H:i:s");
+        $this->assertSame("2014-01-01 08:00:00", $dateStart);
+        
+        $dateEnd = $meeting->getDateEnd()->format("Y-m-d H:i:s");
+        $this->assertSame("2014-01-01 09:30:00", $dateEnd);
     }
 }
