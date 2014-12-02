@@ -137,4 +137,14 @@ fos_rest:
 sensio_framework_extra:
     view:    { annotations: false }
 
+jms_serializer:
+    metadata:
+        directories:
+            SonataUserBundle:
+                namespace_prefix: Sonata\UserBundle
+                path: %kernel.root_dir%/serializer/SonataUserBundle
+            FOSUserBundle:
+                namespace_prefix: FOS\UserBundle
+                path: %kernel.root_dir%/serializer/FOSUserBundle
+
 omma_user: ~

@@ -1,0 +1,11 @@
+Omma\AppBundle\Entity\Attendee:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        mandatory:
+            expose: true
+        status:
+            expose: true
+        user:
+            expose: true

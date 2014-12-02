@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class LanguageController extends Controller
 {
     /**
-     * @Route("/switch_language/{language}", name="omma_switch_language")
+     * @Route("/switch-language/{language}", name="omma_switch_language")
      */
     public function switchAction(Request $request, $language)
     {
