@@ -55,6 +55,14 @@ module.exports = function (grunt) {
 	      }
 	    },*/
         less : {
+            prod: {
+                options: {
+                    paths: ["css"]
+                },
+                files: {
+                    "web/assets/css/style.css": "web/assets/less/basic.less"
+                }
+            },
             dev: {
                 options: {
                     paths: ["css"],
@@ -130,5 +138,9 @@ module.exports = function (grunt) {
     grunt.registerTask('default', [
         'less:dev',
         'serve'
+    ]);
+
+    grunt.registerTask('build', [
+        'less:prod'
     ]);
 };

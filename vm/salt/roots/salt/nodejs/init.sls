@@ -7,3 +7,13 @@ nodejs:
 
 npm:
   pkg.installed: []
+
+bower:
+  npm.installed:
+    - require:
+      - pkg: npm
+
+grunt-cli:
+  npm.installed:
+    - require:
+      - pkg: npm
