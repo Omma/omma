@@ -1,6 +1,6 @@
 {% extends "OmmaAppBundle::layout.html.twig" %}
 
-{% block content %}
+{% block container %}
 
     <form action="{{ path("omma_security_check") }}" method="post" class="form-signin {% if error %} error{% endif %}" role="form">
 

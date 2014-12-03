@@ -83,6 +83,7 @@
     <div class="row hide-if-no-js">
         <div class="col-md-4 left-col">
             <div class="row">
+                {% if app.user %}
                 <div class="col-xs-5">
                     <div class="kalender">
                         <input id="calendar-left-col" type="text" gldp-id="left-col-date" style="visibility:hidden"/>
@@ -117,6 +118,7 @@
                         <ul class="todos"></ul>
                     </div>
                 </div>
+                {% endif %}
 
             </div>
 
