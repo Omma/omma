@@ -112,7 +112,7 @@ fos_rest:
     body_listener: true
     format_listener: true
     routing_loader:
-        default_format: json
+        default_format: html
     access_denied_listener:
         # all requests using the 'json' format will return a 403 on an access denied violation
         json: true
@@ -136,5 +136,15 @@ fos_rest:
 
 sensio_framework_extra:
     view:    { annotations: false }
+
+jms_serializer:
+    metadata:
+        directories:
+            SonataUserBundle:
+                namespace_prefix: Sonata\UserBundle
+                path: %kernel.root_dir%/serializer/SonataUserBundle
+            FOSUserBundle:
+                namespace_prefix: FOS\UserBundle
+                path: %kernel.root_dir%/serializer/FOSUserBundle
 
 omma_user: ~

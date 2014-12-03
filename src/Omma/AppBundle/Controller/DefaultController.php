@@ -14,6 +14,11 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        $token = $this->get("security.context")->getToken();
+        if ($token->getUser()) {
+            return $this->redirect($this->generateUrl("omma_dashboard"));
+        }
+
+
     }
 }

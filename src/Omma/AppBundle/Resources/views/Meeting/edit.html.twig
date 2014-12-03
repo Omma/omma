@@ -1,0 +1,53 @@
+{% extends "OmmaAppBundle::layout.html.twig" %}
+{% block content %}
+    <div ng-controller="meetingController" ng-init="init({{ meeting.id }})">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a href="#datum-uhrzeit" data-toggle="tab">Datum & Uhrzeit</a></li>
+            <li><a href="#agenda" data-toggle="tab">Agenda</a></li>
+            <li><a href="#todos" data-toggle="tab">To Dos</a></li>
+            <li><a href="#protokoll" data-toggle="tab">Protokoll</a></li>
+            <li><a href="#dateien" data-toggle="tab">Dateien</a></li>
+            <li><a href="#teilnehmer" data-toggle="tab">Teilnehmer</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="datum-uhrzeit">
+                <h1>datum-uhrzeit</h1>
+            </div>
+            <div class="tab-pane" id="agenda" ng-controller="meetingAgendaController">
+                <h1>agenda</h1>
+                <!-- Nested node template -->
+                {% verbatim %}
+                <script type="text/ng-template" id="nodes_renderer.html">
+                    <div ui-tree-handle>
+                        {{node.item}}
+                        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+                        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
+                    </div>
+                    <ol ui-tree-nodes="" ng-model="node.sub_items">
+                        <li ng-repeat="node in node.sub_items" ui-tree-node ng-include="'nodes_renderer.html'">
+                        </li>
+                    </ol>
+                </script>
+                {% endverbatim %}
+                <div ui-tree>
+                    <ol ui-tree-nodes="" autosave ng-model="agendas" id="tree-root">
+                        <li ng-repeat="node in agendas" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                    </ol>
+                </div>
+            </div>
+            <div class="tab-pane" id="todos">
+                <h1>todos</h1>
+            </div>
+            <div class="tab-pane" id="protokoll">
+                <h1>protokoll</h1>
+            </div>
+            <div class="tab-pane" id="dateien">
+                <h1>dateien</h1>
+            </div>
+            <div class="tab-pane" id="teilnehmer">
+                <h1>teilnehmer</h1>
+            </div>
+        </div>
+    </div>
+{% endblock %}

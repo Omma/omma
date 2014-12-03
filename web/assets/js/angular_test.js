@@ -2,8 +2,14 @@
 
 // Declare app level module which depends on views, and components
 var app = angular.module('ommaApp', [
-    'restangular'
+    'restangular',
+    'angular-loading-bar',
+    'ui.tree'
 ]);
+
+app.config(function(RestangularProvider) {
+    RestangularProvider.setRequestSuffix('.json');
+});
 
 app.factory('agendaManager', function(Restangular) {
     return {
@@ -32,19 +38,39 @@ app.factory('agendaManager', function(Restangular) {
     };
 });
 
-app.controller('testCtrl', function ($scope, Restangular, agendaManager) {
-    Restangular.one('meetings', 2).get().then(function(meeting) {
-        $scope.meeting = meeting;
-
-        return meeting;
-    }).then(function(meeting) {
-        agendaManager.getAll(meeting).then(function(agendas) {
-            console.log(agendas);
+app.controller('meetingController', function($scope, Restangular) {
+    $scope.init = function(id) {
+        $scope.meeting = Restangular.one('meetings', id).get().then(function(meeting) {
+            return meeting;
         });
-    });
-
-    $scope.save = function() {
-        $scope.meeting.put();
     };
 });
 
+app.directive('autosave',[ function () {
+    'use strict';
+
+    function autosaveController($scope, $emelent, $attrs) {
+
+        function saveModel(newModel, oldModel) {
+            console.log("save", newModel);
+        }
+
+        console.log($attrs.ngModel);
+        $scope.$watch($attrs.ngModel, _.debounce(saveModel, 1000), true);
+    }
+
+    return {
+        restrict: 'A',
+        link: autosaveController
+    }
+}]);
+
+app.controller('meetingAgendaController', function($scope, Restangular, agendaManager) {
+    $scope.agendas = [];
+    $scope.$parent.meeting.then(function(meeting) {
+        agendaManager.getAll(meeting).then(function(agendas) {
+            console.log(agendas);
+            $scope.agendas = agendas;
+        });
+    });
+});
