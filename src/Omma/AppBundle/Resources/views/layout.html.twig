@@ -1,11 +1,133 @@
 {% extends "::base.html.twig" %}
 
+{% block stylesheets %}
+    <!--CSS-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <link href="{{ asset("assets/css/font-awesome.min.css") }}" rel="stylesheet">
+
+    <!--BS Calendar-->
+    <link rel="stylesheet" href="{{ asset("assets/css/calendar.css") }}">
+
+    <link href="{{ asset("assets/css/style.css") }}" rel="stylesheet">
+    <link href="{{ asset("assets/css/glDatePicker.default.css") }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset("assets/components/angular-loading-bar/build/loading-bar.min.css") }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block title %}OMMA &gt; Open Meeting Manager{% endblock %}
+
+{% block javascripts %}
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--JavaScript-->
+    <script src="{{ asset("assets/components/jquery/dist/jquery.min.js") }}"></script>
+    <script src="{{ asset("assets/components/bootstrap/dist/js/bootstrap.min.js") }}"></script>
+    <script src="{{ asset("assets/components/angular/angular.min.js") }}"></script>
+    <script src="{{ asset("assets/components/restangular/dist/restangular.min.js") }}"></script>
+    <script src="{{ asset("assets/components/angular-loading-bar/build/loading-bar.min.js") }}"></script>
+    <script src="{{ asset("assets/components/angular-ui-tree/dist/angular-ui-tree.min.js") }}"></script>
+
+
+    <script src="{{ asset("assets/js/libs/moment.js") }}"></script>
+
+    <script src="{{ asset("assets/js/libs/glDatePicker.min.js") }}"></script>
+
+    <script type="text/javascript" src="{{ asset("assets/js/libs/bs_calendar/underscore-min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/libs/bs_calendar/jstz.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/libs/bs_calendar/language/de-DE.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/libs/bs_calendar/calendar.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/libs/typeahead.bundle.js") }}"></script>
+    <script src="{{ asset("assets/js/script.js") }}"></script>
+    <script src="{{ asset("assets/js/angular_test.js") }}"></script>
+
+{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <a href="{{ path("omma_switch_language", {language: "de_DE"}) }}">Deutsch</a>
-        <a href="{{ path("omma_switch_language", {language: "en_US"}) }}">English</a>
-        {% block content %}
-        {% endblock %}
+
+<div class="container">
+    <header>
+        <div class="row">
+            <div class="col-xs-4">
+                <a href="{{ path("omma_index") }}"><img class="logo" src="{{ asset("assets/img/logo.png") }}"/></a>
+            </div>
+            <div class="col-xs-8 text-right">
+                {% if app.user %}
+                <ul class="top-navi">
+                    <li><a href=""><i class="fa fa-plus"> </i> Veranstaltung erstellen</a></li>
+                    <li><a href=""><i class="fa fa-user"> </i> Profil verwalten</a></li>
+                    <li><a href="{{ path("omma_logout") }}"><i class="fa fa-power-off"> </i> Ausloggen</a></li>
+                </ul>
+
+                <div class="form-group">
+                    <input id="tags" class="typeahead form-control" type="text" placeholder="Veranstaltung suchen">
+                </div>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </header>
+    <noscript>
+        <div class="alert alert-danger" role="alert">
+            <link href="assets/css/noscript.css" rel="stylesheet">
+            Bitte aktivieren Sie JavaScript in Ihrem Browser!
+        </div>
+    </noscript>
+
+    {% block container %}
+    <div class="row hide-if-no-js">
+        <div class="col-md-4 left-col">
+            <div class="row">
+                <div class="col-xs-5">
+                    <div class="kalender">
+                        <input id="calendar-left-col" type="text" gldp-id="left-col-date" style="visibility:hidden"/>
+
+                        <div gldp-el="left-col-date"
+                             style="width:100%; height:300px; position:relative; top:0px;left:0px;">
+                        </div>
+
+
+                        <div class="day-events" style="display: none">
+                            <h4>Events an diesem Tag:</h4>
+                            <div id="insert-events">
+                                <div class="no-events" style="display: none;">Keine Events an diesem Tag</div>
+                                <ul></ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="naechste-events">
+                        <h3>Folgende Veranstaltungen</h3>
+
+                        <div class="list-group"></div>
+
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="todos">
+                        <h3>Ausstehende ToDos</h3>
+                        <ul class="todos"></ul>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="col-md-8 right-col">
+            {% block content %}
+            {% endblock %}
+        </div>
     </div>
+    {% endblock %}
+</div>
 {% endblock %}

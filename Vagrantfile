@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
   #config.vm.network "private_network", type: "dhcp"
   config.vm.synced_folder ".", "/vagrant", type: $shared_folder_type, mount_options: $mount_options
   if $shared_folder_type == "nfs"
-    config.bindfs.bind_folder "/vagrant", "/vagrant"
+    #config.bindfs.bind_folder "/vagrant", "/vagrant"
   end
 
   if Vagrant.has_plugin?("vagrant-hostmanager")

@@ -42,6 +42,7 @@ security:
             pattern:             .*
             context:             user
             ldap:                true
+            http_basic:          ~
             form_login:
                 provider:       fos_userbundle
                 login_path:     /login
@@ -50,6 +51,11 @@ security:
                 failure_path:   null
                 default_target_path: omma_dashboard
                 always_use_default_target_path: false
+            remember_me:
+                key:      "%secret%"
+                lifetime: 31536000 # 365 days in seconds
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
             logout:             true
             anonymous:          true
 
@@ -58,6 +64,7 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/switch-language/, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # Admin login page needs to be access without credential
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }

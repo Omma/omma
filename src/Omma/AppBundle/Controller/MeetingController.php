@@ -71,8 +71,19 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
         return $this->view($form, 400);
     }
 
+    /**
+     * @param Meeting $meeting
+     *
+     * @return \FOS\RestBundle\View\View
+     */
     public function getAction(Meeting $meeting)
     {
-        return $meeting;
+        $view = $this->view($meeting);
+        $view
+            ->setTemplate("OmmaAppBundle:Meeting:edit.html.twig")
+            ->setTemplateVar("meeting")
+        ;
+
+        return $this->handleView($view);
     }
 }
