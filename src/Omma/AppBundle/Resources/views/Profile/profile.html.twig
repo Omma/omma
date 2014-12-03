@@ -1,0 +1,22 @@
+{% extends "OmmaAppBundle::profile.html.twig" %}
+
+{% block content %}
+    <div class="alert alert-info">
+        Sie haben sich via LDAP eingeloggt. <br>Daher können keine Profildaten bearbeitet werden.
+    </div>
+
+
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" value="Philipp Lahm" disabled>
+    </div>
+
+    <div class="form-group">
+        <label for="email">E-Mail: </label>
+        <input type="email" class="form-control" id="email" value="phillipp.lahm@fcb.de" disabled>
+    </div>
+    <div class="form-group">
+        <label for="password">Passwort:</label>
+        <input type="password" class="form-control" id="password" value="1234567" disabled>
+    </div>
+{% endblock %}
