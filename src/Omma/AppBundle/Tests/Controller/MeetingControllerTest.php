@@ -3,6 +3,11 @@ namespace Omma\AppBundle\Tests\Controller;
 
 use Omma\AppBundle\Tests\AbstractAuthenticatedTest;
 
+/**
+ *
+ * @author Adrian Woeltche
+ *        
+ */
 class MeetingControllerTest extends AbstractAuthenticatedTest
 {
 

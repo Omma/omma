@@ -33,6 +33,7 @@ class MeetingProtocolController extends FOSRestController implements ClassResour
     {
         $protocol = new Protocol();
         $protocol->setMeeting($meeting);
+        $meeting->setProtocol($protocol);
         
         return $this->processForm($request, $protocol);
     }

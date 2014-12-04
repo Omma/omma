@@ -147,12 +147,13 @@ class Meeting extends Base
      * Set name
      *
      * @param string $name
+     *            Name
      * @return Meeting
      */
     public function setName($name)
     {
         $this->name = $name;
-
+        
         return $this;
     }
 
@@ -170,12 +171,13 @@ class Meeting extends Base
      * Set dateStart
      *
      * @param \DateTime $dateStart
+     *            DateStart
      * @return Meeting
      */
     public function setDateStart($dateStart)
     {
         $this->dateStart = $dateStart;
-
+        
         return $this;
     }
 
@@ -193,12 +195,13 @@ class Meeting extends Base
      * Set dateEnd
      *
      * @param \DateTime $dateEnd
+     *            DateEnd
      * @return Meeting
      */
     public function setDateEnd($dateEnd)
     {
         $this->dateEnd = $dateEnd;
-
+        
         return $this;
     }
 
@@ -216,12 +219,13 @@ class Meeting extends Base
      * Add users
      *
      * @param \Application\Sonata\UserBundle\Entity\User $users
+     *            User
      * @return Meeting
      */
     public function addUser(\Application\Sonata\UserBundle\Entity\User $users)
     {
         $this->users[] = $users;
-
+        
         return $this;
     }
 
@@ -229,6 +233,7 @@ class Meeting extends Base
      * Remove users
      *
      * @param \Application\Sonata\UserBundle\Entity\User $users
+     *            User
      */
     public function removeUser(\Application\Sonata\UserBundle\Entity\User $users)
     {
@@ -249,12 +254,13 @@ class Meeting extends Base
      * Add groups
      *
      * @param \Application\Sonata\UserBundle\Entity\Group $groups
+     *            Group
      * @return Meeting
      */
     public function addGroup(\Application\Sonata\UserBundle\Entity\Group $groups)
     {
         $this->groups[] = $groups;
-
+        
         return $this;
     }
 
@@ -262,6 +268,7 @@ class Meeting extends Base
      * Remove groups
      *
      * @param \Application\Sonata\UserBundle\Entity\Group $groups
+     *            Group
      */
     public function removeGroup(\Application\Sonata\UserBundle\Entity\Group $groups)
     {
@@ -282,12 +289,13 @@ class Meeting extends Base
      * Add meetingRecurrings
      *
      * @param \Omma\AppBundle\Entity\MeetingRecurring $meetingRecurrings
+     *            MeetingRecurring
      * @return Meeting
      */
     public function addMeetingRecurring(\Omma\AppBundle\Entity\MeetingRecurring $meetingRecurrings)
     {
         $this->meetingRecurrings[] = $meetingRecurrings;
-
+        
         return $this;
     }
 
@@ -295,6 +303,7 @@ class Meeting extends Base
      * Remove meetingRecurrings
      *
      * @param \Omma\AppBundle\Entity\MeetingRecurring $meetingRecurrings
+     *            MeetingRecurring
      */
     public function removeMeetingRecurring(\Omma\AppBundle\Entity\MeetingRecurring $meetingRecurrings)
     {
@@ -315,12 +324,13 @@ class Meeting extends Base
      * Add tasks
      *
      * @param \Omma\AppBundle\Entity\Task $tasks
+     *            Task
      * @return Meeting
      */
     public function addTask(\Omma\AppBundle\Entity\Task $tasks)
     {
         $this->tasks[] = $tasks;
-
+        
         return $this;
     }
 
@@ -328,6 +338,7 @@ class Meeting extends Base
      * Remove tasks
      *
      * @param \Omma\AppBundle\Entity\Task $tasks
+     *            Task
      */
     public function removeTask(\Omma\AppBundle\Entity\Task $tasks)
     {
@@ -348,12 +359,13 @@ class Meeting extends Base
      * Set protocol
      *
      * @param \Omma\AppBundle\Entity\Protocol $protocol
+     *            Protocol
      * @return Meeting
      */
     public function setProtocol(\Omma\AppBundle\Entity\Protocol $protocol = null)
     {
         $this->protocol = $protocol;
-
+        
         return $this;
     }
 
@@ -371,12 +383,13 @@ class Meeting extends Base
      * Add files
      *
      * @param \Omma\AppBundle\Entity\File $files
+     *            File
      * @return Meeting
      */
     public function addFile(\Omma\AppBundle\Entity\File $files)
     {
         $this->files[] = $files;
-
+        
         return $this;
     }
 
@@ -384,6 +397,7 @@ class Meeting extends Base
      * Remove files
      *
      * @param \Omma\AppBundle\Entity\File $files
+     *            File
      */
     public function removeFile(\Omma\AppBundle\Entity\File $files)
     {
@@ -404,12 +418,13 @@ class Meeting extends Base
      * Set prev
      *
      * @param \Omma\AppBundle\Entity\Meeting $prev
+     *            Prev
      * @return Meeting
      */
     public function setPrev(\Omma\AppBundle\Entity\Meeting $prev = null)
     {
         $this->prev = $prev;
-
+        
         return $this;
     }
 
@@ -427,12 +442,13 @@ class Meeting extends Base
      * Set next
      *
      * @param \Omma\AppBundle\Entity\Meeting $next
+     *            Next
      * @return Meeting
      */
     public function setNext(\Omma\AppBundle\Entity\Meeting $next = null)
     {
         $this->next = $next;
-
+        
         return $this;
     }
 
@@ -450,12 +466,13 @@ class Meeting extends Base
      * Add agendas
      *
      * @param \Omma\AppBundle\Entity\Agenda $agendas
+     *            Agenda
      * @return Meeting
      */
     public function addAgenda(\Omma\AppBundle\Entity\Agenda $agendas)
     {
         $this->agendas[] = $agendas;
-
+        
         return $this;
     }
 
@@ -463,6 +480,7 @@ class Meeting extends Base
      * Remove agendas
      *
      * @param \Omma\AppBundle\Entity\Agenda $agendas
+     *            Agenda
      */
     public function removeAgenda(\Omma\AppBundle\Entity\Agenda $agendas)
     {

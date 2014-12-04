@@ -3,6 +3,11 @@ namespace Omma\AppBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
+/**
+ *
+ * @author Adrian Woeltche
+ *        
+ */
 class MeetingControllerNonAuthenticatedTest extends WebTestCase
 {
 
