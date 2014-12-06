@@ -2,6 +2,14 @@ $(document).ready(function() {
 
     "use strict";
 
+
+    //Get Language
+    var language;
+    if (navigator.language.indexOf("de") > -1) {
+        language = "de";
+    }
+
+
     /************************************************************
      LEFT-COL
      ************************************************************/
@@ -31,13 +39,24 @@ $(document).ready(function() {
             day: new Date().getDate()
         }
 
+        var monthNames;
+        var dowNames;
+        var dowOffset;
+
+        if(language == "de") {
+            var monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+            var dowNames= ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+            var dowOffset= 1;
+        }
+
+
         var omma_datepicker = $('input#calendar-left-col').glDatePicker({
 
             showAlways: true,
             selectedDate: new Date(date.year, date.month, date.day),
-            monthNames: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
-            dowNames: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
-            dowOffset: 1,
+            monthNames: monthNames,
+            dowNames: dowNames,
+            dowOffset: dowOffset,
             specialDates: events,
 
 
@@ -290,25 +309,6 @@ $(document).ready(function() {
             }
             var list = $('#eventlist');
             list.html('');
-
-            //$('.left-col div.naechste-events .list-group').html('');
-            $.each(events, function(key, val) {
-
-
-                var date = "datum von event";
-
-                if(key==0)
-                    var active = "active";
-
-
-                /*$('.left-col div.naechste-events .list-group').append(
-                 "<a href=\""+val.url+"\" class=\"list-group-item "+active+"\">" +
-                 "<p>"+val.title+"</p>" +
-                 "<p class=\"list-group-item-text\"><small>"+date+"</small></p>" +
-                 "</a>"
-                 );*/
-
-            });
         },
         onAfterViewLoad: function(view) {
             $('.page-header h2').text(this.getTitle());
@@ -341,13 +341,11 @@ $(document).ready(function() {
 
 
 
+    if(language == "de")
+        calendar.setLanguage("de-DE");
+    else
+        calendar.setLanguage("en-US");
 
-    calendar.setLanguage("de-DE");
-    /* alternativen
-     default: en-US)</option>
-     <option value="fr-FR">French</option>
-     <option value="de-DE">German</option>
-     */
     calendar.view();
 
 
