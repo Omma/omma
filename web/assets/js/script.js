@@ -1,6 +1,37 @@
+"use strict";
+
+/**
+ *
+ * @param {string} month , 2014-Januar e.g.
+ * @returns {{start: (string|*), end: (string|*)}}
+ */
+function get_current_month(month)
+{
+    if (month == "") {
+        return {
+            start: moment().startOf("month"),
+            end:   moment().endOf("month")
+        };
+    }
+
+    return {
+        start: moment(month, "YYYY MM").startOf("month"),
+        end:   moment(month, "YYYY MM").endOf("month")
+    };
+}
+
+function format_incoming_json_date(element) {
+    var date = moment(element.date);
+
+    return {
+        date: date.toDate(),
+        dateOrig: date,
+        data: {title: element.title, url: element.url}
+    };
+}
+
 $(document).ready(function() {
 
-    "use strict";
 
 
     //Get Language
@@ -14,143 +45,6 @@ $(document).ready(function() {
      LEFT-COL
      ************************************************************/
 
-
-    /* Kalender */
-
-    $.getJSON("/temp_jsons/calendar-left-col.json?start="+get_current_month('').start+"&end="+get_current_month('').end, function (data) {
-
-        var events = new Array();
-
-        //define events
-
-        $.each(data, function () {
-
-            var element = $(this)[0];
-
-            var event = format_incoming_json_date(element);
-
-            events.push(event);
-        });
-
-        //Vorselektiertes Datum
-        var date = {
-            year: new Date().getFullYear(),
-            month: new Date().getMonth(),
-            day: new Date().getDate()
-        }
-
-        var monthNames;
-        var dowNames;
-        var dowOffset;
-
-        if(language == "de") {
-            var monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
-            var dowNames= ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
-            var dowOffset= 1;
-        }
-
-
-        var omma_datepicker = $('input#calendar-left-col').glDatePicker({
-
-            showAlways: true,
-            selectedDate: new Date(date.year, date.month, date.day),
-            monthNames: monthNames,
-            dowNames: dowNames,
-            dowOffset: dowOffset,
-            specialDates: events,
-
-
-
-            onClick: function(target, cell, date, data) {
-
-
-                $('.day-events').slideDown();
-
-                if(data != null) {
-
-                    $('.day-events #insert-events .no-events').slideUp();
-                    var clicked_date = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate();
-                    var list = "";
-
-                    $.each(events, function( index, value ) {
-                        var date = value.date;
-                        var obj_date = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate();
-
-                        if(obj_date == clicked_date) {
-                            list += "<li><a href=\""+value.data.url+"\">"+value.data.title+"</a></li>";
-                        }
-
-                    });
-
-                    $('.day-events #insert-events ul').slideUp();
-                    $('.day-events #insert-events ul').html(list);
-                    $('.day-events #insert-events ul').slideDown();
-
-                }
-                else {
-                    $('.day-events #insert-events ul').slideUp();
-                    $('.day-events #insert-events .no-events').slideDown();
-                }
-            }
-        }).glDatePicker(true);
-        $.extend(omma_datepicker.options, {
-
-            nextPrevCallback: function(){
-
-                var month = $('.core.border.monyear.title div span').first().html();
-                var year = $('.core.border.monyear.title div span').last().html();
-
-                var date = get_current_month(year+"-"+month);
-
-
-                //GETJSON auskommentiert, dann gehts
-                $.getJSON("/temp_jsons/calendar-left-col-2.json?start="+date.start+"&end="+date.end, function (data) {
-
-                    console.log("vorher: " + this.specialDates);
-
-
-
-                    var events = [
-                        {
-                            date: new Date(2013, 0, 8),
-                            data: {message: 'Meeting every day 8 of the month'}
-                        },
-                        {
-                            date: new Date(0, 0, 1),
-                            data: {message: 'Happy New Year!'}
-                        }
-                    ];
-
-
-                    this.specialDates = events;
-
-                    console.log("nachher: " + this.specialDates);
-                    console.log("-----------------------");
-                });
-            }
-        });
-
-
-    });
-
-    function format_incoming_json_date(element) {
-
-        var formatDate = element.date;
-
-        var day = moment(formatDate).format('DD');
-        var month = moment(formatDate).format('MM');
-        var year = moment(formatDate).format('YYYY');
-
-        var date_time = new Date(year, month, day);
-
-        var event = {
-            date: date_time,
-            data: {title: element.title, url: element.url}
-        };
-
-        return event;
-
-    }
 
 
     /* Nächste Events */
@@ -184,27 +78,6 @@ $(document).ready(function() {
             $('.left-col ul.todos').append("<li><a href=\""+value.url+"\">"+value.title+"</li>");
         });
     });
-
-
-    //incoming: string, 2014-Januar e.g.
-    function get_current_month(month) {
-
-        if(month=="") {
-            var start = moment().startOf("month").toISOString();
-            var end = moment().endOf("month").toISOString();
-        }
-        else {
-            var start = moment(month, "YYYY MM").startOf("month").toISOString();
-            var end = moment(month, "YYYY MM").endOf("month").toISOString()
-        }
-
-        var month = {
-            "start":start,
-            "end": end
-        };
-
-        return month;
-    }
 
 
 
@@ -271,7 +144,7 @@ $(document).ready(function() {
         events_source: function(start, end) {
 
             var events = [];
-            $.ajax("temp_jsons/events_dt.json.php?from=" + moment(start).format() + "&to=" + moment(end).format(), {
+            $.ajax("/temp_jsons/events_dt.json.php?from=" + moment(start).format() + "&to=" + moment(end).format(), {
                 dataType: 'json',
                 async: false,
                 success: function(data) {
