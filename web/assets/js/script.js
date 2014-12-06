@@ -271,7 +271,7 @@ $(document).ready(function() {
         events_source: function(start, end) {
 
             var events = [];
-            $.ajax("temp_jsons/events_dt.json.php?from=" + moment(start).format() + "&to=" + moment(end).format(), {
+            $.ajax("/temp_jsons/events_dt.json.php?from=" + moment(start).format() + "&to=" + moment(end).format(), {
                 dataType: 'json',
                 async: false,
                 success: function(data) {
@@ -300,7 +300,7 @@ $(document).ready(function() {
             return events;
         },
         view: 'month',
-        tmpl_path: 'assets/js/libs/bs_calendar/tmpls/',
+        tmpl_path: '/assets/js/libs/bs_calendar/tmpls/',
         tmpl_cache: false,
         day: day,
         onAfterEventsLoad: function(events) {

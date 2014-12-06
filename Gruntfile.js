@@ -34,8 +34,8 @@ module.exports = function (grunt) {
         },
         concat: {
         	dist: {
-              src: ['web/assets/js/ctrl/*.js', 'web/assets/js/model/*.js'],
-			      dest: 'web/assets/js/view_controller.js'
+              src: ['web/assets/js/controller/*.js', 'web/assets/js/model/*.js', 'web/assets/js/MainModule.js'],
+			      dest: 'web/assets/js/mvc.js'
             }
 	    },
 
@@ -86,9 +86,9 @@ module.exports = function (grunt) {
             concat : {
                 files : [
                     [
-                    	'web/assets/js/ctrl/*.js',
+                    	'web/assets/js/controller/*.js',
                     	'web/assets/js/model/*.js',
-                    	'web/assets/js/script.js'
+                        'web/assets/js/MainModule.js',
                     ]
                 ],
                 tasks : [
