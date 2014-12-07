@@ -8,7 +8,7 @@
     <!--BS Calendar-->
     <link rel="stylesheet" href="{{ asset("assets/css/calendar.css") }}">
 
-    <link href="{{ asset("assets/css/style.css") }}" rel="stylesheet">
+    <link href="{{ asset("assets/build/style.css") }}" rel="stylesheet">
     <link href="{{ asset("assets/css/glDatePicker.default.css") }}" rel="stylesheet" type="text/css">
     <link href="{{ asset("assets/components/angular-loading-bar/build/loading-bar.min.css") }}" rel="stylesheet" type="text/css">
 {% endblock %}
@@ -24,29 +24,12 @@
     <![endif]-->
 
     <!--JavaScript-->
-    <script src="{{ asset("assets/components/jquery/dist/jquery.min.js") }}"></script>
-    <script src="{{ asset("assets/components/bootstrap/dist/js/bootstrap.min.js") }}"></script>
-    <script src="{{ asset("assets/components/angular/angular.min.js") }}"></script>
-    <script src="{{ asset("assets/components/restangular/dist/restangular.min.js") }}"></script>
-    <script src="{{ asset("assets/components/angular-loading-bar/build/loading-bar.min.js") }}"></script>
-    <script src="{{ asset("assets/components/angular-ui-tree/dist/angular-ui-tree.min.js") }}"></script>
-
-
-    <script src="{{ asset("assets/js/libs/moment.js") }}"></script>
-
-    <script src="{{ asset("assets/js/libs/glDatePicker.min.js") }}"></script>
-
-    <script type="text/javascript" src="{{ asset("assets/js/libs/bs_calendar/underscore-min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("assets/js/libs/bs_calendar/jstz.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("assets/js/libs/bs_calendar/language/de-DE.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("assets/js/libs/bs_calendar/calendar.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("assets/js/libs/typeahead.bundle.js") }}"></script>
-    <script src="{{ asset("assets/js/script.js") }}"></script>
-
-    <!--AngularJS-->
-
-    <script src="{{ asset("assets/js/mvc.js") }}"></script>
-
+    {% if app.environment == "dev" %}
+    <script src="{{ asset("assets/build/libs.js") }}"></script>
+    <script src="{{ asset("assets/build/main.js") }}"></script>
+    {% else %}
+    <script src="{{ asset("assets/build/main.min.js") }}"></script>
+    {% endif %}
 
 {% endblock %}
 
