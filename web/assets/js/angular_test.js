@@ -1,5 +1,3 @@
-'use strict';
-
 // Declare app level module which depends on views, and components
 var app = angular.module('ommaApp', [
     'restangular',
@@ -62,7 +60,7 @@ app.directive('autosave',[ function () {
     return {
         restrict: 'A',
         link: autosaveController
-    }
+    };
 }]);
 
 app.controller('meetingAgendaController', function($scope, Restangular, agendaManager) {

@@ -13,113 +13,132 @@ module.exports = function (grunt) {
 
     // Configure the app path
 
+    var files = {
+        jsLibs: [
+            './web/assets/components/jquery/jquery.min.js',
+            './web/assets/components/lodash/dist/lodash.underscore.min.js',
+            './web/assets/components/bootstrap/dist/js/bootstrap.min.js',
+            './web/assets/components/angular/angular.min.js',
+            './web/assets/components/restangular/dist/restangular.min.js',
+            './web/assets/components/angular-loading-bar/build/loading-bar.min.js',
+            './web/assets/components/angular-ui-tree/dist/angular-ui-tree.min.js',
+            './web/assets/components/moment/min/moment.min.js',
+            './web/assets/components/glDatePicker/glDatePicker.js',
+            './web/assets/components/bootstrap-calendar/js/calendar.min.js',
+            './web/assets/components/bootstrap-calendar/js/language/de-DE.js',
+            './web/assets/components/typehead.js/dist/typeahead.bundle.min.js'
+        ],
+        js: [
+            './web/assets/js/*.js'
+        ]
+    };
+
     grunt.initConfig({
-        pkg : grunt.file.readJSON('package.json'),
+        pkg: grunt.file.readJSON('package.json'),
         // The actual grunt server settings
-        connect : {
-            options : {
-                port : 9000,
-                livereload : 35729,
+        connect: {
+            options: {
+                port: 9000,
+                livereload: 35729,
                 // Change this to '0.0.0.0' to access the server from outside
-                hostname : '127.0.0.1'
+                hostname: '127.0.0.1'
             },
-            livereload : {
-                options : {
-                    open : true,
-                    base : [
+            livereload: {
+                options: {
+                    open: true,
+                    base: [
                         '.'
                     ]
                 }
             }
         },
-        concat: {
-        	dist: {
-              src: ['web/assets/js/ctrl/*.js', 'web/assets/js/model/*.js'],
-			      dest: 'web/assets/js/view_controller.js'
+        jshint: {
+            options : {
+                jshintrc : '.jshintrc'
+            },
+            all: files.js.concat(['Gruntfile.js'])
+        },
+        /*jshint camelcase: false */
+        concat_sourcemap: {
+            libs: {
+                files: {
+                    'web/assets/build/libs.js': files.jsLibs
+                }
+            },
+            main: {
+                files: {
+                    'web/assets/build/main.js': files.js
+                }
             }
-	    },
-
-
-	    /*uglify: {
-	      my_target: {
-	        files: {
-	          'web/assets/js/script.min.js': ['web/assets/js/script.js']
-	        }
-	      }
-	    },
-	    cssmin: {
-	      combine: {
-	        files: {
-	          'web/assets/css/style.min.css': ['web/assets/css/style.css']
-	        }
-	      }
-	    },*/
-        less : {
+        },
+        concat: {
+            build: {
+                src: files.jsLibs.concat([
+                    'web/assets/build/main.min.js'
+                ]),
+                dest: 'web/assets/build/build.js'
+            },
+            dist: {
+                src: ['web/assets/js/ctrl/*.js', 'web/assets/js/model/*.js'],
+                dest: 'web/assets/js/view_controller.js'
+            }
+        },
+        uglify: {
+            options: {},
             prod: {
                 options: {
-                    paths: ["css"]
+                    mangle: false // @TODO: https://stackoverflow.com/questions/17238759/angular-module-minification-bug
                 },
                 files: {
-                    "web/assets/css/style.css": "web/assets/less/basic.less"
+                    'web/assets/build/main.min.js': files.js
+                }
+            }
+        },
+        less: {
+            prod: {
+                options: {
+                    paths: ['css']
+                },
+                files: {
+                    'web/assets/build/style.css': 'web/assets/less/basic.less'
                 }
             },
             dev: {
                 options: {
-                    paths: ["css"],
+                    paths: ['css'],
                     sourceMap: true
                 },
                 files: {
-                    "web/assets/css/style.css": "web/assets/less/basic.less"
+                    'web/assets/build/style.css': 'web/assets/less/basic.less'
                 }
             }
         },
-        watch : {
+        watch: {
             // Watch less files for linting
-            less : {
-                files : [
-                    "web/assets/less/*.less"
+            less: {
+                files: [
+                    'web/assets/less/*.less'
                 ],
                 tasks: [
                     'less:dev'
                 ]
             },
-            concat : {
-                files : [
-                    [
-                    	'web/assets/js/ctrl/*.js',
-                    	'web/assets/js/model/*.js',
-                    	'web/assets/js/script.js'
-                    ]
-                ],
-                tasks : [
-                    'concat'
+            js: {
+                files: files.js,
+                tasks: [
+                    'newer:jshint',
+                    'uglify:dev'
                 ]
             },
-            /*uglify : {
-                files : [
-                    'web/assets/js/script.js'
-                ],
-                tasks : [
-                    'uglify'
-                ]
-            },
-            cssmin : {
-                files : [
-                    'web/assets/css/style.css'
-                ],
-                tasks : [
-                    'cssmin'
-                ]
-            },*/
 
             // Live reload
-            reload : {
-                options : {
-                    livereload : '<%= connect.options.livereload %>'
+            reload: {
+                options: {
+                    livereload: '<%= connect.options.livereload %>'
                 },
-                files : [
+                files: [
                     '<%= watch.less.files %>',
-                    '<%= watch.concat.files %>',
+                    '<%= watch.js.files %>',
                     /*'<%= watch.uglify.files %>',*/
                     /*'<%= watch.cssmin.files %>',*/
                     'web/**/*.html'
@@ -136,11 +155,17 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('default', [
+        'newer:jshint',
+        'concat_sourcemap:libs',
+        'concat_sourcemap:main',
         'less:dev',
         'serve'
     ]);
 
     grunt.registerTask('build', [
-        'less:prod'
+        'newer:jshint',
+        'less:prod',
+        'uglify:prod',
+        'concat:build'
     ]);
 };
