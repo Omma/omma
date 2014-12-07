@@ -8,7 +8,7 @@ use Omma\AppBundle\Entity\MeetingRecurring;
 /**
  *
  * @author Adrian Woeltche
- *        
+ *
  */
 class MeetingRecurringController extends FOSRestController implements ClassResourceInterface
 {
@@ -29,7 +29,7 @@ class MeetingRecurringController extends FOSRestController implements ClassResou
         $meetingRecurring = new MeetingRecurring();
         $meetingRecurring->setMeeting($meeting);
         $meeting->addMeetingRecurring($meetingRecurring);
-        
+
         return $this->processForm($request, $meetingRecurring);
     }
 
@@ -46,7 +46,7 @@ class MeetingRecurringController extends FOSRestController implements ClassResou
     public function deleteAction(Meeting $meeting, MeetingRecurring $meetingRecurring)
     {
         $this->get("omma.app.manager.meeting_recurring")->delete($meetingRecurring);
-        
+
         return $this->view("");
     }
 
@@ -58,13 +58,13 @@ class MeetingRecurringController extends FOSRestController implements ClassResou
             "csrf_protection" => false
         ));
         $form->handleRequest($request);
-        
+
         if ($form->isValid()) {
             $this->get("omma.app.manager_recurring")->save($meetingRecurring);
-            
+
             return $this->view($meetingRecurring);
         }
-        
+
         return $this->view($form, 400);
     }
 }

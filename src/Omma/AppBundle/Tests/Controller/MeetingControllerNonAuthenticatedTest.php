@@ -6,7 +6,6 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 /**
  *
  * @author Adrian Woeltche
- *        
  */
 class MeetingControllerNonAuthenticatedTest extends WebTestCase
 {
