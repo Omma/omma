@@ -6,7 +6,6 @@ use Omma\AppBundle\Tests\AbstractAuthenticatedTest;
 /**
  *
  * @author Adrian Woeltche
- *
  */
 class MeetingProtocolTest extends AbstractAuthenticatedTest
 {
@@ -20,7 +19,7 @@ class MeetingProtocolTest extends AbstractAuthenticatedTest
         ));
 
         $serializer = $this->getContainer()->get("jms_serializer");
-        $meeting = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Meeting", "json');
+        $meeting = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Meeting', "json");
 
         $content = $this->pushContent("/meetings/" . $meeting->getId() . "/protocols", array(
             "text" => "ProtocolText",
@@ -28,7 +27,7 @@ class MeetingProtocolTest extends AbstractAuthenticatedTest
         ));
 
         $serializer = $this->getContainer()->get("jms_serializer");
-        $protocol = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Protocol", "json');
+        $protocol = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Protocol', "json");
 
         $this->assertInstanceOf('Omma\AppBundle\Entity\Protocol', $protocol);
     }

@@ -1,6 +1,7 @@
 <?php
 namespace Omma\AppBundle\Controller;
 
+use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Omma\AppBundle\Entity\MeetingRecurring;

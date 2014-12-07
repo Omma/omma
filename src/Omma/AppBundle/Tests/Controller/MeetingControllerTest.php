@@ -35,7 +35,7 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
         ));
 
         $serializer = $this->getContainer()->get("jms_serializer");
-        $meeting = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Meeting", "json');
+        $meeting = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Meeting', "json");
 
         $this->assertInstanceOf('Omma\AppBundle\Entity\Meeting', $meeting);
 
@@ -49,7 +49,7 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
 
         $newContent = $this->fetchContent("/meetings/" . $meeting->getId());
 
-        $newMeeting = $serializer->deserialize($newContent, 'Omma\AppBundle\Entity\Meeting", "json');
+        $newMeeting = $serializer->deserialize($newContent, 'Omma\AppBundle\Entity\Meeting', "json");
 
         $this->assertInstanceOf('Omma\AppBundle\Entity\Meeting', $newMeeting);
 
@@ -80,7 +80,7 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
         ));
 
         $serializer = $this->getContainer()->get("jms_serializer");
-        $meeting = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Meeting", "json');
+        $meeting = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Meeting', "json");
 
         $this->assertInstanceOf('Omma\AppBundle\Entity\Meeting', $meeting);
 
@@ -99,7 +99,7 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
             "dateEnd" => $editedDateEnd
         ), "PUT");
 
-        $editedMeeting = $serializer->deserialize($editedContent, 'Omma\AppBundle\Entity\Meeting", "json');
+        $editedMeeting = $serializer->deserialize($editedContent, 'Omma\AppBundle\Entity\Meeting', "json");
 
         $this->assertInstanceOf('Omma\AppBundle\Entity\Meeting', $editedMeeting);
 
@@ -121,7 +121,7 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
         ));
 
         $serializer = $this->getContainer()->get("jms_serializer");
-        $meeting = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Meeting", "json');
+        $meeting = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Meeting', "json");
 
         $this->assertInstanceOf('Omma\AppBundle\Entity\Meeting', $meeting);
 
