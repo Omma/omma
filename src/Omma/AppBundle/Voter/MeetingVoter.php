@@ -29,7 +29,7 @@ class MeetingVoter implements VoterInterface
     public function supportsClass($class)
     {
         return in_array($class, array(
-            "Omma\\AppBundle\\Entity\\Meeting"
+            'Omma\AppBundle\Entity\Meeting'
         ));
     }
 

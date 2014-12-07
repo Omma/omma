@@ -4,11 +4,13 @@ namespace Omma\AppBundle\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Omma\AppBundle\Entity\MeetingRecurring;
+use Omma\AppBundle\Entity\Meeting;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @RouteResource("Recurring")
  *
  * @author Adrian Woeltche
- *
  */
 class MeetingRecurringController extends FOSRestController implements ClassResourceInterface
 {

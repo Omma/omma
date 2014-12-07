@@ -35,9 +35,9 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
         ));
 
         $serializer = $this->getContainer()->get("jms_serializer");
-        $meeting = $serializer->deserialize($content, "Omma\AppBundle\Entity\Meeting", "json");
+        $meeting = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Meeting", "json');
 
-        $this->assertInstanceOf("Omma\AppBundle\Entity\Meeting", $meeting);
+        $this->assertInstanceOf('Omma\AppBundle\Entity\Meeting', $meeting);
 
         $this->assertSame("TestMeeting", $meeting->getName());
 
@@ -49,9 +49,9 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
 
         $newContent = $this->fetchContent("/meetings/" . $meeting->getId());
 
-        $newMeeting = $serializer->deserialize($newContent, "Omma\AppBundle\Entity\Meeting", "json");
+        $newMeeting = $serializer->deserialize($newContent, 'Omma\AppBundle\Entity\Meeting", "json');
 
-        $this->assertInstanceOf("Omma\AppBundle\Entity\Meeting", $newMeeting);
+        $this->assertInstanceOf('Omma\AppBundle\Entity\Meeting', $newMeeting);
 
         $this->assertSame($meeting->getId(), $newMeeting->getId());
 
@@ -80,9 +80,9 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
         ));
 
         $serializer = $this->getContainer()->get("jms_serializer");
-        $meeting = $serializer->deserialize($content, "Omma\AppBundle\Entity\Meeting", "json");
+        $meeting = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Meeting", "json');
 
-        $this->assertInstanceOf("Omma\AppBundle\Entity\Meeting", $meeting);
+        $this->assertInstanceOf('Omma\AppBundle\Entity\Meeting', $meeting);
 
         $meeting->setName("EditedMeeting");
         $meeting->setDateStart(\DateTime::createFromFormat("Y-m-d H:i:s", "2014-01-01 11:30:00"));
@@ -99,9 +99,9 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
             "dateEnd" => $editedDateEnd
         ), "PUT");
 
-        $editedMeeting = $serializer->deserialize($editedContent, "Omma\AppBundle\Entity\Meeting", "json");
+        $editedMeeting = $serializer->deserialize($editedContent, 'Omma\AppBundle\Entity\Meeting", "json');
 
-        $this->assertInstanceOf("Omma\AppBundle\Entity\Meeting", $editedMeeting);
+        $this->assertInstanceOf('Omma\AppBundle\Entity\Meeting', $editedMeeting);
 
         $this->assertSame("EditedMeeting", $editedMeeting->getName());
 
@@ -121,9 +121,9 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
         ));
 
         $serializer = $this->getContainer()->get("jms_serializer");
-        $meeting = $serializer->deserialize($content, "Omma\AppBundle\Entity\Meeting", "json");
+        $meeting = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Meeting", "json');
 
-        $this->assertInstanceOf("Omma\AppBundle\Entity\Meeting", $meeting);
+        $this->assertInstanceOf('Omma\AppBundle\Entity\Meeting', $meeting);
 
         $id = $meeting->getId();
         $deletedContent = $this->pushContent("/meetings/" . $id, array(), "DELETE");

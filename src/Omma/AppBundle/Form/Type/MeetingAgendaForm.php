@@ -7,21 +7,19 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  *
- *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 class MeetingAgendaForm extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add("item")
+        $builder->add("item")
             ->add("sorting_order", "integer")
             ->add("parent", "entity", array(
-                "class"    => "Omma\AppBundle\Entity\Agenda",
-                "property" => "item"
-            ))
-        ;
+            "class" => 'Omma\AppBundle\Entity\Agenda',
+            "property" => "item"
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

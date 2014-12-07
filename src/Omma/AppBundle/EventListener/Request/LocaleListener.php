@@ -2,7 +2,6 @@
 namespace Omma\AppBundle\EventListener\Request;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -10,12 +9,13 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  *
- *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 class LocaleListener implements EventSubscriberInterface
 {
+
     /**
+     *
      * @var array
      */
     protected $languages;
@@ -32,14 +32,14 @@ class LocaleListener implements EventSubscriberInterface
         }
 
         $request = $event->getRequest();
-        if (!$request->hasSession()) {
+        if (! $request->hasSession()) {
             return;
         }
 
         $session = $request->getSession();
 
         if (null !== ($locale = $session->get("_locale"))) {
-            if (!in_array($locale, $this->languages)) {
+            if (! in_array($locale, $this->languages)) {
                 throw new NotFoundHttpException("invalid locale");
             }
             $request->setLocale($locale);
@@ -55,7 +55,7 @@ class LocaleListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            KernelEvents::REQUEST => "onKernelRequest",
+            KernelEvents::REQUEST => "onKernelRequest"
         );
     }
 }

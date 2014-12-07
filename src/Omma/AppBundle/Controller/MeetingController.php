@@ -7,7 +7,6 @@ use Omma\AppBundle\Entity\Meeting;
 use Omma\AppBundle\Form\Type\MeetingForm;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Application\Sonata\UserBundle\Entity\User;
 
 /**
  *
@@ -103,8 +102,6 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      */
     public function deleteAction(Meeting $meeting)
     {
-
-
         $this->get("omma.app.manager.meeting")->delete($meeting);
 
         return $this->view("");

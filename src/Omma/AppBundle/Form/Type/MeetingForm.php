@@ -28,7 +28,7 @@ class MeetingForm extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            "data_class" => "Omma\\AppBundle\\Entity\\Meeting"
+            "data_class" => 'Omma\AppBundle\Entity\Meeting'
         ));
     }
 
