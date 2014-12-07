@@ -24,13 +24,11 @@ class Meeting extends Base
      * @ORM\GeneratedValue(strategy="AUTO")
      *
      * @var integer
-     *
-     *
      */
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\Application\Sonata\UserBundle\Entity\User", inversedBy="meetings")
+     * @ORM\ManyToMany(targetEntity="\Application\Sonata\UserBundle\Entity\User", inversedBy="meetings", orphanRemoval=true)
      * @ORM\JoinTable(name="omma_meeting_users")
      *
      * @var \Application\Sonata\UserBundle\Entity\User
@@ -38,7 +36,7 @@ class Meeting extends Base
     private $users;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Group", inversedBy="meetings")
+     * @ORM\ManyToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Group", inversedBy="meetings", orphanRemoval=true)
      * @ORM\JoinTable(name="omma_meeting_groups")
      *
      * @var \Application\Sonata\UserBundle\Entity\Group
@@ -153,7 +151,7 @@ class Meeting extends Base
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -177,7 +175,7 @@ class Meeting extends Base
     public function setDateStart($dateStart)
     {
         $this->dateStart = $dateStart;
-        
+
         return $this;
     }
 
@@ -201,7 +199,7 @@ class Meeting extends Base
     public function setDateEnd($dateEnd)
     {
         $this->dateEnd = $dateEnd;
-        
+
         return $this;
     }
 
@@ -225,7 +223,7 @@ class Meeting extends Base
     public function addUser(\Application\Sonata\UserBundle\Entity\User $users)
     {
         $this->users[] = $users;
-        
+
         return $this;
     }
 
@@ -260,7 +258,7 @@ class Meeting extends Base
     public function addGroup(\Application\Sonata\UserBundle\Entity\Group $groups)
     {
         $this->groups[] = $groups;
-        
+
         return $this;
     }
 
@@ -295,7 +293,7 @@ class Meeting extends Base
     public function addMeetingRecurring(\Omma\AppBundle\Entity\MeetingRecurring $meetingRecurrings)
     {
         $this->meetingRecurrings[] = $meetingRecurrings;
-        
+
         return $this;
     }
 
@@ -330,7 +328,7 @@ class Meeting extends Base
     public function addTask(\Omma\AppBundle\Entity\Task $tasks)
     {
         $this->tasks[] = $tasks;
-        
+
         return $this;
     }
 
@@ -365,7 +363,7 @@ class Meeting extends Base
     public function setProtocol(\Omma\AppBundle\Entity\Protocol $protocol = null)
     {
         $this->protocol = $protocol;
-        
+
         return $this;
     }
 
@@ -389,7 +387,7 @@ class Meeting extends Base
     public function addFile(\Omma\AppBundle\Entity\File $files)
     {
         $this->files[] = $files;
-        
+
         return $this;
     }
 
@@ -424,7 +422,7 @@ class Meeting extends Base
     public function setPrev(\Omma\AppBundle\Entity\Meeting $prev = null)
     {
         $this->prev = $prev;
-        
+
         return $this;
     }
 
@@ -448,7 +446,7 @@ class Meeting extends Base
     public function setNext(\Omma\AppBundle\Entity\Meeting $next = null)
     {
         $this->next = $next;
-        
+
         return $this;
     }
 
@@ -472,7 +470,7 @@ class Meeting extends Base
     public function addAgenda(\Omma\AppBundle\Entity\Agenda $agendas)
     {
         $this->agendas[] = $agendas;
-        
+
         return $this;
     }
 

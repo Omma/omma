@@ -30,7 +30,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
                 ->innerJoin("m.users", "u")
                 ->where("u.id = :userId")
                 ->setParameter("userId", $user->getId());
-            
+
             return $query->getQuery()->getResult();
         }
     }
@@ -52,13 +52,13 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
             ->andWhere("m.dateEnd BETWEEN :dateStart AND :dateEnd")
             ->setParameter("dateStart", $dateStart)
             ->setParameter("dateEnd", $dateEnd);
-        
+
         if (! $this->get("security.context")->isGranted("ROLE_SUPER_ADMIN")) {
             $query->innerJoin("m.users", "u")
                 ->andWhere("u.id = :userId")
                 ->setParameter("userId", $user->getId());
         }
-        
+
         return $query->getQuery()->getResult();
     }
 
@@ -72,11 +72,11 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     public function cpostAction(Request $request)
     {
         $user = $this->getUser();
-        
+
         $meeting = new Meeting();
         $meeting->addUser($user);
         $user->addMeeting($meeting);
-        
+
         return $this->processForm($request, $meeting);
     }
 
@@ -103,13 +103,10 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      */
     public function deleteAction(Meeting $meeting)
     {
-        foreach ($meeting->getUsers() as $user) {
-            $user->removeMeeting($meeting);
-            $this->get("omma.user.orm.user_manager")->getRepository()->save($user);
-        }
-        
+
+
         $this->get("omma.app.manager.meeting")->delete($meeting);
-        
+
         return $this->view("");
     }
 
@@ -130,13 +127,13 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
             "csrf_protection" => false
         ));
         $form->handleRequest($request);
-        
+
         if ($form->isValid()) {
             $this->get("omma.app.manager.meeting")->save($meeting);
-            
+
             return $this->view($meeting);
         }
-        
+
         return $this->view($form, 400);
     }
 

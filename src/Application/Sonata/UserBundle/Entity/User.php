@@ -36,14 +36,16 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @ORM\ManyToMany(targetEntity="\Omma\AppBundle\Entity\Meeting", mappedBy="users", orphanRemoval=true)
      *
-     * @var \Omma\AppBundle\Entity\Meeting @ORM\ManyToMany(targetEntity="\Omma\AppBundle\Entity\Meeting", mappedBy="users", orphanRemoval=true)
+     * @var \Omma\AppBundle\Entity\Meeting
      */
     protected $meetings;
 
     /**
+     * @ORM\OneToMany(targetEntity="\Omma\AppBundle\Entity\Task", mappedBy="user", orphanRemoval=true)
      *
-     * @var \Omma\AppBundle\Entity\Task @ORM\OneToMany(targetEntity="\Omma\AppBundle\Entity\Task", mappedBy="user", orphanRemoval=true)
+     * @var \Omma\AppBundle\Entity\Task
      */
     protected $tasks;
 
@@ -70,20 +72,20 @@ class User extends BaseUser
     /**
      * Add meetings
      *
-     * @param \Omma\AppBundle\Entity\Meeting $meetings            
+     * @param \Omma\AppBundle\Entity\Meeting $meetings
      * @return User
      */
     public function addMeeting(\Omma\AppBundle\Entity\Meeting $meetings)
     {
         $this->meetings[] = $meetings;
-        
+
         return $this;
     }
 
     /**
      * Remove meetings
      *
-     * @param \Omma\AppBundle\Entity\Meeting $meetings            
+     * @param \Omma\AppBundle\Entity\Meeting $meetings
      */
     public function removeMeeting(\Omma\AppBundle\Entity\Meeting $meetings)
     {
@@ -103,20 +105,20 @@ class User extends BaseUser
     /**
      * Add tasks
      *
-     * @param \Omma\AppBundle\Entity\Task $tasks            
+     * @param \Omma\AppBundle\Entity\Task $tasks
      * @return User
      */
     public function addTask(\Omma\AppBundle\Entity\Task $tasks)
     {
         $this->tasks[] = $tasks;
-        
+
         return $this;
     }
 
     /**
      * Remove tasks
      *
-     * @param \Omma\AppBundle\Entity\Task $tasks            
+     * @param \Omma\AppBundle\Entity\Task $tasks
      */
     public function removeTask(\Omma\AppBundle\Entity\Task $tasks)
     {

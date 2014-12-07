@@ -6,7 +6,7 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 /**
  *
  * @author Adrian Woeltche
- *        
+ *
  */
 abstract class AbstractAuthenticatedTest extends WebTestCase
 {
@@ -15,12 +15,11 @@ abstract class AbstractAuthenticatedTest extends WebTestCase
 
     public function setUp()
     {
-        if (! self::$fixturesLoaded) {
-            $fixtureManager = $this->getContainer()->get("h4cc_alice_fixtures.manager");
-            $fixtureManager->load(require (__DIR__ . "/../DataFixtures/Alice/OmmaDataFixtureSet.php"));
-            self::$fixturesLoaded = true;
-        }
-        
+        $this->loadFixtures(array());
+
+        $fixtureManager = $this->getContainer()->get("h4cc_alice_fixtures.manager");
+        $fixtureManager->load(require (__DIR__ . "/../DataFixtures/Alice/OmmaDataFixtureSet.php"));
+
         $this->login("admin");
     }
 
@@ -28,7 +27,7 @@ abstract class AbstractAuthenticatedTest extends WebTestCase
     {
         $userManager = $this->getContainer()->get("omma.user.orm.user_manager");
         $user = $userManager->findUserByUsername($username);
-        
+
         $this->loginAs($user, "user");
     }
 
@@ -36,12 +35,12 @@ abstract class AbstractAuthenticatedTest extends WebTestCase
     {
         $client = $this->makeClient($authentication);
         $client->request($method, $path, $parameters);
-        
+
         $content = $client->getResponse()->getContent();
         if (is_bool($success)) {
             $this->isSuccessful($client->getResponse(), $success);
         }
-        
+
         return $content;
     }
 }

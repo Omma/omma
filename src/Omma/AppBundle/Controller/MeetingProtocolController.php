@@ -34,7 +34,7 @@ class MeetingProtocolController extends FOSRestController implements ClassResour
         $protocol = new Protocol();
         $protocol->setMeeting($meeting);
         $meeting->setProtocol($protocol);
-        
+
         return $this->processForm($request, $protocol);
     }
 
@@ -51,7 +51,7 @@ class MeetingProtocolController extends FOSRestController implements ClassResour
     public function deleteAction(Meeting $meeting, Protocol $protocol)
     {
         $this->get("omma.app.manager.protocol")->delete($protocol);
-        
+
         return $this->view("");
     }
 
@@ -63,13 +63,13 @@ class MeetingProtocolController extends FOSRestController implements ClassResour
             "csrf_protection" => false
         ));
         $form->handleRequest($request);
-        
+
         if ($form->isValid()) {
             $this->get("omma.app.manager.protocol")->save($protocol);
-            
+
             return $this->view($protocol);
         }
-        
+
         return $this->view($form, 400);
     }
 }
