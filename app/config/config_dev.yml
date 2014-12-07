@@ -39,4 +39,5 @@ h4cc_alice_fixtures:
     locale: de_DE
     seed: 1
     do_flush: true
+    schema_tool: null
     doctrine: orm
