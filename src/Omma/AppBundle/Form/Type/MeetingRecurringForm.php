@@ -17,10 +17,10 @@ class MeetingRecurringForm extends AbstractType
         $builder
             ->add("type", "integer")
             ->add("recurring", "integer")
-            ->add("dateStart", "datetime", array(
+            ->add("date_start", "datetime", array(
                 "widget" => "single_text",
             ))
-            ->add("dateEnd", "datetime", array(
+            ->add("date_end", "datetime", array(
                 "widget" => "single_text",
             ))
         ;

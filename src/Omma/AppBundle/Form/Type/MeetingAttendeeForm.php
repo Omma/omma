@@ -17,7 +17,7 @@ class MeetingAttendeeForm extends AbstractType
     {
         $builder
             ->add("user", "entity", array(
-                "class" => "Application\Sonata\UserBundle\Entity\User",
+                "class" => 'Application\Sonata\UserBundle\Entity\User',
             ))
             ->add("mandatory")
             ->add("status", "choice", array(

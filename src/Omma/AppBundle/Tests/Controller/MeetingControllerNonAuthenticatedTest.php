@@ -12,11 +12,11 @@ class MeetingControllerNonAuthenticatedTest extends WebTestCase
 
     public function testCget()
     {
-        $this->fetchContent("/meetings", "GET", false, false);
+        $this->fetchContent("/meetings.json", "GET", false, false);
     }
 
     public function testGet()
     {
-        $this->fetchContent("/meetings/1", "GET", false, false);
+        $this->fetchContent("/meetings/1.json", "GET", false, false);
     }
 }

@@ -28,8 +28,10 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
         } else {
             $query = $this->get("omma.app.manager.meeting")->createQueryBuilder("m");
             $query->select("m")
-                ->innerJoin("m.users", "u")
-                ->where("u.id = :userId")
+                ->innerJoin("m.attendees", "a")
+                ->andWhere("a.meeting = m.id")
+                ->innerJoin("a.user", "u")
+                ->andWhere("u.id = :userId")
                 ->setParameter("userId", $user->getId());
 
             return $query->getQuery()->getResult();
@@ -58,7 +60,9 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
             ->setParameter("dateEnd", $dateEnd);
 
         if (! $this->get("security.context")->isGranted("ROLE_SUPER_ADMIN")) {
-            $query->innerJoin("m.users", "u")
+            $query->innerJoin("m.attendees", "a")
+                ->andWhere("a.meeting = m.id")
+                ->innerJoin("a.user", "u")
                 ->andWhere("u.id = :userId")
                 ->setParameter("userId", $user->getId());
         }

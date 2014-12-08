@@ -29,7 +29,7 @@ class Meeting extends Base
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Omma\AppBundle\Entity\Attendee", mappedBy="meeting")
+     * @ORM\OneToMany(targetEntity="Omma\AppBundle\Entity\Attendee", mappedBy="meeting", orphanRemoval=true, cascade="all")
      *
      * @var ArrayCollection
      */

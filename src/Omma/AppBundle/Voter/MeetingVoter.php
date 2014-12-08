@@ -62,15 +62,19 @@ class MeetingVoter implements VoterInterface
         switch ($attribute) {
             case self::VIEW:
                 if ($object instanceof Meeting) {
-                    if ($object->getUsers()->contains($user)) {
-                        return VoterInterface::ACCESS_GRANTED;
+                    foreach ($object->getAttendees() as $attendee) {
+                        if ($attendee->getUser() === $user) {
+                            return VoterInterface::ACCESS_GRANTED;
+                        }
                     }
                 }
                 break;
             case self::EDIT:
                 if ($object instanceof Meeting) {
-                    if ($object->getUsers()->contains($user)) {
-                        return VoterInterface::ACCESS_GRANTED;
+                    foreach ($object->getAttendees() as $attendee) {
+                        if ($attendee->getUser() === $user) {
+                            return VoterInterface::ACCESS_GRANTED;
+                        }
                     }
                 }
                 break;

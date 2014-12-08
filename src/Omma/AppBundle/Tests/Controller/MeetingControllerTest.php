@@ -12,26 +12,26 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
 
     public function testCgetAdmin()
     {
-        $this->fetchContent("/meetings");
+        $this->fetchContent("/meetings.json");
     }
 
     public function testCgetUser()
     {
         $this->login("test");
-        $this->fetchContent("/meetings");
+        $this->fetchContent("/meetings.json");
     }
 
     public function testGetAdmin()
     {
-        $this->fetchContent("/meetings/1");
+        $this->fetchContent("/meetings/1.json");
     }
 
     public function testCpost()
     {
-        $content = $this->pushContent("/meetings", array(
+        $content = $this->pushContent("/meetings.json", array(
             "name" => "TestMeeting",
-            "dateStart" => "2014-01-01 08:00:00",
-            "dateEnd" => "2014-01-01 09:30:00"
+            "date_start" => "2014-01-01 08:00:00",
+            "date_end" => "2014-01-01 09:30:00"
         ));
 
         $serializer = $this->getContainer()->get("jms_serializer");
@@ -47,7 +47,7 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
         $dateEnd = $meeting->getDateEnd()->format("Y-m-d H:i:s");
         $this->assertSame("2014-01-01 09:30:00", $dateEnd);
 
-        $newContent = $this->fetchContent("/meetings/" . $meeting->getId());
+        $newContent = $this->fetchContent("/meetings/" . $meeting->getId() . ".json");
 
         $newMeeting = $serializer->deserialize($newContent, 'Omma\AppBundle\Entity\Meeting', "json");
 
@@ -66,7 +66,7 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
 
     public function testCpostInvalid()
     {
-        $content = $this->pushContent("/meetings", array(
+        $content = $this->pushContent("/meetings.json", array(
             "name" => "InvalidFormMeeting"
         ), "POST", false, false);
     }
@@ -75,10 +75,10 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
     {
         $this->login("test");
 
-        $content = $this->pushContent("/meetings", array(
+        $content = $this->pushContent("/meetings.json", array(
             "name" => "EditMeeting",
-            "dateStart" => "2014-01-01 09:45:00",
-            "dateEnd" => "2014-01-01 11:15:00"
+            "date_start" => "2014-01-01 09:45:00",
+            "date_end" => "2014-01-01 11:15:00"
         ));
 
         $serializer = $this->getContainer()->get("jms_serializer");
@@ -95,10 +95,10 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
         $editedDateStart = $meeting->getDateStart()->format("Y-m-d H:i:s");
         $editedDateEnd = $meeting->getDateEnd()->format("Y-m-d H:i:s");
 
-        $editedContent = $this->pushContent("/meetings/" . $id, array(
+        $editedContent = $this->pushContent("/meetings/" . $id . ".json", array(
             "name" => $meeting->getName(),
-            "dateStart" => $editedDateStart,
-            "dateEnd" => $editedDateEnd
+            "date_start" => $editedDateStart,
+            "date_end" => $editedDateEnd
         ), "PUT");
 
         $editedMeeting = $serializer->deserialize($editedContent, 'Omma\AppBundle\Entity\Meeting', "json");
@@ -116,10 +116,10 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
 
     public function testDelete()
     {
-        $content = $this->pushContent("/meetings", array(
+        $content = $this->pushContent("/meetings.json", array(
             "name" => "DeleteMeeting",
-            "dateStart" => "2014-01-01 14:00:00",
-            "dateEnd" => "2014-01-01 15:30"
+            "date_start" => "2014-01-01 14:00:00",
+            "date_end" => "2014-01-01 15:30"
         ));
 
         $serializer = $this->getContainer()->get("jms_serializer");
@@ -128,8 +128,8 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
         $this->assertInstanceOf('Omma\AppBundle\Entity\Meeting', $meeting);
 
         $id = $meeting->getId();
-        $deletedContent = $this->pushContent("/meetings/" . $id, array(), "DELETE");
+        $deletedContent = $this->pushContent("/meetings/" . $id . ".json", array(), "DELETE");
 
-        $this->fetchContent("/meetings/" . $id, "GET", false, false);
+        $this->fetchContent("/meetings/" . $id . ".json", "GET", false, false);
     }
 }
