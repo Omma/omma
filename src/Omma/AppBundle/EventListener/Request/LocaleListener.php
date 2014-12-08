@@ -32,14 +32,14 @@ class LocaleListener implements EventSubscriberInterface
         }
 
         $request = $event->getRequest();
-        if (! $request->hasSession()) {
+        if (!$request->hasSession()) {
             return;
         }
 
         $session = $request->getSession();
 
         if (null !== ($locale = $session->get("_locale"))) {
-            if (! in_array($locale, $this->languages)) {
+            if (!in_array($locale, $this->languages)) {
                 throw new NotFoundHttpException("invalid locale");
             }
             $request->setLocale($locale);
@@ -55,7 +55,7 @@ class LocaleListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            KernelEvents::REQUEST => "onKernelRequest"
+            KernelEvents::REQUEST => "onKernelRequest",
         );
     }
 }

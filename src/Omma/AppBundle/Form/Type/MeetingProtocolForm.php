@@ -14,13 +14,16 @@ class MeetingProtocolForm extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add("text")->add("final");
+        $builder
+            ->add("text")
+            ->add("final")
+        ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            "data_class" => 'Omma\AppBundle\Entity\Protocol'
+            "data_class" => 'Omma\AppBundle\Entity\Protocol',
         ));
     }
 
