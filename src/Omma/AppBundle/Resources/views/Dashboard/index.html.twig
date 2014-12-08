@@ -1,1 +1,12 @@
 {% extends "OmmaAppBundle::layout.html.twig" %}
+
+{% block side_calendar %}
+{% endblock %}
+
+{% block content %}
+    <ul>
+    {% for meeting in meetings %}
+        <li><a href="{{ path("omma_app_get_meeting", {"meeting": meeting.id}) }}">{{ meeting.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

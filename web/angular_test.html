@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="ommaApp">
 <head>
 
 
@@ -69,23 +69,24 @@
         <div class="col-md-4 left-col">
             <div class="row">
                 <div class="col-xs-5">
+
+                    <div class="meetings-test" ng-controller="testCtrl">
+                        <div class="control-group">
+                            <input type="text" name="name" ng-model="meeting.name" />
+                        </div>
+                        <div class="control-group">
+                            <input type="text" name="date_start" ng-model="meeting.date_start" />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" ng-click="save()">Speichern</button>
+                    </div>
+
                     <div class="kalender">
                         <input id="calendar-left-col" type="text" gldp-id="left-col-date" style="visibility:hidden"/>
 
                         <div gldp-el="left-col-date"
                              style="width:100%; height:300px; position:relative; top:0px;left:0px;">
                         </div>
-
-
-                        <div class="day-events" style="display: none">
-                            <h4>Events an diesem Tag:</h4>
-                            <div id="insert-events">
-                                <div class="no-events" style="display: none;">Keine Events an diesem Tag</div>
-                                <ul></ul>
-                            </div>
-                        </div>
-
-
                     </div>
                 </div>
                 <div class="col-xs-4">
@@ -180,9 +181,12 @@
 
 <!--JavaScript-->
 <script src="assets/components/jquery/dist/jquery.min.js"></script>
-<script src="assets/js/libs/bootstrap.min.js"></script>
-<script src="assets/js/libs/angular.min.js"></script>
+<script src="assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="assets/components/angular/angular.min.js"></script>
+<script src="assets/components/angular-route/angular-route.min.js"></script>
+<script src="assets/components/restangular/dist/restangular.min.js"></script>
 
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
 <script src="assets/js/libs/moment.js"></script>
 
@@ -193,7 +197,7 @@
 <script type="text/javascript" src="assets/js/libs/bs_calendar/language/de-DE.js"></script>
 <script type="text/javascript" src="assets/js/libs/bs_calendar/calendar.js"></script>
 <script type="text/javascript" src="assets/js/libs/typeahead.bundle.js"></script>
-<script src="assets/js/script.js"></script>
+<script src="assets/js/angular_test.js"></script>
 
 </body>
 </html>

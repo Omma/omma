@@ -40,7 +40,7 @@ class LocaleListener implements EventSubscriberInterface
 
         if (null !== ($locale = $session->get("_locale"))) {
             if (!in_array($locale, $this->languages)) {
-                throw new NotFoundHttpException("invalid locale");
+                $locale = reset($this->languages);
             }
             $request->setLocale($locale);
 

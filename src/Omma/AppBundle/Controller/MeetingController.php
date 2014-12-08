@@ -10,7 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  *
- * @author Florian Pfitzer <pfitzer@w3p.cc>, Adrian Woeltche
+ *
+ * @author Florian Pfitzer <pfitzer@w3p.cc>
+ * @author Adrian Woeltche
  */
 class MeetingController extends FOSRestController implements ClassResourceInterface
 {
@@ -65,7 +67,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      * @Security("is_fully_authenticated()")
      *
      * @param Request $request
-     *            Request
+     *
      * @return \Symfony\Component\Form\Form
      */
     public function cpostAction(Request $request)
@@ -83,9 +85,8 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      * @Security("is_fully_authenticated() and is_granted('edit', meeting)")
      *
      * @param Request $request
-     *            Request
      * @param Meeting $meeting
-     *            Meeting
+     *
      * @return \FOS\RestBundle\View\View
      */
     public function putAction(Request $request, Meeting $meeting)
@@ -97,7 +98,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      * @Security("is_fully_authenticated() and is_granted('edit', meeting)")
      *
      * @param Meeting $meeting
-     *            Meeting
+     *
      * @return \FOS\RestBundle\View\View
      */
     public function deleteAction(Meeting $meeting)
@@ -111,16 +112,15 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      * @Security("is_fully_authenticated() and is_granted('edit', meeting)")
      *
      * @param Request $request
-     *            Request
      * @param Meeting $meeting
-     *            Meeting
+     *
      * @return \FOS\RestBundle\View\View
      */
     protected function processForm(Request $request, Meeting $meeting)
     {
         $new = null === $meeting->getId();
         $form = $this->createForm(new MeetingForm(), $meeting, array(
-            "method" => $new ? "POST" : "PUT",
+            "method"          => $new ? "POST" : "PUT",
             "csrf_protection" => false
         ));
         $form->handleRequest($request);
@@ -138,11 +138,17 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      * @Security("is_fully_authenticated() and is_granted('view', meeting)")
      *
      * @param Meeting $meeting
-     *            Meeting
+     *
      * @return Meeting
      */
     public function getAction(Meeting $meeting)
     {
-        return $meeting;
+        $view = $this->view($meeting);
+        $view
+            ->setTemplate("OmmaAppBundle:Meeting:edit.html.twig")
+            ->setTemplateVar("meeting")
+        ;
+
+        return $this->handleView($view);
     }
 }

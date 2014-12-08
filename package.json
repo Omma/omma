@@ -13,6 +13,8 @@
     "grunt-ftp-deploy": "^0.1.7",
     "grunt-newer": "*",
     "load-grunt-tasks": "*",
-    "time-grunt": "*"
+    "time-grunt": "*",
+    "grunt-concat-sourcemap": "~0.4.3",
+    "grunt-contrib-jshint": "~0.10.0"
   }
 }

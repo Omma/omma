@@ -6,41 +6,37 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- *
+ * Base form type for forms used with REST controllers.
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
-class MeetingForm extends AbstractType
+class RestBaseForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // don't map id, created and updated fields to entity
         $builder
-            ->add("name", "text")
-            ->add("date_start", "datetime", array(
-                "widget" => "single_text",
+            ->add("id", "text", array(
+                "mapped" => false,
             ))
-            ->add("date_end", "datetime", array(
-                "widget" => "single_text",
+            ->add("created", "text", array(
+                "mapped" => false,
             ))
-            ->add("prev", "integer")
-            ->add("next", "integer")
+            ->add("updated", "text", array(
+                "mapped" => false,
+            ))
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            "data_class" => 'Omma\AppBundle\Entity\Meeting',
+            "csrf_protection" => false, // disable csrf for REST
         ));
-    }
-
-    public function getParent()
-    {
-        return "omma_rest_base";
     }
 
     public function getName()
     {
-        return "";
+        return "omma_rest_base";
     }
 }

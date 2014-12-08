@@ -43,3 +43,9 @@ services:
         arguments:
             - @omma.app.entity_manager
             - Omma\AppBundle\Entity\Task
+
+    omma.app.manager.attendee:
+        class: Omma\AppBundle\Entity\AttendeeEntityManager
+        arguments:
+            - @omma.app.entity_manager
+            - Omma\AppBundle\Entity\Attendee

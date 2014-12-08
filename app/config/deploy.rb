@@ -55,5 +55,36 @@ namespace :deploy do
   end
 end
 
+before 'symfony:assetic:dump', 'npm:install'
+after 'npm:install', 'bower:install'
+after 'npm:install', 'grunt:build'
+
+namespace :npm do
+ desc 'Run npm install'
+ task :install do
+   capifony_pretty_print "--> Installing npm components"
+   invoke_command "sh -c 'cd #{latest_release} && npm install'"
+   capifony_puts_ok
+ end
+end
+
+namespace :bower do
+    desc 'Run bower install'
+    task :install do
+      capifony_pretty_print "--> Installing bower components"
+      invoke_command "sh -c 'cd #{latest_release} && bower install'"
+      capifony_puts_ok
+    end
+end
+
+namespace :grunt do
+    desc 'Run grunt build'
+    task :build do
+      capifony_pretty_print "--> Grunt"
+      invoke_command "sh -c 'cd #{latest_release} && grunt build'"
+      capifony_puts_ok
+    end
+end
+
 # Be more verbose by uncommenting the following line
 logger.level = Logger::MAX_LEVEL

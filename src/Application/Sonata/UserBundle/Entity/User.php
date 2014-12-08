@@ -9,6 +9,8 @@
  */
 namespace Application\Sonata\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Omma\AppBundle\Entity\Attendee;
 use Omma\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -36,16 +38,14 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\Omma\AppBundle\Entity\Meeting", mappedBy="users", orphanRemoval=true)
-     *
-     * @var \Omma\AppBundle\Entity\Meeting
+     * @var Attendee
+     * @ORM\OneToMany(targetEntity="Omma\AppBundle\Entity\Attendee", mappedBy="user")
      */
     protected $meetings;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Omma\AppBundle\Entity\Task", mappedBy="user", orphanRemoval=true)
-     *
      * @var \Omma\AppBundle\Entity\Task
+     * @ORM\OneToMany(targetEntity="\Omma\AppBundle\Entity\Task", mappedBy="user")
      */
     protected $tasks;
 
@@ -55,8 +55,8 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        $this->meetings = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->meetings = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
     }
 
     /**
@@ -72,12 +72,15 @@ class User extends BaseUser
     /**
      * Add meetings
      *
-     * @param \Omma\AppBundle\Entity\Meeting $meetings
-     * @return User
+     * @param Attendee $attendee
+     * @return $this
      */
-    public function addMeeting(\Omma\AppBundle\Entity\Meeting $meetings)
+    public function addMeeting(Attendee $attendee)
     {
-        $this->meetings[] = $meetings;
+        if (!$this->meetings->contains($attendee)) {
+            $this->meetings->add($attendee);
+            $attendee->setUser($this);
+        }
 
         return $this;
     }
@@ -85,17 +88,23 @@ class User extends BaseUser
     /**
      * Remove meetings
      *
-     * @param \Omma\AppBundle\Entity\Meeting $meetings
+     * @param Attendee $attendee
+     *
+     * @return $this
      */
-    public function removeMeeting(\Omma\AppBundle\Entity\Meeting $meetings)
+    public function removeMeeting(Attendee $attendee)
     {
-        $this->meetings->removeElement($meetings);
+        if ($this->meetings->removeElement($attendee)) {
+            $attendee->setUser(null);
+        }
+
+        return $this;
     }
 
     /**
      * Get meetings
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Attendee[]
      */
     public function getMeetings()
     {
