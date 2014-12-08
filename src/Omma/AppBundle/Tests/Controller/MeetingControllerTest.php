@@ -73,6 +73,8 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
 
     public function testPut()
     {
+        $this->login("test");
+
         $content = $this->pushContent("/meetings", array(
             "name" => "EditMeeting",
             "dateStart" => "2014-01-01 09:45:00",

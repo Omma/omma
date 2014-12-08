@@ -29,6 +29,18 @@ class MeetingProtocolTest extends AbstractAuthenticatedTest
         $serializer = $this->getContainer()->get("jms_serializer");
         $protocol = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Protocol', "json");
 
-        $this->assertInstanceOf('Omma\AppBundle\Entity\Protocol', $protocol);
+        $content = $this->fetchContent("/meetings/" . $meeting->getId() . "/protocols/" . $protocol->getId());
+
+        $newProtocol = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Protocol', "json");
+
+        $newMeeting = $newProtocol->getMeeting();
+
+        $this->assertInstanceOf('Omma\AppBundle\Entity\Protocol', $newProtocol);
+
+        $this->assertSame($protocol->getId(), $newProtocol->getId());
+
+        $this->assertSame($meeting->getId(), $newMeeting->getId());
+
+        $this->assertSame("ProtocolText", $newProtocol->getText());
     }
 }
