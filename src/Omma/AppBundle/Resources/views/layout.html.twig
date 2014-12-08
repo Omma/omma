@@ -73,23 +73,25 @@
                 {% if app.user %}
                     {% block side_calendar %}
                     <div class="col-xs-5">
-                        <div class="kalender">
+                        <div class="kalender" ng-controller="sidebarCalendarController">
                             <input id="calendar-left-col" type="text" gldp-id="left-col-date" style="visibility:hidden"/>
 
                             <div gldp-el="left-col-date"
                                  style="width:100%; height:300px; position:relative; top:0px;left:0px;">
                             </div>
-
-
-                            <div class="day-events" style="display: none">
+                            <div class="day-events ng-hide" ng-show="currentEvents.length > 0">
                                 <h4>Events an diesem Tag:</h4>
                                 <div id="insert-events">
                                     <div class="no-events" style="display: none;">Keine Events an diesem Tag</div>
-                                    <ul></ul>
+                                    <ul>
+                                        <li ng-repeat="event in currentEvents">
+                                        {% verbatim %}
+                                            <a href="{{ event.data.url }}">{{ event.data.title }}</a>
+                                        {% endverbatim %}
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                     {% endblock %}

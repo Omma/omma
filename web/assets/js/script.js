@@ -1,3 +1,33 @@
+//incoming: string, 2014-Januar e.g.
+function getCurrentMonth(month) {
+
+    var start;
+    var end;
+
+    if(month==='') {
+        return {
+            start: moment().startOf('month'),
+            end:   moment().endOf('month')
+        };
+    }
+
+    return {
+        start: moment(month, 'YYYY MM').startOf('month'),
+        end:   moment(month, 'YYYY MM').endOf('month')
+    };
+}
+
+function formatIncomingJsonDate(element) {
+    var date = moment(element.date);
+
+    return {
+        date: date.toDate(),
+        dateOrig: date,
+        data: {title: element.title, url: element.url}
+    };
+}
+
+
 $(document).ready(function() {
 
     'use strict';
@@ -15,144 +45,6 @@ $(document).ready(function() {
      ************************************************************/
 
 
-    /* Kalender */
-/*
-    $.getJSON('/temp_jsons/calendar-left-col.json?start='+getCurrentMonth('').start+'&end='+getCurrentMonth('').end, function (data) {
-
-        var events = [];
-
-        //define events
-
-        $.each(data, function () {
-
-            var element = $(this)[0];
-
-            var event = formatIncomingJsonDate(element);
-
-            events.push(event);
-        });
-
-        //Vorselektiertes Datum
-        var date = {
-            year: new Date().getFullYear(),
-            month: new Date().getMonth(),
-            day: new Date().getDate()
-        };
-
-        var monthNames;
-        var dowNames;
-        var dowOffset;
-
-        if(language === 'de') {
-            monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
-            dowNames= ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
-            dowOffset= 1;
-        }
-
-
-        var ommaDatepicker = $('input#calendar-left-col').glDatePicker({
-
-            showAlways: true,
-            selectedDate: new Date(date.year, date.month, date.day),
-            monthNames: monthNames,
-            dowNames: dowNames,
-            dowOffset: dowOffset,
-            specialDates: events,
-
-
-
-            onClick: function(target, cell, date, data) {
-
-
-                $('.day-events').slideDown();
-
-                if(data !== null) {
-
-                    $('.day-events #insert-events .no-events').slideUp();
-                    var clickedDate = date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate();
-                    var list = '';
-
-                    $.each(events, function( index, value ) {
-                        var date = value.date;
-                        var objDate = date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate();
-
-                        if(objDate === clickedDate) {
-                            list += '<li><a href=\''+value.data.url+'\'>'+value.data.title+'</a></li>';
-                        }
-
-                    });
-
-                    $('.day-events #insert-events ul').slideUp();
-                    $('.day-events #insert-events ul').html(list);
-                    $('.day-events #insert-events ul').slideDown();
-
-                }
-                else {
-                    $('.day-events #insert-events ul').slideUp();
-                    $('.day-events #insert-events .no-events').slideDown();
-                }
-            }
-        }).glDatePicker(true);
-        $.extend(ommaDatepicker.options, {
-
-            nextPrevCallback: function(){
-
-                var month = $('.core.border.monyear.title div span').first().html();
-                var year = $('.core.border.monyear.title div span').last().html();
-
-                var date = getCurrentMonth(year+'-'+month);
-
-
-                $.getJSON('/temp_jsons/calendar-left-col-2.json?start='+date.start+'&end='+date.end, function (data) {
-
-                    console.log('vorher: ' + this.specialDates);
-
-
-
-                    var events = [
-                        {
-                            date: new Date(2013, 0, 8),
-                            data: {message: 'Meeting every day 8 of the month'}
-                        },
-                        {
-                            date: new Date(0, 0, 1),
-                            data: {message: 'Happy New Year!'}
-                        }
-                    ];
-
-
-                    this.specialDates = events;
-
-                    console.log('nachher: ' + this.specialDates);
-                    console.log('-----------------------');
-                });
-            }
-        });
-
-
-    });*/
-
-  /*
-    function formatIncomingJsonDate(element) {
-
-
-        var formatDate = element.date;
-
-        var day = moment(formatDate).format('DD');
-        var month = moment(formatDate).format('MM');
-        var year = moment(formatDate).format('YYYY');
-
-        var dateTime = new Date(year, month, day);
-
-        var event = {
-            date: dateTime,
-            data: {title: element.title, url: element.url}
-        };
-
-        return event;
-
-    }
-*/
 
     /* Nächste Events */
     $.getJSON( '/temp_jsons/next-events-left-col.json?start='+getCurrentMonth('').start, function( data ) {
@@ -186,30 +78,6 @@ $(document).ready(function() {
             $('.left-col ul.todos').append('<li><a href=\''+value.url+'\'>'+value.title+'</li>');
         });
     });
-
-
-    //incoming: string, 2014-Januar e.g.
-    function getCurrentMonth(month) {
-
-        var start;
-        var end;
-
-        if(month==='') {
-            start = moment().startOf('month').toISOString();
-            end = moment().endOf('month').toISOString();
-        }
-        else {
-            start = moment(month, 'YYYY MM').startOf('month').toISOString();
-            end = moment(month, 'YYYY MM').endOf('month').toISOString();
-        }
-
-        var returnMonth = {
-            'start':start,
-            'end': end
-        };
-
-        return returnMonth;
-    }
 
 
 
