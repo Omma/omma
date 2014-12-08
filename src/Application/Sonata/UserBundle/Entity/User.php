@@ -28,6 +28,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User extends BaseUser
 {
+
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -38,14 +39,16 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @var Attendee
      * @ORM\OneToMany(targetEntity="Omma\AppBundle\Entity\Attendee", mappedBy="user")
+     *
+     * @var Attendee
      */
     protected $meetings;
 
     /**
-     * @var Task
      * @ORM\OneToMany(targetEntity="\Omma\AppBundle\Entity\Task", mappedBy="user")
+     *
+     * @var Task
      */
     protected $tasks;
 

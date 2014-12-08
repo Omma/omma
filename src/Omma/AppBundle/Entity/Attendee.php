@@ -10,13 +10,18 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @ORM\Table("omma_attendee")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
+ *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 class Attendee extends Base
 {
+
     const STATUS_INVITED = "invited";
+
     const STATUS_ACCEPTED = "accepted";
+
     const STATUS_DECLIED = "declined";
+
     const STATUS_MAYBE = "maybe";
 
     /**
@@ -29,37 +34,43 @@ class Attendee extends Base
     private $id;
 
     /**
-     * @var Meeting
      * @ORM\ManyToOne(targetEntity="Omma\AppBundle\Entity\Meeting", inversedBy="attendees")
+     *
+     * @var Meeting
      */
     protected $meeting;
 
     /**
-     * @var User
      * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="meetings")
+     *
+     * @var User
      */
     protected $user;
 
     /**
-     * @var boolean
      * @ORM\Column(type="boolean")
+     *
+     * @var boolean
      */
     protected $mandatory = true;
 
     /**
-     * @var string
      * @ORM\Column(type="string")
      * @NotBlank()
+     *
+     * @var string
      */
     protected $status = Attendee::STATUS_INVITED;
 
     /**
-     * @var string
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string
      */
     protected $message;
 
     /**
+     *
      * @return int
      */
     public function getId()
@@ -68,6 +79,7 @@ class Attendee extends Base
     }
 
     /**
+     *
      * @return Meeting
      */
     public function getMeeting()
@@ -76,6 +88,7 @@ class Attendee extends Base
     }
 
     /**
+     *
      * @param Meeting $meeting
      *
      * @return $this
@@ -93,6 +106,7 @@ class Attendee extends Base
     }
 
     /**
+     *
      * @return User
      */
     public function getUser()
@@ -101,6 +115,7 @@ class Attendee extends Base
     }
 
     /**
+     *
      * @param User $user
      *
      * @return $this
@@ -113,6 +128,7 @@ class Attendee extends Base
     }
 
     /**
+     *
      * @return boolean
      */
     public function isMandatory()
@@ -121,6 +137,7 @@ class Attendee extends Base
     }
 
     /**
+     *
      * @param boolean $mandatory
      *
      * @return $this
@@ -133,6 +150,7 @@ class Attendee extends Base
     }
 
     /**
+     *
      * @return string
      */
     public function getStatus()
@@ -141,6 +159,7 @@ class Attendee extends Base
     }
 
     /**
+     *
      * @param string $status
      *
      * @return $this
@@ -153,6 +172,7 @@ class Attendee extends Base
     }
 
     /**
+     *
      * @return string
      */
     public function getMessage()
@@ -161,6 +181,7 @@ class Attendee extends Base
     }
 
     /**
+     *
      * @param string $message
      *
      * @return $this
