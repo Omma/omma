@@ -7,6 +7,7 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use Omma\AppBundle\Entity\MeetingRecurring;
 use Omma\AppBundle\Entity\Meeting;
 use Symfony\Component\HttpFoundation\Request;
+use Omma\AppBundle\Form\Type\MeetingRecurringForm;
 
 /**
  * @RouteResource("Recurring")
@@ -56,14 +57,14 @@ class MeetingRecurringController extends FOSRestController implements ClassResou
     protected function processForm(Request $request, MeetingRecurring $meetingRecurring)
     {
         $new = null === $meetingRecurring->getId();
-        $form = $this->createForm(new MeetingRecurringForm(), $protocol, array(
+        $form = $this->createForm(new MeetingRecurringForm(), $meetingRecurring, array(
             "method" => $new ? "POST" : "PUT",
             "csrf_protection" => false
         ));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->get("omma.app.manager_recurring")->save($meetingRecurring);
+            $this->get("omma.app.manager.meeting_recurring")->save($meetingRecurring);
 
             return $this->view($meetingRecurring);
         }

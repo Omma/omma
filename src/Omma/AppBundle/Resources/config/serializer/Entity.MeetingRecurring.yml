@@ -1,13 +1,15 @@
-Omma\AppBundle\Entity\Agenda:
+Omma\AppBundle\Entity\MeetingRecurring:
     exclusion_policy: ALL
     properties:
         id:
             expose: true
         meeting:
             expose: true
-        item:
+        dateStart:
             expose: true
-        sortingOrder:
+        dateEnd:
             expose: true
-        subItems:
+        type:
+            expose: true
+        recurring:
             expose: true
