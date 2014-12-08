@@ -32,7 +32,6 @@ class MeetingRecurringController extends FOSRestController implements ClassResou
     {
         $meetingRecurring = new MeetingRecurring();
         $meetingRecurring->setMeeting($meeting);
-        $meeting->addMeetingRecurring($meetingRecurring);
 
         return $this->processForm($request, $meetingRecurring);
     }

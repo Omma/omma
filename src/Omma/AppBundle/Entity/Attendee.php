@@ -82,8 +82,12 @@ class Attendee extends Base
      */
     public function setMeeting(Meeting $meeting)
     {
-        $this->meeting = $meeting;
-        $meeting->addAttendee($this);
+        if ($this->meeting !== $meeting) {
+            $this->meeting = $meeting;
+            if (null !== $meeting) {
+                $meeting->addAttendee($this);
+            }
+        }
 
         return $this;
     }

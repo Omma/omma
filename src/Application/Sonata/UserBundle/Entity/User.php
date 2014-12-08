@@ -11,6 +11,7 @@ namespace Application\Sonata\UserBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Omma\AppBundle\Entity\Attendee;
+use Omma\AppBundle\Entity\Task;
 use Omma\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -27,7 +28,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User extends BaseUser
 {
-
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -44,7 +44,7 @@ class User extends BaseUser
     protected $meetings;
 
     /**
-     * @var \Omma\AppBundle\Entity\Task
+     * @var Task
      * @ORM\OneToMany(targetEntity="\Omma\AppBundle\Entity\Task", mappedBy="user")
      */
     protected $tasks;
@@ -114,12 +114,15 @@ class User extends BaseUser
     /**
      * Add tasks
      *
-     * @param \Omma\AppBundle\Entity\Task $tasks
+     * @param Task $task
      * @return User
      */
-    public function addTask(\Omma\AppBundle\Entity\Task $tasks)
+    public function addTask(Task $task)
     {
-        $this->tasks[] = $tasks;
+        if (!$this->tasks->contains($task)) {
+            $this->tasks->add($task);
+            $task->setUser($this);
+        }
 
         return $this;
     }
@@ -127,17 +130,23 @@ class User extends BaseUser
     /**
      * Remove tasks
      *
-     * @param \Omma\AppBundle\Entity\Task $tasks
+     * @param Task $task
+     *
+     * @return $this
      */
-    public function removeTask(\Omma\AppBundle\Entity\Task $tasks)
+    public function removeTask(Task $task)
     {
-        $this->tasks->removeElement($tasks);
+        if ($this->tasks->removeElement($task)) {
+            $task->setUser(null);
+        }
+
+        return $this;
     }
 
     /**
      * Get tasks
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Task[]
      */
     public function getTasks()
     {

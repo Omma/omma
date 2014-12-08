@@ -74,7 +74,7 @@ class File extends Base
      */
     public function __construct()
     {
-        $this->subFiles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->subFiles = new ArrayCollection();
     }
 
     /**
@@ -136,12 +136,18 @@ class File extends Base
     /**
      * Set meeting
      *
-     * @param \Omma\AppBundle\Entity\Meeting $meeting
+     * @param Meeting $meeting
+     *
      * @return File
      */
-    public function setMeeting(\Omma\AppBundle\Entity\Meeting $meeting)
+    public function setMeeting(Meeting $meeting)
     {
-        $this->meeting = $meeting;
+        if ($this->meeting !== $meeting) {
+            $this->meeting = $meeting;
+            if (null !== $meeting) {
+                $meeting->addFile($this);
+            }
+        }
 
         return $this;
     }
@@ -149,7 +155,7 @@ class File extends Base
     /**
      * Get meeting
      *
-     * @return \Omma\AppBundle\Entity\Meeting
+     * @return Meeting
      */
     public function getMeeting()
     {
@@ -159,12 +165,18 @@ class File extends Base
     /**
      * Set protocol
      *
-     * @param \Omma\AppBundle\Entity\Protocol $protocol
+     * @param Protocol $protocol
+     *
      * @return File
      */
-    public function setProtocol(\Omma\AppBundle\Entity\Protocol $protocol = null)
+    public function setProtocol(Protocol $protocol = null)
     {
-        $this->protocol = $protocol;
+        if ($this->protocol !== $protocol) {
+            $this->protocol = $protocol;
+            if (null !== $protocol) {
+                $protocol->setFile($this);
+            }
+        }
 
         return $this;
     }
@@ -172,7 +184,7 @@ class File extends Base
     /**
      * Get protocol
      *
-     * @return \Omma\AppBundle\Entity\Protocol
+     * @return Protocol
      */
     public function getProtocol()
     {
@@ -182,12 +194,16 @@ class File extends Base
     /**
      * Add subFiles
      *
-     * @param \Omma\AppBundle\Entity\File $subFiles
+     * @param File $subFile
+     *
      * @return File
      */
-    public function addSubFile(\Omma\AppBundle\Entity\File $subFiles)
+    public function addSubFile(File $subFile)
     {
-        $this->subFiles[] = $subFiles;
+        if (!$this->subFiles->contains($subFile)) {
+            $this->subFiles->add($subFile);
+            $subFile->setParent($this);
+        }
 
         return $this;
     }
@@ -195,17 +211,19 @@ class File extends Base
     /**
      * Remove subFiles
      *
-     * @param \Omma\AppBundle\Entity\File $subFiles
+     * @param File $subFile
      */
-    public function removeSubFile(\Omma\AppBundle\Entity\File $subFiles)
+    public function removeSubFile(File $subFile)
     {
-        $this->subFiles->removeElement($subFiles);
+        if ($this->subFiles->removeElement($subFile)) {
+            $subFile->setParent(null);
+        }
     }
 
     /**
      * Get subFiles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return File[]
      */
     public function getSubFiles()
     {
@@ -215,12 +233,18 @@ class File extends Base
     /**
      * Set parent
      *
-     * @param \Omma\AppBundle\Entity\File $parent
+     * @param File $parent
+     *
      * @return File
      */
-    public function setParent(\Omma\AppBundle\Entity\File $parent = null)
+    public function setParent(File $parent = null)
     {
-        $this->parent = $parent;
+        if ($this->parent !== $parent) {
+            $this->parent = $parent;
+            if (null !== $parent) {
+                $parent->addSubFile($this);
+            }
+        }
 
         return $this;
     }
@@ -228,7 +252,7 @@ class File extends Base
     /**
      * Get parent
      *
-     * @return \Omma\AppBundle\Entity\File
+     * @return File
      */
     public function getParent()
     {

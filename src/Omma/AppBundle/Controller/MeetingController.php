@@ -1,8 +1,10 @@
 <?php
 namespace Omma\AppBundle\Controller;
 
+use Application\Sonata\UserBundle\Entity\User;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use Omma\AppBundle\Entity\Attendee;
 use Omma\AppBundle\Entity\Meeting;
 use Omma\AppBundle\Form\Type\MeetingForm;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,10 +41,10 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     /**
      * @Security("is_fully_authenticated()")
      *
-     * @param \DateTime $dateStart
-     *            Start Date
-     * @param \DateTime $dateEnd
-     *            End Date
+     * @param \DateTime $dateStart Start Date
+     * @param \DateTime $dateEnd End Date
+     *
+     * @return array
      */
     public function getRangeAction(\DateTime $dateStart, \DateTime $dateEnd)
     {
@@ -72,11 +74,15 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      */
     public function cpostAction(Request $request)
     {
+        /** @var User $user */
         $user = $this->getUser();
 
         $meeting = new Meeting();
-        $meeting->addUser($user);
-        $user->addMeeting($meeting);
+        $attendee = new Attendee();
+        $attendee
+            ->setMeeting($meeting)
+            ->setUser($user)
+        ;
 
         return $this->processForm($request, $meeting);
     }

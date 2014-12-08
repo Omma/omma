@@ -1,7 +1,9 @@
 <?php
 namespace Omma\AppBundle\Entity;
 
+use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use Omma\AppBundle\Entity\Meeting;
 
 /**
  * Task
@@ -36,7 +38,7 @@ class Task extends Base
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\User", inversedBy="tasks")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      *
-     * @var \Application\Sonata\UserBundle\Entity\User
+     * @var User
      */
     private $user;
 
@@ -241,12 +243,17 @@ class Task extends Base
     /**
      * Set meeting
      *
-     * @param \Omma\AppBundle\Entity\Meeting $meeting
+     * @param Meeting $meeting
      * @return Task
      */
-    public function setMeeting(\Omma\AppBundle\Entity\Meeting $meeting)
+    public function setMeeting(Meeting $meeting = null)
     {
-        $this->meeting = $meeting;
+        if ($this->meeting !== $meeting) {
+            $this->meeting = $meeting;
+            if (null !== $meeting) {
+                $meeting->addTask($this);
+            }
+        }
 
         return $this;
     }
@@ -254,7 +261,7 @@ class Task extends Base
     /**
      * Get meeting
      *
-     * @return \Omma\AppBundle\Entity\Meeting
+     * @return Meeting
      */
     public function getMeeting()
     {
@@ -264,12 +271,17 @@ class Task extends Base
     /**
      * Set user
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @param User $user
      * @return Task
      */
-    public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
-        $this->user = $user;
+        if ($this->user !== $user) {
+            $this->user = $user;
+            if (null !== $user) {
+                $user->addTask($this);
+            }
+        }
 
         return $this;
     }
@@ -277,7 +289,7 @@ class Task extends Base
     /**
      * Get user
      *
-     * @return \Application\Sonata\UserBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
@@ -287,12 +299,18 @@ class Task extends Base
     /**
      * Set agenda
      *
-     * @param \Omma\AppBundle\Entity\Agenda $agenda
-     * @return Task
+     * @param Agenda $agenda
+     *
+     * @return $this
      */
-    public function setAgenda(\Omma\AppBundle\Entity\Agenda $agenda = null)
+    public function setAgenda(Agenda $agenda = null)
     {
-        $this->agenda = $agenda;
+        if ($this->agenda !== $agenda) {
+            $this->agenda = $agenda;
+            if (null !== $agenda) {
+                $agenda->setTask($this);
+            }
+        }
 
         return $this;
     }
@@ -300,7 +318,7 @@ class Task extends Base
     /**
      * Get agenda
      *
-     * @return \Omma\AppBundle\Entity\Agenda
+     * @return Agenda
      */
     public function getAgenda()
     {

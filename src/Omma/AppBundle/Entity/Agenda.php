@@ -3,6 +3,7 @@ namespace Omma\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Omma\AppBundle\Entity\Task;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -77,7 +78,7 @@ class Agenda extends Base
      */
     public function __construct()
     {
-        $this->subItems = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->subItems = new ArrayCollection();
     }
 
     /**
@@ -139,12 +140,18 @@ class Agenda extends Base
     /**
      * Set meeting
      *
-     * @param \Omma\AppBundle\Entity\Meeting $meeting
-     * @return Agenda
+     * @param Meeting $meeting
+     *
+     * @return $this
      */
-    public function setMeeting(\Omma\AppBundle\Entity\Meeting $meeting)
+    public function setMeeting(Meeting $meeting)
     {
-        $this->meeting = $meeting;
+        if ($this->meeting !== $meeting) {
+            $this->meeting = $meeting;
+            if (null !== $meeting) {
+                $meeting->addAgenda($this);
+            }
+        }
 
         return $this;
     }
@@ -152,7 +159,7 @@ class Agenda extends Base
     /**
      * Get meeting
      *
-     * @return \Omma\AppBundle\Entity\Meeting
+     * @return $this
      */
     public function getMeeting()
     {
@@ -162,12 +169,17 @@ class Agenda extends Base
     /**
      * Set task
      *
-     * @param \Omma\AppBundle\Entity\Task $task
+     * @param Task $task
      * @return Agenda
      */
-    public function setTask(\Omma\AppBundle\Entity\Task $task = null)
+    public function setTask(Task $task = null)
     {
-        $this->task = $task;
+        if ($this->task !== $task) {
+            $task->setAgenda($this);
+            if (null !== $task) {
+                $this->task = $task;
+            }
+        }
 
         return $this;
     }
@@ -175,7 +187,7 @@ class Agenda extends Base
     /**
      * Get task
      *
-     * @return \Omma\AppBundle\Entity\Task
+     * @return Task
      */
     public function getTask()
     {
@@ -185,12 +197,16 @@ class Agenda extends Base
     /**
      * Add subItems
      *
-     * @param \Omma\AppBundle\Entity\Agenda $subItems
+     * @param Agenda $subItem
+     *
      * @return Agenda
      */
-    public function addSubItem(\Omma\AppBundle\Entity\Agenda $subItems)
+    public function addSubItem(Agenda $subItem)
     {
-        $this->subItems[] = $subItems;
+        if (!$this->subItems->contains($subItem)) {
+            $this->subItems->add($subItem);
+            $subItem->setParent($this);
+        }
 
         return $this;
     }
@@ -198,17 +214,23 @@ class Agenda extends Base
     /**
      * Remove subItems
      *
-     * @param \Omma\AppBundle\Entity\Agenda $subItems
+     * @param Agenda $subItems
+     *
+     * @return $this
      */
-    public function removeSubItem(\Omma\AppBundle\Entity\Agenda $subItems)
+    public function removeSubItem(Agenda $subItems)
     {
-        $this->subItems->removeElement($subItems);
+        if ($this->subItems->removeElement($subItems)) {
+            $subItems->setParent(null);
+        }
+
+        return $this;
     }
 
     /**
      * Get subItems
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Agenda[]
      */
     public function getSubItems()
     {
@@ -218,12 +240,18 @@ class Agenda extends Base
     /**
      * Set parent
      *
-     * @param \Omma\AppBundle\Entity\Agenda $parent
+     * @param Agenda $parent
+     *
      * @return Agenda
      */
-    public function setParent(\Omma\AppBundle\Entity\Agenda $parent = null)
+    public function setParent(Agenda $parent = null)
     {
-        $this->parent = $parent;
+        if ($this->parent !== $parent) {
+            $this->parent = $parent;
+            if (null !== $parent) {
+                $parent->removeSubItem($this);
+            }
+        }
 
         return $this;
     }
@@ -231,7 +259,7 @@ class Agenda extends Base
     /**
      * Get parent
      *
-     * @return \Omma\AppBundle\Entity\Agenda
+     * @return Agenda
      */
     public function getParent()
     {
