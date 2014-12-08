@@ -1,6 +1,8 @@
 <?php
 namespace Omma\AppBundle\Controller;
 
+use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -22,8 +24,22 @@ class MeetingAgendaController extends FOSRestController implements ClassResource
             ->select("a")
             ->where("a.meeting = :meeting AND a.parent IS NULL")
             ->setParameter("meeting", $meeting)
+            ->orderBy("a.sortingOrder")
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param Request $request
+     * @param Meeting $meeting
+     * @Put("/meetings/{meeting}/agendas/tree")
+     */
+    public function treeAction(Request $request, Meeting $meeting)
+    {
+        echo "foo";
+        $tree = $this->get("serializer")->deserialize($request->getContent(), "Omma\AppBundle\Entity\Agenda", "json");
+        var_dump($tree);
+        return $this->view(null);
     }
 
     public function cpostAction(Request $request, Meeting $meeting)
