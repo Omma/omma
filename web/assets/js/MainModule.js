@@ -1,4 +1,4 @@
-var app = angular.module('ommaApp', [
+/*var app = angular.module('ommaApp', [
         'app.date_time_ctrl',
         'app.todo_ctrl',
         'app.agenda_ctrl',
@@ -9,13 +9,10 @@ var app = angular.module('ommaApp', [
     ])
 
 
-        .run ( function ( $log, agenda_model ) {
-            $log.log ( "app started");
+        .run ( function ( $log ) {
+            $log.log ( 'app started');
 
-            $log.log (agenda_model.getTest());
 
-            agenda_model.setTest( "test erfolgreich" );
-            $log.log (agenda_model.getTest());
 
     })
-    ;
+    ;*/

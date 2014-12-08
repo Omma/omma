@@ -1,12 +1,12 @@
 $(document).ready(function() {
 
-    "use strict";
+    'use strict';
 
 
     //Get Language
     var language;
-    if (navigator.language.indexOf("de") > -1) {
-        language = "de";
+    if (navigator.language.indexOf('de') > -1) {
+        language = 'de';
     }
 
 
@@ -16,10 +16,10 @@ $(document).ready(function() {
 
 
     /* Kalender */
+/*
+    $.getJSON('/temp_jsons/calendar-left-col.json?start='+getCurrentMonth('').start+'&end='+getCurrentMonth('').end, function (data) {
 
-    $.getJSON("/temp_jsons/calendar-left-col.json?start="+get_current_month('').start+"&end="+get_current_month('').end, function (data) {
-
-        var events = new Array();
+        var events = [];
 
         //define events
 
@@ -27,7 +27,7 @@ $(document).ready(function() {
 
             var element = $(this)[0];
 
-            var event = format_incoming_json_date(element);
+            var event = formatIncomingJsonDate(element);
 
             events.push(event);
         });
@@ -37,20 +37,20 @@ $(document).ready(function() {
             year: new Date().getFullYear(),
             month: new Date().getMonth(),
             day: new Date().getDate()
-        }
+        };
 
         var monthNames;
         var dowNames;
         var dowOffset;
 
-        if(language == "de") {
-            var monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
-            var dowNames= ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
-            var dowOffset= 1;
+        if(language === 'de') {
+            monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+            dowNames= ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+            dowOffset= 1;
         }
 
 
-        var omma_datepicker = $('input#calendar-left-col').glDatePicker({
+        var ommaDatepicker = $('input#calendar-left-col').glDatePicker({
 
             showAlways: true,
             selectedDate: new Date(date.year, date.month, date.day),
@@ -66,18 +66,18 @@ $(document).ready(function() {
 
                 $('.day-events').slideDown();
 
-                if(data != null) {
+                if(data !== null) {
 
                     $('.day-events #insert-events .no-events').slideUp();
-                    var clicked_date = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate();
-                    var list = "";
+                    var clickedDate = date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate();
+                    var list = '';
 
                     $.each(events, function( index, value ) {
                         var date = value.date;
-                        var obj_date = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate();
+                        var objDate = date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate();
 
-                        if(obj_date == clicked_date) {
-                            list += "<li><a href=\""+value.data.url+"\">"+value.data.title+"</a></li>";
+                        if(objDate === clickedDate) {
+                            list += '<li><a href=\''+value.data.url+'\'>'+value.data.title+'</a></li>';
                         }
 
                     });
@@ -93,20 +93,19 @@ $(document).ready(function() {
                 }
             }
         }).glDatePicker(true);
-        $.extend(omma_datepicker.options, {
+        $.extend(ommaDatepicker.options, {
 
             nextPrevCallback: function(){
 
                 var month = $('.core.border.monyear.title div span').first().html();
                 var year = $('.core.border.monyear.title div span').last().html();
 
-                var date = get_current_month(year+"-"+month);
+                var date = getCurrentMonth(year+'-'+month);
 
 
-                //GETJSON auskommentiert, dann gehts
-                $.getJSON("/temp_jsons/calendar-left-col-2.json?start="+date.start+"&end="+date.end, function (data) {
+                $.getJSON('/temp_jsons/calendar-left-col-2.json?start='+date.start+'&end='+date.end, function (data) {
 
-                    console.log("vorher: " + this.specialDates);
+                    console.log('vorher: ' + this.specialDates);
 
 
 
@@ -124,16 +123,18 @@ $(document).ready(function() {
 
                     this.specialDates = events;
 
-                    console.log("nachher: " + this.specialDates);
-                    console.log("-----------------------");
+                    console.log('nachher: ' + this.specialDates);
+                    console.log('-----------------------');
                 });
             }
         });
 
 
-    });
+    });*/
 
-    function format_incoming_json_date(element) {
+  /*
+    function formatIncomingJsonDate(element) {
+
 
         var formatDate = element.date;
 
@@ -141,35 +142,36 @@ $(document).ready(function() {
         var month = moment(formatDate).format('MM');
         var year = moment(formatDate).format('YYYY');
 
-        var date_time = new Date(year, month, day);
+        var dateTime = new Date(year, month, day);
 
         var event = {
-            date: date_time,
+            date: dateTime,
             data: {title: element.title, url: element.url}
         };
 
         return event;
 
     }
-
+*/
 
     /* Nächste Events */
-    $.getJSON( "/temp_jsons/next-events-left-col.json?start="+get_current_month('').start, function( data ) {
-        var i=0;
-        $.each( data, function( key,value ) {
-            if(key==0)
-                var active = "active";
+    $.getJSON( '/temp_jsons/next-events-left-col.json?start='+getCurrentMonth('').start, function( data ) {
 
+        $.each( data, function( key,value ) {
+            var active;
+            if(key===0) {
+                active = 'active';
+            }
 
             var formatDate = value.date;
 
-            var date = moment(formatDate).format("DD.MM.YYYY [um] HH:mm");
+            var date = moment(formatDate).format('DD.MM.YYYY [um] HH:mm');
 
             $('.left-col div.naechste-events .list-group').append(
-                "<a href=\""+value.url+"\" class=\"list-group-item "+active+"\">" +
-                "<p>"+value.title+"</p>" +
-                "<p class=\"list-group-item-text\"><small>"+date+"</small></p>" +
-                "</a>"
+                '<a href=\''+value.url+'\' class=\'list-group-item '+active+'\'>' +
+                '<p>'+value.title+'</p>' +
+                '<p class=\'list-group-item-text\'><small>'+date+'</small></p>' +
+                '</a>'
             );
         });
     });
@@ -179,31 +181,34 @@ $(document).ready(function() {
 
 
     /* Todos */
-    $.getJSON( "/temp_jsons/todos-left-col.json?start="+get_current_month('').start, function( data ) {
+    $.getJSON( '/temp_jsons/todos-left-col.json?start='+getCurrentMonth('').start, function( data ) {
         $.each( data, function( key,value ) {
-            $('.left-col ul.todos').append("<li><a href=\""+value.url+"\">"+value.title+"</li>");
+            $('.left-col ul.todos').append('<li><a href=\''+value.url+'\'>'+value.title+'</li>');
         });
     });
 
 
     //incoming: string, 2014-Januar e.g.
-    function get_current_month(month) {
+    function getCurrentMonth(month) {
 
-        if(month=="") {
-            var start = moment().startOf("month").toISOString();
-            var end = moment().endOf("month").toISOString();
+        var start;
+        var end;
+
+        if(month==='') {
+            start = moment().startOf('month').toISOString();
+            end = moment().endOf('month').toISOString();
         }
         else {
-            var start = moment(month, "YYYY MM").startOf("month").toISOString();
-            var end = moment(month, "YYYY MM").endOf("month").toISOString()
+            start = moment(month, 'YYYY MM').startOf('month').toISOString();
+            end = moment(month, 'YYYY MM').endOf('month').toISOString();
         }
 
-        var month = {
-            "start":start,
-            "end": end
+        var returnMonth = {
+            'start':start,
+            'end': end
         };
 
-        return month;
+        return returnMonth;
     }
 
 
@@ -212,11 +217,12 @@ $(document).ready(function() {
      Typeahead Suche
      ************************************************************/
 
-    var substringMatcher = function(strs) {
+    //var substringMatcher = function(strs) {
+    var substringMatcher = function() {
         return function findMatches(q, cb) {
 
-            if(q != '') {
-                $.getJSON("/temp_jsons/typeahead.json?q=" + q, function (data) {
+            if(q !== '') {
+                $.getJSON('/temp_jsons/typeahead.json?q=' + q, function (data) {
 
                     var matches = [];
 
@@ -225,11 +231,11 @@ $(document).ready(function() {
                     $.each(data, function (i, str) {
 
                         if (substrRegex.test(str.title)) {
-                            var value = "<a href=\"" + str.url + "\">";
-                            value += str.title + "<br />";
-                            value += "<small>";
-                            value += moment(str.date).format("DD.MM.YYYY [um] HH:mm");
-                            value += "</small></a>";
+                            var value = '<a href=\'' + str.url + '\'>';
+                            value += str.title + '<br />';
+                            value += '<small>';
+                            value += moment(str.date).format('DD.MM.YYYY [um] HH:mm');
+                            value += '</small></a>';
                             matches.push({value: value});
                         }
                     });
@@ -265,13 +271,13 @@ $(document).ready(function() {
      ************************************************************/
 
 
-    var day = moment().format("YYYY-MM-DD");
+    var day = moment().format('YYYY-MM-DD');
 
     var options = {
         events_source: function(start, end) {
 
             var events = [];
-            $.ajax("/temp_jsons/events_dt.json.php?from=" + moment(start).format() + "&to=" + moment(end).format(), {
+            $.ajax('/temp_jsons/events_dt.json.php?from=' + moment(start).format() + '&to=' + moment(end).format(), {
                 dataType: 'json',
                 async: false,
                 success: function(data) {
@@ -291,9 +297,9 @@ $(document).ready(function() {
                             url: obj.url,
                             start: start,
                             end: end
-                        }
+                        };
                         events.push(event);
-                    })
+                    });
                 }
             });
 
@@ -313,7 +319,7 @@ $(document).ready(function() {
         onAfterViewLoad: function(view) {
             $('.page-header h2').text(this.getTitle());
             $('.btn-group button').removeClass('active');
-            $('button[data-calendar-view="' + view + '"]').addClass('active');
+            $('button[data-calendar-view=' + view + ']').addClass('active');
         },
         classes: {
             months: {
@@ -341,12 +347,14 @@ $(document).ready(function() {
 
 
 
-    if(language == "de")
-        calendar.setLanguage("de-DE");
-    else
-        calendar.setLanguage("en-US");
+    if(language === 'de') {
+        calendar.setLanguage('de-DE');
+    }
+    else {
+        calendar.setLanguage('en-US');
+    }
 
     calendar.view();
 
 
-})
+});
