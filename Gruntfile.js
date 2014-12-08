@@ -29,7 +29,8 @@ module.exports = function (grunt) {
             './web/assets/components/typehead.js/dist/typeahead.bundle.min.js'
         ],
         js: [
-            './web/assets/js/**.js'
+            './web/assets/js/MainModule.js',
+            './web/assets/js/**/*.js'
         ]
     };
 

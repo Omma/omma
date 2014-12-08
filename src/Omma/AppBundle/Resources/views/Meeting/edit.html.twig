@@ -38,7 +38,7 @@
 {% endblock %}
 
 {% block content %}
-    <div><!--controller hier rein-->
+    <div ng-controller="meetingController" ng-init="init({{ meeting.id }})">
         <ul class="nav nav-tabs" data-tabs="tabs">
             <li class="active"><a href="#datum-uhrzeit" data-toggle="tab">Datum & Uhrzeit</a></li>
             <li><a href="#agenda" data-toggle="tab">Agenda</a></li>
@@ -49,22 +49,22 @@
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane active" id="datum-uhrzeit" ng-controller="meetingDateTimeController">
+            <div class="tab-pane active" id="datum-uhrzeit">
                 <h1>datum-uhrzeit</h1>
             </div>
             <div class="tab-pane" id="agenda" ng-controller="meetingAgendaController">
                 {{ block('agenda_tab') }}
             </div>
-            <div class="tab-pane" id="todos" ng-controller="meetingTodoController">
+            <div class="tab-pane" id="todos"
                 <h1>todos</h1>
             </div>
-            <div class="tab-pane" id="protokoll" ng-controller="meetingProtocolController">
+            <div class="tab-pane" id="protokoll">
                 <h1>protokoll</h1>
             </div>
-            <div class="tab-pane" id="dateien" ng-controller="meetingFileController">
+            <div class="tab-pane" id="dateien">
                 <h1>dateien</h1>
             </div>
-            <div class="tab-pane" id="teilnehmer" ng-controller="meetingAttendeeController">
+            <div class="tab-pane" id="teilnehmer">
                 <h1>teilnehmer</h1>
             </div>
         </div>
