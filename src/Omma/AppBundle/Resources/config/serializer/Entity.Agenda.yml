@@ -5,9 +5,9 @@ Omma\AppBundle\Entity\Agenda:
             expose: true
         meeting:
             expose: true
-        item:
+        name:
             expose: true
         sortingOrder:
             expose: true
-        subItems:
+        children:
             expose: true

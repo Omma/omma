@@ -1,4 +1,42 @@
 {% extends "OmmaAppBundle::layout.html.twig" %}
+
+{% block agenda_tab %}
+    <h1>Agenda</h1>
+    <!-- Nested node template -->
+    {% verbatim %}
+    <script type="text/ng-template" id="nodes_renderer.html">
+        <div ui-tree-handle>
+            <form class="form-inline" role="form" ng-show="node.editing">
+                <div class="form-group">
+                    <label class="sr-only" for="name">Name</label>
+                    <input type="text" class="form-control" placeholder="Name" ng-model="node.name">
+                </div>
+                <button type="submit" class="btn btn-default" ng-click="save(node)">Save</button>
+                <button type="submit" class="btn btn-default" ng-click="cancelEditing(node)">Cancel</button>
+            </form>
+            <div ng-show="!node.editing">
+                {{node.name}}
+                <div class="pull-right">
+                    <a href="" class="btn btn-success btn-xs" data-nodrag ng-click="newNode(node)"><span class="glyphicon glyphicon-plus"></span></a>
+                    <a href="" class="btn btn-primary btn-xs" data-nodrag ng-click="edit(node)"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a href="" class="btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+                </div>
+            </div>
+        </div>
+        <ol ui-tree-nodes="" ng-model="node.children">
+            <li ng-repeat="node in node.children" ui-tree-node ng-include="'nodes_renderer.html'">
+            </li>
+        </ol>
+    </script>
+    {% endverbatim %}
+    <div ui-tree>
+        <ol ui-tree-nodes="" ng-model="agendas" id="tree-root">
+            <li ng-repeat="node in agendas" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+        </ol>
+        <a href="" class="btn btn-success btn-xs" data-nodrag ng-click="newNode()"><span class="glyphicon glyphicon-plus"></span></a>
+    </div>
+{% endblock %}
+
 {% block content %}
     <div ng-controller="meetingController" ng-init="init({{ meeting.id }})">
         <ul class="nav nav-tabs" data-tabs="tabs">
@@ -15,28 +53,9 @@
                 <h1>datum-uhrzeit</h1>
             </div>
             <div class="tab-pane" id="agenda" ng-controller="meetingAgendaController">
-                <h1>agenda</h1>
-                <!-- Nested node template -->
-                {% verbatim %}
-                <script type="text/ng-template" id="nodes_renderer.html">
-                    <div ui-tree-handle>
-                        {{node.item}}
-                        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
-                        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
-                    </div>
-                    <ol ui-tree-nodes="" ng-model="node.sub_items">
-                        <li ng-repeat="node in node.sub_items" ui-tree-node ng-include="'nodes_renderer.html'">
-                        </li>
-                    </ol>
-                </script>
-                {% endverbatim %}
-                <div ui-tree>
-                    <ol ui-tree-nodes="" autosave ng-model="agendas" id="tree-root">
-                        <li ng-repeat="node in agendas" ui-tree-node ng-include="'nodes_renderer.html'"></li>
-                    </ol>
-                </div>
+                {{ block('agenda_tab') }}
             </div>
-            <div class="tab-pane" id="todos">
+            <div class="tab-pane" id="todos"
                 <h1>todos</h1>
             </div>
             <div class="tab-pane" id="protokoll">

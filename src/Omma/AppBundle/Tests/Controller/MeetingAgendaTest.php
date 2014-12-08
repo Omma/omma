@@ -22,8 +22,8 @@ class MeetingAgendaTest extends AbstractAuthenticatedTest
         $meeting = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Meeting', "json");
 
         $content = $this->pushContent("/meetings/" . $meeting->getId() . "/agendas.json", array(
-            "item" => "AgendaText",
-            "sorting_order" => 1
+            "name" => "AgendaText",
+            "sorting_order" => 1,
         ));
 
         $serializer = $this->getContainer()->get("jms_serializer");
@@ -41,7 +41,7 @@ class MeetingAgendaTest extends AbstractAuthenticatedTest
 
         $this->assertSame($meeting->getId(), $newMeeting->getId());
 
-        $this->assertSame("AgendaText", $newAgenda->getItem());
+        $this->assertSame("AgendaText", $newAgenda->getName());
         $this->assertSame(1, $newAgenda->getSortingOrder());
     }
 }

@@ -16,7 +16,7 @@ module.exports = function (grunt) {
     var files = {
         jsLibs: [
             './web/assets/components/jquery/jquery.min.js',
-            './web/assets/components/lodash/dist/lodash.underscore.min.js',
+            './web/assets/components/lodash/dist/lodash.min.js',
             './web/assets/components/bootstrap/dist/js/bootstrap.min.js',
             './web/assets/components/angular/angular.min.js',
             './web/assets/components/restangular/dist/restangular.min.js',
@@ -29,7 +29,8 @@ module.exports = function (grunt) {
             './web/assets/components/typehead.js/dist/typeahead.bundle.min.js'
         ],
         js: [
-            './web/assets/js/*.js'
+            './web/assets/js/MainModule.js',
+            './web/assets/js/**/*.js'
         ]
     };
 
@@ -127,7 +128,7 @@ module.exports = function (grunt) {
                 files: files.js,
                 tasks: [
                     'newer:jshint',
-                    'uglify:dev'
+                    'concat_sourcemap:main'
                 ]
             },
 

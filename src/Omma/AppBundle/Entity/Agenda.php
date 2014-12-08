@@ -1,8 +1,8 @@
 <?php
 namespace Omma\AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Omma\AppBundle\Entity\Task;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @ORM\HasLifecycleCallbacks
  *
  * @author Adrian Woeltche
+ * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 class Agenda extends Base
 {
@@ -47,10 +48,10 @@ class Agenda extends Base
      *
      * @var ArrayCollection
      */
-    private $subItems;
+    private $children;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Agenda", inversedBy="subItems")
+     * @ORM\ManyToOne(targetEntity="Agenda", inversedBy="children")
      * @ORM\JoinColumn(name="parent", referencedColumnName="id")
      *
      * @var Agenda
@@ -58,12 +59,12 @@ class Agenda extends Base
     private $parent;
 
     /**
-     * @ORM\Column(name="item", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      * @NotBlank()
      *
      * @var string
      */
-    private $item;
+    private $name;
 
     /**
      * @ORM\Column(name="sortingOrder", type="integer")
@@ -78,7 +79,7 @@ class Agenda extends Base
      */
     public function __construct()
     {
-        $this->subItems = new ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     /**
@@ -92,32 +93,30 @@ class Agenda extends Base
     }
 
     /**
-     * Set item
-     *
-     * @param string $item
-     * @return Agenda
+     * @return string
      */
-    public function setItem($item)
+    public function getName()
     {
-        $this->item = $item;
-
-        return $this;
+        return $this->name;
     }
 
     /**
-     * Get item
+     * @param string $name
      *
-     * @return string
+     * @return $this
      */
-    public function getItem()
+    public function setName($name)
     {
-        return $this->item;
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
      * Set sortingOrder
      *
      * @param integer $sortingOrder
+     *
      * @return Agenda
      */
     public function setSortingOrder($sortingOrder)
@@ -170,6 +169,7 @@ class Agenda extends Base
      * Set task
      *
      * @param Task $task
+     *
      * @return Agenda
      */
     public function setTask(Task $task = null)
@@ -195,46 +195,57 @@ class Agenda extends Base
     }
 
     /**
-     * Add subItems
-     *
-     * @param Agenda $subItem
-     *
-     * @return Agenda
+     * @return Agenda[]
      */
-    public function addSubItem(Agenda $subItem)
+    public function getChildren()
     {
-        if (!$this->subItems->contains($subItem)) {
-            $this->subItems->add($subItem);
-            $subItem->setParent($this);
-        }
-
-        return $this;
+        return $this->children;
     }
 
     /**
-     * Remove subItems
-     *
-     * @param Agenda $subItems
+     * @param self[] $children
      *
      * @return $this
      */
-    public function removeSubItem(Agenda $subItems)
+    public function setChildren(array $children)
     {
-        if ($this->subItems->removeElement($subItems)) {
-            $subItems->setParent(null);
+        $this->children->clear();
+        foreach ($children as $child) {
+            $this->addChild($child);
         }
 
         return $this;
     }
 
     /**
-     * Get subItems
+     * @param Agenda $agenda
      *
-     * @return Agenda[]
+     * @return $this
      */
-    public function getSubItems()
+    public function addChild(Agenda $agenda)
     {
-        return $this->subItems;
+        if (!$this->children->contains($agenda)) {
+            $this->children->add($agenda);
+            $agenda->setParent($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param Agenda $agenda
+     *
+     * @return $this
+     */
+    public function removeChild(Agenda $agenda)
+    {
+        if ($this->children->removeElement($agenda)) {
+            $agenda->setParent(null);
+        }
+
+        return $this;
     }
 
     /**
