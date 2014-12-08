@@ -15,7 +15,7 @@ class MeetingAgendaForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add("item")
-            ->add("sorting_order", "integer")
+            ->add("sortingOrder", "integer")
             ->add("parent", "entity", array(
             "class" => 'Omma\AppBundle\Entity\Agenda',
             "property" => "item"

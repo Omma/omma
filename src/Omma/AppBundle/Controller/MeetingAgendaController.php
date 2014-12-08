@@ -33,6 +33,7 @@ class MeetingAgendaController extends FOSRestController implements ClassResource
     {
         $agenda = new Agenda();
         $agenda->setMeeting($meeting);
+        $meeting->addAgenda($agenda);
 
         return $this->processForm($request, $agenda);
     }

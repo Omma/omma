@@ -48,5 +48,3 @@ class MeetingRecurringTest extends AbstractAuthenticatedTest
         $this->assertSame(1, $newMeetingRecurring->getRecurring());
     }
 }
-
-?>
