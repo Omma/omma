@@ -1,31 +1,28 @@
 //incoming: string, 2014-Januar e.g.
-function getCurrentMonth(month) {
+window.utils = {
+    getCurrentMonth:        function (month) {
+        if (month === '') {
+            return {
+                start: moment().startOf('month'),
+                end:   moment().endOf('month')
+            };
+        }
 
-    var start;
-    var end;
-
-    if(month==='') {
         return {
-            start: moment().startOf('month'),
-            end:   moment().endOf('month')
+            start: moment(month, 'YYYY MM').startOf('month'),
+            end:   moment(month, 'YYYY MM').endOf('month')
+        };
+    },
+    formatIncomingJsonDate: function (element) {
+        var date = moment(element.date);
+
+        return {
+            date:     date.toDate(),
+            dateOrig: date,
+            data:     {title: element.title, url: element.url}
         };
     }
-
-    return {
-        start: moment(month, 'YYYY MM').startOf('month'),
-        end:   moment(month, 'YYYY MM').endOf('month')
-    };
-}
-
-function formatIncomingJsonDate(element) {
-    var date = moment(element.date);
-
-    return {
-        date: date.toDate(),
-        dateOrig: date,
-        data: {title: element.title, url: element.url}
-    };
-}
+};
 
 
 $(document).ready(function() {
@@ -47,7 +44,7 @@ $(document).ready(function() {
 
 
     /* Nächste Events */
-    $.getJSON( '/temp_jsons/next-events-left-col.json?start='+getCurrentMonth('').start, function( data ) {
+    $.getJSON( '/temp_jsons/next-events-left-col.json?start='+utils.getCurrentMonth('').start, function( data ) {
 
         $.each( data, function( key,value ) {
             var active;
@@ -73,7 +70,7 @@ $(document).ready(function() {
 
 
     /* Todos */
-    $.getJSON( '/temp_jsons/todos-left-col.json?start='+getCurrentMonth('').start, function( data ) {
+    $.getJSON( '/temp_jsons/todos-left-col.json?start='+utils.getCurrentMonth('').start, function( data ) {
         $.each( data, function( key,value ) {
             $('.left-col ul.todos').append('<li><a href=\''+value.url+'\'>'+value.title+'</li>');
         });

@@ -1,4 +1,4 @@
-app.factory('meetingService', ['$http', function($http) {
+angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
     return {
         /**
          * Get Meetings for date range
@@ -15,7 +15,7 @@ app.factory('meetingService', ['$http', function($http) {
             }
             return $http.get('/temp_jsons/calendar-left-col.json?start=' + start.format() + '&end=' + end.format())
                 .then(function (data) {
-                    return _.map(data.data, formatIncomingJsonDate);
+                    return _.map(data.data, utils.formatIncomingJsonDate);
                 })
             ;
         }

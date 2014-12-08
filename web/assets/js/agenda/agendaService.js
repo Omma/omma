@@ -31,7 +31,6 @@ angular.module('ommaApp').factory('agendaService', ['Restangular', '$http', func
 
         },
         getAll: function(meeting) {
-            var self = this;
             return $http.get('/meetings/' + meeting.id + '/agendas.json').then(function(data) {
                 return data.data;
             });
@@ -39,7 +38,7 @@ angular.module('ommaApp').factory('agendaService', ['Restangular', '$http', func
         saveTree: function(meeting, tree) {
             $http.put('/meetings/' + meeting.id + '/agendas/tree', tree).success(function(data) {
                 console.log(data);
-            })
+            });
         }
     };
 }]);

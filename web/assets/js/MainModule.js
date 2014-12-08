@@ -9,8 +9,6 @@ app.config(['RestangularProvider', function(RestangularProvider) {
     RestangularProvider.setRequestSuffix('.json');
 }]);
 
-
-
 app.controller('meetingController', ['$scope', 'Restangular', function($scope, Restangular) {
     $scope.init = function(id) {
         $scope.meeting = Restangular.one('meetings', id).get().then(function(meeting) {
@@ -18,16 +16,3 @@ app.controller('meetingController', ['$scope', 'Restangular', function($scope, R
         });
     };
 }]);
-
-app.directive('autosave', ['agendaManager', function(agendaManager) {
-
-    function autosaveController($scope, $emelent, $attrs) {
-
-    }
-
-    return {
-        restrict: 'A',
-        link: autosaveController
-    };
-}]);
-

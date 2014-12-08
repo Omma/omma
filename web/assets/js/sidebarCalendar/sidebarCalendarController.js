@@ -1,5 +1,5 @@
 angular.module('ommaApp').controller('sidebarCalendarController', ['$scope', 'meetingService', function ($scope, meetingService) {
-    var current = getCurrentMonth('');
+    var current = utils.getCurrentMonth('');
     $scope.currentEvents = [];
 
     meetingService.getByDate(current.start, current.end).then(function(events) {
@@ -14,7 +14,7 @@ angular.module('ommaApp').controller('sidebarCalendarController', ['$scope', 'me
         var dowNames;
         var dowOffset;
 
-        if (window.language == 'de_DE') {
+        if (window.language === 'de_DE') {
             monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
             dowNames = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
             dowOffset = 1;

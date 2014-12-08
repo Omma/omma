@@ -51,7 +51,7 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
 
     function watchAgendas(meeting) {
         var first = true;
-        function saveModel(newModel, oldModel) {
+        function saveModel(newModel) {
             // first change is from angular ui tree
             if (first) {
                 first = false;
