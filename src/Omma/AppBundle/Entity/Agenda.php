@@ -1,8 +1,8 @@
 <?php
 namespace Omma\AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @ORM\HasLifecycleCallbacks
  *
  * @author Adrian Woeltche
+ * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 class Agenda extends Base
 {
@@ -46,10 +47,10 @@ class Agenda extends Base
      *
      * @var ArrayCollection
      */
-    private $subItems;
+    private $children;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Agenda", inversedBy="subItems")
+     * @ORM\ManyToOne(targetEntity="Agenda", inversedBy="children")
      * @ORM\JoinColumn(name="parent", referencedColumnName="id")
      *
      * @var Agenda
@@ -57,12 +58,12 @@ class Agenda extends Base
     private $parent;
 
     /**
-     * @ORM\Column(name="item", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      * @NotBlank()
      *
      * @var string
      */
-    private $item;
+    private $name;
 
     /**
      * @ORM\Column(name="sortingOrder", type="integer")
@@ -77,7 +78,7 @@ class Agenda extends Base
      */
     public function __construct()
     {
-        $this->subItems = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     /**
@@ -91,32 +92,30 @@ class Agenda extends Base
     }
 
     /**
-     * Set item
-     *
-     * @param string $item
-     * @return Agenda
+     * @return string
      */
-    public function setItem($item)
+    public function getName()
     {
-        $this->item = $item;
-
-        return $this;
+        return $this->name;
     }
 
     /**
-     * Get item
+     * @param string $name
      *
-     * @return string
+     * @return $this
      */
-    public function getItem()
+    public function setName($name)
     {
-        return $this->item;
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
      * Set sortingOrder
      *
      * @param integer $sortingOrder
+     *
      * @return Agenda
      */
     public function setSortingOrder($sortingOrder)
@@ -140,6 +139,7 @@ class Agenda extends Base
      * Set meeting
      *
      * @param \Omma\AppBundle\Entity\Meeting $meeting
+     *
      * @return Agenda
      */
     public function setMeeting(\Omma\AppBundle\Entity\Meeting $meeting)
@@ -163,6 +163,7 @@ class Agenda extends Base
      * Set task
      *
      * @param \Omma\AppBundle\Entity\Task $task
+     *
      * @return Agenda
      */
     public function setTask(\Omma\AppBundle\Entity\Task $task = null)
@@ -183,45 +184,49 @@ class Agenda extends Base
     }
 
     /**
-     * Add subItems
-     *
-     * @param \Omma\AppBundle\Entity\Agenda $subItems
-     * @return Agenda
+     * @return Agenda[]
      */
-    public function addSubItem(\Omma\AppBundle\Entity\Agenda $subItems)
+    public function getChildren()
     {
-        $this->subItems[] = $subItems;
+        return $this->children;
+    }
+
+    /**
+     * @param self[] $children
+     *
+     * @return $this
+     */
+    public function setChildren(array $children)
+    {
+        $this->children->clear();
+        foreach ($children as $child) {
+            $this->addChild($child);
+        }
 
         return $this;
     }
 
     /**
-     * Remove subItems
+     * @param Agenda $agenda
      *
-     * @param \Omma\AppBundle\Entity\Agenda $subItems
+     * @return $this
      */
-    public function removeSubItem(\Omma\AppBundle\Entity\Agenda $subItems)
+    public function addChild(Agenda $agenda)
     {
-        $this->subItems->removeElement($subItems);
-    }
+        $agenda->setParent($this);
+        $this->children->add($agenda);
 
-    /**
-     * Get subItems
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSubItems()
-    {
-        return $this->subItems;
+        return $this;
     }
 
     /**
      * Set parent
      *
-     * @param \Omma\AppBundle\Entity\Agenda $parent
+     * @param Agenda $parent
+     *
      * @return Agenda
      */
-    public function setParent(\Omma\AppBundle\Entity\Agenda $parent = null)
+    public function setParent(Agenda $parent = null)
     {
         $this->parent = $parent;
 
@@ -231,7 +236,7 @@ class Agenda extends Base
     /**
      * Get parent
      *
-     * @return \Omma\AppBundle\Entity\Agenda
+     * @return Agenda
      */
     public function getParent()
     {

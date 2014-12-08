@@ -17,6 +17,8 @@
     "devel": true,
     "indent": 4,
     "globals": {
-        "moment": true
+        "angular": true,
+        "moment": true,
+        "_": true
     }
 }
