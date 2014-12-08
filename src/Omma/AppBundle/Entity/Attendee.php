@@ -1,9 +1,9 @@
 <?php
 namespace Omma\AppBundle\Entity;
 
-use Omma\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Application\Sonata\UserBundle\Entity\User;
 
 /**
  *
@@ -38,21 +38,21 @@ class Attendee extends Base
      *
      * @var Meeting
      */
-    protected $meeting;
+    private $meeting;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="meetings")
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="attendees")
      *
      * @var User
      */
-    protected $user;
+    private $user;
 
     /**
      * @ORM\Column(type="boolean")
      *
      * @var boolean
      */
-    protected $mandatory = true;
+    private $mandatory = true;
 
     /**
      * @ORM\Column(type="string")
@@ -60,14 +60,14 @@ class Attendee extends Base
      *
      * @var string
      */
-    protected $status = Attendee::STATUS_INVITED;
+    private $status = Attendee::STATUS_INVITED;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      *
      * @var string
      */
-    protected $message;
+    private $message;
 
     /**
      *
@@ -122,7 +122,12 @@ class Attendee extends Base
      */
     public function setUser(User $user)
     {
-        $this->user = $user;
+        if ($this->user !== $user) {
+            $this->user = $user;
+            if (null !== $user) {
+                $user->addAttendee($this);
+            }
+        }
 
         return $this;
     }

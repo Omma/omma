@@ -25,7 +25,7 @@ class MeetingRecurringException extends Base
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MeetingRecurring", inversedBy="meetingRecurringException")
+     * @ORM\ManyToOne(targetEntity="MeetingRecurring", inversedBy="meetingRecurringExceptions")
      * @ORM\JoinColumn(name="meeting_recurring_id", referencedColumnName="id", nullable=false)
      *
      * @var MeetingRecurring

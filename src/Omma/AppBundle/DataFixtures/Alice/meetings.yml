@@ -3,4 +3,3 @@ Omma\AppBundle\Entity\Meeting:
         name: <word()>
         dateStart: <dateTimeBetween("2014-01-01", "2015-12-31")>
         dateEnd: <dateTimeBetween(@self->dateStart, @self->dateStart ->format("Y-m-d H:i:s")." +1 day")>
-        users: 1x @user*

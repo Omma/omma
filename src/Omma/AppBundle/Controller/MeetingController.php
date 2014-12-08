@@ -1,7 +1,6 @@
 <?php
 namespace Omma\AppBundle\Controller;
 
-use Application\Sonata\UserBundle\Entity\User;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Omma\AppBundle\Entity\Attendee;
@@ -11,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- *
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  * @author Adrian Woeltche
@@ -41,14 +39,17 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     /**
      * @Security("is_fully_authenticated()")
      *
-     * @param \DateTime $dateStart Start Date
-     * @param \DateTime $dateEnd End Date
+     * @param \DateTime $dateStart
+     *            Start Date
+     * @param \DateTime $dateEnd
+     *            End Date
      *
      * @return array
      */
     public function getRangeAction(\DateTime $dateStart, \DateTime $dateEnd)
     {
         $user = $this->getUser();
+
         $query = $this->get("omma.app.manager.meeting")->createQueryBuilder("m");
         $query->select("m")
             ->where("m.dateStart BETWEEN :dateStart AND :dateEnd")
@@ -74,15 +75,11 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      */
     public function cpostAction(Request $request)
     {
-        /** @var User $user */
         $user = $this->getUser();
 
         $meeting = new Meeting();
         $attendee = new Attendee();
-        $attendee
-            ->setMeeting($meeting)
-            ->setUser($user)
-        ;
+        $attendee->setMeeting($meeting)->setUser($user);
 
         return $this->processForm($request, $meeting);
     }
@@ -126,7 +123,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     {
         $new = null === $meeting->getId();
         $form = $this->createForm(new MeetingForm(), $meeting, array(
-            "method"          => $new ? "POST" : "PUT",
+            "method" => $new ? "POST" : "PUT",
             "csrf_protection" => false
         ));
         $form->handleRequest($request);
@@ -150,10 +147,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     public function getAction(Meeting $meeting)
     {
         $view = $this->view($meeting);
-        $view
-            ->setTemplate("OmmaAppBundle:Meeting:edit.html.twig")
-            ->setTemplateVar("meeting")
-        ;
+        $view->setTemplate("OmmaAppBundle:Meeting:edit.html.twig")->setTemplateVar("meeting");
 
         return $this->handleView($view);
     }
