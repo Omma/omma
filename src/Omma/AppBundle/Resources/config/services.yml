@@ -1,4 +1,10 @@
 services:
+    security.access.post_voter:
+        class: Omma\AppBundle\Voter\MeetingVoter
+        public: false
+        tags:
+            - { name: security.voter }
+
     omma.app.request.listener.locale:
         class: Omma\AppBundle\EventListener\Request\LocaleListener
         tags:

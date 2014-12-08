@@ -12,13 +12,16 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  *
  * @RouteResource("Agenda")
+ *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 class MeetingAgendaController extends FOSRestController implements ClassResourceInterface
 {
+
     public function cgetAction(Meeting $meeting)
     {
-        return $this->get("omma.app.manager.agenda")->createQueryBuilder("a")
+        return $this->get("omma.app.manager.agenda")
+            ->createQueryBuilder("a")
             ->select("a")
             ->where("a.meeting = :meeting AND a.parent IS NULL")
             ->setParameter("meeting", $meeting)
@@ -55,8 +58,8 @@ class MeetingAgendaController extends FOSRestController implements ClassResource
     {
         $new = null === $agenda->getId();
         $form = $this->createForm(new MeetingAgendaForm(), $agenda, array(
-            "method"          => $new ? "POST" : "PUT",
-            "csrf_protection" => false,
+            "method" => $new ? "POST" : "PUT",
+            "csrf_protection" => false
         ));
         $form->handleRequest($request);
 

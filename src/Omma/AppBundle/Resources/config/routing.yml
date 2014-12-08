@@ -10,13 +10,19 @@ omma_app_meeting_agenda:
     parent: omma_app_meeting
 
 omma_app_meeting_protocol:
-    resource: @OmmaAppBundle/Controller/MeetingProtocolController.php
+    resource: "@OmmaAppBundle/Controller/MeetingProtocolController.php"
     type: rest
     name_prefix: omma_app_
     parent: omma_app_meeting
 
 omma_app_meeting_attendee:
-    resource: @OmmaAppBundle/Controller/MeetingAttendeeController.php
+    resource: "@OmmaAppBundle/Controller/MeetingAttendeeController.php"
     type: rest
     name_prefix: omma_app_
+    parent: omma_app_meeting
+
+omma_app_meeting_recurring:
+    resource: "@OmmaAppBundle/Controller/MeetingRecurringController.php"
+    type: rest
+    name_prefix: omma_app
     parent: omma_app_meeting

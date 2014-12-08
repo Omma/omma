@@ -9,3 +9,7 @@ Omma\AppBundle\Entity\Meeting:
             expose: true
         dateEnd:
             expose: true
+        prev:
+            expose: true
+        next:
+            expose: true

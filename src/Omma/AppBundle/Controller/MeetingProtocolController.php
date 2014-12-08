@@ -12,19 +12,21 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  *
  * @RouteResource("Protocol")
+ *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 class MeetingProtocolController extends FOSRestController implements ClassResourceInterface
 {
+
     public function cgetAction(Meeting $meeting)
     {
-        return $this->get("omma.app.manager.protocol")->createQueryBuilder("p")
+        return $this->get("omma.app.manager.protocol")
+            ->createQueryBuilder("p")
             ->select("p")
             ->where("p.meeting = :meeting")
             ->setParameter("meeting", $meeting)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function cpostAction(Request $request, Meeting $meeting)
@@ -56,8 +58,8 @@ class MeetingProtocolController extends FOSRestController implements ClassResour
     {
         $new = null === $protocol->getId();
         $form = $this->createForm(new MeetingProtocolForm(), $protocol, array(
-            "method"          => $new ? "POST" : "PUT",
-            "csrf_protection" => false,
+            "method" => $new ? "POST" : "PUT",
+            "csrf_protection" => false
         ));
         $form->handleRequest($request);
 

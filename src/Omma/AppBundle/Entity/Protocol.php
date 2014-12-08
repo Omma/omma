@@ -70,6 +70,7 @@ class Protocol extends Base
      * Set text
      *
      * @param string $text
+     *
      * @return Protocol
      */
     public function setText($text)
@@ -93,6 +94,7 @@ class Protocol extends Base
      * Set final
      *
      * @param boolean $final
+     *
      * @return Protocol
      */
     public function setFinal($final)
@@ -115,12 +117,18 @@ class Protocol extends Base
     /**
      * Set meeting
      *
-     * @param \Omma\AppBundle\Entity\Meeting $meeting
+     * @param Meeting $meeting
+     *
      * @return Protocol
      */
-    public function setMeeting(\Omma\AppBundle\Entity\Meeting $meeting)
+    public function setMeeting(Meeting $meeting = null)
     {
-        $this->meeting = $meeting;
+        if ($this->meeting !== $meeting) {
+            $this->meeting = $meeting;
+            if (null !== $meeting) {
+                $meeting->setProtocol($this);
+            }
+        }
 
         return $this;
     }
@@ -128,7 +136,7 @@ class Protocol extends Base
     /**
      * Get meeting
      *
-     * @return \Omma\AppBundle\Entity\Meeting
+     * @return Meeting
      */
     public function getMeeting()
     {
@@ -138,12 +146,18 @@ class Protocol extends Base
     /**
      * Set file
      *
-     * @param \Omma\AppBundle\Entity\File $file
+     * @param File $file
+     *
      * @return Protocol
      */
-    public function setFile(\Omma\AppBundle\Entity\File $file = null)
+    public function setFile(File $file = null)
     {
-        $this->file = $file;
+        if ($this->file !== $file) {
+            $this->file = $file;
+            if (null !== $file) {
+                $file->setProtocol($this);
+            }
+        }
 
         return $this;
     }
@@ -151,10 +165,20 @@ class Protocol extends Base
     /**
      * Get file
      *
-     * @return \Omma\AppBundle\Entity\File
+     * @return File
      */
     public function getFile()
     {
         return $this->file;
+    }
+
+    /**
+     * Get final
+     *
+     * @return boolean
+     */
+    public function getFinal()
+    {
+        return $this->final;
     }
 }

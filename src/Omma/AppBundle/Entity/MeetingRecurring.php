@@ -1,8 +1,8 @@
 <?php
 namespace Omma\AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * MeetingRecurring
@@ -16,6 +16,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 class MeetingRecurring extends Base
 {
 
+    const TYPE_DAY = 1;
+
+    const TYPE_WEEK = 2;
+
+    const TYPE_MONTH = 3;
+
+    const TYPE_YEAR = 4;
+
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -26,15 +34,15 @@ class MeetingRecurring extends Base
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="meetingRecurring")
+     * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="meetingRecurrings")
      * @ORM\JoinColumn(name="meeting_id", referencedColumnName="id", nullable=false)
      *
      * @var Meeting
      */
-    private $meetingId;
+    private $meeting;
 
     /**
-     * @ORM\OneToMany(targetEntity="MeetingRecurringException", mappedBy="meetingRecurringId")
+     * @ORM\OneToMany(targetEntity="MeetingRecurringException", mappedBy="meetingRecurring")
      *
      * @var ArrayCollection
      */
@@ -55,18 +63,25 @@ class MeetingRecurring extends Base
     private $dateEnd;
 
     /**
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(name="type", type="integer")
      *
-     * @var string
+     * @var integer
      */
     private $type;
+
+    /**
+     * @ORM\Column(name="recurring", type="integer")
+     *
+     * @var integer
+     */
+    private $recurring;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->meetingRecurringExceptions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->meetingRecurringExceptions = new ArrayCollection();
     }
 
     /**
@@ -83,6 +98,7 @@ class MeetingRecurring extends Base
      * Set dateStart
      *
      * @param \DateTime $dateStart
+     *
      * @return MeetingRecurring
      */
     public function setDateStart($dateStart)
@@ -106,6 +122,7 @@ class MeetingRecurring extends Base
      * Set dateEnd
      *
      * @param \DateTime $dateEnd
+     *
      * @return MeetingRecurring
      */
     public function setDateEnd($dateEnd)
@@ -129,6 +146,7 @@ class MeetingRecurring extends Base
      * Set type
      *
      * @param string $type
+     *
      * @return MeetingRecurring
      */
     public function setType($type)
@@ -149,37 +167,47 @@ class MeetingRecurring extends Base
     }
 
     /**
-     * Set meetingId
+     * Set meeting
      *
-     * @param \Omma\AppBundle\Entity\Meeting $meetingId
+     * @param Meeting $meeting
+     *
      * @return MeetingRecurring
      */
-    public function setMeetingId(\Omma\AppBundle\Entity\Meeting $meetingId)
+    public function setMeeting(Meeting $meeting)
     {
-        $this->meetingId = $meetingId;
+        if ($this->meeting !== $meeting) {
+            $this->meeting = $meeting;
+            if (null !== $meeting) {
+                $meeting->addMeetingRecurring($this);
+            }
+        }
 
         return $this;
     }
 
     /**
-     * Get meetingId
+     * Get meeting
      *
-     * @return \Omma\AppBundle\Entity\Meeting
+     * @return Meeting
      */
-    public function getMeetingId()
+    public function getMeeting()
     {
-        return $this->meetingId;
+        return $this->meeting;
     }
 
     /**
      * Add meetingRecurringExceptions
      *
-     * @param \Omma\AppBundle\Entity\MeetingRecurringException $meetingRecurringExceptions
+     * @param MeetingRecurringException $meetingRecurringException
+     *
      * @return MeetingRecurring
      */
-    public function addMeetingRecurringException(\Omma\AppBundle\Entity\MeetingRecurringException $meetingRecurringExceptions)
+    public function addMeetingRecurringException(MeetingRecurringException $meetingRecurringException)
     {
-        $this->meetingRecurringExceptions[] = $meetingRecurringExceptions;
+        if ($this->meetingRecurringExceptions->contains($meetingRecurringException)) {
+            $this->meetingRecurringExceptions->add($meetingRecurringException);
+            $meetingRecurringException->setMeetingRecurring($this);
+        }
 
         return $this;
     }
@@ -187,11 +215,17 @@ class MeetingRecurring extends Base
     /**
      * Remove meetingRecurringExceptions
      *
-     * @param \Omma\AppBundle\Entity\MeetingRecurringException $meetingRecurringExceptions
+     * @param MeetingRecurringException $meetingRecurringException
+     *
+     * @return $this
      */
-    public function removeMeetingRecurringException(\Omma\AppBundle\Entity\MeetingRecurringException $meetingRecurringExceptions)
+    public function removeMeetingRecurringException(MeetingRecurringException $meetingRecurringException)
     {
-        $this->meetingRecurringExceptions->removeElement($meetingRecurringExceptions);
+        if ($this->meetingRecurringExceptions->removeElement($meetingRecurringException)) {
+            $meetingRecurringException->setMeetingRecurring(null);
+        }
+
+        return $this;
     }
 
     /**
@@ -202,5 +236,29 @@ class MeetingRecurring extends Base
     public function getMeetingRecurringExceptions()
     {
         return $this->meetingRecurringExceptions;
+    }
+
+    /**
+     * Set recurring
+     *
+     * @param integer $recurring
+     *
+     * @return MeetingRecurring
+     */
+    public function setRecurring($recurring)
+    {
+        $this->recurring = $recurring;
+
+        return $this;
+    }
+
+    /**
+     * Get recurring
+     *
+     * @return integer
+     */
+    public function getRecurring()
+    {
+        return $this->recurring;
     }
 }

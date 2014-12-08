@@ -11,6 +11,7 @@ namespace Application\Sonata\UserBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Omma\AppBundle\Entity\Attendee;
+use Omma\AppBundle\Entity\Task;
 use Omma\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,7 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="fos_user_user")
  *
- * @author <yourname> <youremail>
+ * @author Adrian Woeltche
  */
 class User extends BaseUser
 {
@@ -38,14 +39,16 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @var Attendee
      * @ORM\OneToMany(targetEntity="Omma\AppBundle\Entity\Attendee", mappedBy="user")
+     *
+     * @var Attendee
      */
-    protected $meetings;
+    protected $attendees;
 
     /**
-     * @var \Omma\AppBundle\Entity\Task
      * @ORM\OneToMany(targetEntity="\Omma\AppBundle\Entity\Task", mappedBy="user")
+     *
+     * @var Task
      */
     protected $tasks;
 
@@ -55,7 +58,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        $this->meetings = new ArrayCollection();
+        $this->attendees = new ArrayCollection();
         $this->tasks = new ArrayCollection();
     }
 
@@ -70,15 +73,15 @@ class User extends BaseUser
     }
 
     /**
-     * Add meetings
+     * Add attendees
      *
      * @param Attendee $attendee
      * @return $this
      */
-    public function addMeeting(Attendee $attendee)
+    public function addAttendee(Attendee $attendee)
     {
-        if (!$this->meetings->contains($attendee)) {
-            $this->meetings->add($attendee);
+        if (! $this->attendees->contains($attendee)) {
+            $this->attendees->add($attendee);
             $attendee->setUser($this);
         }
 
@@ -86,15 +89,15 @@ class User extends BaseUser
     }
 
     /**
-     * Remove meetings
+     * Remove attendees
      *
      * @param Attendee $attendee
      *
      * @return $this
      */
-    public function removeMeeting(Attendee $attendee)
+    public function removeAttendee(Attendee $attendee)
     {
-        if ($this->meetings->removeElement($attendee)) {
+        if ($this->attendees->removeElement($attendee)) {
             $attendee->setUser(null);
         }
 
@@ -102,24 +105,27 @@ class User extends BaseUser
     }
 
     /**
-     * Get meetings
+     * Get attendees
      *
      * @return Attendee[]
      */
-    public function getMeetings()
+    public function getAttendees()
     {
-        return $this->meetings;
+        return $this->attendees;
     }
 
     /**
      * Add tasks
      *
-     * @param \Omma\AppBundle\Entity\Task $tasks
+     * @param Task $task
      * @return User
      */
-    public function addTask(\Omma\AppBundle\Entity\Task $tasks)
+    public function addTask(Task $task)
     {
-        $this->tasks[] = $tasks;
+        if (! $this->tasks->contains($task)) {
+            $this->tasks->add($task);
+            $task->setUser($this);
+        }
 
         return $this;
     }
@@ -127,17 +133,23 @@ class User extends BaseUser
     /**
      * Remove tasks
      *
-     * @param \Omma\AppBundle\Entity\Task $tasks
+     * @param Task $task
+     *
+     * @return $this
      */
-    public function removeTask(\Omma\AppBundle\Entity\Task $tasks)
+    public function removeTask(Task $task)
     {
-        $this->tasks->removeElement($tasks);
+        if ($this->tasks->removeElement($task)) {
+            $task->setUser(null);
+        }
+
+        return $this;
     }
 
     /**
      * Get tasks
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Task[]
      */
     public function getTasks()
     {

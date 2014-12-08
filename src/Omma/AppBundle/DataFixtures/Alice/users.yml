@@ -1,0 +1,12 @@
+Application\Sonata\UserBundle\Entity\User:
+    user1:
+        username: admin
+        email: admin@omma.local
+        plainPassword: admin
+        roles: ["ROLE_SUPER_ADMIN"]
+        enabled: true
+    user2:
+        username: test
+        email: test@omma.local
+        plainPassword: test
+        enabled: true

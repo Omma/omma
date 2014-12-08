@@ -1,6 +1,7 @@
 <?php
 namespace Omma\AppBundle\Entity;
 
+use Application\Sonata\UserBundle\Entity\Group;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints\DateTime;
@@ -28,22 +29,22 @@ class Meeting extends Base
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Omma\AppBundle\Entity\Attendee", mappedBy="meeting")
+     * @ORM\OneToMany(targetEntity="Omma\AppBundle\Entity\Attendee", mappedBy="meeting", orphanRemoval=true, cascade="all")
      *
      * @var ArrayCollection
      */
     private $attendees;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Group", inversedBy="meetings")
+     * @ORM\ManyToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Group", inversedBy="meetings", orphanRemoval=true)
      * @ORM\JoinTable(name="omma_meeting_groups")
      *
-     * @var \Application\Sonata\UserBundle\Entity\Group
+     * @var Group
      */
     private $groups;
 
     /**
-     * @ORM\OneToMany(targetEntity="MeetingRecurring", mappedBy="meetingId", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="MeetingRecurring", mappedBy="meeting", orphanRemoval=true)
      *
      * @var MeetingRecurring
      */
@@ -113,6 +114,7 @@ class Meeting extends Base
      * @ORM\Column(name="date_end", type="datetime")
      * @NotBlank()
      * @DateTime()
+     *
      * @var \DateTime
      */
     private $dateEnd;
@@ -190,6 +192,7 @@ class Meeting extends Base
      * Set dateEnd
      *
      * @param \DateTime $dateEnd
+     *
      * @return Meeting
      */
     public function setDateEnd($dateEnd)
@@ -262,59 +265,36 @@ class Meeting extends Base
     }
 
     /**
-     * Add users
+     * Add group
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $users
+     * @param Group $group
      * @return Meeting
      */
-    public function addUser(\Application\Sonata\UserBundle\Entity\User $users)
+    public function addGroup(Group $group)
     {
-        $this->users[] = $users;
+        if (!$this->groups->contains($group)) {
+            $this->groups->add($group);
+            $group->addMeeting($this);
+        }
 
         return $this;
     }
 
     /**
-     * Remove users
+     * Remove group
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $users
-     */
-    public function removeUser(\Application\Sonata\UserBundle\Entity\User $users)
-    {
-        $this->users->removeElement($users);
-    }
-
-    /**
-     * Get users
+     * @param Group $group
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return $this
      */
-    public function getUsers()
+    public function removeGroup(Group $group)
     {
-        return $this->users;
-    }
-
-    /**
-     * Add groups
-     *
-     * @param \Application\Sonata\UserBundle\Entity\Group $groups
-     * @return Meeting
-     */
-    public function addGroup(\Application\Sonata\UserBundle\Entity\Group $groups)
-    {
-        $this->groups[] = $groups;
+        if ($this->groups->removeElement($group)) {
+            $this->groups->add($group);
+            $group->removeMeeting($this);
+        }
 
         return $this;
-    }
-
-    /**
-     * Remove groups
-     *
-     * @param \Application\Sonata\UserBundle\Entity\Group $groups
-     */
-    public function removeGroup(\Application\Sonata\UserBundle\Entity\Group $groups)
-    {
-        $this->groups->removeElement($groups);
     }
 
     /**
@@ -328,26 +308,32 @@ class Meeting extends Base
     }
 
     /**
-     * Add meetingRecurrings
+     * Add meetingRecurring
      *
-     * @param \Omma\AppBundle\Entity\MeetingRecurring $meetingRecurrings
+     * @param MeetingRecurring $meetingRecurring
+     *
      * @return Meeting
      */
-    public function addMeetingRecurring(\Omma\AppBundle\Entity\MeetingRecurring $meetingRecurrings)
+    public function addMeetingRecurring(MeetingRecurring $meetingRecurring)
     {
-        $this->meetingRecurrings[] = $meetingRecurrings;
+        if (!$this->meetingRecurrings->contains($meetingRecurring)) {
+            $this->meetingRecurrings->add($meetingRecurring);
+            $meetingRecurring->setMeeting($this);
+        }
 
         return $this;
     }
 
     /**
-     * Remove meetingRecurrings
+     * Remove meetingRecurring
      *
-     * @param \Omma\AppBundle\Entity\MeetingRecurring $meetingRecurrings
+     * @param MeetingRecurring $meetingRecurring
      */
-    public function removeMeetingRecurring(\Omma\AppBundle\Entity\MeetingRecurring $meetingRecurrings)
+    public function removeMeetingRecurring(MeetingRecurring $meetingRecurring)
     {
-        $this->meetingRecurrings->removeElement($meetingRecurrings);
+        if ($this->meetingRecurrings->removeElement($meetingRecurring)) {
+            $meetingRecurring->setMeeting(null);
+        }
     }
 
     /**
@@ -361,14 +347,18 @@ class Meeting extends Base
     }
 
     /**
-     * Add tasks
+     * Add task
      *
-     * @param \Omma\AppBundle\Entity\Task $tasks
+     * @param Task $task
+     *
      * @return Meeting
      */
-    public function addTask(\Omma\AppBundle\Entity\Task $tasks)
+    public function addTask(Task $task)
     {
-        $this->tasks[] = $tasks;
+        if (!$this->tasks->contains($task)) {
+            $this->tasks->add($task);
+            $task->setMeeting($this);
+        }
 
         return $this;
     }
@@ -376,17 +366,23 @@ class Meeting extends Base
     /**
      * Remove tasks
      *
-     * @param \Omma\AppBundle\Entity\Task $tasks
+     * @param Task $task
+     *
+     * @return $this
      */
-    public function removeTask(\Omma\AppBundle\Entity\Task $tasks)
+    public function removeTask(Task $task)
     {
-        $this->tasks->removeElement($tasks);
+        if ($this->tasks->removeElement($task)) {
+            $task->setMeeting(null);
+        }
+
+        return $this;
     }
 
     /**
      * Get tasks
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Task[]
      */
     public function getTasks()
     {
@@ -449,12 +445,15 @@ class Meeting extends Base
     /**
      * Set protocol
      *
-     * @param \Omma\AppBundle\Entity\Protocol $protocol
+     * @param Protocol $protocol
      * @return Meeting
      */
-    public function setProtocol(\Omma\AppBundle\Entity\Protocol $protocol = null)
+    public function setProtocol(Protocol $protocol = null)
     {
-        $this->protocol = $protocol;
+        if ($this->protocol !== $protocol) {
+            $this->protocol = $protocol;
+            $protocol->setMeeting($this);
+        }
 
         return $this;
     }
@@ -462,7 +461,7 @@ class Meeting extends Base
     /**
      * Get protocol
      *
-     * @return \Omma\AppBundle\Entity\Protocol
+     * @return Protocol
      */
     public function getProtocol()
     {
@@ -472,30 +471,40 @@ class Meeting extends Base
     /**
      * Add files
      *
-     * @param \Omma\AppBundle\Entity\File $files
+     * @param File $file
+     *
      * @return Meeting
      */
-    public function addFile(\Omma\AppBundle\Entity\File $files)
+    public function addFile(File $file)
     {
-        $this->files[] = $files;
+        if (!$this->files->contains($file)) {
+            $this->files->add($file);
+            $file->setMeeting($this);
+        }
 
         return $this;
     }
 
     /**
-     * Remove files
+     * Remove file
      *
-     * @param \Omma\AppBundle\Entity\File $files
+     * @param File $file
+     *
+     * @return $this
      */
-    public function removeFile(\Omma\AppBundle\Entity\File $files)
+    public function removeFile(File $file)
     {
-        $this->files->removeElement($files);
+        if ($this->files->removeElement($file)) {
+            $file->setMeeting(null);
+        }
+
+        return $this;
     }
 
     /**
      * Get files
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return File[]
      */
     public function getFiles()
     {
@@ -505,12 +514,18 @@ class Meeting extends Base
     /**
      * Set prev
      *
-     * @param \Omma\AppBundle\Entity\Meeting $prev
+     * @param Meeting $prev
+     *
      * @return Meeting
      */
-    public function setPrev(\Omma\AppBundle\Entity\Meeting $prev = null)
+    public function setPrev(Meeting $prev = null)
     {
-        $this->prev = $prev;
+        if ($this->prev !== $prev) {
+            $this->prev = $prev;
+            if (null !== $prev) {
+                $prev->setNext($this);
+            }
+        }
 
         return $this;
     }
@@ -518,7 +533,7 @@ class Meeting extends Base
     /**
      * Get prev
      *
-     * @return \Omma\AppBundle\Entity\Meeting
+     * @return Meeting
      */
     public function getPrev()
     {
@@ -528,12 +543,18 @@ class Meeting extends Base
     /**
      * Set next
      *
-     * @param \Omma\AppBundle\Entity\Meeting $next
+     * @param Meeting $next
+     *
      * @return Meeting
      */
-    public function setNext(\Omma\AppBundle\Entity\Meeting $next = null)
+    public function setNext(Meeting $next = null)
     {
-        $this->next = $next;
+        if ($this->next !== $next) {
+            $this->next = $next;
+            if (null !== $next) {
+                $next->setPrev($this);
+            }
+        }
 
         return $this;
     }
@@ -541,7 +562,7 @@ class Meeting extends Base
     /**
      * Get next
      *
-     * @return \Omma\AppBundle\Entity\Meeting
+     * @return Meeting
      */
     public function getNext()
     {

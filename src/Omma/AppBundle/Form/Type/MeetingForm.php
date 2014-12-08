@@ -15,22 +15,22 @@ class MeetingForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("name", "text", array(
-
-            ))
+            ->add("name", "text")
             ->add("date_start", "datetime", array(
                 "widget" => "single_text",
             ))
             ->add("date_end", "datetime", array(
                 "widget" => "single_text",
             ))
+            ->add("prev", "integer")
+            ->add("next", "integer")
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            "data_class" => "Omma\AppBundle\Entity\Meeting",
+            "data_class" => 'Omma\AppBundle\Entity\Meeting',
         ));
     }
 

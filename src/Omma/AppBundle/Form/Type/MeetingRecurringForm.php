@@ -7,23 +7,29 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  *
- * @author Florian Pfitzer <pfitzer@w3p.cc>
+ * @author Adrian Woeltche
  */
-class MeetingProtocolForm extends AbstractType
+class MeetingRecurringForm extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("text")
-            ->add("final")
+            ->add("type", "integer")
+            ->add("recurring", "integer")
+            ->add("date_start", "datetime", array(
+                "widget" => "single_text",
+            ))
+            ->add("date_end", "datetime", array(
+                "widget" => "single_text",
+            ))
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            "data_class" => 'Omma\AppBundle\Entity\Protocol',
+            "data_class" => 'Omma\AppBundle\Entity\MeetingRecurring',
         ));
     }
 
