@@ -1,3 +1,6 @@
+/**
+ * @author Johannes Höhn <johannes.hoehn@hof-university.de>
+ */
 angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
     return {
         /**

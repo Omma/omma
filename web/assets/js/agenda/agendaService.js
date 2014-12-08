@@ -1,3 +1,6 @@
+/**
+ * @author Florian Pfitzer <pfitzer@w3p.cc>
+ */
 angular.module('ommaApp').factory('agendaService', ['Restangular', '$http', function(Restangular, $http) {
     Restangular.extendModel('agendas', function(model) {
         model.editing = false;

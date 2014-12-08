@@ -6,13 +6,6 @@ var app = angular.module('ommaApp', [
 ]);
 
 app.config(['RestangularProvider', function(RestangularProvider) {
+    // append .json to all Restangular requests
     RestangularProvider.setRequestSuffix('.json');
-}]);
-
-app.controller('meetingController', ['$scope', 'Restangular', function($scope, Restangular) {
-    $scope.init = function(id) {
-        $scope.meeting = Restangular.one('meetings', id).get().then(function(meeting) {
-            return meeting;
-        });
-    };
 }]);

@@ -1,3 +1,6 @@
+/**
+ * @author Johannes Höhn <johannes.hoehn@hof-university.de>
+ */
 angular.module('ommaApp').controller('sidebarCalendarController', ['$scope', 'meetingService', function ($scope, meetingService) {
     var current = utils.getCurrentMonth('');
     $scope.currentEvents = [];
