@@ -26,3 +26,9 @@ omma_app_meeting_recurring:
     type: rest
     name_prefix: omma_app
     parent: omma_app_meeting
+
+omma_app_meeting_recurring_exception:
+    resource: "@OmmaAppBundle/Controller/MeetingRecurringExceptionController.php"
+    type: rest
+    name_prefix: omma_app
+    parent: omma_app_meeting_recurring
