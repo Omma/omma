@@ -260,7 +260,7 @@ class Agenda extends Base
         if ($this->parent !== $parent) {
             $this->parent = $parent;
             if (null !== $parent) {
-                $parent->removeSubItem($this);
+                $parent->removeChild($this);
             }
         }
 
