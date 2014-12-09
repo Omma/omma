@@ -7,7 +7,6 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use Omma\AppBundle\Entity\MeetingRecurring;
 use Omma\AppBundle\Entity\Meeting;
 use Symfony\Component\HttpFoundation\Request;
-use Omma\AppBundle\Form\Type\MeetingRecurringForm;
 use Omma\AppBundle\Entity\MeetingRecurringException;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Omma\AppBundle\Form\Type\MeetingRecurringExceptionForm;
