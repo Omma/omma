@@ -171,7 +171,7 @@ $(document).ready(function() {
             return events;
         },
         view: 'month',
-        tmpl_path: '/assets/js/libs/bs_calendar/tmpls/',
+        tmpl_path: '/assets/components/bootstrap-calendar/tmpls/',
         tmpl_cache: false,
         day: day,
         onAfterEventsLoad: function(events) {
