@@ -9,7 +9,7 @@
 /*Basics*/
 body, html {
     padding-bottom: 50px;
-    background-color: #eee;
+    background-color: #fafafa;
 }
 
 .container {
@@ -41,6 +41,7 @@ h3 {
 
 a {
     color: @blue;
+    .transition();
     &:hover {
         color: @font-color;
         text-decoration: none;
@@ -65,8 +66,12 @@ header {
             margin-left: 20px;
 
             a {
-                color: #333;
+                color: @font-color;
+                .transition();
             }
+          a:hover {
+            color: @blue;
+          }
         }
 
         @media (max-width: 991px) {
@@ -193,10 +198,14 @@ header {
         .list-group {
             a {
                 padding: 15px 10px;
+                border:1px solid @grey;
                 background-color: @light-blue;
 
-                &.active {
+                &.active, &:hover {
                     background-color: @blue;
+                    p {
+                      //color: white;
+                    }
                 }
             }
             p:first-child {
@@ -217,6 +226,24 @@ header {
             margin: 0 auto;
         }
     }
+
+    /*ToDos*/
+    .todos {
+
+      .list-group {
+
+        a {
+
+          border: 1px solid @grey;
+          background-color: @background;
+
+        }
+
+      }
+
+    }
+
+
 }
 
 /*Right-Col*/
@@ -364,4 +391,34 @@ footer {
             text-align: center;
         }
     }
+}
+
+
+
+
+
+/*Protocol*/
+
+
+
+
+div.tab-pane {
+  padding-top:30px;
+}
+
+
+div.tab-pane#protokoll {
+
+
+
+
+  .final {
+      border: 1px solid @border;
+      border-radius: 3px;
+      padding: 5px 10px;
+
+      input {
+        margin-right:10px;
+      }
+  }
 }

@@ -30,11 +30,40 @@ $(document).ready(function() {
     'use strict';
 
 
+
+
+    /************************************************************
+     Basics
+     ************************************************************/
+
     //Get Language
     var language;
     if (navigator.language.indexOf('de') > -1) {
         language = 'de';
     }
+
+    //Nachfrage bei wichtigen Buttons
+    $('.btn.omma-cancel, .btn.omma-do').hide();
+    $('.btn.omma-ask').click(function() {
+        $(this).hide();
+        $('.btn.omma-cancel, .btn.omma-do').show();
+    });
+    $('.btn.omma-cancel').click(function() {
+        $('.btn.omma-cancel, .btn.omma-do').hide();
+        $('.btn.omma-ask').show();
+    });
+    $('.btn.omma-do').click(function() {
+        alert('als final markieren');
+        $('.btn.omma-cancel, .btn.omma-do').hide();
+        $('.btn.omma-ask').show();
+        $('.btn.omma-ask').addClass('disabled');
+    });
+
+
+
+
+
+
 
 
     /************************************************************
@@ -72,11 +101,10 @@ $(document).ready(function() {
     /* Todos */
     $.getJSON( '/temp_jsons/todos-left-col.json?start='+utils.getCurrentMonth('').start, function( data ) {
         $.each( data, function( key,value ) {
-            $('.left-col ul.todos').append('<li><a href=\''+value.url+'\'>'+value.title+'</li>');
+            //$('.left-col ul.todos').append('<li><a href=\''+value.url+'\'>'+value.title+'</a></li>');
+            $('.left-col #insert-todos').append('<a href="'+value.url+'" class="list-group-item">'+value.title+'</a>');
         });
     });
-
-
 
     /************************************************************
      Typeahead Suche
@@ -171,7 +199,7 @@ $(document).ready(function() {
             return events;
         },
         view: 'month',
-        tmpl_path: '/assets/js/libs/bs_calendar/tmpls/',
+        tmpl_path: '/assets/components/bootstrap-calendar/tmpls/',
         tmpl_cache: false,
         day: day,
         onAfterEventsLoad: function(events) {
@@ -220,6 +248,7 @@ $(document).ready(function() {
     }
 
     calendar.view();
+
 
 
 });

@@ -1,3 +1,8 @@
+/**
+ * Controller for displaying agenda tree
+ *
+ * @author Florian Pfitzer <pfitzer@w3p.cc>
+ */
 angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Restangular', 'agendaService', function($scope, Restangular, agendaService) {
     $scope.agendas = [];
 

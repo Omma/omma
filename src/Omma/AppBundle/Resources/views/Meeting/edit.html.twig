@@ -37,6 +37,30 @@
     </div>
 {% endblock %}
 
+
+{% block protocol_tab %}
+    {% verbatim %}
+    <h1>Protokoll zu dieser Veranstaltung</h1>
+    <p>Wenn Sie das Protokoll als "final" markieren, ist es für alle Teilnehmer sichtbar. </p>
+    <hr class="invisible" />
+    <span class="status">{{ status }}</span>
+    <div text-angular-toolbar name="htmlcontenttools"></div>
+    <div text-angular="text-angular" name="htmlcontent" ng-model="orightml" ta-disabled='disabled' placeholder='Hier können Sie Ihr Protokoll verfassen... ' ta-target-toolbars='htmlcontenttools,statictoolbar'></div>
+    <hr class="invisible" />
+    <div class="btn btn-primary omma-ask {{ getButtonClass() }}">Protokoll als "final" markieren</div>
+    <div class="btn btn-info omma-cancel">Nein, doch nicht</div>
+    <div class="btn btn-danger omma-do">Ja, als "final" markieren</div>
+    {% endverbatim %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
 {% block content %}
     <div ng-controller="meetingController" ng-init="init({{ meeting.id }})">
         <ul class="nav nav-tabs" data-tabs="tabs">
@@ -44,7 +68,6 @@
             <li><a href="#agenda" data-toggle="tab">Agenda</a></li>
             <li><a href="#todos" data-toggle="tab">To Dos</a></li>
             <li><a href="#protokoll" data-toggle="tab">Protokoll</a></li>
-            <li><a href="#dateien" data-toggle="tab">Dateien</a></li>
             <li><a href="#teilnehmer" data-toggle="tab">Teilnehmer</a></li>
         </ul>
 
@@ -55,14 +78,26 @@
             <div class="tab-pane" id="agenda" ng-controller="meetingAgendaController">
                 {{ block('agenda_tab') }}
             </div>
-            <div class="tab-pane" id="todos"
-                <h1>todos</h1>
+            <div class="tab-pane" id="todos">
+                <h1>ToDos</h1>
+
+                    <ul class="nav nav-tabs nav-justified" data-tabs="tabs">
+                        <li class="active"><a href="#meine-todos" data-toggle="tab">Meine Todos</a></li>
+                        <li><a href="#allgemein" data-toggle="tab">Allgemeine Todos</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="meine-todos">
+                            <h1>meine-todos</h1>
+                        </div>
+                        <div class="tab-pane" id="allgemein">
+                            <h1>allgemein-todos</h1>
+                        </div>
+                    </div>
+
             </div>
-            <div class="tab-pane" id="protokoll">
-                <h1>protokoll</h1>
-            </div>
-            <div class="tab-pane" id="dateien">
-                <h1>dateien</h1>
+            <div class="tab-pane" id="protokoll" ng-controller="protocolController">
+                {{ block('protocol_tab') }}
             </div>
             <div class="tab-pane" id="teilnehmer">
                 <h1>teilnehmer</h1>
