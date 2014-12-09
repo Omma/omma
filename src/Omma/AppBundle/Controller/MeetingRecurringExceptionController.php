@@ -35,8 +35,9 @@ class MeetingRecurringExceptionController extends FOSRestController implements C
 
     public function cpostAction(Request $request, Meeting $meeting, MeetingRecurring $meetingRecurring)
     {
-        if ($meeting !== $meetingRecurring->getMeeting())
+        if ($meeting !== $meetingRecurring->getMeeting()) {
             throw new InvalidOptionsException("Meeting and MeetingRecurring are not linked", 500);
+        }
 
         $meetingRecurringException = new MeetingRecurringException();
         $meetingRecurringException->setMeetingRecurring($meetingRecurring);
