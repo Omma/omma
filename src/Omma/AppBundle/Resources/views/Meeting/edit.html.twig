@@ -1,6 +1,7 @@
 {% extends "OmmaAppBundle::layout.html.twig" %}
 
 {% block agenda_tab %}
+    <button class="btn btn-primary pull-right" ng-click="saveTree()" btn-loading="saving" data-loading-text="<span class='glyphicon glyphicon-refresh'></span> saving"><span class="glyphicon glyphicon-file"></span> Save</button>
     <h1>Agenda</h1>
     <!-- Nested node template -->
     {% verbatim %}

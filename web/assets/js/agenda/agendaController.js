@@ -7,6 +7,7 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
     $scope.rootAgenda = {
         children: []
     };
+    $scope.saving = false;
 
     $scope.$parent.meeting.then(function(meeting) {
         agendaService.getAll(meeting).then(function(agendas) {
@@ -45,6 +46,14 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
         }
     };
 
+    $scope.saveTree = function() {
+        $scope.saving = true;
+        agendaService.saveTree(meeting, newModel).then(function() {
+            $scope.saving = false;
+        });
+    };
+
+
     function watchAgendas(meeting) {
         var first = true;
         function saveModel(newModel) {
@@ -62,7 +71,7 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
                 }
             });
 
-            agendaService.saveTree(meeting, newModel);
+            $scope.saveTree();
         }
 
         function watch() {
