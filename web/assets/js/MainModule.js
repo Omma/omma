@@ -2,7 +2,8 @@
 var app = angular.module('ommaApp', [
     'restangular',
     'angular-loading-bar',
-    'ui.tree'
+    'ui.tree',
+    'textAngular'
 ]);
 
 app.config(['RestangularProvider', function(RestangularProvider) {

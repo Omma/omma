@@ -26,7 +26,9 @@ module.exports = function (grunt) {
             './web/assets/components/glDatePicker/glDatePicker.js',
             './web/assets/components/bootstrap-calendar/js/calendar.min.js',
             './web/assets/components/bootstrap-calendar/js/language/de-DE.js',
-            './web/assets/components/typehead.js/dist/typeahead.bundle.min.js'
+            './web/assets/components/typehead.js/dist/typeahead.bundle.min.js',
+            './web/assets/components/textAngular/dist/textAngular-sanitize.min.js',
+            './web/assets/components/textAngular/dist/textAngular.min.js'
         ],
         js: [
             './web/assets/js/MainModule.js',

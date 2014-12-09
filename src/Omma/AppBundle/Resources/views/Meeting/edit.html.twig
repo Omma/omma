@@ -44,7 +44,6 @@
             <li><a href="#agenda" data-toggle="tab">Agenda</a></li>
             <li><a href="#todos" data-toggle="tab">To Dos</a></li>
             <li><a href="#protokoll" data-toggle="tab">Protokoll</a></li>
-            <li><a href="#dateien" data-toggle="tab">Dateien</a></li>
             <li><a href="#teilnehmer" data-toggle="tab">Teilnehmer</a></li>
         </ul>
 
@@ -55,14 +54,18 @@
             <div class="tab-pane" id="agenda" ng-controller="meetingAgendaController">
                 {{ block('agenda_tab') }}
             </div>
-            <div class="tab-pane" id="todos"
+            <div class="tab-pane" id="todos">
                 <h1>todos</h1>
             </div>
-            <div class="tab-pane" id="protokoll">
+            <div class="tab-pane" id="protokoll" ng-controller="protocolController">
                 <h1>protokoll</h1>
-            </div>
-            <div class="tab-pane" id="dateien">
-                <h1>dateien</h1>
+
+
+                    <div text-angular="text-angular" ng-model="htmlcontent"></div>
+
+
+
+
             </div>
             <div class="tab-pane" id="teilnehmer">
                 <h1>teilnehmer</h1>

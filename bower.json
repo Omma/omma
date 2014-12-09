@@ -24,7 +24,8 @@
     "moment": "~2.8.4",
     "glDatePicker": "https://github.com/t0mtaylor/glDatePicker.git",
     "typehead.js": "~0.10.5",
-    "bootstrap-calendar": "~0.2.4"
+    "bootstrap-calendar": "~0.2.4",
+    "textAngular": "https://github.com/fraywing/textAngular.git"
   },
   "resolutions": {
     "moment": "~2.8.4",
