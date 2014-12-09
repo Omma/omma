@@ -48,12 +48,28 @@ angular.module('ommaApp').factory('agendaService', ['Restangular', '$http', func
          * @param rootNode
          */
         saveTree: function(meeting, rootNode) {
-            rootNode.sorting_order = 1;
-            this._setSortingOrder(rootNode.children);
-            return $http.put('/meetings/' + meeting.id + '/agendas.json', rootNode).then(function(data) {
+            var root = this.filterNode(rootNode);
+            root.sorting_order = 1;
+            this._setSortingOrder(root.children);
+            return $http.put('/meetings/' + meeting.id + '/agendas.json', root).then(function(data) {
                 console.log(data);
                 return data.data;
             });
+        },
+        /**
+         * Remove properites from node that are not used for comparisson and transmission
+         * @param node
+         * @returns {*}
+         */
+        filterNode: function(node) {
+            var self = this;
+            var newNode = _.omit(node, ['parent', 'editing', 'oldName']);
+            if (newNode.children) {
+                newNode.children = _.filter(node.children, function(child) {
+                    return !child.editing;
+                }).map(_.bind(this.filterNode, this));
+            }
+            return newNode;
         }
     };
 }]);

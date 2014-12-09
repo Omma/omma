@@ -3,3 +3,7 @@ app:
     password: Passwort
     remember_me: Login merken
     login: einloggen
+
+    save: speichern
+    saved: gespeichert
+    saving: wird gespeichert
