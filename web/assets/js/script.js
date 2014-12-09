@@ -101,11 +101,10 @@ $(document).ready(function() {
     /* Todos */
     $.getJSON( '/temp_jsons/todos-left-col.json?start='+utils.getCurrentMonth('').start, function( data ) {
         $.each( data, function( key,value ) {
-            $('.left-col ul.todos').append('<li><a href=\''+value.url+'\'>'+value.title+'</li>');
+            //$('.left-col ul.todos').append('<li><a href=\''+value.url+'\'>'+value.title+'</a></li>');
+            $('.left-col #insert-todos').append('<a href="'+value.url+'" class="list-group-item">'+value.title+'</a>');
         });
     });
-
-
 
     /************************************************************
      Typeahead Suche

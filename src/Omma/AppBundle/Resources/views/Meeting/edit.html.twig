@@ -39,19 +39,14 @@
 
 
 {% block protocol_tab %}
+    {% verbatim %}
     <h1>Protokoll zu dieser Veranstaltung</h1>
-
     <p>Wenn Sie das Protokoll als "final" markieren, ist es für alle Teilnehmer sichtbar. </p>
     <hr class="invisible" />
-
-    {% verbatim %}
-        <span class="status">{{ status }}</span>
-
-
+    <span class="status">{{ status }}</span>
     <div text-angular-toolbar name="htmlcontenttools"></div>
     <div text-angular="text-angular" name="htmlcontent" ng-model="orightml" ta-disabled='disabled' placeholder='Hier können Sie Ihr Protokoll verfassen... ' ta-target-toolbars='htmlcontenttools,statictoolbar'></div>
-<hr class="invisible" />
-
+    <hr class="invisible" />
     <div class="btn btn-primary omma-ask {{ getButtonClass() }}">Protokoll als "final" markieren</div>
     <div class="btn btn-info omma-cancel">Nein, doch nicht</div>
     <div class="btn btn-danger omma-do">Ja, als "final" markieren</div>
