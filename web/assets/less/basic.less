@@ -5,6 +5,9 @@
 // Buttons
 @brand-primary: @blue;
 @btn-primary-color: @white;
+@btn-info-color: @font-color;
+@btn-info-bg:@light-blue;
+@btn-info-border:darken(@btn-info-bg, 5%);
 
 /*Basics*/
 body, html {
@@ -85,6 +88,7 @@ header {
     /*Typeahead*/
     .form-group {
         float: right;
+        z-index:300;
 
         input.form-control.typeahead {
             width: 220px;
@@ -96,8 +100,18 @@ header {
             }
         }
 
+        a {
+          color:@font-color;
+          transition: none;
+
+          &:hover {
+            color:@font-color;
+          }
+        }
+
+
         .tt-dropdown-menu {
-            background-color: @white;
+            background-color: @light-blue;
             text-align: left;
             width: 100%;
             border: 1px solid @grey;
@@ -106,9 +120,8 @@ header {
         }
         .tt-suggestion {
             border-bottom: 1px solid @grey;
-            padding: 15px 8px;
+            padding: 5px 5px 3px;
             cursor: pointer;
-            color: #777;
 
             &:last-child {
                 border-bottom: none;
@@ -121,10 +134,17 @@ header {
                 strong.tt-highlight {
                     color: @white;
                 }
+
+              a {
+                color:white;
+                transition: none;
+              }
+
+
             }
 
             strong.tt-highlight {
-                color: @blue;
+                color: @font-color;
                 font-weight: normal;
             }
 
@@ -204,7 +224,7 @@ header {
                 &.active, &:hover {
                     background-color: @blue;
                     p {
-                      //color: white;
+                      color: white;
                     }
                 }
             }
@@ -235,7 +255,13 @@ header {
         a {
 
           border: 1px solid @grey;
-          background-color: @background;
+          background-color: @light-blue;
+          padding:4px 8px;
+
+          &:hover {
+            background-color:@blue;
+            color:white;
+          }
 
         }
 
@@ -408,17 +434,10 @@ div.tab-pane {
 
 
 div.tab-pane#protokoll {
-
-
-
-
-  .final {
-      border: 1px solid @border;
-      border-radius: 3px;
-      padding: 5px 10px;
-
-      input {
-        margin-right:10px;
-      }
+  div.status {
+    margin-top:20px;
+    color:@grey;
+    text-align:right;
   }
+
 }

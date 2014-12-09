@@ -26,7 +26,7 @@ angular.module('ommaApp')
             setTimeout(function() {
 
                 console.log('saved');
-                $scope.status = 'Alle Änderungen sind gespeichert.';
+                $scope.status = 'testAlle Änderungen sind gespeichert.';
             }, 500);
         });
 }]);
