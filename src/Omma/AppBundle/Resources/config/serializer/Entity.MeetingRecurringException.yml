@@ -1,0 +1,9 @@
+Omma\AppBundle\Entity\MeetingRecurringException:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        meetingRecurring:
+            expose: true
+        date:
+            expose: true
