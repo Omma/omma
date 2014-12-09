@@ -30,10 +30,10 @@
     </script>
     {% endverbatim %}
     <div ui-tree>
-        <ol ui-tree-nodes="" ng-model="agendas" id="tree-root">
-            <li ng-repeat="node in agendas" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+        <ol ui-tree-nodes="" ng-model="rootAgenda.children" id="tree-root">
+            <li ng-repeat="node in rootAgenda.children" ui-tree-node ng-include="'nodes_renderer.html'"></li>
         </ol>
-        <a href="" class="btn btn-success btn-xs" data-nodrag ng-click="newNode()"><span class="glyphicon glyphicon-plus"></span></a>
+        <a href="" class="btn btn-success btn-xs" data-nodrag ng-click="newNode(rootAgenda)"><span class="glyphicon glyphicon-plus"></span></a>
     </div>
 {% endblock %}
 

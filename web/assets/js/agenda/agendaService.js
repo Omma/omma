@@ -5,11 +5,6 @@ angular.module('ommaApp').factory('agendaService', ['Restangular', '$http', func
     Restangular.extendModel('agendas', function(model) {
         model.editing = false;
         console.log(model.name);
-        /*$rootScope.watch(function() {
-         return model.name;
-         }, function() {
-         console.log('changed', model);
-         });*/
 
         return model;
     });
@@ -38,8 +33,24 @@ angular.module('ommaApp').factory('agendaService', ['Restangular', '$http', func
                 return data.data;
             });
         },
-        saveTree: function(meeting, tree) {
-            $http.put('/meetings/' + meeting.id + '/agendas/tree', tree).success(function(data) {
+        _setSortingOrder: function(tree) {
+            var self = this;
+            var order = 1;
+            angular.forEach(tree, function(agenda) {
+                agenda.sorting_order = order;
+                order++;
+                self._setSortingOrder(agenda.children);
+            });
+        },
+        /**
+         * Save whole agenda tree
+         * @param meeting Meeting object
+         * @param rootNode
+         */
+        saveTree: function(meeting, rootNode) {
+            rootNode.sorting_order = 1;
+            this._setSortingOrder(rootNode.children);
+            $http.put('/meetings/' + meeting.id + '/agendas.json', rootNode).success(function(data) {
                 console.log(data);
             });
         }

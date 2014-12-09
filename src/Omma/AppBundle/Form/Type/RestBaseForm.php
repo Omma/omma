@@ -17,7 +17,7 @@ class RestBaseForm extends AbstractType
         // don't map id, created and updated fields to entity
         $builder
             ->add("id", "text", array(
-                "mapped" => false,
+            //    "mapped" => false,
             ))
             ->add("created", "text", array(
                 "mapped" => false,

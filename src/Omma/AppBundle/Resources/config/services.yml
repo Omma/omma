@@ -16,3 +16,13 @@ services:
         class: Omma\AppBundle\Form\Type\RestBaseForm
         tags:
             - { name: form.type, alias: omma_rest_base }
+
+    omma.app.form.type.meeting_agenda:
+        class: Omma\AppBundle\Form\Type\MeetingAgendaForm
+        tags:
+            - { name: form.type, alias: omma_meeting_agenda }
+
+    omma.app.form.type.meeting_agenda_collection:
+        class: Omma\AppBundle\Form\Type\MeetingAgendaCollectionForm
+        tags:
+            - { name: form.type, alias: omma_meeting_agenda_collection }

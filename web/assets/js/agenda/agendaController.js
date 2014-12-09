@@ -4,13 +4,15 @@
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Restangular', 'agendaService', function($scope, Restangular, agendaService) {
-    $scope.agendas = [];
+    $scope.rootAgenda = {
+        children: []
+    };
 
     $scope.$parent.meeting.then(function(meeting) {
-        watchAgendas(meeting);
         agendaService.getAll(meeting).then(function(agendas) {
             console.log(agendas);
-            $scope.agendas = agendas;
+            $scope.rootAgenda = agendas;
+            watchAgendas(meeting);
         });
     });
 
@@ -19,16 +21,10 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
             parent: parent,
             editing: true
         };
-        if (undefined !== parent) {
-            if (parent.children === undefined) {
-                parent.children = [];
-            }
-            parent.children.push(node);
-
-            return;
+        if (parent.children === undefined) {
+            parent.children = [];
         }
-
-        $scope.agendas.push(node);
+        parent.children.push(node);
     };
 
     $scope.edit = function(node) {
@@ -45,12 +41,7 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
         node.name = node.oldName;
         // remove from parent if not saved before
         if (node.oldName === undefined) {
-            var parent = node.parent;
-            if (undefined !== parent) {
-                _.pull(parent.children, node);
-            } else {
-                _.pull($scope.agendas, node);
-            }
+            _.pull(parent.children, node);
         }
     };
 
@@ -60,6 +51,7 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
             // first change is from angular ui tree
             if (first) {
                 first = false;
+
                 return;
             }
             var save = true;
@@ -74,11 +66,11 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
         }
 
         function watch() {
-            return $scope.agendas.map(nodeValue);
+            return nodeValue($scope.rootAgenda);
         }
 
         function nodeValue(node) {
-            var newNode = _.omit(node, ['parent', 'editing', 'oldName']);
+            var newNode = _.omit(node, ['parent', 'editing', 'oldName', 'sorting_order']);
             if (newNode.children) {
                 newNode.children = _.filter(node.children, function(child) {
                     return !child.editing;

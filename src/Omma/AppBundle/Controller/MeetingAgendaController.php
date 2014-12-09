@@ -8,6 +8,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Omma\AppBundle\Entity\Agenda;
 use Omma\AppBundle\Entity\Meeting;
+use Omma\AppBundle\Form\Type\MeetingAgendaCollectionForm;
 use Omma\AppBundle\Form\Type\MeetingAgendaForm;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,27 +23,36 @@ class MeetingAgendaController extends FOSRestController implements ClassResource
 
     public function cgetAction(Meeting $meeting)
     {
-        return $this->get("omma.app.manager.agenda")
+        $root = $this->get("omma.app.manager.agenda")
             ->createQueryBuilder("a")
             ->select("a")
-            ->where("a.meeting = :meeting AND a.parent IS NULL")
+            ->where("a.meeting = :meeting AND a.parent IS NULL AND a.name = 'root'")
             ->setParameter("meeting", $meeting)
             ->orderBy("a.sortingOrder")
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
+
+        if (null !== $root) {
+            return $root;
+        }
+
+        $root = new Agenda();
+        $root->setName("root");
+        $root->setMeeting($meeting);
+        $this->get("omma.app.manager.agenda")->save($root);
+
+        return $root;
     }
 
     /**
      * @param Request $request
      * @param Meeting $meeting
-     * @Put("/meetings/{meeting}/agendas/tree")
+     *
+     * @return \FOS\RestBundle\View\View
      */
-    public function treeAction(Request $request, Meeting $meeting)
+    public function cputAction(Request $request, Meeting $meeting)
     {
-        echo "foo";
-        $tree = $this->get("serializer")->deserialize($request->getContent(), "Omma\AppBundle\Entity\Agenda", "json");
-        var_dump($tree);
-        return $this->view(null);
+        return $this->processTreeForm($request, $meeting);
     }
 
     public function cpostAction(Request $request, Meeting $meeting)
@@ -70,11 +80,44 @@ class MeetingAgendaController extends FOSRestController implements ClassResource
         return $this->view("");
     }
 
+    protected function processTreeForm(Request $request, Meeting $meeting)
+    {
+        $root = $this->cgetAction($meeting);
+        $form = $this->get("form.factory")->createNamed("", "omma_meeting_agenda", $root, array(
+            "method"          => "PUT",
+            "csrf_protection" => false,
+        ));
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $root->setMeetingRecursive($meeting);
+            $this->get("omma.app.manager.agenda")->save($root);
+
+            // remove orphans manually, as automatical removal will remove everything
+            /** @var Agenda[] $agendas */
+            $agendas = $this->get("omma.app.manager.agenda")->findBy(array(
+                "meeting" => $meeting,
+                "parent"  => null,
+            ));
+            foreach ($agendas as $agenda) {
+                if ($agenda === $root) {
+                    continue;
+                }
+                $this->get("omma.app.manager.agenda")->delete($agenda, false);
+            }
+            $this->get("omma.app.manager.agenda")->flush();
+
+            return $this->view($root);
+        }
+
+        return $this->view($form, 400);
+    }
+
     protected function processForm(Request $request, Agenda $agenda)
     {
         $new = null === $agenda->getId();
         $form = $this->createForm(new MeetingAgendaForm(), $agenda, array(
-            "method" => $new ? "POST" : "PUT",
+            "method"          => $new ? "POST" : "PUT",
             "csrf_protection" => false
         ));
         $form->handleRequest($request);

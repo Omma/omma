@@ -64,6 +64,9 @@ module.exports = function (grunt) {
         },
         /*jshint camelcase: false */
         concat_sourcemap: {
+            options: {
+                sourceRoot: '../../'
+            },
             libs: {
                 files: {
                     'web/assets/build/libs.js': files.jsLibs
