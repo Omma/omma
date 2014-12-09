@@ -29,7 +29,6 @@ class MeetingRecurringTest extends AbstractAuthenticatedTest
             "recurring" => 1
         ));
 
-        $serializer = $this->getContainer()->get("jms_serializer");
         $meetingRecurring = $serializer->deserialize($content, 'Omma\AppBundle\Entity\MeetingRecurring', "json");
 
         $content = $this->fetchContent("/meetings/" . $meeting->getId() . "/recurrings/" . $meetingRecurring->getId() . ".json");
