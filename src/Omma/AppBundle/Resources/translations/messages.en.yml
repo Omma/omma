@@ -7,3 +7,9 @@ app:
     save: Save
     saved: Saved
     saving: Saving
+
+    today: Today
+    year: Year
+    month: Month
+    week: Week
+    day: Day

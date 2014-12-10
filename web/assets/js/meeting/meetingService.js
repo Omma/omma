@@ -16,9 +16,9 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
             if (!moment.isMoment(end)) {
                 end = moment(end);
             }
-            return $http.get('/temp_jsons/calendar-left-col.json?start=' + start.format() + '&end=' + end.format())
+            return $http.get('/meetings/' + start.format() + '/ranges/' + end.format() + '.json')
                 .then(function (data) {
-                    return _.map(data.data, utils.formatIncomingJsonDate);
+                    return data.data;
                 })
             ;
         }

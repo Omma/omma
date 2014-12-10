@@ -1,0 +1,39 @@
+.events-list a.event {
+    background-color: @grey;
+    border: 2px solid @blue;
+}
+
+#cal-week-box {
+    z-index: 5;
+    display: none !important;
+}
+
+.cal-day-today span[data-cal-date] {
+    color: @font-color;
+}
+
+.cal-day-today {
+    background-color: @light-blue;
+}
+
+.cal-month-day.cal-day-inmonth:hover {
+    background-color: @light-blue;
+    color: blue;
+}
+
+#cal-slide-content {
+    background-image: none;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5) inset;
+}
+
+#cal-slide-content a.event-item {
+    color: @blue;
+
+    &:hover {
+        color: @font-color;
+    }
+}
+
+.dashboard-calendar {
+    margin-top: 10px;
+}

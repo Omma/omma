@@ -4,8 +4,11 @@ var app = angular.module('ommaApp', [
     'angular-loading-bar',
     'ui.tree',
     'textAngular',
-    'xeditable'
+    'xeditable',
+    'ui.bootstrap',
+    'mwl.calendar'
 ]);
+moment.locale('de');
 
 app.run(['editableOptions', function(editableOptions) {
     editableOptions.theme = 'bs3';
