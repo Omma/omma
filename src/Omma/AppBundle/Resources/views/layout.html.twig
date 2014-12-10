@@ -45,7 +45,7 @@
             <div class="col-xs-8 text-right">
                 {% if app.user %}
                 <ul class="top-navi">
-                    <li><a href=""><i class="fa fa-plus"> </i> Veranstaltung erstellen</a></li>
+                    <li><a href="{{ path("omma_app_meeting_create") }}"><i class="fa fa-plus"> </i> Veranstaltung erstellen</a></li>
                     <li><a href="{{ path("omma_app_profile_index") }}"><i class="fa fa-user"> </i> Profil verwalten</a></li>
                     <li><a href="{{ path("omma_logout") }}"><i class="fa fa-power-off"> </i> Ausloggen</a></li>
                 </ul>

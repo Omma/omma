@@ -102,7 +102,7 @@ class Meeting extends Base
     private $next;
 
     /**
-     * @ORM\Column(name="date_start", type="datetime")
+     * @ORM\Column(name="date_start", type="datetime", nullable=true)
      * @NotBlank()
      * @DateTime()
      *
@@ -111,13 +111,20 @@ class Meeting extends Base
     private $dateStart;
 
     /**
-     * @ORM\Column(name="date_end", type="datetime")
+     * @ORM\Column(name="date_end", type="datetime", nullable=true)
      * @NotBlank()
      * @DateTime()
      *
      * @var \DateTime
      */
     private $dateEnd;
+
+    /**
+     * Temporary and not saved meeting
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    protected $temp;
 
     /**
      * Constructor
@@ -567,5 +574,25 @@ class Meeting extends Base
     public function getNext()
     {
         return $this->next;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isTemp()
+    {
+        return $this->temp;
+    }
+
+    /**
+     * @param boolean $temp
+     *
+     * @return self
+     */
+    public function setTemp($temp)
+    {
+        $this->temp = $temp;
+
+        return $this;
     }
 }

@@ -6,6 +6,7 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use Omma\AppBundle\Entity\Attendee;
 use Omma\AppBundle\Entity\Meeting;
 use Omma\AppBundle\Form\Type\MeetingForm;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -133,6 +134,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $meeting->setTemp(false);
             $this->get("omma.app.manager.meeting")->save($meeting);
 
             return $this->view($meeting);
@@ -154,5 +156,27 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
         $view->setTemplate("OmmaAppBundle:Meeting:edit.html.twig")->setTemplateVar("meeting");
 
         return $this->handleView($view);
+    }
+
+    /**
+     * @Route("/meetings/create", name="omma_app_meeting_create")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function createAction()
+    {
+        $user = $this->getUser();
+
+        $meeting = new Meeting();
+        $meeting
+            ->setName("temp-" . date("Y-m-d"))
+            ->setTemp(true)
+        ;
+        $attendee = new Attendee();
+        $attendee->setMeeting($meeting)->setUser($user);
+
+        $this->get("omma.app.manager.meeting")->save($meeting);
+
+        return $this->redirect($this->generateUrl("omma_app_get_meeting", array("meeting" => $meeting->getId())));
     }
 }

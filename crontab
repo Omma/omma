@@ -1,0 +1,5 @@
+# ldap sync
+*/5 *  * * *  cd /var/www/praktikum-web && php app/console omma:user:ldap-sync > /dev/null 2>&1
+
+# remove temp meetings
+0 0  * * *  cd /var/www/praktikum-web && php app/console omma:meeting:remove_temp > /dev/null 2>&1
