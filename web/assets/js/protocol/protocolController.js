@@ -27,22 +27,22 @@ angular.module('ommaApp')
         };
 
 
-        $scope.$watch('orightml', function(newValue, oldValue){
-
+        $scope.$watch('orightml', function(newValue, oldValue) {
 
             if (newValue !== oldValue) {
-
-                console.log(newValue);
-
                 $scope.status = 'Änderungen speichern...';
-
-                setTimeout(function() {
-
-                    console.log('saved');
-                    $scope.status = 'testAlle Änderungen sind gespeichert.';
-                }, 500);
-
             }
 
         });
+
+        $scope.$watch('orightml', _.debounce(function (newValue, oldValue) {
+
+            if (newValue !== oldValue) {
+
+                $scope.$apply(function () {
+                    console.log('update db protocol text mit var newValue');
+                    $scope.status = 'Alle Änderungen sind gespeichert.';
+                });
+            }
+        }, 700));
 }]);

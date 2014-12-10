@@ -42,7 +42,7 @@
 {% block protocol_tab %}
     {% verbatim %}
         <h1>Protokoll zu dieser Veranstaltung</h1>
-        <p>Wenn Sie das Protokoll als "final" markieren, ist es für alle Teilnehmer sichtbar. </p>
+        <p>Wenn Sie das Protokoll als "Final" markieren, ist es für alle Teilnehmer sichtbar. </p>
         <hr class="invisible" />
 
         <div text-angular-toolbar name="htmlcontenttools"></div>
@@ -81,7 +81,7 @@
 {% block todo_tab %}
     {% verbatim %}
 
-        <h1>ToDos</h1>
+        <h1>ToDos verwalten</h1>
 
 
     <div class="input-group">
@@ -92,26 +92,27 @@
     </div>
     <hr class="invisible" />
 
-        <div ng-repeat-start="todo in todos" ng-repeat-end>
-
-            <div class="alert alert-info">
-
-                <input type="checkbox" ng-model="todo.done" ng-change="checkboxChanged()">
-
-                {{ todo.content }}
-
-                {{ todo.done }}
+    <div ng-repeat-start="todo in todos" ng-repeat-end>
 
 
-                <div class="btn btn-primary btn-small" data-toggle="modal" data-target=".todoModal">
-                    löschen
-                </div>
-
-
-            </div>
-
-
+        <div class="input-group">
+        <span class="input-group-addon">
+            <input type="checkbox" ng-model="todo.done" ng-change="checkboxChanged()">
+          </span>
+            <input type="text" class="form-control" placeholder="Beschreibung des ToDo-Punktes" value="{{ todo.content }}">
+            <span class="input-group-addon"><i class="fa fa-pencil"> </i> </span>
+            <span class="input-group-addon" data-toggle="modal" data-target=".todoModal"><i class="fa fa-remove"> </i> </span>
         </div>
+
+
+
+
+
+
+
+    </div>
+
+
 
 
     <!-- Todo Modal -->
