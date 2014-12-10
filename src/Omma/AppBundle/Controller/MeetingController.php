@@ -19,7 +19,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
 {
 
     /**
-     * @Security("is_fully_authenticated()")
+     * @Security("has_role('ROLE_USER')")
      */
     public function cgetAction()
     {
@@ -40,7 +40,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("is_fully_authenticated()")
+     * @Security("has_role('ROLE_USER')")
      *
      * @param \DateTime $dateStart
      *            Start Date
@@ -72,7 +72,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("is_fully_authenticated()")
+     * @Security("has_role('ROLE_USER')")
      *
      * @param Request $request
      *
@@ -90,7 +90,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("is_fully_authenticated() and is_granted('edit', meeting)")
+     * @Security("has_role('ROLE_USER') and is_granted('edit', meeting)")
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -103,7 +103,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("is_fully_authenticated() and is_granted('edit', meeting)")
+     * @Security("has_role('ROLE_USER') and is_granted('edit', meeting)")
      *
      * @param Meeting $meeting
      *
@@ -117,7 +117,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("is_fully_authenticated() and is_granted('edit', meeting)")
+     * @Security("has_role('ROLE_USER') and is_granted('edit', meeting)")
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -144,7 +144,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("is_fully_authenticated() and is_granted('view', meeting)")
+     * @Security("has_role('ROLE_USER') and is_granted('view', meeting)")
      *
      * @param Meeting $meeting
      *
