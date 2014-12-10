@@ -19,14 +19,26 @@ angular.module('ommaApp')
             }
         };
 
-        $scope.$watch('orightml', function(val){
-            console.log(val);
-            $scope.status = 'Änderungen speichern...';
 
-            setTimeout(function() {
 
-                console.log('saved');
-                $scope.status = 'testAlle Änderungen sind gespeichert.';
-            }, 500);
+
+
+        $scope.$watch('orightml', function(newValue, oldValue){
+
+
+            if (newValue !== oldValue) {
+
+                console.log(newValue);
+
+                $scope.status = 'Änderungen speichern...';
+
+                setTimeout(function() {
+
+                    console.log('saved');
+                    $scope.status = 'testAlle Änderungen sind gespeichert.';
+                }, 500);
+
+            }
+
         });
 }]);
