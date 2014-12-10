@@ -171,6 +171,8 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
         $meeting
             ->setName("temp-" . date("Y-m-d"))
             ->setTemp(true)
+            ->setDateStart(new \DateTime())
+            ->setDateEnd(new \DateTime("+1hour"))
         ;
         $attendee = new Attendee();
         $attendee->setMeeting($meeting)->setUser($user);

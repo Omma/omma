@@ -10,7 +10,7 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
     $scope.status = 'saved';
     $scope.meeting = null;
 
-    $scope.$parent.meeting.then(function(meeting) {
+    $scope.$parent.meetingRequest.then(function(meeting) {
         $scope.meeting = meeting;
         agendaService.getAll(meeting).then(function(agendas) {
             $scope.rootAgenda = agendas;

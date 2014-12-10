@@ -122,9 +122,9 @@ class Meeting extends Base
     /**
      * Temporary and not saved meeting
      * @var boolean
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $temp;
+    protected $temp = false;
 
     /**
      * Constructor

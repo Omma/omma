@@ -1,6 +1,7 @@
 @import "variables";
 @import "../components/bootstrap/less/bootstrap.less";
 @import "tree";
+@import "editable";
 
 // Buttons
 @brand-primary: @blue;
@@ -261,8 +262,6 @@ header {
     }
 
     .tab-pane {
-        padding-top: 50px;
-
         &#agenda {
             .input-group {
                 margin-bottom: 20px;
@@ -385,6 +384,20 @@ footer {
 .header-button{
     .pull-right();
     margin-top: 22px;
+}
+
+.meeting-name {
+    margin-bottom: 20px;
+    h1{
+        &:after{
+            .glyphicon();
+            content: "\270f"; // pencil
+            font-size: 16px;
+        }
+    }
+    .editable-wrap{
+        margin-top: 20px;
+    }
 }
 
 @media screen and (max-width: 991px) {

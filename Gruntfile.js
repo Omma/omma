@@ -29,7 +29,8 @@ module.exports = function (grunt) {
             'web/assets/components/typehead.js/dist/typeahead.bundle.min.js',
             'web/assets/components/textAngular/dist/textAngular-sanitize.min.js',
             'web/assets/components/textAngular/dist/textAngular.min.js',
-            'web/assets/components/angular-daterangepicker/js/angular-daterangepicker.js'
+            'web/assets/components/angular-daterangepicker/js/angular-daterangepicker.js',
+            'web/assets/components/angular-xeditable/dist/js/xeditable.min.js'
         ],
         js: [
             'web/assets/js/MainModule.js',
