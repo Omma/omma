@@ -116,7 +116,7 @@ class MeetingAgendaController extends FOSRestController implements ClassResource
     protected function processForm(Request $request, Agenda $agenda)
     {
         $new = null === $agenda->getId();
-        $form = $this->createForm(new MeetingAgendaForm(), $agenda, array(
+        $form = $this->get("form.factory")->createNamed("", new MeetingAgendaForm(), $agenda, array(
             "method"          => $new ? "POST" : "PUT",
             "csrf_protection" => false
         ));

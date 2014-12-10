@@ -62,7 +62,6 @@ angular.module('ommaApp').factory('agendaService', ['Restangular', '$http', func
          * @returns {*}
          */
         filterNode: function(node) {
-            var self = this;
             var newNode = _.omit(node, ['parent', 'editing', 'oldName']);
             if (newNode.children) {
                 newNode.children = _.filter(node.children, function(child) {
