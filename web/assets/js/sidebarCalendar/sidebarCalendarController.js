@@ -5,7 +5,19 @@ angular.module('ommaApp').controller('sidebarCalendarController', ['$scope', 'me
     var current = utils.getCurrentMonth('');
     $scope.currentEvents = [];
 
+    function formatDate(element) {
+        var date = moment(element.date_start);
+
+        return {
+            date:     date.toDate(),
+            dateOrig: date,
+            data:     { name: element.name, url: '/meetings/' + element.id }
+        };
+    }
+
     meetingService.getByDate(current.start, current.end).then(function(events) {
+        events = _.map(events, formatDate);
+
         // Vorselektiertes Datum
         var date = {
             year:  new Date().getFullYear(),
@@ -40,7 +52,7 @@ angular.module('ommaApp').controller('sidebarCalendarController', ['$scope', 'me
                     return;
                 }
                 var clickedDate = moment(date);
-                $.each(events, function (index, value) {
+                $.each(this.specialDates, function (index, value) {
                     var date = value.dateOrig;
 
                     if (date.isSame(clickedDate, 'day')) {
@@ -55,7 +67,9 @@ angular.module('ommaApp').controller('sidebarCalendarController', ['$scope', 'me
                 var self = this;
                 var date = moment(this.firstDate);
 
-                meetingService.getByDate(date.startOf('month'), date.endOf('month')).then(function(events) {
+                meetingService.getByDate(moment(date).startOf('month'), moment(date).endOf('month')).then(function(events) {
+                    events = _.map(events, formatDate);
+
                     self.specialDates = events;
                     ommaDatepicker.render();
                 });

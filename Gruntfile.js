@@ -23,9 +23,12 @@ module.exports = function (grunt) {
             'web/assets/components/angular-loading-bar/build/loading-bar.min.js',
             'web/assets/components/angular-ui-tree/dist/angular-ui-tree.min.js',
             'web/assets/components/moment/min/moment.min.js',
+            'web/assets/components/moment/locale/de.js',
             'web/assets/components/glDatePicker/glDatePicker.js',
-            'web/assets/components/bootstrap-calendar/js/calendar.min.js',
-            'web/assets/components/bootstrap-calendar/js/language/de-DE.js',
+            'web/assets/components/angular-bootstrap/ui-bootstrap.min.js',
+            'web/assets/components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+            'web/assets/components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar.js',
+            'web/assets/components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js',
             'web/assets/components/typehead.js/dist/typeahead.bundle.min.js',
             'web/assets/components/textAngular/dist/textAngular-sanitize.min.js',
             'web/assets/components/textAngular/dist/textAngular.min.js',
@@ -35,6 +38,12 @@ module.exports = function (grunt) {
         js: [
             'web/assets/js/MainModule.js',
             'web/assets/js/**/*.js'
+        ],
+        css: [
+            'web/assets/components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css',
+            'web/assets/components/angular-ui-tree/dist/angular-ui-tree.min.css',
+            'web/assets/components/angular-xeditable/dist/css/xeditable.css',
+            'web/assets/less/basic.less'
         ]
     };
 
@@ -105,7 +114,7 @@ module.exports = function (grunt) {
                     paths: ['css']
                 },
                 files: {
-                    'web/assets/build/style.css': 'web/assets/less/basic.less'
+                    'web/assets/build/style.css': files.css
                 }
             },
             dev: {
@@ -114,7 +123,7 @@ module.exports = function (grunt) {
                     sourceMap: true
                 },
                 files: {
-                    'web/assets/build/style.css': 'web/assets/less/basic.less'
+                    'web/assets/build/style.css': files.css
                 }
             }
         },

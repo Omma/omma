@@ -7,3 +7,9 @@ app:
     save: speichern
     saved: gespeichert
     saving: wird gespeichert
+
+    today: Heute
+    year: Jahr
+    month: Monat
+    week: Woche
+    day: Tag

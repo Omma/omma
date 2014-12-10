@@ -24,10 +24,10 @@
     "moment": "~2.8.4",
     "glDatePicker": "https://github.com/t0mtaylor/glDatePicker.git",
     "typehead.js": "~0.10.5",
-    "bootstrap-calendar": "~0.2.4",
     "angular-daterangepicker": "~0.1.10",
     "textAngular": "~1.2.2",
-    "angular-xeditable": "~0.1.8"
+    "angular-xeditable": "~0.1.8",
+    "angular-bootstrap-calendar": "~0.6.0"
   },
   "resolutions": {
     "moment": "~2.8.4",
