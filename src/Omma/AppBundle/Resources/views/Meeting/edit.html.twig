@@ -42,7 +42,6 @@
     </div>
 {% endblock %}
 
-
 {% block protocol_tab %}
     {% verbatim %}
     <h1>Protokoll zu dieser Veranstaltung</h1>
@@ -58,16 +57,15 @@
     {% endverbatim %}
 {% endblock %}
 
-
-
-
-
-
-
-
-
 {% block content %}
-    <div ng-controller="meetingController" ng-init="init({{ meeting.id }})">
+    <div ng-controller="meetingController" ng-init="init({{ meeting|serialize('json') }})">
+        {% verbatim %}
+            <div class="meeting-name">
+                <h1 editable-text="meeting.name">
+                    {{ meeting.name || "empty" }}
+                </h1>
+            </div>
+        {% endverbatim %}
         <ul class="nav nav-tabs" data-tabs="tabs">
             <li class="active"><a href="#datum-uhrzeit" data-toggle="tab">Datum & Uhrzeit</a></li>
             <li><a href="#agenda" data-toggle="tab">Agenda</a></li>
@@ -78,7 +76,7 @@
 
         <div class="tab-content">
             <div class="tab-pane active" id="datum-uhrzeit">
-                <h1>datum-uhrzeit</h1>
+                <h2>datum-uhrzeit</h2>
             </div>
             <div class="tab-pane" id="agenda" ng-controller="meetingAgendaController">
                 {{ block('agenda_tab') }}
@@ -99,7 +97,6 @@
                             <h1>allgemein-todos</h1>
                         </div>
                     </div>
-
             </div>
             <div class="tab-pane" id="protokoll" ng-controller="protocolController">
                 {{ block('protocol_tab') }}
