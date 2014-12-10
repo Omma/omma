@@ -51,6 +51,10 @@ a {
     }
 }
 
+span.bold {
+  font-weight: bold;
+}
+
 /*Header*/
 header {
     margin-bottom: 40px;
@@ -424,10 +428,6 @@ footer {
 
 
 /*Protocol*/
-
-
-
-
 div.tab-pane {
   padding-top:30px;
 }
@@ -440,4 +440,16 @@ div.tab-pane#protokoll {
     text-align:right;
   }
 
+}
+
+
+/*Todos*/
+div.tab-pane#todos {
+  .panel-default > .panel-heading {
+    background-color: @light-blue;
+  }
+
+  .done h4 {
+    text-decoration: line-through;
+  }
 }

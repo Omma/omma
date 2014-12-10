@@ -1,5 +1,8 @@
 {% extends "OmmaAppBundle::layout.html.twig" %}
 
+
+
+
 {% block agenda_tab %}
     <h1>Agenda</h1>
     <!-- Nested node template -->
@@ -39,6 +42,14 @@
 {% endblock %}
 
 
+
+
+
+
+
+
+
+
 {% block protocol_tab %}
     {% verbatim %}
         <h1>Protokoll zu dieser Veranstaltung</h1>
@@ -50,8 +61,6 @@
         <div text-angular="text-angular" name="htmlcontent" ng-model="orightml" ta-disabled='disabled' placeholder='Hier können Sie Ihr Protokoll verfassen... ' ta-target-toolbars='htmlcontenttools,statictoolbar'></div>
         <hr class="invisible" />
         <div class="btn btn-primary {{ getButtonClass() }}" data-toggle="modal" data-target=".protocolModal">Protokoll als "Final" markieren</div>
-
-
 
         <!-- Todo Modal -->
         <div class="modal fade protocolModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -72,45 +81,115 @@
                 </div>
             </div>
         </div>
-
-
-
     {% endverbatim %}
 {% endblock %}
 
+
+
+
+
+
+
+
+
+
+
+
 {% block todo_tab %}
     {% verbatim %}
+<h1>ToDo-Liste</h1>
+    <hr class="invisible"/><hr class="invisible"/>
+    <h2>Punkt erstellen</h2>
 
-        <h1>ToDos verwalten</h1>
-
-
-    <div class="input-group">
-
+    <div class="input-group form-inline">
         <input type="text" class="form-control" placeholder="Neuen ToDo-Punkt hinzufügen..." ng-model="newToDoContent">
         <span class="input-group-addon" ng-click="persistNewToDo()">Speichern</span>
-
+        <h4>Priorität</h4>
+        <div class="input-group">
+            <input type="radio" name="priority" value="high" ng-checked="true"> Hoch<br>
+            <input type="radio" name="priority" value="normal" ng-checked="false"> Normal
+        </div>
     </div>
-    <hr class="invisible" />
+<hr>
+
+    <h2>Punkte verwalten</h2>
 
     <div ng-repeat-start="todo in todos" ng-repeat-end>
 
 
-        <div class="input-group">
-        <span class="input-group-addon">
-            <input type="checkbox" ng-model="todo.done" ng-change="checkboxChanged()">
-          </span>
-            <input type="text" class="form-control" placeholder="Beschreibung des ToDo-Punktes" value="{{ todo.content }}">
-            <span class="input-group-addon"><i class="fa fa-pencil"> </i> </span>
-            <span class="input-group-addon" data-toggle="modal" data-target=".todoModal"><i class="fa fa-remove"> </i> </span>
+
+        <div ng-class="{'done': todo.status}">
+        <accordion close-others="oneAtATime">
+            <accordion-group>
+                <accordion-heading ng-class="done">
+                    <i class="fa" ng-class="{'fa-exclamation': getPriorityOfTodo(todo)}"> </i> {{ todo.task }}
+
+                </accordion-heading>
+
+
+                <div class="row">
+                    <div class="col-xs-12"><i>{{ todo.description }}</i></div>
+
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-xs-6">
+
+                        <input type="checkbox" ng-checked="todo.status" ng-model="todo.status" ng-change="checkboxDoneChanged(todo)">
+                        <span class="bold">Erledigt</span><br><br>
+
+
+                        <input type="checkbox" ng-checked="todo.priority" ng-model="todo.priority" ng-change="checkboxPrioChanged(todo)">
+                        <span class="bold">Hohe Priorität</span>
+
+                    </div>
+                    <div class="col-xs-4">
+
+
+
+
+                        <span class="bold">Zu erledigen bis</span>
+
+
+                            <p class="input-group">
+                                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                  <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+                            </p>
+
+
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="pull-right" data-toggle="modal" data-target=".todoModal"><i class="fa fa-trash fa-2x"></i></div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+            </accordion-group>
+        </accordion>
         </div>
 
 
 
 
-
-
-
     </div>
+
+
+
+
+
+
+
+
+
 
 
 
