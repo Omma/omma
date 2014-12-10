@@ -20,7 +20,11 @@ angular.module('ommaApp')
         };
 
 
+        $scope.deleteModal = function() {
+            console.log('protokoll in db als final markieren');
 
+            $scope.disabled = true;
+        };
 
 
         $scope.$watch('orightml', function(newValue, oldValue){
