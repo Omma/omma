@@ -4,13 +4,17 @@
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Restangular', 'agendaService', function($scope, Restangular, agendaService) {
-    $scope.agendas = [];
+    $scope.rootAgenda = {
+        children: []
+    };
+    $scope.status = 'saved';
+    $scope.meeting = null;
 
     $scope.$parent.meeting.then(function(meeting) {
-        watchAgendas(meeting);
+        $scope.meeting = meeting;
         agendaService.getAll(meeting).then(function(agendas) {
-            console.log(agendas);
-            $scope.agendas = agendas;
+            $scope.rootAgenda = agendas;
+            watchAgendas(meeting);
         });
     });
 
@@ -19,16 +23,10 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
             parent: parent,
             editing: true
         };
-        if (undefined !== parent) {
-            if (parent.children === undefined) {
-                parent.children = [];
-            }
-            parent.children.push(node);
-
-            return;
+        if (parent.children === undefined) {
+            parent.children = [];
         }
-
-        $scope.agendas.push(node);
+        parent.children.push(node);
     };
 
     $scope.edit = function(node) {
@@ -43,25 +41,30 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
     $scope.cancelEditing = function(node) {
         node.editing = false;
         node.name = node.oldName;
-        // remove from parent if not saved before
         if (node.oldName === undefined) {
-            var parent = node.parent;
-            if (undefined !== parent) {
-                _.pull(parent.children, node);
-            } else {
-                _.pull($scope.agendas, node);
-            }
+            // remove from parent if not saved before
+            _.pull(node.parent.children, node);
         }
     };
 
-    function watchAgendas(meeting) {
-        var first = true;
-        function saveModel(newModel) {
-            // first change is from angular ui tree
-            if (first) {
-                first = false;
-                return;
-            }
+    $scope.saveTree = function() {
+        if (!$scope.meeting) {
+            return;
+        }
+        $scope.status = 'saving';
+        agendaService.saveTree($scope.meeting, $scope.rootAgenda).then(function() {
+            $scope.status = 'saved';
+        });
+    };
+
+    /**
+     * Watch agenda for changes
+     */
+    function watchAgendas() {
+
+        // max save every 2 seconds
+        var save = _.debounce(function(newModel) {
+
             var save = true;
             angular.forEach(newModel, function(item) {
                 // new not saved item
@@ -69,24 +72,30 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
                     save = false;
                 }
             });
+            if (!save) {
+                $scope.status = 'saved';
 
-            agendaService.saveTree(meeting, newModel);
-        }
+                return false;
+            }
+
+            $scope.saveTree();
+
+            return true;
+        }, 2000);
 
         function watch() {
-            return $scope.agendas.map(nodeValue);
+            return agendaService.filterNode($scope.rootAgenda);
         }
+        var first = true;
+        $scope.$watch(watch, function() {
+            // first change is from angular ui tree
+            if (first) {
+                first = false;
 
-        function nodeValue(node) {
-            var newNode = _.omit(node, ['parent', 'editing', 'oldName']);
-            if (newNode.children) {
-                newNode.children = _.filter(node.children, function(child) {
-                    return !child.editing;
-                }).map(nodeValue);
+                return false;
             }
-            return newNode;
-        }
-
-        $scope.$watch(watch, _.debounce(saveModel, 1000), true);
+            $scope.status = 'not_saved';
+            save();
+        }, true);
     }
 }]);

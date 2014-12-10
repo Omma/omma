@@ -3,3 +3,7 @@ app:
     password: Password
     remember_me: Remember Login
     login: Login
+
+    save: Save
+    saved: Saved
+    saving: Saving

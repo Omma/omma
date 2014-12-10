@@ -1,6 +1,11 @@
 {% extends "OmmaAppBundle::layout.html.twig" %}
 
 {% block agenda_tab %}
+    <div class="header-button">
+        <button class="btn btn-primary" ng-show="status == 'not_saved'" ng-click="saveTree()"><span class="glyphicon glyphicon-file"></span> {{ "app.save"|trans }}</button>
+        <button class="btn btn-default disabled" ng-show="status == 'saving'" ng-click="saveTree()"><span class="glyphicon glyphicon-refresh"></span> {{ "app.saving"|trans }}</button>
+        <button class="btn btn-default disabled" ng-show="status == 'saved'" ng-click="saveTree()"><span class="glyphicon glyphicon-ok"></span> {{ "app.saved"|trans }}</button>
+    </div>
     <h1>Agenda</h1>
     <!-- Nested node template -->
     {% verbatim %}
@@ -30,10 +35,10 @@
     </script>
     {% endverbatim %}
     <div ui-tree>
-        <ol ui-tree-nodes="" ng-model="agendas" id="tree-root">
-            <li ng-repeat="node in agendas" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+        <ol ui-tree-nodes="" ng-model="rootAgenda.children" id="tree-root">
+            <li ng-repeat="node in rootAgenda.children" ui-tree-node ng-include="'nodes_renderer.html'"></li>
         </ol>
-        <a href="" class="btn btn-success btn-xs" data-nodrag ng-click="newNode()"><span class="glyphicon glyphicon-plus"></span></a>
+        <a href="" class="btn btn-success btn-xs" data-nodrag ng-click="newNode(rootAgenda)" style="margin-top: 10px"><span class="glyphicon glyphicon-plus"></span></a>
     </div>
 {% endblock %}
 

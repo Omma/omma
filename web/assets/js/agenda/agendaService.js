@@ -5,11 +5,6 @@ angular.module('ommaApp').factory('agendaService', ['Restangular', '$http', func
     Restangular.extendModel('agendas', function(model) {
         model.editing = false;
         console.log(model.name);
-        /*$rootScope.watch(function() {
-         return model.name;
-         }, function() {
-         console.log('changed', model);
-         });*/
 
         return model;
     });
@@ -38,10 +33,42 @@ angular.module('ommaApp').factory('agendaService', ['Restangular', '$http', func
                 return data.data;
             });
         },
-        saveTree: function(meeting, tree) {
-            $http.put('/meetings/' + meeting.id + '/agendas/tree', tree).success(function(data) {
-                console.log(data);
+        _setSortingOrder: function(tree) {
+            var self = this;
+            var order = 1;
+            angular.forEach(tree, function(agenda) {
+                agenda.sorting_order = order;
+                order++;
+                self._setSortingOrder(agenda.children);
             });
+        },
+        /**
+         * Save whole agenda tree
+         * @param meeting Meeting object
+         * @param rootNode
+         */
+        saveTree: function(meeting, rootNode) {
+            var root = this.filterNode(rootNode);
+            root.sorting_order = 1;
+            this._setSortingOrder(root.children);
+            return $http.put('/meetings/' + meeting.id + '/agendas.json', root).then(function(data) {
+                console.log(data);
+                return data.data;
+            });
+        },
+        /**
+         * Remove properites from node that are not used for comparisson and transmission
+         * @param node
+         * @returns {*}
+         */
+        filterNode: function(node) {
+            var newNode = _.omit(node, ['parent', 'editing', 'oldName']);
+            if (newNode.children) {
+                newNode.children = _.filter(node.children, function(child) {
+                    return !child.editing;
+                }).map(_.bind(this.filterNode, this));
+            }
+            return newNode;
         }
     };
 }]);
