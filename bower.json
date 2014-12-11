@@ -27,7 +27,8 @@
     "angular-daterangepicker": "~0.1.10",
     "textAngular": "~1.2.2",
     "angular-xeditable": "~0.1.8",
-    "angular-bootstrap-calendar": "~0.6.0"
+    "angular-bootstrap-calendar": "~0.6.0",
+    "angular-ui-select2": "~0.0.5"
   },
   "resolutions": {
     "moment": "~2.8.4",

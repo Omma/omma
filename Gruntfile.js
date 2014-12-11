@@ -33,7 +33,8 @@ module.exports = function (grunt) {
             'web/assets/components/textAngular/dist/textAngular-sanitize.min.js',
             'web/assets/components/textAngular/dist/textAngular.min.js',
             'web/assets/components/angular-daterangepicker/js/angular-daterangepicker.js',
-            'web/assets/components/angular-xeditable/dist/js/xeditable.min.js'
+            'web/assets/components/angular-xeditable/dist/js/xeditable.min.js',
+            'web/assets/components/angular-ui-select2/src/select2.js'
         ],
         js: [
             'web/assets/js/MainModule.js',
