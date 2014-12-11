@@ -3,3 +3,13 @@ app:
     password: Passwort
     remember_me: Login merken
     login: einloggen
+
+    save: speichern
+    saved: gespeichert
+    saving: wird gespeichert
+
+    today: Heute
+    year: Jahr
+    month: Monat
+    week: Woche
+    day: Tag

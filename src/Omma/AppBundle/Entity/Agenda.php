@@ -44,7 +44,7 @@ class Agenda extends Base
     private $task;
 
     /**
-     * @ORM\OneToMany(targetEntity="Agenda", mappedBy="parent", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Agenda", mappedBy="parent", cascade={"persist", "remove"})
      *
      * @var ArrayCollection
      */
@@ -72,7 +72,7 @@ class Agenda extends Base
      *
      * @var integer
      */
-    private $sortingOrder;
+    private $sortingOrder = 1;
 
     /**
      * Constructor
@@ -90,6 +90,14 @@ class Agenda extends Base
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
@@ -150,6 +158,23 @@ class Agenda extends Base
             if (null !== $meeting) {
                 $meeting->addAgenda($this);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set meeting for all child agendas
+     *
+     * @param Meeting $meeting
+     *
+     * @return $this
+     */
+    public function setMeetingRecursive(Meeting $meeting)
+    {
+        $this->setMeeting($meeting);
+        foreach ($this->children as $child) {
+            $child->setMeetingRecursive($meeting);
         }
 
         return $this;
@@ -260,7 +285,7 @@ class Agenda extends Base
         if ($this->parent !== $parent) {
             $this->parent = $parent;
             if (null !== $parent) {
-                $parent->removeSubItem($this);
+                $parent->addChild($this);
             }
         }
 

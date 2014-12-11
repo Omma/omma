@@ -4,8 +4,14 @@ var app = angular.module('ommaApp', [
     'angular-loading-bar',
     'ui.tree',
     'textAngular',
-    'ui.bootstrap'
+    'xeditable',
+    'ui.bootstrap',
+    'mwl.calendar'
 ]);
+
+app.run(['editableOptions', function(editableOptions) {
+    editableOptions.theme = 'bs3';
+}]);
 
 app.config(['RestangularProvider', function(RestangularProvider) {
     // append .json to all Restangular requests

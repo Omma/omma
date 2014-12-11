@@ -12,15 +12,6 @@ window.utils = {
             start: moment(month, 'YYYY MM').startOf('month'),
             end:   moment(month, 'YYYY MM').endOf('month')
         };
-    },
-    formatIncomingJsonDate: function (element) {
-        var date = moment(element.date);
-
-        return {
-            date:     date.toDate(),
-            dateOrig: date,
-            data:     {title: element.title, url: element.url}
-        };
     }
 };
 
@@ -155,100 +146,4 @@ $(document).ready(function() {
             source: substringMatcher(events)
         }
     );
-
-
-
-
-    /************************************************************
-     Kalender Startseite
-     ************************************************************/
-
-
-    var day = moment().format('YYYY-MM-DD');
-
-    var options = {
-        events_source: function(start, end) {
-
-            var events = [];
-            $.ajax('/temp_jsons/events_dt.json.php?from=' + moment(start).format() + '&to=' + moment(end).format(), {
-                dataType: 'json',
-                async: false,
-                success: function(data) {
-                    events = [];
-
-
-                    //parse date
-                    $.each(data.result, function() {
-                        var obj = $(this)[0];
-
-                        var start = (moment(obj.start).unix())*1000;
-                        var end = moment(obj.end).unix()*1000;
-
-                        var event = {
-                            id: obj.id,
-                            title: obj.title,
-                            url: obj.url,
-                            start: start,
-                            end: end
-                        };
-                        events.push(event);
-                    });
-                }
-            });
-
-            return events;
-        },
-        view: 'month',
-        tmpl_path: '/assets/components/bootstrap-calendar/tmpls/',
-        tmpl_cache: false,
-        day: day,
-        onAfterEventsLoad: function(events) {
-            if(!events) {
-                return;
-            }
-            var list = $('#eventlist');
-            list.html('');
-        },
-        onAfterViewLoad: function(view) {
-            $('.page-header h2').text(this.getTitle());
-            $('.btn-group button').removeClass('active');
-            $('button[data-calendar-view=' + view + ']').addClass('active');
-        },
-        classes: {
-            months: {
-                general: 'label'
-            }
-        }
-    };
-
-    var calendar = $('#calendar').calendar(options);
-
-    $('.btn-group button[data-calendar-nav]').each(function() {
-        var $this = $(this);
-        $this.click(function() {
-            calendar.navigate($this.data('calendar-nav'));
-        });
-    });
-
-    $('.btn-group button[data-calendar-view]').each(function() {
-        var $this = $(this);
-        $this.click(function() {
-            calendar.view($this.data('calendar-view'));
-        });
-    });
-
-
-
-
-    if(language === 'de') {
-        calendar.setLanguage('de-DE');
-    }
-    else {
-        calendar.setLanguage('en-US');
-    }
-
-    calendar.view();
-
-
-
 });

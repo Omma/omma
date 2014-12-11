@@ -4,9 +4,52 @@
 {% endblock %}
 
 {% block content %}
+    <div ng-controller="dashboarCalendarController">
+        {% verbatim %}
+        <h2 class="text-center">{{ calendarControl.getTitle() }}</h2>
+        {% endverbatim %}
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="btn-group">
+
+                    <button class="btn btn-default" ng-click="calendarControl.prev()"><i class="glyphicon glyphicon-arrow-left"></i></button>
+                    <button class="btn btn-primary" ng-click="setCalendarToToday()">{{ "app.today"|trans }}</button>
+                    <button class="btn btn-default" ng-click="calendarControl.next()"><i class="glyphicon glyphicon-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <br class="visible-xs visible-sm">
+
+            <div class="col-md-6 text-right">
+                <div class="btn-group">
+                    <label class="btn btn-primary" ng-model="calendarView" btn-radio="'year'">{{ "app.year"|trans }}</label>
+                    <label class="btn btn-primary" ng-model="calendarView" btn-radio="'month'">{{ "app.month"|trans }}</label>
+                    <label class="btn btn-primary" ng-model="calendarView" btn-radio="'week'">{{ "app.week"|trans }}</label>
+                    <label class="btn btn-primary" ng-model="calendarView" btn-radio="'day'">{{ "app.day"|trans }}</label>
+                </div>
+            </div>
+
+        </div>
+        <div class="dashboard-calendar">
+            <mwl-calendar
+                    calendar-events="events"
+                    calendar-view="calendarView"
+                    calendar-current-day="calendarDay"
+                    calendar-control="calendarControl"
+                    calendar-event-click="eventClicked($event)"
+                    calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+                    calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+                    calendar-edit-event-click="eventEdited($event)"
+                    calendar-delete-event-click="eventDeleted($event)"
+                    calendar-auto-open="true"
+                    calendar-use-iso-week="true"
+                    ></mwl-calendar>
+        </div>
+    </div>
     <ul>
-    {% for meeting in meetings %}
-        <li><a href="{{ path("omma_app_get_meeting", {"meeting": meeting.id}) }}">{{ meeting.name }}</a></li>
-    {% endfor %}
+        {% for meeting in meetings %}
+            <li><a href="{{ path("omma_app_get_meeting", {"meeting": meeting.id}) }}">{{ meeting.name }}</a></li>
+        {% endfor %}
     </ul>
 {% endblock %}
