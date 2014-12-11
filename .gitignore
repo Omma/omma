@@ -6,6 +6,7 @@
 /.idea
 /app/bootstrap.php.cache
 /app/cache/*
+/app/spool/
 /app/config/parameters.yml
 /app/config/ldap.yml
 /app/logs/*

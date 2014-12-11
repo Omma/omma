@@ -52,7 +52,6 @@ angular.module('ommaApp').factory('agendaService', ['Restangular', '$http', func
             root.sorting_order = 1;
             this._setSortingOrder(root.children);
             return $http.put('/meetings/' + meeting.id + '/agendas.json', root).then(function(data) {
-                console.log(data);
                 return data.data;
             });
         },

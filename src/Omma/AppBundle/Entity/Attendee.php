@@ -80,6 +80,13 @@ class Attendee extends Base
     protected $message;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @var \DateTime
+     */
+    protected $invitationSentAt;
+
+    /**
      *
      * @return int
      */
@@ -227,6 +234,26 @@ class Attendee extends Base
     public function setMessage($message)
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getInvitationSentAt()
+    {
+        return $this->invitationSentAt;
+    }
+
+    /**
+     * @param \DateTime $invitationSentAt
+     *
+     * @return $this
+     */
+    public function setInvitationSentAt($invitationSentAt)
+    {
+        $this->invitationSentAt = $invitationSentAt;
 
         return $this;
     }

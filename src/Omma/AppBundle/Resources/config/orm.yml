@@ -49,3 +49,11 @@ services:
         arguments:
             - @omma.app.entity_manager
             - Omma\AppBundle\Entity\Attendee
+
+    omma.app.listener.invitation:
+        class: Omma\AppBundle\EventListener\ORM\InvitationListener
+        tags:
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: doctrine.event_listener, event: postPersist }
+        arguments:
+            - @service_container

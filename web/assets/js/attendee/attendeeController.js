@@ -19,14 +19,14 @@ angular.module('ommaApp').controller('meetingAttendeeController', ['$scope', 'at
     });
 
     $scope.addUser = function() {
-        var userId = $scope.userId;
+        var userId = parseInt($scope.userId);
         $scope.userId = null;
-        if (userId.length <= 0) {
+        if (userId <= 0) {
             return;
         }
         // check if attendee already exists
         var attendee = _.find($scope.attendees, function(attendee) {
-            return attendee.user.id == userId;
+            return attendee.user.id === userId;
         });
         if (undefined !== attendee) {
             return;

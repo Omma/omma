@@ -3,14 +3,15 @@
 {% set is_owner = is_granted('edit', meeting) %}
 
 {% block agenda_tab %}
-    <div class="header-button">
-        <button class="btn btn-primary" ng-show="status == 'not_saved'" ng-click="saveTree()"><span class="glyphicon glyphicon-file"></span> {{ "app.save"|trans }}</button>
-        <button class="btn btn-default disabled" ng-show="status == 'saving'" ng-click="saveTree()"><span class="glyphicon glyphicon-refresh"></span> {{ "app.saving"|trans }}</button>
-        <button class="btn btn-default disabled" ng-show="status == 'saved'" ng-click="saveTree()"><span class="glyphicon glyphicon-ok"></span> {{ "app.saved"|trans }}</button>
-    </div>
+    {% if is_owner %}
+        <div class="header-button" ng-switch on="status">
+            <button ng-switch-when="not_saved" class="btn btn-primary" ng-click="saveTree()"><span class="glyphicon glyphicon-file"></span> {{ "app.save"|trans }}</button>
+            <button ng-switch-when="saving" class="btn btn-default disabled" ng-click="saveTree()"><span class="glyphicon glyphicon-refresh"></span> {{ "app.saving"|trans }}</button>
+            <button ng-switch-when="saved" class="btn btn-default disabled" ng-click="saveTree()"><span class="glyphicon glyphicon-ok"></span> {{ "app.saved"|trans }}</button>
+        </div>
+    {% endif %}
     <h1>Agenda</h1>
     <!-- Nested node template -->
-    {% verbatim %}
     <script type="text/ng-template" id="nodes_renderer.html">
         <div ui-tree-handle>
             <form class="form-inline" role="form" ng-show="node.editing">
@@ -22,7 +23,7 @@
                 <button type="submit" class="btn btn-default" ng-click="cancelEditing(node)">Cancel</button>
             </form>
             <div ng-show="!node.editing">
-                {{node.name}}
+                {{ "{{ node.name }}" }}
                 <div class="pull-right">
                     <a href="" class="btn btn-success btn-xs" data-nodrag ng-click="newNode(node)"><span class="glyphicon glyphicon-plus"></span></a>
                     <a href="" class="btn btn-primary btn-xs" data-nodrag ng-click="edit(node)"><i class="glyphicon glyphicon-pencil"></i></a>
@@ -35,7 +36,6 @@
             </li>
         </ol>
     </script>
-    {% endverbatim %}
     <div ui-tree>
         <ol ui-tree-nodes="" ng-model="rootAgenda.children" id="tree-root">
             <li ng-repeat="node in rootAgenda.children" ui-tree-node ng-include="'nodes_renderer.html'"></li>
@@ -75,7 +75,7 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th>-</th>
+            <th style="width: 20px">-</th>
             <th>{{ "app.attendee.user"|trans }}</th>
             {% if is_owner %}
                 <th>{{ "app.options"|trans }}</th>

@@ -51,9 +51,9 @@ class MeetingVoter implements VoterInterface
             return VoterInterface::ACCESS_DENIED;
         }
 
-        /*if (in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
+        if (in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
             return VoterInterface::ACCESS_GRANTED;
-        }*/
+        }
 
         if (! $this->supportsClass(get_class($object))) {
             return VoterInterface::ACCESS_ABSTAIN;
