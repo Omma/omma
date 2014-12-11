@@ -13,3 +13,9 @@ app:
     month: Monat
     week: Woche
     day: Tag
+
+    options: Optionen
+
+    attendee:
+        user: Benutzer
+        organizer: Organisator

@@ -84,7 +84,12 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
 
         $meeting = new Meeting();
         $attendee = new Attendee();
-        $attendee->setMeeting($meeting)->setUser($user);
+
+        $attendee
+            ->setMeeting($meeting)
+            ->setUser($user)
+            ->setOwner(true)
+        ;
 
         return $this->processForm($request, $meeting);
     }
@@ -175,7 +180,11 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
             ->setDateEnd(new \DateTime("+1hour"))
         ;
         $attendee = new Attendee();
-        $attendee->setMeeting($meeting)->setUser($user);
+        $attendee
+            ->setMeeting($meeting)
+            ->setUser($user)
+            ->setOwner(true)
+        ;
 
         $this->get("omma.app.manager.meeting")->save($meeting);
 

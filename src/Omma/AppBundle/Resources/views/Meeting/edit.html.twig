@@ -57,6 +57,48 @@
     {% endverbatim %}
 {% endblock %}
 
+{% block attendee_tab %}
+    <h1>Teilnehmer</h1>
+    <form class="form-inline" role="form">
+        <div class="form-group">
+            <div class="input-group">
+                <label class="sr-only" for="exampleInputEmail2">{{ "app.user"|trans }}</label>
+                <input type="text" class="form-control" id="attendee-name" placeholder="{{ "app.attendee.user"|trans }}" ng-model="userId">
+            </div>
+        </div>
+        <button ng-click="addUser()" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i></button>
+    </form>
+    <hr />
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>-</th>
+            <th>{{ "app.attendee.user"|trans }}</th>
+            <th>{{ "app.options"|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="attendee in attendees">
+            <td ng-switch on="attendee.status">
+                <i ng-switch-when="invited" class="glyphicon glyphicon-time" data-toggle="tooltip" title="Invited"></i>
+                <i ng-switch-when="accepted" class="glyphicon glyphicon-ok-sign"></i>
+                <i ng-switch-when="declined" class="glyphicon glyphicon-remove-sign"></i>
+                <i ng-switch-when="maybe" class="glyphicon glyphicon-question-sign"></i>
+            </td>
+            <td>
+                {{ "{{ attendee.user.username }}" }}
+                <span ng-show="attendee.owner" class="label label-primary">
+                    {{ "app.attendee.organizer"|trans }}
+                </span>
+            </td>
+            <td>
+                <a class="btn btn-xs btn-danger" ng-click="removeAttendee(attendee)" ng-hide="attendee.owner"><i class="glyphicon glyphicon-remove"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
 {% block content %}
     <div ng-controller="meetingController" ng-init="init({{ meeting|serialize('json') }})">
         {% verbatim %}
@@ -67,15 +109,15 @@
             </div>
         {% endverbatim %}
         <ul class="nav nav-tabs" data-tabs="tabs">
-            <li class="active"><a href="#datum-uhrzeit" data-toggle="tab">Datum & Uhrzeit</a></li>
+            <li class="active"><a href="#settings" data-toggle="tab">Datum & Uhrzeit</a></li>
             <li><a href="#agenda" data-toggle="tab">Agenda</a></li>
             <li><a href="#todos" data-toggle="tab">To Dos</a></li>
-            <li><a href="#protokoll" data-toggle="tab">Protokoll</a></li>
-            <li><a href="#teilnehmer" data-toggle="tab">Teilnehmer</a></li>
+            <li><a href="#protocol" data-toggle="tab">Protokoll</a></li>
+            <li><a href="#attendees" data-toggle="tab">Teilnehmer</a></li>
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane active" id="datum-uhrzeit">
+            <div class="tab-pane active" id="settings">
                 <h2>datum-uhrzeit</h2>
             </div>
             <div class="tab-pane" id="agenda" ng-controller="meetingAgendaController">
@@ -98,11 +140,11 @@
                         </div>
                     </div>
             </div>
-            <div class="tab-pane" id="protokoll" ng-controller="protocolController">
+            <div class="tab-pane" id="protocol" ng-controller="protocolController">
                 {{ block('protocol_tab') }}
             </div>
-            <div class="tab-pane" id="teilnehmer">
-                <h1>teilnehmer</h1>
+            <div class="tab-pane" id="attendees" ng-controller="meetingAttendeeController">
+                {{ block('attendee_tab') }}
             </div>
         </div>
     </div>

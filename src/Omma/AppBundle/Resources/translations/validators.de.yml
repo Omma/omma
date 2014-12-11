@@ -1,0 +1,3 @@
+app:
+    attendee:
+        already_exists: Teilnehmer wurde dem Meeting schon hinzugefügt.

@@ -8,6 +8,7 @@ use Omma\AppBundle\Entity\Attendee;
 use Omma\AppBundle\Entity\Meeting;
 use Omma\AppBundle\Form\Type\MeetingAttendeeForm;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  *
@@ -54,6 +55,9 @@ class MeetingAttendeeController extends FOSRestController implements ClassResour
 
     public function deleteAction(Meeting $meeting, Attendee $attendee)
     {
+        if ($attendee->isOwner()) {
+            return $this->view("owner can't be removed", Response::HTTP_BAD_REQUEST);
+        }
         $meeting->removeAttendee($attendee);
         $this->get("omma.app.manager.attendee")->delete($attendee);
 
