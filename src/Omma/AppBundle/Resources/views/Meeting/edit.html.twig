@@ -1,5 +1,7 @@
 {% extends "OmmaAppBundle::layout.html.twig" %}
 
+{% set is_owner = is_granted('edit', meeting) %}
+
 {% block agenda_tab %}
     <div class="header-button">
         <button class="btn btn-primary" ng-show="status == 'not_saved'" ng-click="saveTree()"><span class="glyphicon glyphicon-file"></span> {{ "app.save"|trans }}</button>
@@ -59,6 +61,7 @@
 
 {% block attendee_tab %}
     <h1>Teilnehmer</h1>
+    {% if is_owner %}
     <form class="form-inline" role="form">
         <div class="form-group">
             <div class="input-group">
@@ -68,13 +71,15 @@
         </div>
         <button ng-click="addUser()" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i></button>
     </form>
-    <hr />
+    {% endif %}
     <table class="table table-hover">
         <thead>
         <tr>
             <th>-</th>
             <th>{{ "app.attendee.user"|trans }}</th>
-            <th>{{ "app.options"|trans }}</th>
+            {% if is_owner %}
+                <th>{{ "app.options"|trans }}</th>
+            {% endif %}
         </tr>
         </thead>
         <tbody>
@@ -91,9 +96,11 @@
                     {{ "app.attendee.organizer"|trans }}
                 </span>
             </td>
+            {% if is_owner %}
             <td>
                 <a class="btn btn-xs btn-danger" ng-click="removeAttendee(attendee)" ng-hide="attendee.owner"><i class="glyphicon glyphicon-remove"></i></a>
             </td>
+            {% endif %}
         </tr>
         </tbody>
     </table>

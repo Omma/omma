@@ -7,6 +7,7 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use Omma\AppBundle\Entity\Attendee;
 use Omma\AppBundle\Entity\Meeting;
 use Omma\AppBundle\Form\Type\MeetingAttendeeForm;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,12 +18,21 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class MeetingAttendeeController extends FOSRestController implements ClassResourceInterface
 {
+    /**
+     * @Security("is_granted('view', meeting)")
+     *
+     * @param Meeting $meeting
+     *
+     * @return \Omma\AppBundle\Entity\Attendee[]
+     */
     public function cgetAction(Meeting $meeting)
     {
         return $meeting->getAttendees();
     }
 
     /**
+     * @Security("is_granted('edit', meeting)")
+     *
      * @param Request $request
      * @param Meeting $meeting
      *
@@ -37,6 +47,8 @@ class MeetingAttendeeController extends FOSRestController implements ClassResour
     }
 
     /**
+     * @Security("is_granted('edit', meeting)")
+     *
      * @param Request  $request
      * @param Meeting  $meeting
      * @param Attendee $attendee
@@ -48,11 +60,27 @@ class MeetingAttendeeController extends FOSRestController implements ClassResour
         return $this->processForm($request, $attendee);
     }
 
+    /**
+     * @Security("is_granted('view', meeting)")
+     *
+     * @param Meeting  $meeting
+     * @param Attendee $attendee
+     *
+     * @return Attendee
+     */
     public function getAction(Meeting $meeting, Attendee $attendee)
     {
         return $attendee;
     }
 
+    /**
+     * @Security("is_granted('edit', meeting)")
+     *
+     * @param Meeting  $meeting
+     * @param Attendee $attendee
+     *
+     * @return \FOS\RestBundle\View\View
+     */
     public function deleteAction(Meeting $meeting, Attendee $attendee)
     {
         if ($attendee->isOwner()) {
