@@ -11,7 +11,7 @@ angular.module('ommaApp').controller('sidebarCalendarController', ['$scope', 'me
         return {
             date:     date.toDate(),
             dateOrig: date,
-            data:     { name: element.name, url: '/meetings/' + element.id }
+            data:     { name: element.name, url: '/meetings/' + element.id + '/details' }
         };
     }
 

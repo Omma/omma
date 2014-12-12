@@ -13,3 +13,9 @@ app:
     month: Month
     week: Week
     day: Day
+
+    confirmation:
+        title: Confirmation
+
+    user:
+        search: Select or search a person in the list...

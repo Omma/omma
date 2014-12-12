@@ -3,6 +3,7 @@ namespace Omma\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Application\Sonata\UserBundle\Entity\User;
 
 /**
@@ -10,6 +11,7 @@ use Application\Sonata\UserBundle\Entity\User;
  * @ORM\Table("omma_attendee")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity(fields={"meeting", "user"}, message="app.attendee.already_exists")
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
@@ -31,28 +33,28 @@ class Attendee extends Base
      *
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Omma\AppBundle\Entity\Meeting", inversedBy="attendees")
      *
      * @var Meeting
      */
-    private $meeting;
+    protected $meeting;
 
     /**
      * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="attendees")
      *
      * @var User
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\Column(type="boolean")
      *
      * @var boolean
      */
-    private $mandatory = true;
+    protected $mandatory = true;
 
     /**
      * @ORM\Column(type="string")
@@ -60,14 +62,29 @@ class Attendee extends Base
      *
      * @var string
      */
-    private $status = Attendee::STATUS_INVITED;
+    protected $status = Attendee::STATUS_INVITED;
+
+    /**
+     * Marks attendee as meeting owner
+     * @ORM\Column(type="boolean")
+     *
+     * @var boolean
+     */
+    protected $owner = false;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      *
      * @var string
      */
-    private $message;
+    protected $message;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @var \DateTime
+     */
+    protected $invitationSentAt;
 
     /**
      *
@@ -93,7 +110,7 @@ class Attendee extends Base
      *
      * @return $this
      */
-    public function setMeeting(Meeting $meeting)
+    public function setMeeting(Meeting $meeting = null)
     {
         if ($this->meeting !== $meeting) {
             $this->meeting = $meeting;
@@ -177,6 +194,29 @@ class Attendee extends Base
     }
 
     /**
+     * @return boolean
+     */
+    public function isOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param boolean $owner
+     *
+     * @return $this
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
+        if ($owner) {
+            $this->setStatus(self::STATUS_ACCEPTED);
+        }
+
+        return $this;
+    }
+
+    /**
      *
      * @return string
      */
@@ -194,6 +234,26 @@ class Attendee extends Base
     public function setMessage($message)
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getInvitationSentAt()
+    {
+        return $this->invitationSentAt;
+    }
+
+    /**
+     * @param \DateTime $invitationSentAt
+     *
+     * @return $this
+     */
+    public function setInvitationSentAt($invitationSentAt)
+    {
+        $this->invitationSentAt = $invitationSentAt;
 
         return $this;
     }

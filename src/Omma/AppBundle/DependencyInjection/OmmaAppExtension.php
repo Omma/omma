@@ -37,7 +37,7 @@ class OmmaAppExtension extends Extension
                 continue;
             }
         }
-
         $container->setParameter("omma.languages", $availableLocales);
+        $container->setParameter("omma.mail.from", $config['mail']['from']);
     }
 }

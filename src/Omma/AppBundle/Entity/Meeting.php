@@ -127,6 +127,11 @@ class Meeting extends Base
     protected $temp = false;
 
     /**
+     * @var bool
+     */
+    protected $sendInvitations = false;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -592,6 +597,26 @@ class Meeting extends Base
     public function setTemp($temp)
     {
         $this->temp = $temp;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isSendInvitations()
+    {
+        return $this->sendInvitations;
+    }
+
+    /**
+     * @param boolean $sendInvitations
+     *
+     * @return $this
+     */
+    public function setSendInvitations($sendInvitations)
+    {
+        $this->sendInvitations = $sendInvitations;
 
         return $this;
     }

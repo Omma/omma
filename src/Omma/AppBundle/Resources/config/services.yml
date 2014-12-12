@@ -4,6 +4,8 @@ services:
         public: false
         tags:
             - { name: security.voter }
+        arguments:
+            - @omma.app.manager.attendee
 
     omma.app.request.listener.locale:
         class: Omma\AppBundle\EventListener\Request\LocaleListener
@@ -26,3 +28,18 @@ services:
         class: Omma\AppBundle\Form\Type\MeetingAgendaCollectionForm
         tags:
             - { name: form.type, alias: omma_meeting_agenda_collection }
+
+    omma.app.mail.abstract:
+        class: Omma\AppBundle\Mail\AbstractMailer
+        public: false
+        arguments:
+            - @swiftmailer.mailer
+            - @router
+            - @twig
+            - %omma.mail.from%
+
+    omma.app.mail.invitation:
+        class: Omma\AppBundle\Mail\InvitationMailer
+        arguments:
+            - @omma.app.mail.abstract
+            - @omma.app.manager.attendee

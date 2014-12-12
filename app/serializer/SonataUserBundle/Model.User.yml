@@ -1,3 +1,7 @@
 Sonata\UserBundle\Model\User:
     exclusion_policy: ALL
-    properties: ~
+    properties:
+        firstname:
+            expose: true
+        lastname:
+            expose: true

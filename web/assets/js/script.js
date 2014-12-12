@@ -146,4 +146,7 @@ $(document).ready(function() {
             source: substringMatcher(events)
         }
     );
+
+    // initalize tooltips
+    $('[data-toggle="tooltip"]').tooltip();
 });

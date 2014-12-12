@@ -5,8 +5,10 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Omma\AppBundle\Entity\Attendee;
 use Omma\AppBundle\Entity\Meeting;
+use Omma\AppBundle\Form\Type\MeetingConfirmationForm;
 use Omma\AppBundle\Form\Type\MeetingForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -19,7 +21,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
 {
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @return Meeting[]
      */
     public function cgetAction()
     {
@@ -40,8 +42,6 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
-     *
      * @param \DateTime $dateStart
      *            Start Date
      * @param \DateTime $dateEnd
@@ -72,8 +72,6 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
-     *
      * @param Request $request
      *
      * @return \Symfony\Component\Form\Form
@@ -84,13 +82,18 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
 
         $meeting = new Meeting();
         $attendee = new Attendee();
-        $attendee->setMeeting($meeting)->setUser($user);
+
+        $attendee
+            ->setMeeting($meeting)
+            ->setUser($user)
+            ->setOwner(true)
+        ;
 
         return $this->processForm($request, $meeting);
     }
 
     /**
-     * @Security("has_role('ROLE_USER') and is_granted('edit', meeting)")
+     * @Security("is_granted('edit', meeting)")
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -103,7 +106,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("has_role('ROLE_USER') and is_granted('edit', meeting)")
+     * @Security("is_granted('edit', meeting)")
      *
      * @param Meeting $meeting
      *
@@ -117,7 +120,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("has_role('ROLE_USER') and is_granted('edit', meeting)")
+     * @Security("is_granted('edit', meeting)")
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -144,18 +147,50 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("has_role('ROLE_USER') and is_granted('view', meeting)")
+     * @Security("is_granted('view', meeting)")
+     *
+     */
+    public function getAction(Meeting $meeting)
+    {
+        return $meeting;
+    }
+
+    /**
+     * @Security("is_granted('view', meeting)")
+     * @Route("/meetings/{meeting}/details", name="omma_meeting_details")
+     * @Template()
      *
      * @param Meeting $meeting
      *
      * @return Meeting
      */
-    public function getAction(Meeting $meeting)
+    public function detailsAction(Request $request, Meeting $meeting)
     {
-        $view = $this->view($meeting);
-        $view->setTemplate("OmmaAppBundle:Meeting:edit.html.twig")->setTemplateVar("meeting");
+        $owner = $this->get("security.context")->isGranted("owner", $meeting);
+        $canEdit = $this->get("security.context")->isGranted("edit", $meeting);
 
-        return $this->handleView($view);
+        $attendee = $this->get("omma.app.manager.attendee")->findOneBy(array(
+            "meeting" => $meeting,
+            "user"    => $this->getUser(),
+        ));
+        $attendeeForm = null;
+        if (null !== $attendee) {
+            $attendeeForm = $this->createForm(new MeetingConfirmationForm(), $attendee);
+            $attendeeForm->handleRequest($request);
+            if ($attendeeForm->isValid()) {
+                $this->get("omma.app.manager.attendee")->save($attendee);
+
+                return $this->redirect($this->generateUrl("omma_meeting_details", array("meeting" => $meeting->getId())));
+            }
+        }
+
+        return array(
+            "meeting"      => $meeting,
+            "owner"        => $owner,
+            "can_edit"     => $canEdit,
+            "attendee"     => $attendee,
+            "attendeeForm" => $attendeeForm ? $attendeeForm->createView() : null,
+        );
     }
 
     /**
@@ -175,7 +210,11 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
             ->setDateEnd(new \DateTime("+1hour"))
         ;
         $attendee = new Attendee();
-        $attendee->setMeeting($meeting)->setUser($user);
+        $attendee
+            ->setMeeting($meeting)
+            ->setUser($user)
+            ->setOwner(true)
+        ;
 
         $this->get("omma.app.manager.meeting")->save($meeting);
 

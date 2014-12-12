@@ -5,7 +5,7 @@ imports:
 
 framework:
     #esi:             ~
-    translator:      { fallback: "%locale%" }
+    translator:      { fallback: "de_DE" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -16,7 +16,7 @@ framework:
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
-    default_locale:  "%locale%"
+    default_locale:  "en_US"
     trusted_hosts:   ~
     trusted_proxies: ~
     session:
@@ -30,6 +30,9 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
+    form:
+        resources:
+            - form_theme.html.twig
 
 # Assetic Configuration
 assetic:
@@ -69,11 +72,15 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    spool:     { type: memory }
+    transport:  %mailer_transport%
+    encryption: %mailer_encryption%
+    auth_mode:  %mailer_auth_mode%
+    host:       %mailer_host%
+    username:   %mailer_user%
+    password:   %mailer_password%
+    spool:
+        type: file
+        path: "%kernel.root_dir%/spool"
 
 sonata_core: ~
 
@@ -147,4 +154,7 @@ jms_serializer:
                 namespace_prefix: FOS\UserBundle
                 path: %kernel.root_dir%/serializer/FOSUserBundle
 
+omma_app:
+    mail:
+        from: %mailer_from%
 omma_user: ~

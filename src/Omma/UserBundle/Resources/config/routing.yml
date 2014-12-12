@@ -1,0 +1,4 @@
+omma_user_user:
+    resource: "@OmmaUserBundle/Controller/UserController.php"
+    type: rest
+    name_prefix: omma_user_

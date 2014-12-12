@@ -9,3 +9,5 @@ Omma\AppBundle\Entity\Attendee:
             expose: true
         user:
             expose: true
+        owner:
+            expose: true

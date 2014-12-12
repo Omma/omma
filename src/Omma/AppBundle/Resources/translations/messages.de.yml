@@ -13,3 +13,51 @@ app:
     month: Monat
     week: Woche
     day: Tag
+
+    options: Optionen
+
+    confirmation:
+        title: Bestätigung
+        info: |
+            Sie wurden zu dieser Veranstaltung eingeladen. Bitte geben Sie an, ob Sie daran teilnehmen können.
+
+        status:
+            title: Status
+            accepted: Teilnehmen
+            declined: Ablehnen
+            maybe: Vielleicht teilnehmen
+        message: Nachricht
+
+    date:
+        title: Datum & Uhrzeit
+
+    agenda:
+        title: Agenda
+
+    todos:
+        title: ToDos
+
+    protocol:
+        title: Protokoll
+
+    attendees:
+        title: Teilnehmer
+        user: Benutzer
+        organizer: Organisator
+
+    user:
+        search: Person Auswählen oder Suchen...
+
+    mail:
+        invitation:
+            subject: Einladung zu %meeting%
+            message: |
+                Hallo %username%,
+
+                Sie wurden zum Meeting %meeting% eingeladen.
+                Bitte geben Sie unter folgender URL an, ob Sie teilnehmen können:
+
+                %meetingUrl%
+
+                ---
+                Open Meeting Manager

@@ -32,8 +32,10 @@ monolog:
 assetic:
     use_controller: false
 
-#swiftmailer:
-#    delivery_address: me@example.com
+swiftmailer:
+    delivery_address: %mailer_from%
+    spool:
+        type: memory
 
 h4cc_alice_fixtures:
     locale: de_DE

@@ -6,7 +6,9 @@ var app = angular.module('ommaApp', [
     'textAngular',
     'xeditable',
     'ui.bootstrap',
-    'mwl.calendar'
+    'mwl.calendar',
+    'ngSanitize',
+    'ui.select'
 ]);
 
 app.run(['editableOptions', function(editableOptions) {

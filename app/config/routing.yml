@@ -3,6 +3,10 @@ omma_user:
     type:     annotation
     prefix:   /
 
+omma_user_rest:
+    resource: "@OmmaUserBundle/Resources/config/routing.yml"
+    type: rest
+
 omma_app:
     resource: "@OmmaAppBundle/Controller/"
     type:     annotation
