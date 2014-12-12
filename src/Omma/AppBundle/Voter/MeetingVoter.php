@@ -18,6 +18,8 @@ class MeetingVoter implements VoterInterface
 
     const EDIT = "edit";
 
+    const OWNER = "owner";
+
     /**
      * @var AttendeeEntityManager
      */
@@ -32,7 +34,8 @@ class MeetingVoter implements VoterInterface
     {
         return in_array($attribute, array(
             self::VIEW,
-            self::EDIT
+            self::EDIT,
+            self::OWNER,
         ));
     }
 
@@ -51,10 +54,6 @@ class MeetingVoter implements VoterInterface
             return VoterInterface::ACCESS_DENIED;
         }
 
-        if (in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
-            return VoterInterface::ACCESS_GRANTED;
-        }
-
         if (! $this->supportsClass(get_class($object))) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
@@ -62,23 +61,27 @@ class MeetingVoter implements VoterInterface
         if (1 !== count($attributes)) {
             throw new \InvalidArgumentException("Only one attribute is allowed for VIEW or EDIT");
         }
-
         $attribute = $attributes[0];
-
-        if (! $this->supportsAttribute($attribute)) {
-            return VoterInterface::ACCESS_ABSTAIN;
-        }
 
         if (!$object instanceof Meeting) {
             return VoterInterface::ACCESS_DENIED;
+        }
+
+        if (self::OWNER !== $attribute and in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
+            return VoterInterface::ACCESS_GRANTED;
+        }
+
+        if (! $this->supportsAttribute($attribute)) {
+            return VoterInterface::ACCESS_ABSTAIN;
         }
 
         switch ($attribute) {
             case self::VIEW:
                 $count = $this->attendeeEntityManager->createQueryBuilder("a")
                     ->select("COUNT(a)")
-                    ->where("a.meeting = :meeting")
+                    ->where("a.meeting = :meeting AND a.user = :user")
                     ->setParameter("meeting", $object)
+                    ->setParameter("user", $user)
                     ->getQuery()
                     ->getSingleScalarResult()
                 ;
@@ -86,11 +89,14 @@ class MeetingVoter implements VoterInterface
                     return VoterInterface::ACCESS_GRANTED;
                 }
                 break;
+            case self::OWNER:
+                /* fall through */
             case self::EDIT:
                 $count = $this->attendeeEntityManager->createQueryBuilder("a")
                     ->select("COUNT(a)")
-                    ->where("a.meeting = :meeting AND a.owner = 1")
+                    ->where("a.meeting = :meeting AND a.user = :user AND a.owner = 1")
                     ->setParameter("meeting", $object)
+                    ->setParameter("user", $user)
                     ->getQuery()
                     ->getSingleScalarResult()
                 ;

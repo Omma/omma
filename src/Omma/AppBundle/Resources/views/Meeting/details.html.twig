@@ -1,16 +1,14 @@
 {% extends "OmmaAppBundle::layout.html.twig" %}
 
-{% set is_owner = is_granted('edit', meeting) %}
-
 {% block agenda_tab %}
-    {% if is_owner %}
+    {% if can_edit %}
         <div class="header-button" ng-switch on="status">
             <button ng-switch-when="not_saved" class="btn btn-primary" ng-click="saveTree()"><span class="glyphicon glyphicon-file"></span> {{ "app.save"|trans }}</button>
             <button ng-switch-when="saving" class="btn btn-default disabled" ng-click="saveTree()"><span class="glyphicon glyphicon-refresh"></span> {{ "app.saving"|trans }}</button>
             <button ng-switch-when="saved" class="btn btn-default disabled" ng-click="saveTree()"><span class="glyphicon glyphicon-ok"></span> {{ "app.saved"|trans }}</button>
         </div>
     {% endif %}
-    <h1>Agenda</h1>
+    <h2>{{ "app.agenda.title"|trans }}</h2>
     <!-- Nested node template -->
     <script type="text/ng-template" id="nodes_renderer.html">
         <div ui-tree-handle>
@@ -46,7 +44,7 @@
 
 {% block protocol_tab %}
     {% verbatim %}
-    <h1>Protokoll zu dieser Veranstaltung</h1>
+    <h2>Protokoll zu dieser Veranstaltung</h2>
     <p>Wenn Sie das Protokoll als "final" markieren, ist es für alle Teilnehmer sichtbar. </p>
     <hr class="invisible" />
     <span class="status">{{ status }}</span>
@@ -60,8 +58,8 @@
 {% endblock %}
 
 {% block attendee_tab %}
-    <h1>Teilnehmer</h1>
-    {% if is_owner %}
+    <h2>{{ "app.attendees.title"|trans }}</h2>
+    {% if can_edit %}
     <form role="form">
         <div class="form-group">
             <div class="row">
@@ -79,8 +77,8 @@
         <thead>
         <tr>
             <th style="width: 20px">-</th>
-            <th>{{ "app.attendee.user"|trans }}</th>
-            {% if is_owner %}
+            <th>{{ "app.attendees.user"|trans }}</th>
+            {% if can_edit %}
                 <th>{{ "app.options"|trans }}</th>
             {% endif %}
         </tr>
@@ -96,10 +94,10 @@
             <td>
                 {{ "{{ attendee.user.username }}" }}
                 <span ng-show="attendee.owner" class="label label-primary">
-                    {{ "app.attendee.organizer"|trans }}
+                    {{ "app.attendees.organizer"|trans }}
                 </span>
             </td>
-            {% if is_owner %}
+            {% if can_edit %}
             <td>
                 <a class="btn btn-xs btn-danger" ng-click="removeAttendee(attendee)" ng-hide="attendee.owner"><i class="glyphicon glyphicon-remove"></i></a>
             </td>
@@ -134,22 +132,28 @@
             </div>
         {% endverbatim %}
         <ul class="nav nav-tabs" data-tabs="tabs">
-            <li class="active"><a href="#settings" data-toggle="tab">Datum & Uhrzeit</a></li>
-            <li><a href="#agenda" data-toggle="tab">Agenda</a></li>
-            <li><a href="#todos" data-toggle="tab">To Dos</a></li>
-            <li><a href="#protocol" data-toggle="tab">Protokoll</a></li>
-            <li><a href="#attendees" data-toggle="tab">Teilnehmer</a></li>
+            {% if not owner %}
+            <li{% if not owner %} class="active"{% endif %}><a href="#confirmation" data-toggle="tab">{{ "app.confirmation.title"|trans }}</a></li>
+            {% endif %}
+            <li{% if owner %} class="active"{% endif %}><a href="#settings" data-toggle="tab">{{ "app.date.title"|trans }}</a></li>
+            <li><a href="#agenda" data-toggle="tab">{{ "app.agenda.title"|trans }}</a></li>
+            <li><a href="#todos" data-toggle="tab">{{ "app.todos.title"|trans }}</a></li>
+            <li><a href="#protocol" data-toggle="tab">{{ "app.protocol.title"|trans }}</a></li>
+            <li><a href="#attendees" data-toggle="tab">{{ "app.attendees.title"|trans }}</a></li>
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane active" id="settings">
-                <h2>datum-uhrzeit</h2>
+            <div class="tab-pane{% if not owner %} active{% endif %}" id="confirmation">
+                {{ block('confirmation_tab') }}
+            </div>
+            <div class="tab-pane{% if owner %} active{% endif %}" id="settings">
+                <h2>{{ "app.date.title"|trans }}</h2>
             </div>
             <div class="tab-pane" id="agenda" ng-controller="meetingAgendaController">
                 {{ block('agenda_tab') }}
             </div>
             <div class="tab-pane" id="todos">
-                <h1>ToDos</h1>
+                <h2>{{ "app.todos.title"|trans }}</h2>
 
                     <ul class="nav nav-tabs nav-justified" data-tabs="tabs">
                         <li class="active"><a href="#meine-todos" data-toggle="tab">Meine Todos</a></li>
@@ -158,10 +162,10 @@
 
                     <div class="tab-content">
                         <div class="tab-pane active" id="meine-todos">
-                            <h1>meine-todos</h1>
+                            <h3>meine-todos</h3>
                         </div>
                         <div class="tab-pane" id="allgemein">
-                            <h1>allgemein-todos</h1>
+                            <h3>allgemein-todos</h3>
                         </div>
                     </div>
             </div>
@@ -173,4 +177,23 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block confirmation_tab %}
+    <h2>{{ "app.confirmation.title"|trans }}</h2>
+    {% if attendee.status == 'invited' %}
+        <div class="alert alert-info" role="alert">
+            {{ "app.confirmation.info"|trans }}
+        </div>
+    {% endif %}
+    {{ form_start(attendeeForm) }}
+    {{ form_rest(attendeeForm) }}
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+            <button type="submit" class="btn btn-primary">
+                <i class="glyphicon glyphicon-file"></i> {{ "app.save"|trans }}
+            </button>
+        </div>
+    </div>
+    {{ form_end(attendeeForm) }}
 {% endblock %}
