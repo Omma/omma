@@ -78,8 +78,8 @@
 {% endblock %}
 
 {% block todo_tab %}
-    {% verbatim %}
     <h2>{{ "app.todos.title"|trans }}</h2>
+    {% verbatim %}
     <hr class="invisible"/><hr class="invisible"/>
     <h2>Punkt erstellen</h2>
 
@@ -286,7 +286,7 @@
             <div class="tab-pane" id="agenda" ng-controller="meetingAgendaController">
                 {{ block('agenda_tab') }}
             </div>
-            <div class="tab-pane" id="todos">
+            <div class="tab-pane" id="todos" ng-controller="toDoController">
                 <h2>{{ "app.todos.title"|trans }}</h2>
                 {{ block('todo_tab') }}
             </div>
