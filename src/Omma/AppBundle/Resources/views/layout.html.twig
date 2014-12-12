@@ -51,8 +51,12 @@
             <div class="col-xs-8 text-right">
                 {% if app.user %}
                 <ul class="top-navi">
+                    {% if app.request.locale != "de_DE" %}
                     <li><a href="{{ path("omma_switch_language", {language: 'de_DE'}) }}">Deutsch</a></li>
+                    {% endif %}
+                    {% if app.request.locale != "en_US" %}
                     <li><a href="{{ path("omma_switch_language", {language: 'en_US'}) }}">English</a></li>
+                    {% endif %}
                     <li><a href="{{ path("omma_app_meeting_create") }}"><i class="fa fa-plus"> </i> Veranstaltung erstellen</a></li>
                     <li><a href="{{ path("omma_app_profile_index") }}"><i class="fa fa-user"> </i> Profil verwalten</a></li>
                     <li><a href="{{ path("omma_logout") }}"><i class="fa fa-power-off"> </i> Ausloggen</a></li>
