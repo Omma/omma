@@ -16,6 +16,9 @@ app:
 
     options: Optionen
 
+    user:
+        search: Person Auswählen oder Suchen...
+
     attendee:
         user: Benutzer
         organizer: Organisator

@@ -34,7 +34,7 @@ module.exports = function (grunt) {
             'web/assets/components/textAngular/dist/textAngular.min.js',
             'web/assets/components/angular-daterangepicker/js/angular-daterangepicker.js',
             'web/assets/components/angular-xeditable/dist/js/xeditable.min.js',
-            'web/assets/components/angular-ui-select2/src/select2.js'
+            'web/assets/components/angular-ui-select/dist/select.min.js'
         ],
         js: [
             'web/assets/js/MainModule.js',
@@ -44,6 +44,11 @@ module.exports = function (grunt) {
             'web/assets/components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css',
             'web/assets/components/angular-ui-tree/dist/angular-ui-tree.min.css',
             'web/assets/components/angular-xeditable/dist/css/xeditable.css',
+            'web/assets/components/select2/select2.css',
+            'web/assets/components/select2-bootstrap-css/select2-bootstrap.css',
+            'web/assets/components/angular-ui-select/dist/select.min.css',
+        ],
+        less: [
             'web/assets/less/basic.less'
         ]
     };
@@ -124,7 +129,24 @@ module.exports = function (grunt) {
                     sourceMap: true
                 },
                 files: {
-                    'web/assets/build/style.css': files.css
+                    'web/assets/build/less.css': files.less
+                }
+            }
+        },
+        cssmin: {
+            prod: {
+                files: {
+                    'web/assets/build/style.css': files.css.concat(['web/assets/build/less.css'])
+                }
+            },
+            dev: {
+                options: {
+                    rebase: true,
+                    target: 'web/assets/build',
+                    root: 'web'
+                },
+                files: {
+                    'web/assets/build/style.css': files.css.concat(['web/assets/build/less.css'])
                 }
             }
         },
@@ -132,10 +154,11 @@ module.exports = function (grunt) {
             // Watch less files for linting
             less: {
                 files: [
-                    'web/assets/less/*.less'
+                    'web/assets/less/*.less',
                 ],
                 tasks: [
-                    'less:dev'
+                    'less:dev',
+                    'cssmin:dev'
                 ]
             },
             js: {
@@ -174,12 +197,14 @@ module.exports = function (grunt) {
         'concat_sourcemap:libs',
         'concat_sourcemap:main',
         'less:dev',
+        'cssmin:dev',
         'serve'
     ]);
 
     grunt.registerTask('build', [
         'newer:jshint',
         'less:prod',
+        'cssmin:prod',
         'uglify:prod',
         'concat:build'
     ]);

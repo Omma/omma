@@ -62,14 +62,17 @@
 {% block attendee_tab %}
     <h1>Teilnehmer</h1>
     {% if is_owner %}
-    <form class="form-inline" role="form">
+    <form role="form">
         <div class="form-group">
-            <div class="input-group">
-                <label class="sr-only" for="exampleInputEmail2">{{ "app.user"|trans }}</label>
-                <input type="text" class="form-control" id="attendee-name" placeholder="{{ "app.attendee.user"|trans }}" ng-model="userId">
+            <div class="row">
+                <div class="col-md-6">
+                    <user-select selected="selectedUser"></user-select>
+                </div>
+                <div class="col-md-6">
+                    <button ng-click="addUser()" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i></button>
+                </div>
             </div>
         </div>
-        <button ng-click="addUser()" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i></button>
     </form>
     {% endif %}
     <table class="table table-hover">
@@ -107,6 +110,21 @@
 {% endblock %}
 
 {% block content %}
+    <script type="text/ng-template" id="user_select.html">
+        <ui-select ng-model="$parent.selected" theme="select2" class="form-control">
+            <ui-select-match placeholder="{{ "app.user.search"|trans }}">
+            {{ "{{ $select.selected.username}}" }}
+            </ui-select-match>
+            <ui-select-choices refresh="search($select.search)" refresh-delay="1000" repeat="item in users | filter: $select.search">
+                <div ng-bind-html="item.username | highlight: $select.search"></div>
+                <small>
+                    <span ng-bind-html="item.firstname | highlight: $select.search"></span>
+                    <span ng-bind-html="item.lastname | highlight: $select.search"></span>
+                </small>
+            </ui-select-choices>
+        </ui-select>
+    </script>
+
     <div ng-controller="meetingController" ng-init="init({{ meeting|serialize('json') }})">
         {% verbatim %}
             <div class="meeting-name">

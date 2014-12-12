@@ -39,6 +39,10 @@ class InvitationMailer
 
     public function sentInvitationToAttendee(Attendee $attendee)
     {
+        // don't send invitation to owner
+        if ($attendee->isOwner()) {
+            return;
+        }
         if (null !== $attendee->getInvitationSentAt()) {
             return;
         }

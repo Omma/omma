@@ -2,7 +2,7 @@
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 angular.module('ommaApp').controller('meetingAttendeeController', ['$scope', 'attendeeService', function($scope, attendeeService) {
-    $scope.userId = null;
+    $scope.selectedUser = null;
     $scope.attendees = [];
 
     function sort() {
@@ -19,27 +19,21 @@ angular.module('ommaApp').controller('meetingAttendeeController', ['$scope', 'at
     });
 
     $scope.addUser = function() {
-        var userId = parseInt($scope.userId);
-        $scope.userId = null;
-        if (userId <= 0) {
-            return;
-        }
+        var selectedUser = $scope.selectedUser;
+        $scope.selectedUser = null;
         // check if attendee already exists
         var attendee = _.find($scope.attendees, function(attendee) {
-            return attendee.user.id === userId;
+            return attendee.user.id === selectedUser.id;
         });
         if (undefined !== attendee) {
             return;
         }
         var placeholder = {
             status: 'invited',
-            user: {
-                id: userId,
-                username: '...'
-            }
+            user: selectedUser
         };
         $scope.attendees.push(placeholder);
-        attendeeService.add($scope.$parent.meeting, userId).then(function(attendee) {
+        attendeeService.add($scope.$parent.meeting, selectedUser.id).then(function(attendee) {
             _.pull($scope.attendees, placeholder);
             $scope.attendees.push(attendee);
             sort();
@@ -49,5 +43,9 @@ angular.module('ommaApp').controller('meetingAttendeeController', ['$scope', 'at
     $scope.removeAttendee = function(attendee) {
         _.pull($scope.attendees, attendee);
         attendeeService.remove(attendee);
+    };
+
+    $scope.search = function(term) {
+        console.log(term);
     };
 }]);
