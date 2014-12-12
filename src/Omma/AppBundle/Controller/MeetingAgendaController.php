@@ -10,6 +10,7 @@ use Omma\AppBundle\Entity\Agenda;
 use Omma\AppBundle\Entity\Meeting;
 use Omma\AppBundle\Form\Type\MeetingAgendaCollectionForm;
 use Omma\AppBundle\Form\Type\MeetingAgendaForm;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,7 +21,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MeetingAgendaController extends FOSRestController implements ClassResourceInterface
 {
-
+    /**
+     * @Security("is_granted('view', meeting)")
+     *
+     * @param Meeting $meeting
+     *
+     * @return mixed|Agenda
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function cgetAction(Meeting $meeting)
     {
         $root = $this->get("omma.app.manager.agenda")
@@ -37,14 +45,18 @@ class MeetingAgendaController extends FOSRestController implements ClassResource
         }
 
         $root = new Agenda();
-        $root->setName("root");
-        $root->setMeeting($meeting);
+        $root
+            ->setName("root")
+            ->setMeeting($meeting)
+        ;
         $this->get("omma.app.manager.agenda")->save($root);
 
         return $root;
     }
 
     /**
+     * @Security("is_granted('edit', meeting)")
+     *
      * @param Request $request
      * @param Meeting $meeting
      *
@@ -55,6 +67,14 @@ class MeetingAgendaController extends FOSRestController implements ClassResource
         return $this->processTreeForm($request, $meeting);
     }
 
+    /**
+     * @Security("is_granted('edit', meeting)")
+     *
+     * @param Request $request
+     * @param Meeting $meeting
+     *
+     * @return \FOS\RestBundle\View\View
+     */
     public function cpostAction(Request $request, Meeting $meeting)
     {
         $agenda = new Agenda();
@@ -63,16 +83,41 @@ class MeetingAgendaController extends FOSRestController implements ClassResource
         return $this->processForm($request, $agenda);
     }
 
+    /**
+     * @Security("is_granted('view', meeting)")
+     *
+     * @param Meeting $meeting
+     * @param Agenda  $agenda
+     *
+     * @return Agenda
+     */
     public function getAction(Meeting $meeting, Agenda $agenda)
     {
         return $agenda;
     }
 
+    /**
+     * @Security("is_granted('edit', meeting)")
+     *
+     * @param Request $request
+     * @param Meeting $meeting
+     * @param Agenda  $agenda
+     *
+     * @return \FOS\RestBundle\View\View
+     */
     public function putAction(Request $request, Meeting $meeting, Agenda $agenda)
     {
         return $this->processForm($request, $agenda);
     }
 
+    /**
+     * @Security("is_granted('edit', meeting)")
+     *
+     * @param Meeting $meeting
+     * @param Agenda  $agenda
+     *
+     * @return \FOS\RestBundle\View\View
+     */
     public function deleteAction(Meeting $meeting, Agenda $agenda)
     {
         $this->get("omma.app.manager.agenda")->delete($agenda);
@@ -80,6 +125,12 @@ class MeetingAgendaController extends FOSRestController implements ClassResource
         return $this->view("");
     }
 
+    /**
+     * @param Request $request
+     * @param Meeting $meeting
+     *
+     * @return \FOS\RestBundle\View\View
+     */
     protected function processTreeForm(Request $request, Meeting $meeting)
     {
         $root = $this->cgetAction($meeting);

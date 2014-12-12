@@ -20,13 +20,11 @@ class MeetingAttendeeForm extends AbstractType
                 "class" => 'Application\Sonata\UserBundle\Entity\User',
             ))
             ->add("mandatory")
-            ->add("status", "choice", array(
-                "choices" => array(
-                    Attendee::STATUS_ACCEPTED => Attendee::STATUS_ACCEPTED,
-                    Attendee::STATUS_DECLIED => Attendee::STATUS_DECLIED,
-                    Attendee::STATUS_INVITED => Attendee::STATUS_INVITED,
-                    Attendee::STATUS_MAYBE => Attendee::STATUS_MAYBE,
-                ),
+            ->add("owner", "text", array(
+                "mapped" => false,
+            ))
+            ->add("status", "text", array(
+                "mapped" => false,
             ))
         ;
     }

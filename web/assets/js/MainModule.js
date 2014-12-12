@@ -6,7 +6,9 @@ var app = angular.module('ommaApp', [
     'textAngular',
     'xeditable',
     'ui.bootstrap',
-    'mwl.calendar'
+    'mwl.calendar',
+    'ngSanitize',
+    'ui.select'
 ]);
 moment.locale('de');
 

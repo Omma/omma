@@ -1,14 +1,17 @@
 {% extends "OmmaAppBundle::layout.html.twig" %}
 
+{% set is_owner = is_granted('edit', meeting) %}
+
 {% block agenda_tab %}
-    <div class="header-button">
-        <button class="btn btn-primary" ng-show="status == 'not_saved'" ng-click="saveTree()"><span class="glyphicon glyphicon-file"></span> {{ "app.save"|trans }}</button>
-        <button class="btn btn-default disabled" ng-show="status == 'saving'" ng-click="saveTree()"><span class="glyphicon glyphicon-refresh"></span> {{ "app.saving"|trans }}</button>
-        <button class="btn btn-default disabled" ng-show="status == 'saved'" ng-click="saveTree()"><span class="glyphicon glyphicon-ok"></span> {{ "app.saved"|trans }}</button>
-    </div>
+    {% if is_owner %}
+        <div class="header-button" ng-switch on="status">
+            <button ng-switch-when="not_saved" class="btn btn-primary" ng-click="saveTree()"><span class="glyphicon glyphicon-file"></span> {{ "app.save"|trans }}</button>
+            <button ng-switch-when="saving" class="btn btn-default disabled" ng-click="saveTree()"><span class="glyphicon glyphicon-refresh"></span> {{ "app.saving"|trans }}</button>
+            <button ng-switch-when="saved" class="btn btn-default disabled" ng-click="saveTree()"><span class="glyphicon glyphicon-ok"></span> {{ "app.saved"|trans }}</button>
+        </div>
+    {% endif %}
     <h1>Agenda</h1>
     <!-- Nested node template -->
-    {% verbatim %}
     <script type="text/ng-template" id="nodes_renderer.html">
         <div ui-tree-handle>
             <form class="form-inline" role="form" ng-show="node.editing">
@@ -20,7 +23,7 @@
                 <button type="submit" class="btn btn-default" ng-click="cancelEditing(node)">Cancel</button>
             </form>
             <div ng-show="!node.editing">
-                {{node.name}}
+                {{ "{{ node.name }}" }}
                 <div class="pull-right">
                     <a href="" class="btn btn-success btn-xs" data-nodrag ng-click="newNode(node)"><span class="glyphicon glyphicon-plus"></span></a>
                     <a href="" class="btn btn-primary btn-xs" data-nodrag ng-click="edit(node)"><i class="glyphicon glyphicon-pencil"></i></a>
@@ -33,7 +36,6 @@
             </li>
         </ol>
     </script>
-    {% endverbatim %}
     <div ui-tree>
         <ol ui-tree-nodes="" ng-model="rootAgenda.children" id="tree-root">
             <li ng-repeat="node in rootAgenda.children" ui-tree-node ng-include="'nodes_renderer.html'"></li>
@@ -57,7 +59,72 @@
     {% endverbatim %}
 {% endblock %}
 
+{% block attendee_tab %}
+    <h1>Teilnehmer</h1>
+    {% if is_owner %}
+    <form role="form">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <user-select selected="selectedUser"></user-select>
+                </div>
+                <div class="col-md-6">
+                    <button ng-click="addUser()" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    {% endif %}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th style="width: 20px">-</th>
+            <th>{{ "app.attendee.user"|trans }}</th>
+            {% if is_owner %}
+                <th>{{ "app.options"|trans }}</th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="attendee in attendees">
+            <td ng-switch on="attendee.status">
+                <i ng-switch-when="invited" class="glyphicon glyphicon-time" data-toggle="tooltip" title="Invited"></i>
+                <i ng-switch-when="accepted" class="glyphicon glyphicon-ok-sign"></i>
+                <i ng-switch-when="declined" class="glyphicon glyphicon-remove-sign"></i>
+                <i ng-switch-when="maybe" class="glyphicon glyphicon-question-sign"></i>
+            </td>
+            <td>
+                {{ "{{ attendee.user.username }}" }}
+                <span ng-show="attendee.owner" class="label label-primary">
+                    {{ "app.attendee.organizer"|trans }}
+                </span>
+            </td>
+            {% if is_owner %}
+            <td>
+                <a class="btn btn-xs btn-danger" ng-click="removeAttendee(attendee)" ng-hide="attendee.owner"><i class="glyphicon glyphicon-remove"></i></a>
+            </td>
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
 {% block content %}
+    <script type="text/ng-template" id="user_select.html">
+        <ui-select ng-model="$parent.selected" theme="select2" class="form-control">
+            <ui-select-match placeholder="{{ "app.user.search"|trans }}">
+            {{ "{{ $select.selected.username}}" }}
+            </ui-select-match>
+            <ui-select-choices refresh="search($select.search)" refresh-delay="1000" repeat="item in users | filter: $select.search">
+                <div ng-bind-html="item.username | highlight: $select.search"></div>
+                <small>
+                    <span ng-bind-html="item.firstname | highlight: $select.search"></span>
+                    <span ng-bind-html="item.lastname | highlight: $select.search"></span>
+                </small>
+            </ui-select-choices>
+        </ui-select>
+    </script>
+
     <div ng-controller="meetingController" ng-init="init({{ meeting|serialize('json') }})">
         {% verbatim %}
             <div class="meeting-name">
@@ -67,15 +134,15 @@
             </div>
         {% endverbatim %}
         <ul class="nav nav-tabs" data-tabs="tabs">
-            <li class="active"><a href="#datum-uhrzeit" data-toggle="tab">Datum & Uhrzeit</a></li>
+            <li class="active"><a href="#settings" data-toggle="tab">Datum & Uhrzeit</a></li>
             <li><a href="#agenda" data-toggle="tab">Agenda</a></li>
             <li><a href="#todos" data-toggle="tab">To Dos</a></li>
-            <li><a href="#protokoll" data-toggle="tab">Protokoll</a></li>
-            <li><a href="#teilnehmer" data-toggle="tab">Teilnehmer</a></li>
+            <li><a href="#protocol" data-toggle="tab">Protokoll</a></li>
+            <li><a href="#attendees" data-toggle="tab">Teilnehmer</a></li>
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane active" id="datum-uhrzeit">
+            <div class="tab-pane active" id="settings">
                 <h2>datum-uhrzeit</h2>
             </div>
             <div class="tab-pane" id="agenda" ng-controller="meetingAgendaController">
@@ -98,11 +165,11 @@
                         </div>
                     </div>
             </div>
-            <div class="tab-pane" id="protokoll" ng-controller="protocolController">
+            <div class="tab-pane" id="protocol" ng-controller="protocolController">
                 {{ block('protocol_tab') }}
             </div>
-            <div class="tab-pane" id="teilnehmer">
-                <h1>teilnehmer</h1>
+            <div class="tab-pane" id="attendees" ng-controller="meetingAttendeeController">
+                {{ block('attendee_tab') }}
             </div>
         </div>
     </div>

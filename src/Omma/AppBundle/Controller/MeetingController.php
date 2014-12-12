@@ -19,7 +19,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
 {
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @return Meeting[]
      */
     public function cgetAction()
     {
@@ -40,8 +40,6 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
-     *
      * @param \DateTime $dateStart
      *            Start Date
      * @param \DateTime $dateEnd
@@ -72,8 +70,6 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
-     *
      * @param Request $request
      *
      * @return \Symfony\Component\Form\Form
@@ -84,13 +80,18 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
 
         $meeting = new Meeting();
         $attendee = new Attendee();
-        $attendee->setMeeting($meeting)->setUser($user);
+
+        $attendee
+            ->setMeeting($meeting)
+            ->setUser($user)
+            ->setOwner(true)
+        ;
 
         return $this->processForm($request, $meeting);
     }
 
     /**
-     * @Security("has_role('ROLE_USER') and is_granted('edit', meeting)")
+     * @Security("is_granted('edit', meeting)")
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -103,7 +104,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("has_role('ROLE_USER') and is_granted('edit', meeting)")
+     * @Security("is_granted('edit', meeting)")
      *
      * @param Meeting $meeting
      *
@@ -117,7 +118,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("has_role('ROLE_USER') and is_granted('edit', meeting)")
+     * @Security("is_granted('edit', meeting)")
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -144,7 +145,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
-     * @Security("has_role('ROLE_USER') and is_granted('view', meeting)")
+     * @Security("is_granted('view', meeting)")
      *
      * @param Meeting $meeting
      *
@@ -153,7 +154,11 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     public function getAction(Meeting $meeting)
     {
         $view = $this->view($meeting);
-        $view->setTemplate("OmmaAppBundle:Meeting:edit.html.twig")->setTemplateVar("meeting");
+
+        $view
+            ->setTemplate("OmmaAppBundle:Meeting:edit.html.twig")
+            ->setTemplateVar("meeting")
+        ;
 
         return $this->handleView($view);
     }
@@ -175,7 +180,11 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
             ->setDateEnd(new \DateTime("+1hour"))
         ;
         $attendee = new Attendee();
-        $attendee->setMeeting($meeting)->setUser($user);
+        $attendee
+            ->setMeeting($meeting)
+            ->setUser($user)
+            ->setOwner(true)
+        ;
 
         $this->get("omma.app.manager.meeting")->save($meeting);
 

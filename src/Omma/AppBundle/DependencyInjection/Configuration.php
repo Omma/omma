@@ -27,6 +27,12 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(array("de_DE", "en_US"))
                     ->cannotBeEmpty()
                 ->end()
+                ->arrayNode("mail")
+                    ->cannotBeEmpty()
+                    ->children()
+                        ->scalarNode("from")->isRequired()->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

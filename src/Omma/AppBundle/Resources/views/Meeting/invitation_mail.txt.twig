@@ -1,0 +1,18 @@
+{% block subject %}
+{% autoescape false %}
+{{ 'app.mail.invitation.subject'|trans({
+    '%username%': username,
+    '%meeting%': meeting.name,
+    '%meetingUrl%': meetingUrl,
+}) }}
+{% endautoescape %}
+{% endblock %}
+{% block body_text %}
+{% autoescape false %}
+{{ 'app.mail.invitation.message'|trans({
+    '%username%': username,
+    '%meeting%': meeting.name,
+    '%meetingUrl%': meetingUrl,
+}) }}{% endautoescape %}
+{% endblock %}
+{% block body_html %}{% endblock %}

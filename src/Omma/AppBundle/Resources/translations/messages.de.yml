@@ -13,3 +13,26 @@ app:
     month: Monat
     week: Woche
     day: Tag
+
+    options: Optionen
+
+    user:
+        search: Person Auswählen oder Suchen...
+
+    attendee:
+        user: Benutzer
+        organizer: Organisator
+
+    mail:
+        invitation:
+            subject: Einladung zu %meeting%
+            message: |
+                Hallo %username%,
+
+                Sie wurden zum Meeting %meeting% eingeladen.
+                Bitte geben Sie unter folgender URL an, ob Sie teilnehmen können:
+
+                %meetingUrl%
+
+                ---
+                Open Meeting Manager

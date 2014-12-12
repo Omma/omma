@@ -13,3 +13,6 @@ app:
     month: Month
     week: Week
     day: Day
+
+    user:
+        search: Select or search a person in the list...
