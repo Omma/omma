@@ -9,6 +9,7 @@
         </div>
     {% endif %}
     <h2>{{ "app.agenda.title"|trans }}</h2>
+    <hr class="invisible" />
     <!-- Nested node template -->
     <script type="text/ng-template" id="nodes_renderer.html">
         <div ui-tree-handle>
@@ -17,15 +18,15 @@
                     <label class="sr-only" for="name">Name</label>
                     <input type="text" class="form-control" placeholder="Name" ng-model="node.name">
                 </div>
-                <button type="submit" class="btn btn-default" ng-click="save(node)">Save</button>
+                <button type="submit" class="btn btn-primary" ng-click="save(node)">Save</button>
                 <button type="submit" class="btn btn-default" ng-click="cancelEditing(node)">Cancel</button>
             </form>
             <div ng-show="!node.editing">
                 {{ "{{ node.name }}" }}
                 <div class="pull-right">
-                    <a href="" class="btn btn-success btn-xs" data-nodrag ng-click="newNode(node)"><span class="glyphicon glyphicon-plus"></span></a>
-                    <a href="" class="btn btn-primary btn-xs" data-nodrag ng-click="edit(node)"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <a href="" class="btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+                    <a href="" class="btn btn-primary add btn-xs" data-nodrag ng-click="newNode(node)"><span class="glyphicon glyphicon-plus"></span></a>
+                    <a href="" class="btn btn-primary edit btn-xs" data-nodrag ng-click="edit(node)"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a href="" class="btn btn-primary delete btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
                 </div>
             </div>
         </div>
@@ -38,19 +39,21 @@
         <ol ui-tree-nodes="" ng-model="rootAgenda.children" id="tree-root">
             <li ng-repeat="node in rootAgenda.children" ui-tree-node ng-include="'nodes_renderer.html'"></li>
         </ol>
-        <a href="" class="btn btn-success btn-xs" data-nodrag ng-click="newNode(rootAgenda)" style="margin-top: 10px"><span class="glyphicon glyphicon-plus"></span></a>
+        <hr class="invisible" />
+        <a href="" class="btn btn-success" data-nodrag ng-click="newNode(rootAgenda)"><span class="glyphicon glyphicon-plus"></span></a>
     </div>
 {% endblock %}
 
 
 {% block protocol_tab %}
     {% verbatim %}
-    <h1>Protokoll zu dieser Veranstaltung</h1>
+    <h2>Protokoll zu dieser Veranstaltung</h2>
+    <div class="pull-right btn btn-default" ng-class="{'hidden': !getSaving()}"><i class="glyphicon glyphicon-refresh"> </i> wird gespeichert</div>
+    <div class="pull-right btn btn-default" ng-class="{'hidden': getSaving()}"><i class="glyphicon glyphicon-ok"> </i> gespeichert</div>
     <p>Wenn Sie das Protokoll als "Final" markieren, ist es für alle Teilnehmer sichtbar. </p>
     <hr class="invisible" />
 
     <div text-angular-toolbar name="htmlcontenttools"></div>
-    <div class="status">{{ status }}</div>
     <div text-angular="text-angular" name="htmlcontent" ng-model="orightml" ta-disabled='disabled' placeholder='Hier können Sie Ihr Protokoll verfassen... ' ta-target-toolbars='htmlcontenttools,statictoolbar'></div>
     <hr class="invisible" />
     <div class="btn btn-primary {{ getButtonClass() }}" data-toggle="modal" data-target=".protocolModal">Protokoll als "Final" markieren</div>
@@ -193,6 +196,7 @@
 
 {% block attendee_tab %}
     <h2>{{ "app.attendees.title"|trans }}</h2>
+    <hr class="invisible" />
     {% if can_edit %}
     <form role="form">
         <div class="form-group">
@@ -201,7 +205,7 @@
                     <user-select selected="selectedUser"></user-select>
                 </div>
                 <div class="col-md-6">
-                    <button ng-click="addUser()" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i></button>
+                    <button ng-click="addUser()" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i></button>
                 </div>
             </div>
         </div>
@@ -210,7 +214,7 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th style="width: 20px">-</th>
+            <th style="width: 20px">&nbsp;</th>
             <th>{{ "app.attendees.user"|trans }}</th>
             {% if can_edit %}
                 <th>{{ "app.options"|trans }}</th>
@@ -287,7 +291,6 @@
                 {{ block('agenda_tab') }}
             </div>
             <div class="tab-pane" id="todos" ng-controller="toDoController">
-                <h2>{{ "app.todos.title"|trans }}</h2>
                 {{ block('todo_tab') }}
             </div>
             <div class="tab-pane" id="protocol" ng-controller="protocolController">

@@ -8,7 +8,12 @@ angular.module('ommaApp')
         $scope.orightml = 'hallo das ist ein test';
         $scope.htmlcontent = $scope.orightml;
         $scope.disabled = false; //Protokoll editieren aktivieren oder deaktivieren
-        $scope.status = '';
+        $scope.saving = false;
+
+
+        $scope.getSaving = function() {
+            return $scope.saving;
+        };
 
         $scope.getButtonClass = function() {
             if($scope.disabled===false) {
@@ -30,7 +35,7 @@ angular.module('ommaApp')
         $scope.$watch('orightml', function(newValue, oldValue) {
 
             if (newValue !== oldValue) {
-                $scope.status = 'Änderungen speichern...';
+                $scope.saving = true;
             }
 
         });
@@ -41,7 +46,7 @@ angular.module('ommaApp')
 
                 $scope.$apply(function () {
                     console.log('update db protocol text mit var newValue');
-                    $scope.status = 'Alle Änderungen sind gespeichert.';
+                    $scope.saving = false;
                 });
             }
         }, 700));
