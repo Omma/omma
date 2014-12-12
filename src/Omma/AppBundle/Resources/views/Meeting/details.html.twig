@@ -77,10 +77,9 @@
     {% endverbatim %}
 {% endblock %}
 
-
 {% block todo_tab %}
     {% verbatim %}
-    <h1>ToDo-Liste</h1>
+    <h2>{{ "app.todos.title"|trans }}</h2>
     <hr class="invisible"/><hr class="invisible"/>
     <h2>Punkt erstellen</h2>
 
@@ -289,20 +288,7 @@
             </div>
             <div class="tab-pane" id="todos">
                 <h2>{{ "app.todos.title"|trans }}</h2>
-
-                    <ul class="nav nav-tabs nav-justified" data-tabs="tabs">
-                        <li class="active"><a href="#meine-todos" data-toggle="tab">Meine Todos</a></li>
-                        <li><a href="#allgemein" data-toggle="tab">Allgemeine Todos</a></li>
-                    </ul>
-
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="meine-todos">
-                            <h3>meine-todos</h3>
-                        </div>
-                        <div class="tab-pane" id="allgemein">
-                            <h3>allgemein-todos</h3>
-                        </div>
-                    </div>
+                {{ block('todo_tab') }}
             </div>
             <div class="tab-pane" id="protocol" ng-controller="protocolController">
                 {{ block('protocol_tab') }}
