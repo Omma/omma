@@ -47,7 +47,7 @@ class InvitationMailer
             return;
         }
         $url = $this->mailer->getUrlGenerator()->generate(
-            "omma_app_get_meeting",
+            "omma_meeting_details",
             array("meeting" => $attendee->getMeeting()->getId()),
             UrlGeneratorInterface::ABSOLUTE_URL
         );

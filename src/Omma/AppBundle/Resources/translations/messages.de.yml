@@ -16,12 +16,37 @@ app:
 
     options: Optionen
 
-    user:
-        search: Person Auswählen oder Suchen...
+    confirmation:
+        title: Bestätigung
+        info: |
+            Sie wurden zu dieser Veranstaltung eingeladen. Bitte geben Sie an, ob Sie daran teilnehmen können.
 
-    attendee:
+        status:
+            title: Status
+            accepted: Teilnehmen
+            declined: Ablehnen
+            maybe: Vielleicht teilnehmen
+        message: Nachricht
+
+    date:
+        title: Datum & Uhrzeit
+
+    agenda:
+        title: Agenda
+
+    todos:
+        title: ToDos
+
+    protocol:
+        title: Protokoll
+
+    attendees:
+        title: Teilnehmer
         user: Benutzer
         organizer: Organisator
+
+    user:
+        search: Person Auswählen oder Suchen...
 
     mail:
         invitation:

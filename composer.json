@@ -8,7 +8,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.5.*",
+        "symfony/symfony": "2.6.*",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
         "twig/extensions": "~1.0",
@@ -33,7 +33,7 @@
         "phploc/phploc": "2.0.6",
         "pdepend/pdepend" : "2.0.3",
         "squizlabs/php_codesniffer": "2.0.0RC3",
-        "phpmd/phpmd": "2.1.3",
+        "phpmd/phpmd": "dev-master#7bc6ddeb0351f69989895f89bae2a10bcc54fcba",
         "sebastian/phpcpd": "2.0.1",
         "mayflower/php-codebrowser": "~1.1",
         "apigen/apigen": "4.0.0-RC3",
