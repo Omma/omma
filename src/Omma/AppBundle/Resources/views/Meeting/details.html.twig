@@ -258,13 +258,17 @@
     </script>
 
     <div ng-controller="meetingController" ng-init="init({{ meeting|serialize('json') }})">
-        {% verbatim %}
-            <div class="meeting-name">
-                <h1 editable-text="meeting.name">
-                    {{ meeting.name || "empty" }}
-                </h1>
-            </div>
-        {% endverbatim %}
+        {% if can_edit %}
+            {% verbatim %}
+                <div class="meeting-name">
+                    <h1 editable-text="meeting.name">
+                        {{ meeting.name || "empty" }}
+                    </h1>
+                </div>
+            {% endverbatim %}
+        {% else %}
+            <h1>{{ meeting.name }}</h1>
+        {% endif %}
         <ul class="nav nav-tabs" data-tabs="tabs">
             <li class="active"><a href="#general" data-toggle="tab">{{ "app.general.title"|trans }}</a></li>
             <li><a href="#agenda" data-toggle="tab">{{ "app.agenda.title"|trans }}</a></li>
@@ -323,16 +327,19 @@
         <div class="form-group">
             <label for="previous" class="col-sm-3 control-label">{{ "app.general.previous_meeting"|trans }}</label>
             <div class="col-sm-9">
+                {% if can_edit %}
                 <button class="btn btn-primary" ng-click="editPrevMeeting()" ng-hide="editingPrevMeeting || prevMeeting != null">
                     <i class="glyphicon glyphicon-plus"></i>
                     {{ "app.add"|trans }}
                 </button>
+                {% endif %}
                 <div class="form-control-static" ng-show="!editingPrevMeeting && prevMeeting != null">
                     {% verbatim %}
                         <a target="_blank" ng-href="/meetings/{{ prevMeeting.id }}/details">{{ prevMeeting.name }}<br />
-                            {{ prevMeeting.start }} - {{ prevMeeting.end }}
+                            {{ prevMeeting.date_start | moment }} - {{ prevMeeting.date_end | moment }}
                         </a>
                     {% endverbatim %}
+                    {% if can_edit %}
                     <br /><br />
                     <button class="btn btn-default" ng-click="copyAttendees()">
                         {{ "app.general.copy_attendees"|trans }}
@@ -340,18 +347,20 @@
                     <button class="btn btn-default" ng-click="copyAgenda()">
                         {{ "app.general.copy_agenda"|trans }}
                     </button>
+                    {% endif %}
                 </div>
+                {% if can_edit %}
                 <div class="well" ng-show="editingPrevMeeting">
                     <ui-select ng-model="$parent.prevMeeting" theme="select2" class="form-control">
                         <ui-select-match placeholder="{{ "app.general.search"|trans }}">
-                            {{ "{{ $select.selected.name}} ({{ $select.selected.start }} - {{ $select.selected.end }}) " }}
+                            {{ "{{ $select.selected.name}} ({{ $select.selected.date_start | moment }} - {{ $select.selected.date_end | moment }}) " }}
                         </ui-select-match>
                         <ui-select-choices repeat="item in prevMeetings | filter: $select.search">
                             <div ng-bind-html="item.name | highlight: $select.search"></div>
                             <small>
-                                <span ng-bind-html="item.start | highlight: $select.search"></span>
+                                <span ng-bind-html="item.date_start | moment | highlight: $select.search"></span>
                                 -
-                                <span ng-bind-html="item.end | highlight: $select.search"></span>
+                                <span ng-bind-html="item.date_end | moment | highlight: $select.search"></span>
                             </small>
                         </ui-select-choices>
                     </ui-select>
@@ -365,6 +374,7 @@
                         {{ "app.cancel"|trans }}
                     </button>
                 </div>
+                {% endif %}
             </div>
         </div>
         {% if meeting.next is not null %}
@@ -374,7 +384,7 @@
                     <div class="form-control-static">
                         {% verbatim %}
                         <a target="_blank" ng-href="/meetings/{{ nextMeeting.id }}/details">{{ nextMeeting.name }}<br />
-                            {{ nextMeeting.start }} - {{ nextMeeting.end }}
+                            {{ prevMeeting.date_start | moment }} - {{ prevMeeting.date_end | moment }}
                         </a>
                         {% endverbatim %}
                     </div>
@@ -383,21 +393,37 @@
         {% endif %}
         <div class="form-group" style="margin-top: 35px">
             <label for="startDate" class="col-sm-3 control-label">{{ "app.general.date_start"|trans }}</label>
-            <div class="col-sm-5">
-                <input date-picker id="startDate" class="form-control date-picker" type="text" date="date.startDate" />
-            </div>
-            <div class="col-sm-3">
-                <timepicker class="time-picker" ng-model="date.startDate" hour-step="1" minute-step="5" show-meridian="false"></timepicker>
-            </div>
+            {% if can_edit %}
+                <div class="col-sm-5">
+                    <input date-picker id="startDate" class="form-control date-picker" type="text" date="date.startDate" />
+                </div>
+                <div class="col-sm-3">
+                    <timepicker class="time-picker" ng-model="date.startDate" hour-step="1" minute-step="5" show-meridian="false"></timepicker>
+                </div>
+            {% else %}
+                <div class="col-sm-9">
+                    <div class="form-control-static">
+                        {{ "{{ date.startDate|moment }}" }}
+                    </div>
+                </div>
+            {% endif %}
         </div>
         <div class="form-group" style="margin-top: 35px">
             <label for="endDate" class="col-sm-3 control-label">{{ "app.general.date_end"|trans }}</label>
-            <div class="col-sm-5">
-                <input date-picker id="endDate" class="form-control date-picker" type="text" date="date.endDate" />
-            </div>
-            <div class="col-sm-3">
-                <timepicker class="time-picker" ng-model="date.endDate" hour-step="1" minute-step="5" show-meridian="false"></timepicker>
-            </div>
+            {% if can_edit %}
+                <div class="col-sm-5">
+                    <input date-picker id="endDate" class="form-control date-picker" type="text" date="date.endDate" />
+                </div>
+                <div class="col-sm-3">
+                    <timepicker class="time-picker" ng-model="date.endDate" hour-step="1" minute-step="5" show-meridian="false"></timepicker>
+                </div>
+            {% else %}
+                <div class="col-sm-9">
+                    <div class="form-control-static">
+                        {{ "{{ date.endDate|moment }}" }}
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </form>
 {% endblock %}

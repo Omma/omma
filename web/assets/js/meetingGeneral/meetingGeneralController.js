@@ -33,19 +33,10 @@ angular.module('ommaApp').controller('meetingGeneralController', ['$scope', 'mee
         $scope.$parent.meeting.date_end = $scope.date.endDate.format();
     }, true);
 
-    function formatMeetingDates(meeting) {
-        if (undefined === meeting) {
-            return meeting;
-        }
-        meeting.start = moment(meeting.date_start).format('DD. MMMM. YYYY HH:mm');
-        meeting.end = moment(meeting.date_end).format('DD. MMMM. YYYY HH:mm');
-
-        return meeting;
-    }
 
     // previous meeting linking
-    $scope.prevMeeting = formatMeetingDates(meeting.prev);
-    $scope.nextMeeting = formatMeetingDates(meeting.next);
+    $scope.prevMeeting = meeting.prev;
+    $scope.nextMeeting = meeting.next;
     $scope.prevMeetings = [];
 
     $scope.editPrevMeeting = function() {
@@ -54,8 +45,6 @@ angular.module('ommaApp').controller('meetingGeneralController', ['$scope', 'mee
             return;
         }
         meetingService.search().then(function(meetings) {
-            _.map(meetings, formatMeetingDates);
-
             $scope.prevMeetings = meetings;
         });
     };
