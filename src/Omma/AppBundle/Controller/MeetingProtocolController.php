@@ -8,6 +8,7 @@ use Omma\AppBundle\Entity\Meeting;
 use Omma\AppBundle\Entity\Protocol;
 use Omma\AppBundle\Form\Type\MeetingProtocolForm;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  *
@@ -18,6 +19,11 @@ use Symfony\Component\HttpFoundation\Request;
 class MeetingProtocolController extends FOSRestController implements ClassResourceInterface
 {
 
+    /**
+     * @Security("is_granted('view', meeting)")
+     *
+     * @param Meeting $meeting
+     */
     public function cgetAction(Meeting $meeting)
     {
         return $this->get("omma.app.manager.protocol")
@@ -29,6 +35,14 @@ class MeetingProtocolController extends FOSRestController implements ClassResour
             ->getResult();
     }
 
+    /**
+     * @Security("is_granted('edit', meeting)")
+     *
+     * @param Request $request
+     * @param Meeting $meeting
+     *
+     * @return \FOS\RestBundle\View\View
+     */
     public function cpostAction(Request $request, Meeting $meeting)
     {
         $protocol = new Protocol();
@@ -37,16 +51,41 @@ class MeetingProtocolController extends FOSRestController implements ClassResour
         return $this->processForm($request, $protocol);
     }
 
+    /**
+     * @Security("is_granted('view', meeting)")
+     *
+     * @param Meeting $meeting
+     * @param Protocol $protocol
+     *
+     * @return Protocol
+     */
     public function getAction(Meeting $meeting, Protocol $protocol)
     {
         return $protocol;
     }
 
+    /**
+     * @Security("is_granted('edit', meeting)")
+     *
+     * @param Request $request
+     * @param Meeting $meeting
+     * @param Protocol $protocol
+     *
+     * @return \FOS\RestBundle\View\View
+     */
     public function putAction(Request $request, Meeting $meeting, Protocol $protocol)
     {
         return $this->processForm($request, $protocol);
     }
 
+    /**
+     * @Security("is_granted('edit', meeting)")
+     *
+     * @param Meeting $meeting
+     * @param Protocol $protocol
+     *
+     * @return \FOS\RestBundle\View\View
+     */
     public function deleteAction(Meeting $meeting, Protocol $protocol)
     {
         $this->get("omma.app.manager.protocol")->delete($protocol);

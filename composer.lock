@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a589a9db082f522fe0058941e1e65b64",
+    "hash": "ca8bea33697b4ac5d8637b515f952034",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1234,7 +1234,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "Knplabs",
+                    "name": "KnpLabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -1290,7 +1290,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "Knplabs",
+                    "name": "KnpLabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -4431,12 +4431,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/bootstrap.git",
-                "reference": "137a027723e46da0807dd902821d6c441667081f"
+                "reference": "76177e115ab947b8375e852c738520e34c6ae532"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/bootstrap/zipball/137a027723e46da0807dd902821d6c441667081f",
-                "reference": "137a027723e46da0807dd902821d6c441667081f",
+                "url": "https://api.github.com/repos/nette/bootstrap/zipball/76177e115ab947b8375e852c738520e34c6ae532",
+                "reference": "76177e115ab947b8375e852c738520e34c6ae532",
                 "shasum": ""
             },
             "require": {
@@ -4485,7 +4485,7 @@
             ],
             "description": "Nette Bootstrap",
             "homepage": "http://nette.org",
-            "time": "2014-11-15 17:09:41"
+            "time": "2014-11-15 19:32:31"
         },
         {
             "name": "nette/caching",
@@ -4902,12 +4902,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/reflection.git",
-                "reference": "a2b82c52833c4ac27db0e262b9a8748c9777a132"
+                "reference": "2ef632dd47e07040ee4f960070ed98fa1f59a68e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/reflection/zipball/a2b82c52833c4ac27db0e262b9a8748c9777a132",
-                "reference": "a2b82c52833c4ac27db0e262b9a8748c9777a132",
+                "url": "https://api.github.com/repos/nette/reflection/zipball/2ef632dd47e07040ee4f960070ed98fa1f59a68e",
+                "reference": "2ef632dd47e07040ee4f960070ed98fa1f59a68e",
                 "shasum": ""
             },
             "require": {
@@ -4946,7 +4946,7 @@
             ],
             "description": "Nette PHP Reflection Component",
             "homepage": "http://nette.org",
-            "time": "2014-11-13 23:25:13"
+            "time": "2014-11-15 18:55:43"
         },
         {
             "name": "nette/robot-loader",

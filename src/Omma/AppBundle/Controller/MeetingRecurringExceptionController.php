@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Omma\AppBundle\Entity\MeetingRecurringException;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Omma\AppBundle\Form\Type\MeetingRecurringExceptionForm;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @RouteResource("RecurringException")
@@ -19,6 +20,12 @@ use Omma\AppBundle\Form\Type\MeetingRecurringExceptionForm;
 class MeetingRecurringExceptionController extends FOSRestController implements ClassResourceInterface
 {
 
+    /**
+     * @Security("is_granted('view', meeting)")
+     *
+     * @param Meeting $meeting
+     * @param MeetingRecurring $meetingRecurring
+     */
     public function cgetAction(Meeting $meeting, MeetingRecurring $meetingRecurring)
     {
         return $this->get("omma.app.manager.meeting_recurring_exception")
@@ -33,6 +40,17 @@ class MeetingRecurringExceptionController extends FOSRestController implements C
             ->getResult();
     }
 
+    /**
+     * @Security("is_granted('edit', meeting)")
+     *
+     * @param Request $request
+     * @param Meeting $meeting
+     * @param MeetingRecurring $meetingRecurring
+     *
+     * @throws InvalidOptionsException
+     *
+     * @return \FOS\RestBundle\View\View
+     */
     public function cpostAction(Request $request, Meeting $meeting, MeetingRecurring $meetingRecurring)
     {
         if ($meeting !== $meetingRecurring->getMeeting()) {
@@ -45,16 +63,42 @@ class MeetingRecurringExceptionController extends FOSRestController implements C
         return $this->processForm($request, $meetingRecurringException);
     }
 
+    /**
+     * @Security("is_granted('view', meeting)")
+     *
+     * @param Meeting $meeting
+     * @param MeetingRecurring $meetingRecurring
+     * @param MeetingRecurringException $meetingRecurringException
+     *
+     * @return MeetingRecurringException
+     */
     public function getAction(Meeting $meeting, MeetingRecurring $meetingRecurring, MeetingRecurringException $meetingRecurringException)
     {
         return $meetingRecurringException;
     }
 
+    /**
+     * @Security("is_granted('edit', meeting)")
+     *
+     * @param Request $request
+     * @param Meeting $meeting
+     * @param MeetingRecurring $meetingRecurring
+     * @param MeetingRecurringException $meetingRecurringException
+     *
+     * @return \FOS\RestBundle\View\View
+     */
     public function putAction(Request $request, Meeting $meeting, MeetingRecurring $meetingRecurring, MeetingRecurringException $meetingRecurringException)
     {
         return $this->processForm($request, $meetingRecurringException);
     }
 
+    /**
+     * @Security("is_granted('edit', meeting)")
+     *
+     * @param Meeting $meeting
+     * @param MeetingRecurring $meetingRecurring
+     * @param MeetingRecurringException $meetingRecurringException
+     */
     public function deleteAction(Meeting $meeting, MeetingRecurring $meetingRecurring, MeetingRecurringException $meetingRecurringException)
     {
         $this->get("omma.app.manager.meeting_recurring_exception")->delete($meetingRecurringException);

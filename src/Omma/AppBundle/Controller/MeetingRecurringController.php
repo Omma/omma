@@ -8,6 +8,7 @@ use Omma\AppBundle\Entity\MeetingRecurring;
 use Omma\AppBundle\Entity\Meeting;
 use Symfony\Component\HttpFoundation\Request;
 use Omma\AppBundle\Form\Type\MeetingRecurringForm;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @RouteResource("Recurring")
@@ -17,6 +18,11 @@ use Omma\AppBundle\Form\Type\MeetingRecurringForm;
 class MeetingRecurringController extends FOSRestController implements ClassResourceInterface
 {
 
+    /**
+     * @Security("is_granted('view', meeting)")
+     *
+     * @param Meeting $meeting
+     */
     public function cgetAction(Meeting $meeting)
     {
         return $this->get("omma.app.manager.meeting_recurring")
@@ -28,6 +34,12 @@ class MeetingRecurringController extends FOSRestController implements ClassResou
             ->getResult();
     }
 
+    /**
+     * @Security("is_granted('edit', meeting)")
+     *
+     * @param Request $request
+     * @param Meeting $meeting
+     */
     public function cpostAction(Request $request, Meeting $meeting)
     {
         $meetingRecurring = new MeetingRecurring();
@@ -36,16 +48,39 @@ class MeetingRecurringController extends FOSRestController implements ClassResou
         return $this->processForm($request, $meetingRecurring);
     }
 
+    /**
+     * @Security("is_granted('view', meeting)")
+     *
+     * @param Meeting $meeting
+     * @param MeetingRecurring $meetingRecurring
+     *
+     * @return MeetingRecurring
+     */
     public function getAction(Meeting $meeting, MeetingRecurring $meetingRecurring)
     {
         return $meetingRecurring;
     }
 
+    /**
+     * @Security("is_granted('edit', meeting)")
+     *
+     * @param Request $request
+     * @param Meeting $meeting
+     * @param MeetingRecurring $meetingRecurring
+     *
+     * @return \FOS\RestBundle\View\View
+     */
     public function putAction(Request $request, Meeting $meeting, MeetingRecurring $meetingRecurring)
     {
         return $this->processForm($request, $meetingRecurring);
     }
 
+    /**
+     * @Security("is_granted('edit', meeting)")
+     *
+     * @param Meeting $meeting
+     * @param MeetingRecurring $meetingRecurring
+     */
     public function deleteAction(Meeting $meeting, MeetingRecurring $meetingRecurring)
     {
         $this->get("omma.app.manager.meeting_recurring")->delete($meetingRecurring);

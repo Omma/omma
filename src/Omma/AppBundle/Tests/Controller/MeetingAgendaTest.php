@@ -1,7 +1,6 @@
 <?php
 namespace Omma\AppBundle\Tests\Controller;
 
-use Omma\AppBundle\Entity\Meeting;
 use Omma\AppBundle\Tests\AbstractAuthenticatedTest;
 
 /**
