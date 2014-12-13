@@ -1,7 +1,7 @@
 /**
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
-angular.module('ommaApp').controller('meetingGeneralController', ['$scope', function($scope) {
+angular.module('ommaApp').controller('meetingGeneralController', ['$scope', 'meetingService', function($scope, meetingService) {
     $scope.date = {
         startDate: undefined,
         endDate: undefined
@@ -33,4 +33,42 @@ angular.module('ommaApp').controller('meetingGeneralController', ['$scope', func
         $scope.$parent.meeting.date_end = $scope.date.endDate.format();
     }, true);
 
+    function formatMeetingDates(meeting) {
+        if (undefined === meeting) {
+            return meeting;
+        }
+        meeting.start = moment(meeting.date_start).format('DD. MMMM. YY HH:mm');
+        meeting.end = moment(meeting.date_end).format('DD. MMMM. YY HH:mm');
+
+        return meeting;
+    }
+
+    // previous meeting linking
+    $scope.prevMeeting = formatMeetingDates(meeting.prev);
+    $scope.prevMeetings = [];
+
+    $scope.editPrevMeeting = function() {
+        $scope.editingPrevMeeting = true;
+        if (0 !== $scope.prevMeetings.length) {
+            return;
+        }
+        meetingService.search().then(function(meetings) {
+            _.map(meetings, formatMeetingDates);
+
+            $scope.prevMeetings = meetings;
+        });
+    };
+
+    $scope.cancelEditPrevMeeting = function() {
+        $scope.prevMeeting = null;
+        $scope.editingPrevMeeting = false;
+    };
+
+    $scope.linkMeeting = function() {
+        if (null === $scope.prevMeeting) {
+            return;
+        }
+        $scope.editingPrevMeeting = false;
+        meeting.prev = $scope.prevMeeting;
+    };
 }]);

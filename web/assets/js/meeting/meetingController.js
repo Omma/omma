@@ -14,6 +14,12 @@ angular.module('ommaApp').controller('meetingController', ['$scope', 'Restangula
     };
 
     $scope.saveMeeting = function() {
-        $scope.meeting.put();
+        var meeting = $scope.meeting.clone();
+
+        // replace prev meeting object with id
+        if (meeting.prev) {
+            meeting.prev = meeting.prev.id;
+        }
+        meeting.put();
     };
 }]);

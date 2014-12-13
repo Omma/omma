@@ -21,6 +21,15 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
                     return data.data;
                 })
             ;
+        },
+        search: function(term) {
+            return $http.get('/meetings.json', {
+                params: {
+                    search: term
+                }
+            }).then(function(data) {
+                return data.data;
+            });
         }
     };
 }]);
