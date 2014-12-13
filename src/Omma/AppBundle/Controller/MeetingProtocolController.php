@@ -9,6 +9,7 @@ use Omma\AppBundle\Entity\Protocol;
 use Omma\AppBundle\Form\Type\MeetingProtocolForm;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  *
@@ -24,44 +25,18 @@ class MeetingProtocolController extends FOSRestController implements ClassResour
      * @Security("is_granted('view', meeting)")
      *
      * @param Meeting $meeting
-     */
-    public function cgetAction(Meeting $meeting)
-    {
-        return $this->get("omma.app.manager.protocol")
-            ->createQueryBuilder("p")
-            ->select("p")
-            ->where("p.meeting = :meeting")
-            ->setParameter("meeting", $meeting)
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @Security("is_granted('edit', meeting)")
-     *
-     * @param Request $request
-     * @param Meeting $meeting
-     *
-     * @return \FOS\RestBundle\View\View
-     */
-    public function cpostAction(Request $request, Meeting $meeting)
-    {
-        $protocol = new Protocol();
-        $protocol->setMeeting($meeting);
-
-        return $this->processForm($request, $protocol);
-    }
-
-    /**
-     * @Security("is_granted('view', meeting)")
-     *
-     * @param Meeting $meeting
-     * @param Protocol $protocol
      *
      * @return Protocol
      */
-    public function getAction(Meeting $meeting, Protocol $protocol)
+    public function getAction(Meeting $meeting)
     {
+        $protocol = $meeting->getProtocol();
+        if (null !== $protocol) {
+            return $protocol;
+        }
+        $protocol = new Protocol();
+        $protocol->setMeeting($meeting);
+
         return $protocol;
     }
 
@@ -70,36 +45,39 @@ class MeetingProtocolController extends FOSRestController implements ClassResour
      *
      * @param Request $request
      * @param Meeting $meeting
-     * @param Protocol $protocol
      *
      * @return \FOS\RestBundle\View\View
      */
-    public function putAction(Request $request, Meeting $meeting, Protocol $protocol)
+    public function putAction(Request $request, Meeting $meeting)
     {
-        return $this->processForm($request, $protocol);
+        return $this->processForm($request, $this->getAction($meeting));
     }
 
     /**
      * @Security("is_granted('edit', meeting)")
      *
      * @param Meeting $meeting
-     * @param Protocol $protocol
      *
      * @return \FOS\RestBundle\View\View
      */
-    public function deleteAction(Meeting $meeting, Protocol $protocol)
+    public function deleteAction(Meeting $meeting)
     {
-        $this->get("omma.app.manager.protocol")->delete($protocol);
+        if (null === $meeting->getProtocol()) {
+            return $this->view("");
+        }
+        $this->get("omma.app.manager.protocol")->delete($meeting->getProtocol());
 
         return $this->view("");
     }
 
     protected function processForm(Request $request, Protocol $protocol)
     {
-        $new = null === $protocol->getId();
+        if ($protocol->isFinal()) {
+            return $this->view("marked as final", Response::HTTP_FORBIDDEN);
+        }
         $form = $this->createForm(new MeetingProtocolForm(), $protocol, array(
-            "method" => $new ? "POST" : "PUT",
-            "csrf_protection" => false
+            "method" => "PUT",
+            "csrf_protection" => false,
         ));
         $form->handleRequest($request);
 

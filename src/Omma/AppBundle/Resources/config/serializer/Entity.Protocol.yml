@@ -3,8 +3,6 @@ Omma\AppBundle\Entity\Protocol:
     properties:
         id:
             expose: true
-        meeting:
-            expose: true
         text:
             expose: true
         final:

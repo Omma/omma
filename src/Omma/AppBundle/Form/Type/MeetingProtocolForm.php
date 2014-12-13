@@ -27,6 +27,11 @@ class MeetingProtocolForm extends AbstractType
         ));
     }
 
+    public function getParent()
+    {
+        return "omma_rest_base";
+    }
+
     public function getName()
     {
         return "";

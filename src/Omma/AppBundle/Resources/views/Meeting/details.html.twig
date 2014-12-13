@@ -44,37 +44,46 @@
 
 
 {% block protocol_tab %}
-    {% verbatim %}
     <h1>Protokoll zu dieser Veranstaltung</h1>
-    <p>Wenn Sie das Protokoll als "Final" markieren, ist es für alle Teilnehmer sichtbar. </p>
-    <hr class="invisible" />
+    {% if can_edit %}
+        <div class="well" ng-show="protocol.final" ng-bind-html="protocol.text"></div>
+        <div ng-hide="protocol.final">
+            <p>Wenn Sie das Protokoll als "Final" markieren, ist es für alle Teilnehmer sichtbar. </p>
+            <hr class="invisible" />
 
-    <div text-angular-toolbar name="htmlcontenttools"></div>
-    <div class="status">{{ status }}</div>
-    <div text-angular="text-angular" name="htmlcontent" ng-model="orightml" ta-disabled='disabled' placeholder='Hier können Sie Ihr Protokoll verfassen... ' ta-target-toolbars='htmlcontenttools,statictoolbar'></div>
-    <hr class="invisible" />
-    <div class="btn btn-primary {{ getButtonClass() }}" data-toggle="modal" data-target=".protocolModal">Protokoll als "Final" markieren</div>
+            <div text-angular-toolbar name="htmlcontenttools"></div>
+            <div class="status">{{ "{{ status }}" }}</div>
 
-    <!-- Todo Modal -->
-    <div class="modal fade protocolModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Protokoll als "Final" markieren</h4>
-                </div>
-                <div class="modal-body">
-                    Wollen Sie das Protokoll wirklich als "Final" markieren?<br>Diese Aktion kann nicht rückgängig gemacht werden, Änderungen sind nicht mehr möglich.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Nein, doch nicht</button>
-                    <button type="button" class="btn btn-primary" ng-click="deleteModal()" data-dismiss="modal">Ja, als "Final" markieren</button>
+            <div text-angular="text-angular" name="htmlcontent" ng-model="protocol.text" ta-disabled='disabled' placeholder='Hier können Sie Ihr Protokoll verfassen... ' ta-target-toolbars='htmlcontenttools,statictoolbar'></div>
+            <hr class="invisible" />
+            <div class="btn btn-primary {{ "{{ getButtonClass() }}" }}" data-toggle="modal" data-target=".protocolModal">Protokoll als "Final" markieren</div>
+        </div>
+        <!-- Todo Modal -->
+        <div class="modal fade protocolModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Protokoll als "Final" markieren</h4>
+                    </div>
+                    <div class="modal-body">
+                        Wollen Sie das Protokoll wirklich als "Final" markieren?<br>Diese Aktion kann nicht rückgängig gemacht werden, Änderungen sind nicht mehr möglich.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Nein, doch nicht</button>
+                        <button type="button" class="btn btn-primary" ng-click="deleteModal()" data-dismiss="modal">Ja, als "Final" markieren</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    {% endverbatim %}
+    {% else %}
+        {% if meeting.protocol %}
+            <div class="well">
+                {{ meeting.protocol.text }}
+            </div>
+        {% endif %}
+    {% endif %}
 {% endblock %}
 
 {% block todo_tab %}
