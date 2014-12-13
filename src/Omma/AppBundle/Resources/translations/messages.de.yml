@@ -28,8 +28,12 @@ app:
             maybe: Vielleicht teilnehmen
         message: Nachricht
 
-    date:
-        title: Datum & Uhrzeit
+    general:
+        title: Allgemein
+        date: Datum
+        date_start: Beginn
+        date_end: Ende
+        previous_meeting: vorheriges Meeting
 
     agenda:
         title: Agenda

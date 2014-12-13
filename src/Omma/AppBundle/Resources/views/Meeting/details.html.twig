@@ -266,10 +266,7 @@
             </div>
         {% endverbatim %}
         <ul class="nav nav-tabs" data-tabs="tabs">
-            {% if not owner %}
-            <li{% if not owner %} class="active"{% endif %}><a href="#confirmation" data-toggle="tab">{{ "app.confirmation.title"|trans }}</a></li>
-            {% endif %}
-            <li{% if owner %} class="active"{% endif %}><a href="#settings" data-toggle="tab">{{ "app.date.title"|trans }}</a></li>
+            <li class="active"><a href="#general" data-toggle="tab">{{ "app.general.title"|trans }}</a></li>
             <li><a href="#agenda" data-toggle="tab">{{ "app.agenda.title"|trans }}</a></li>
             <li><a href="#todos" data-toggle="tab">{{ "app.todos.title"|trans }}</a></li>
             <li><a href="#protocol" data-toggle="tab">{{ "app.protocol.title"|trans }}</a></li>
@@ -277,11 +274,12 @@
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane{% if not owner %} active{% endif %}" id="confirmation">
-                {{ block('confirmation_tab') }}
-            </div>
-            <div class="tab-pane{% if owner %} active{% endif %}" id="settings">
-                <h2>{{ "app.date.title"|trans }}</h2>
+            <div class="tab-pane active" id="general" ng-controller="meetingGeneralController">
+                {% if attendee is not null %}
+                    {{ block('confirmation_form') }}
+                {% endif %}
+                <h2>{{ "app.general.title"|trans }}</h2>
+                {{ block('general_tab') }}
             </div>
             <div class="tab-pane" id="agenda" ng-controller="meetingAgendaController">
                 {{ block('agenda_tab') }}
@@ -300,23 +298,50 @@
     </div>
 {% endblock %}
 
-{% block confirmation_tab %}
-    {% if attendee is not null %}
-        <h2>{{ "app.confirmation.title"|trans }}</h2>
-        {% if attendee.status == 'invited' %}
-            <div class="alert alert-info" role="alert">
-                {{ "app.confirmation.info"|trans }}
-            </div>
-        {% endif %}
-        {{ form_start(attendeeForm) }}
-        {{ form_rest(attendeeForm) }}
+{% block confirmation_form %}
+    <h2>{{ "app.confirmation.title"|trans }}</h2>
+    {% if attendee.status == 'invited' %}
+        <div class="alert alert-info" role="alert">
+            {{ "app.confirmation.info"|trans }}
+        </div>
+    {% endif %}
+    {{ form_start(attendeeForm) }}
+    {{ form_rest(attendeeForm) }}
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+            <button type="submit" class="btn btn-primary">
+                <i class="glyphicon glyphicon-file"></i> {{ "app.save"|trans }}
+            </button>
+        </div>
+    </div>
+    {{ form_end(attendeeForm) }}
+{% endblock %}
+
+{% block general_tab %}
+    <form class="form-horizontal">
         <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-9">
-                <button type="submit" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-file"></i> {{ "app.save"|trans }}
-                </button>
+            <label for="previous" class="col-sm-3 control-label">{{ "app.general.previous_meeting"|trans }}</label>
+            <div class="col-sm-9">
+
             </div>
         </div>
-        {{ form_end(attendeeForm) }}
-    {% endif %}
+        <div class="form-group" style="margin-top: 35px">
+            <label for="date" class="col-sm-3 control-label">{{ "app.general.date_start"|trans }}</label>
+            <div class="col-sm-5">
+                <input date-picker id="date" class="form-control date-picker" type="text" date="date.startDate" />
+            </div>
+            <div class="col-sm-3">
+                <timepicker class="time-picker" ng-model="date.startDate" hour-step="1" minute-step="5" show-meridian="false"></timepicker>
+            </div>
+        </div>
+        <div class="form-group" style="margin-top: 35px">
+            <label for="date" class="col-sm-3 control-label">{{ "app.general.date_end"|trans }}</label>
+            <div class="col-sm-5">
+                <input date-picker id="date" class="form-control date-picker" type="text" date="date.endDate" />
+            </div>
+            <div class="col-sm-3">
+                <timepicker class="time-picker" ng-model="date.endDate" hour-step="1" minute-step="5" show-meridian="false"></timepicker>
+            </div>
+        </div>
+    </form>
 {% endblock %}

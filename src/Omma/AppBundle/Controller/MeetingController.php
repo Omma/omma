@@ -172,6 +172,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
         $attendee = $this->get("omma.app.manager.attendee")->findOneBy(array(
             "meeting" => $meeting,
             "user"    => $this->getUser(),
+            "owner"   => 0
         ));
         $attendeeForm = null;
         if (null !== $attendee) {
@@ -218,6 +219,6 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
 
         $this->get("omma.app.manager.meeting")->save($meeting);
 
-        return $this->redirect($this->generateUrl("omma_app_get_meeting", array("meeting" => $meeting->getId())));
+        return $this->redirect($this->generateUrl("omma_meeting_details", array("meeting" => $meeting->getId())));
     }
 }

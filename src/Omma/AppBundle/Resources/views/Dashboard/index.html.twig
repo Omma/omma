@@ -49,7 +49,7 @@
     </div>
     <ul>
         {% for meeting in meetings %}
-            <li><a href="{{ path("omma_app_get_meeting", {"meeting": meeting.id}) }}">{{ meeting.name }}</a></li>
+            <li><a href="{{ path("omma_meeting_details", {"meeting": meeting.id}) }}">{{ meeting.name }}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}

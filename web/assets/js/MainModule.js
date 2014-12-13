@@ -8,7 +8,8 @@ var app = angular.module('ommaApp', [
     'ui.bootstrap',
     'mwl.calendar',
     'ngSanitize',
-    'ui.select'
+    'ui.select',
+    'daterangepicker'
 ]);
 
 app.run(['editableOptions', function(editableOptions) {
@@ -19,3 +20,8 @@ app.config(['RestangularProvider', function(RestangularProvider) {
     // append .json to all Restangular requests
     RestangularProvider.setRequestSuffix('.json');
 }]);
+
+app.value('dateRangePickerConfig', {
+    separator: ' - ',
+    format: 'DD. MMMM YYYY HH:mm'
+});

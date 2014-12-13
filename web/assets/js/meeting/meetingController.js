@@ -14,7 +14,8 @@ angular.module('ommaApp').controller('meetingController', ['$scope', 'Restangula
         $scope.meetingRequest = Restangular.one('meetings', data.id).get().then(function(meeting) {
             $scope.meeting = meeting;
 
-            $scope.$watch('meeting', _.after(2, _.debounce($scope.saveMeeting, 1000)), true);
+            // 3 chnages: init, name, date
+            $scope.$watch('meeting', _.after(3, _.debounce($scope.saveMeeting, 1000)), true);
             return meeting;
         });
 
