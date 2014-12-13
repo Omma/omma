@@ -1,0 +1,17 @@
+Omma\AppBundle\Entity\File:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        meeting:
+            expose: true
+        protocol:
+            expose: true
+        subFiles:
+            expose: true
+        parent:
+            expose: true
+        type:
+            expose: true
+        url:
+            expose: true
