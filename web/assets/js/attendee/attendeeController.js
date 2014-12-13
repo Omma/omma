@@ -11,6 +11,30 @@ angular.module('ommaApp').controller('meetingAttendeeController', ['$scope', 'at
         });
     }
 
+    /**
+     * check if user is already added
+     * @param userId
+     */
+    function alreadExists(userId) {
+        var result = _.find($scope.attendees, function(attendee) {
+            return attendee.user.id === userId;
+        });
+        return undefined !== result;
+    }
+
+    function addUser(user) {
+        var placeholder = {
+            status: 'invited',
+            user: user
+        };
+        $scope.attendees.push(placeholder);
+        attendeeService.add($scope.$parent.meeting, user.id).then(function(attendee) {
+            _.pull($scope.attendees, placeholder);
+            $scope.attendees.push(attendee);
+            sort();
+        });
+    }
+
     attendeeService.getAll($scope.$parent.meeting).then(function(attendees) {
         $scope.attendees = attendees;
         sort();
@@ -19,23 +43,11 @@ angular.module('ommaApp').controller('meetingAttendeeController', ['$scope', 'at
     $scope.addUser = function() {
         var selectedUser = $scope.selectedUser;
         $scope.selectedUser = null;
-        // check if attendee already exists
-        var attendee = _.find($scope.attendees, function(attendee) {
-            return attendee.user.id === selectedUser.id;
-        });
-        if (undefined !== attendee) {
+        if (alreadExists(selectedUser.id)) {
             return;
         }
-        var placeholder = {
-            status: 'invited',
-            user: selectedUser
-        };
-        $scope.attendees.push(placeholder);
-        attendeeService.add($scope.$parent.meeting, selectedUser.id).then(function(attendee) {
-            _.pull($scope.attendees, placeholder);
-            $scope.attendees.push(attendee);
-            sort();
-        });
+
+        addUser(selectedUser);
     };
 
     $scope.removeAttendee = function(attendee) {
@@ -43,7 +55,18 @@ angular.module('ommaApp').controller('meetingAttendeeController', ['$scope', 'at
         attendeeService.remove(attendee);
     };
 
-    $scope.search = function(term) {
-        console.log(term);
+    $scope.$on('attendee.copy', function(event, args) {
+        $scope.copyFromMeeting(args.meeting);
+    });
+
+    $scope.copyFromMeeting = function(meeting) {
+        attendeeService.getAll(meeting).then(function(attendees) {
+            angular.forEach(attendees, function (attendee) {
+                if (alreadExists(attendee.user.id)) {
+                    return;
+                }
+                addUser(attendee.user);
+            });
+        });
     };
 }]);

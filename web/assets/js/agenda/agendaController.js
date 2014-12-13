@@ -54,6 +54,14 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
         });
     };
 
+    $scope.$on('agenda.copy', function(event, args){
+        agendaService.getAll(args.meeting).then(function(root) {
+            angular.forEach(root.children, function(agenda) {
+                $scope.rootAgenda.children.push(agenda);
+            });
+        });
+    });
+
     /**
      * Watch agenda for changes
      */

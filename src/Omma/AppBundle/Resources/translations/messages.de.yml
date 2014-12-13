@@ -39,7 +39,8 @@ app:
         next_meeting: nächstes Meeting
         search: Meeting auswählen oder suchen...
         link: verknüpfen
-
+        copy_attendees: Teilnehmer übernehmen
+        copy_agenda: Agenda übernehmen
     agenda:
         title: Agenda
 

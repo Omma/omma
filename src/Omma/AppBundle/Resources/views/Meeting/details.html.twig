@@ -333,6 +333,13 @@
                             {{ prevMeeting.start }} - {{ prevMeeting.end }}
                         </a>
                     {% endverbatim %}
+                    <br /><br />
+                    <button class="btn btn-default" ng-click="copyAttendees()">
+                        {{ "app.general.copy_attendees"|trans }}
+                    </button>
+                    <button class="btn btn-default" ng-click="copyAgenda()">
+                        {{ "app.general.copy_agenda"|trans }}
+                    </button>
                 </div>
                 <div class="well" ng-show="editingPrevMeeting">
                     <ui-select ng-model="$parent.prevMeeting" theme="select2" class="form-control">
@@ -365,10 +372,11 @@
                 <label for="next" class="col-sm-3 control-label">{{ "app.general.next_meeting"|trans }}</label>
                 <div class="col-sm-9">
                     <div class="form-control-static">
-                        <a target="_blank" href="/meetings/{{ meeting.next.id }}/details">
-                            {{ meeting.next.name }}<br />
-                            {{ meeting.next.dateStart|date("d. l Y H:i") }} - {{ meeting.next.dateEnd|date("d. l Y H:i") }}
+                        {% verbatim %}
+                        <a target="_blank" ng-href="/meetings/{{ nextMeeting.id }}/details">{{ nextMeeting.name }}<br />
+                            {{ nextMeeting.start }} - {{ nextMeeting.end }}
                         </a>
+                        {% endverbatim %}
                     </div>
                 </div>
             </div>

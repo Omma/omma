@@ -10,6 +10,9 @@ angular.module('ommaApp').controller('meetingController', ['$scope', 'Restangula
     $scope.init = function(data) {
         $scope.meeting = data;
         Restangular.restangularizeElement(null, data, 'meetings');
+        if (undefined !== data.prev) {
+            Restangular.restangularizeElement(null, data.prev, 'meetings');
+        }
         $scope.$watch('meeting', _.after(3, _.debounce($scope.saveMeeting, 1000)), true);
     };
 

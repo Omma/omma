@@ -37,14 +37,15 @@ angular.module('ommaApp').controller('meetingGeneralController', ['$scope', 'mee
         if (undefined === meeting) {
             return meeting;
         }
-        meeting.start = moment(meeting.date_start).format('DD. MMMM. YY HH:mm');
-        meeting.end = moment(meeting.date_end).format('DD. MMMM. YY HH:mm');
+        meeting.start = moment(meeting.date_start).format('DD. MMMM. YYYY HH:mm');
+        meeting.end = moment(meeting.date_end).format('DD. MMMM. YYYY HH:mm');
 
         return meeting;
     }
 
     // previous meeting linking
     $scope.prevMeeting = formatMeetingDates(meeting.prev);
+    $scope.nextMeeting = formatMeetingDates(meeting.next);
     $scope.prevMeetings = [];
 
     $scope.editPrevMeeting = function() {
@@ -70,5 +71,21 @@ angular.module('ommaApp').controller('meetingGeneralController', ['$scope', 'mee
         }
         $scope.editingPrevMeeting = false;
         meeting.prev = $scope.prevMeeting;
+    };
+
+    $scope.copyAttendees = function() {
+        if (null === $scope.prevMeeting) {
+            return;
+        }
+        // broadcast copy to attendee controller
+        $scope.$parent.$broadcast('attendee.copy', {meeting: $scope.prevMeeting});
+    };
+
+    $scope.copyAgenda = function() {
+        if (null === $scope.prevMeeting) {
+            return;
+        }
+        // broadcast copy to agenda controller
+        $scope.$parent.$broadcast('agenda.copy', {meeting: $scope.prevMeeting});
     };
 }]);
