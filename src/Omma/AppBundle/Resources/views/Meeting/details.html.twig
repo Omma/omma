@@ -83,10 +83,9 @@
 {% block todo_tab %}
     <h2>{{ "app.todos.title"|trans }}</h2>
     {% verbatim %}
-    <hr class="invisible"/><hr class="invisible"/>
-    <h2>Punkt erstellen</h2>
+    <hr class="invisible"/>
 
-    <div class="input-group form-inline">
+    <!--<div class="input-group form-inline">
         <input type="text" class="form-control" placeholder="Neuen ToDo-Punkt hinzufügen..." ng-model="newToDoContent">
         <span class="input-group-addon" ng-click="persistNewToDo()">Speichern</span>
         <h4>Priorität</h4>
@@ -95,13 +94,12 @@
             <input type="radio" name="priority" value="normal" ng-checked="false"> Normal
         </div>
     </div>
-    <hr>
+    <hr>-->
 
-    <h2>Punkte verwalten</h2>
+        <div class="btn btn-primary" ng-click="addNewTodo()"><i class="glyphicon glyphicon-plus"></i> </div>
+        <hr class="invisible" />
 
-    <div ng-repeat-start="todo in todos" ng-repeat-end>
-
-
+    <div ng-repeat="todo in todos">
 
         <div ng-class="{'done': todo.status}">
             <accordion close-others="oneAtATime">
@@ -118,17 +116,17 @@
                     </div>
                     <hr />
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-xs-3">
 
                             <input type="checkbox" ng-checked="todo.status" ng-model="todo.status" ng-change="checkboxDoneChanged(todo)">
                             <span class="bold">Erledigt</span><br><br>
 
 
                             <input type="checkbox" ng-checked="todo.priority" ng-model="todo.priority" ng-change="checkboxPrioChanged(todo)">
-                            <span class="bold">Hohe Priorität</span>
+                            <span class="bold">Wichtig</span>
 
                         </div>
-                        <div class="col-xs-4">
+                        <div class="col-xs-3">
 
 
 
@@ -142,21 +140,19 @@
                                     <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                                   </span>
                             </p>
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="bold">teilnehmer</span>
+                            select field here
+
+
 
 
                         </div>
                         <div class="col-xs-2">
-                            <div class="pull-right" data-toggle="modal" data-target=".todoModal"><i class="fa fa-trash fa-2x"></i></div>
+                            <div class="pull-right" data-toggle="modal" data-target=".todoModal" ng-click="setTempIdToDelete(todo.id)"><i class="fa fa-trash fa-2x"></i></div>
                         </div>
                     </div>
-
-
-
-
-
-
-
-
 
                 </accordion-group>
             </accordion>

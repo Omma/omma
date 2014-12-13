@@ -8,40 +8,57 @@ angular.module('ommaApp')
 
 
 
+        function fetchTodosFromJSON() {
+            var todos = [
+                {
+                    id: 5,
+                    status: 0,
+                    task: 'test2 bla',
+                    user_id: 1,
+                    description: 'test3 bla',
+                    date: '2014-213-123-123-132321',
+                    priority: 0
+                },
+                {
+                    id: 7,
+                    status: 1,
+                    task: 'test3 bla',
+                    user_id: 1,
+                    description: 'test3 bla',
+                    date: '2014-213-123-123-132321',
+                    priority: 1
+                }
+            ];
+            return todos;
+        }
+
+
+
         //priority: 1(high) or 0(normal)
 
-        $scope.todos = [
-            {
-                id: 5,
-                status: 0,
-                task: 'test2 bla',
-                description: 'test3 bla',
-                date: '2014-213-123-123-132321',
-                priority: 0
-            },
-            {
-                id: 7,
-                status: 1,
-                task: 'test3 bla',
-                description: 'test3 bla',
-                date: '2014-213-123-123-132321',
-                priority: 1
-            }
-        ];
+        $scope.todos = fetchTodosFromJSON();
+
+        function setTodos() {
+            $scope.todos = fetchTodosFromJSON();
+        }
+
+        //Add new todo
+        $scope.addNewTodo = function() {
+            console.log('add empty task in db');
+            setTodos();
+        };
 
 
 
 
-
-        //Checkbox changed
-
-        $scope.checkboxDoneChanged = function (todo) {
+        //Edit todo
+        $scope.checkboxDoneChanged = function (todo) {  //done
             console.log('change into db');
             console.log(todo);
         };
-        $scope.checkboxPrioChanged = function (todo) {
+        $scope.checkboxPrioChanged = function (todo) {  //high priority
             console.log('change into db');
-            console.log($scope.todos);
+            console.log(todo);
         };
 
 
@@ -58,6 +75,9 @@ angular.module('ommaApp')
 
 
 
+        //Attendees
+
+
 
         $scope.status = {
             isFirstOpen: true,
@@ -65,25 +85,14 @@ angular.module('ommaApp')
         };
 
 
-        //Add new ToDo
-        $scope.newToDoContent = '';
-        $scope.persistNewToDo = function () {
-
-            var done = false;
-            var content = $scope.newToDoContent;
-            var finishDate = '2014-213-123-123-132321';
-
-            console.log('add new todo into db');
-
-            $scope.todos.push({done:done, content: content, finishDate: finishDate});
-            $scope.newToDoContent = '';
-        };
-
-
 
         //Delete Modal
+        var tempIdToDelete;
+        $scope.setTempIdToDelete = function(id) {
+            tempIdToDelete = id;
+        };
         $scope.deleteModal = function () {
-            console.log('delete in db');
+            console.log('delete id: '+tempIdToDelete+'in db');
         };
 
 

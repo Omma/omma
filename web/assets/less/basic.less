@@ -58,6 +58,10 @@ span.bold {
   font-weight: bold;
 }
 
+.modal {
+  z-index: 9999;
+}
+
 /*Header*/
 header {
   margin-bottom: 40px;
@@ -447,7 +451,9 @@ header {
     .panel-default > .panel-heading {
       background-color: @light-blue;
     }
-
+    i.fa-trash:hover {
+      cursor: pointer;
+    }
     .done h4 {
       text-decoration: line-through;
     }
