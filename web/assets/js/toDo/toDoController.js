@@ -39,7 +39,7 @@ angular.module('ommaApp')
             console.log('change into db');
             console.log(todo);
         };
-        $scope.checkboxPrioChanged = function (todo) {
+        $scope.checkboxPrioChanged = function () {
             console.log('change into db');
             console.log($scope.todos);
         };
@@ -48,7 +48,7 @@ angular.module('ommaApp')
 
         //Priority
         $scope.getPriorityOfTodo = function(todo){
-            if(todo.priority == 1){
+            if(todo.priority === 1){
                 return true;
             }
             else{

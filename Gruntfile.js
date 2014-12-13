@@ -30,9 +30,13 @@ module.exports = function (grunt) {
             'web/assets/components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar.js',
             'web/assets/components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js',
             'web/assets/components/typehead.js/dist/typeahead.bundle.min.js',
+
             'web/assets/components/textAngular/dist/textAngular-sanitize.min.js',
             'web/assets/components/textAngular/dist/textAngular.min.js',
-            'web/assets/components/angular-daterangepicker/js/angular-daterangepicker.js',
+
+            'web/assets/components/bootstrap-daterangepicker/daterangepicker.js',
+            'web/assets/components/angular-daterangepicker/js/angular-daterangepicker.min.js',
+
             'web/assets/components/angular-xeditable/dist/js/xeditable.min.js',
             'web/assets/components/angular-ui-select/dist/select.min.js'
         ],
@@ -44,9 +48,11 @@ module.exports = function (grunt) {
             'web/assets/components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css',
             'web/assets/components/angular-ui-tree/dist/angular-ui-tree.min.css',
             'web/assets/components/angular-xeditable/dist/css/xeditable.css',
+
+            'web/assets/components/bootstrap-daterangepicker/daterangepicker-bs3.css',
             'web/assets/components/select2/select2.css',
             'web/assets/components/select2-bootstrap-css/select2-bootstrap.css',
-            'web/assets/components/angular-ui-select/dist/select.min.css',
+            'web/assets/components/angular-ui-select/dist/select.min.css'
         ],
         less: [
             'web/assets/less/basic.less'

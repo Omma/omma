@@ -1,48 +1,37 @@
 /**
  * @author Johannes Höhn <johannes.hoehn@hof-university.de>
  */
-
 angular.module('ommaApp')
-    .controller('protocolController', ['$scope', function ($scope) {
+    .controller('protocolController', ['$scope', 'protocolService', function ($scope, protocolService) {
+        $scope.status = 'saved';
+        $scope.protocol = {};
 
-        $scope.orightml = 'hallo das ist ein test';
-        $scope.htmlcontent = $scope.orightml;
-        $scope.disabled = false; //Protokoll editieren aktivieren oder deaktivieren
-        $scope.status = '';
+        protocolService.load($scope.$parent.meeting).then(function(protocol) {
+            $scope.protocol = protocol;
+        });
 
         $scope.getButtonClass = function() {
-            if($scope.disabled===false) {
+            if($scope.protocol.final === false) {
                 return '';
-            }
-            else {
+            } else {
                 return 'disabled';
             }
         };
 
-
         $scope.deleteModal = function() {
-            console.log('protokoll in db als final markieren');
-
-            $scope.disabled = true;
+            $scope.protocol.final = true;
         };
 
+        var save = _.debounce(function() {
+            $scope.status = 'saving';
+            protocolService.save($scope.$parent.meeting, $scope.protocol).then(function() {
+                $scope.status = 'saved';
+            });
 
-        $scope.$watch('orightml', function(newValue, oldValue) {
+        }, 1000);
 
-            if (newValue !== oldValue) {
-                $scope.status = 'Änderungen speichern...';
-            }
-
-        });
-
-        $scope.$watch('orightml', _.debounce(function (newValue, oldValue) {
-
-            if (newValue !== oldValue) {
-
-                $scope.$apply(function () {
-                    console.log('update db protocol text mit var newValue');
-                    $scope.status = 'Alle Änderungen sind gespeichert.';
-                });
-            }
-        }, 700));
+        $scope.$watch('protocol', _.after(3, function() {
+            $scope.status = 'not_saved';
+            save();
+        }), true);
 }]);

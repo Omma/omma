@@ -11,5 +11,7 @@ Omma\AppBundle\Entity\Meeting:
             expose: true
         prev:
             expose: true
+            max_depth: 1
         next:
             expose: true
+            max_depth: 1

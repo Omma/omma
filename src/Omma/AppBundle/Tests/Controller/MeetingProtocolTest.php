@@ -21,30 +21,27 @@ class MeetingProtocolTest extends AbstractAuthenticatedTest
         $serializer = $this->getContainer()->get("jms_serializer");
         $meeting = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Meeting', "json");
 
-        $content = $this->pushContent("/meetings/" . $meeting->getId() . "/protocols.json", array(
+        $content = $this->pushContent("/meetings/" . $meeting->getId() . "/protocol.json", array(
             "text" => "ProtocolText",
             "final" => false
-        ));
+        ), "PUT");
 
         $protocol = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Protocol', "json");
 
-        $content = $this->fetchContent("/meetings/" . $meeting->getId() . "/protocols/" . $protocol->getId() . ".json");
+        $content = $this->fetchContent("/meetings/" . $meeting->getId() . "/protocol.json");
 
         $newProtocol = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Protocol', "json");
-
-        $newMeeting = $newProtocol->getMeeting();
 
         $this->assertInstanceOf('Omma\AppBundle\Entity\Protocol', $newProtocol);
 
         $this->assertSame($protocol->getId(), $newProtocol->getId());
 
-        $this->assertSame($meeting->getId(), $newMeeting->getId());
-
         $this->assertSame("ProtocolText", $newProtocol->getText());
         $this->assertSame(false, $newProtocol->isFinal());
 
-        $this->pushContent("/meetings/" . $newMeeting->getId() . "/protocols/" . $newProtocol->getId() . ".json", array(), "DELETE");
+        $this->pushContent("/meetings/" . $meeting->getId() . "/protocol.json", array(), "DELETE");
 
-        $content = $this->fetchContent("/meetings/" . $newMeeting->getId() . "/protocols/" . $newProtocol->getId() . ".json", "GET", false, false);
+        $content = $this->fetchContent("/meetings/" . $meeting->getId() . "/protocol.json", "GET");
+        $this->assertEquals("{}", $content);
     }
 }
