@@ -50,8 +50,11 @@
     {% if can_edit %}
         <div class="well" ng-show="protocol.final" ng-bind-html="protocol.text"></div>
         <div ng-hide="protocol.final">
-            <div class="pull-right btn btn-default" ng-show="status = 'saving'"><i class="glyphicon glyphicon-refresh"> </i> wird gespeichert</div>
-            <div class="pull-right btn btn-default" ng-show="status = 'saved'"><i class="glyphicon glyphicon-ok"> </i> gespeichert</div>
+            <div class="header-button" ng-switch on="status">
+                <button ng-switch-when="not_saved" class="btn btn-primary"><span class="glyphicon glyphicon-file"></span> {{ "app.save"|trans }}</button>
+                <button ng-switch-when="saving" class="btn btn-default disabled"><span class="glyphicon glyphicon-refresh"></span> {{ "app.saving"|trans }}</button>
+                <button ng-switch-when="saved" class="btn btn-default disabled"><span class="glyphicon glyphicon-ok"></span> {{ "app.saved"|trans }}</button>
+            </div>
             <p>Wenn Sie das Protokoll als "Final" markieren, ist es für alle Teilnehmer sichtbar. </p>
             <hr class="invisible" />
 
