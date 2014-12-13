@@ -22,7 +22,7 @@
     "angular-loading-bar": "~0.6.0",
     "angular-ui-tree": "~2.1.5",
     "moment": "~2.8.4",
-    "glDatePicker": "https://github.com/t0mtaylor/glDatePicker.git",
+    "glDatePicker": "https://github.com/Omma/glDatePicker.git",
     "typehead.js": "~0.10.5",
     "angular-daterangepicker": "~0.1.10",
     "textAngular": "~1.2.2",
