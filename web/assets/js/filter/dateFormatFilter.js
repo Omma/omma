@@ -6,7 +6,10 @@ angular.module('ommaApp').filter('moment', [function() {
         if (!moment.isMoment(input)) {
             input = moment(input);
         }
+        if (undefined === format) {
+            format = 'DD. MMMM. YYYY HH:mm';
+        }
 
-        return input.format('DD. MMMM. YYYY HH:mm');
+        return input.format(format);
     };
 }]);
