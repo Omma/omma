@@ -9,8 +9,20 @@ omma_app_meeting_agenda:
     name_prefix: omma_app_
     parent: omma_app_meeting
 
+omma_app_meeting_task:
+    resource: "@OmmaAppBundle/Controller/MeetingTaskController.php"
+    type: rest
+    name_prefix: omma_app_
+    parent: omma_app_meeting
+
 omma_app_meeting_protocol:
     resource: "@OmmaAppBundle/Controller/MeetingProtocolController.php"
+    type: rest
+    name_prefix: omma_app_
+    parent: omma_app_meeting
+
+omma_app_meeting_file:
+    resource: "@OmmaAppBundle/Controller/MeetingFileController.php"
     type: rest
     name_prefix: omma_app_
     parent: omma_app_meeting
@@ -26,3 +38,9 @@ omma_app_meeting_recurring:
     type: rest
     name_prefix: omma_app
     parent: omma_app_meeting
+
+omma_app_meeting_recurring_exception:
+    resource: "@OmmaAppBundle/Controller/MeetingRecurringExceptionController.php"
+    type: rest
+    name_prefix: omma_app
+    parent: omma_app_meeting_recurring

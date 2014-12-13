@@ -1,13 +1,17 @@
-Omma\AppBundle\Entity\Agenda:
+Omma\AppBundle\Entity\File:
     exclusion_policy: ALL
     properties:
         id:
             expose: true
         meeting:
             expose: true
-        name:
+        protocol:
             expose: true
-        sortingOrder:
+        subFiles:
             expose: true
-        children:
+        parent:
+            expose: true
+        type:
+            expose: true
+        url:
             expose: true
