@@ -7,12 +7,13 @@ angular.module('ommaApp').controller('meetingGeneralController', ['$scope', func
         endDate: undefined
     };
 
-    $scope.$parent.meetingRequest.then(function(meeting) {
-        $scope.date = {
-            startDate: moment(meeting.date_start),
-            endDate: moment(meeting.date_end)
-        };
-    });
+    var meeting = $scope.$parent.meeting;
+
+
+    $scope.date = {
+        startDate: moment(meeting.date_start),
+        endDate: moment(meeting.date_end)
+    };
 
     $scope.$watch('date', function(newValue, oldValue) {
         var start = $scope.date.startDate = moment(newValue.startDate);

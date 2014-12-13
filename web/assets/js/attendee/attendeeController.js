@@ -11,11 +11,9 @@ angular.module('ommaApp').controller('meetingAttendeeController', ['$scope', 'at
         });
     }
 
-    $scope.$parent.meetingRequest.then(function(meeting) {
-        attendeeService.getAll(meeting).then(function(attendees) {
-            $scope.attendees = attendees;
-            sort();
-        });
+    attendeeService.getAll($scope.$parent.meeting).then(function(attendees) {
+        $scope.attendees = attendees;
+        sort();
     });
 
     $scope.addUser = function() {

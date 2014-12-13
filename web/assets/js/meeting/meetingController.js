@@ -8,17 +8,9 @@ angular.module('ommaApp').controller('meetingController', ['$scope', 'Restangula
 
     $scope.meeting = {};
     $scope.init = function(data) {
-        console.log(data);
         $scope.meeting = data;
-
-        $scope.meetingRequest = Restangular.one('meetings', data.id).get().then(function(meeting) {
-            $scope.meeting = meeting;
-
-            // 3 chnages: init, name, date
-            $scope.$watch('meeting', _.after(3, _.debounce($scope.saveMeeting, 1000)), true);
-            return meeting;
-        });
-
+        Restangular.restangularizeElement(null, data, 'meetings');
+        $scope.$watch('meeting', _.after(3, _.debounce($scope.saveMeeting, 1000)), true);
     };
 
     $scope.saveMeeting = function() {
