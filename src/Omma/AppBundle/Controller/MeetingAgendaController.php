@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @RouteResource("Agenda")
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
+ * @author Adrian Woeltche
  */
 class MeetingAgendaController extends FOSRestController implements ClassResourceInterface
 {

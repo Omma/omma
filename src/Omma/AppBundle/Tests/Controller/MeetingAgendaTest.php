@@ -32,12 +32,20 @@ class MeetingAgendaTest extends AbstractAuthenticatedTest
 
         $newAgenda = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Agenda', "json");
 
+        $newMeeting = $newAgenda->getMeeting();
+
         $this->assertInstanceOf('Omma\AppBundle\Entity\Agenda', $newAgenda);
 
         $this->assertSame($agenda->getId(), $newAgenda->getId());
 
+        $this->assertSame($meeting->getId(), $newMeeting->getId());
+
         $this->assertSame("AgendaText", $newAgenda->getName());
         $this->assertSame(1, $newAgenda->getSortingOrder());
+
+        $this->pushContent("/meetings/" . $newMeeting->getId() . "/agendas/" . $newAgenda->getId() . ".json", array(), "DELETE");
+
+        $content = $this->fetchContent("/meetings/" . $newMeeting->getId() . "/agendas/" . $newAgenda->getId() . ".json", "GET", false, false);
     }
 
     public function testTree()

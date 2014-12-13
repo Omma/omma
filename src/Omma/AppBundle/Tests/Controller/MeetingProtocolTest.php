@@ -41,5 +41,10 @@ class MeetingProtocolTest extends AbstractAuthenticatedTest
         $this->assertSame($meeting->getId(), $newMeeting->getId());
 
         $this->assertSame("ProtocolText", $newProtocol->getText());
+        $this->assertSame(false, $newProtocol->getFinal());
+
+        $this->pushContent("/meetings/" . $newMeeting->getId() . "/protocols/" . $newProtocol->getId() . ".json", array(), "DELETE");
+
+        $content = $this->fetchContent("/meetings/" . $newMeeting->getId() . "/protocols/" . $newProtocol->getId() . ".json", "GET", false, false);
     }
 }

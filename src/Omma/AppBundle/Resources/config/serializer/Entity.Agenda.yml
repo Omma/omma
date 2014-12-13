@@ -3,6 +3,8 @@ Omma\AppBundle\Entity\Agenda:
     properties:
         id:
             expose: true
+        meeting:
+            expose: true
         name:
             expose: true
         sortingOrder:

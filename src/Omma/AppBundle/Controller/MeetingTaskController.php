@@ -6,18 +6,18 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Omma\AppBundle\Entity\Meeting;
 use Omma\AppBundle\Entity\Protocol;
-use Omma\AppBundle\Form\Type\MeetingProtocolForm;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Omma\AppBundle\Entity\Task;
+use Omma\AppBundle\Form\Type\MeetingTaskForm;
 
 /**
  *
- * @RouteResource("Protocol")
+ * @RouteResource("Task")
  *
- * @author Florian Pfitzer <pfitzer@w3p.cc>
  * @author Adrian Woeltche
  */
-class MeetingProtocolController extends FOSRestController implements ClassResourceInterface
+class MeetingTaskController extends FOSRestController implements ClassResourceInterface
 {
 
     /**
@@ -27,10 +27,10 @@ class MeetingProtocolController extends FOSRestController implements ClassResour
      */
     public function cgetAction(Meeting $meeting)
     {
-        return $this->get("omma.app.manager.protocol")
-            ->createQueryBuilder("p")
-            ->select("p")
-            ->where("p.meeting = :meeting")
+        return $this->get("omma.app.manager.task")
+            ->createQueryBuilder("t")
+            ->select("t")
+            ->where("t.meeting = :meeting")
             ->setParameter("meeting", $meeting)
             ->getQuery()
             ->getResult();
@@ -46,23 +46,23 @@ class MeetingProtocolController extends FOSRestController implements ClassResour
      */
     public function cpostAction(Request $request, Meeting $meeting)
     {
-        $protocol = new Protocol();
-        $protocol->setMeeting($meeting);
+        $task = new Task();
+        $task->setMeeting($meeting);
 
-        return $this->processForm($request, $protocol);
+        return $this->processForm($request, $task);
     }
 
     /**
      * @Security("is_granted('view', meeting)")
      *
      * @param Meeting $meeting
-     * @param Protocol $protocol
+     * @param Task $task
      *
      * @return Protocol
      */
-    public function getAction(Meeting $meeting, Protocol $protocol)
+    public function getAction(Meeting $meeting, Task $task)
     {
-        return $protocol;
+        return $task;
     }
 
     /**
@@ -70,43 +70,43 @@ class MeetingProtocolController extends FOSRestController implements ClassResour
      *
      * @param Request $request
      * @param Meeting $meeting
-     * @param Protocol $protocol
+     * @param Task $task
      *
      * @return \FOS\RestBundle\View\View
      */
-    public function putAction(Request $request, Meeting $meeting, Protocol $protocol)
+    public function putAction(Request $request, Meeting $meeting, Task $task)
     {
-        return $this->processForm($request, $protocol);
+        return $this->processForm($request, $task);
     }
 
     /**
      * @Security("is_granted('edit', meeting)")
      *
      * @param Meeting $meeting
-     * @param Protocol $protocol
+     * @param Task $task
      *
      * @return \FOS\RestBundle\View\View
      */
-    public function deleteAction(Meeting $meeting, Protocol $protocol)
+    public function deleteAction(Meeting $meeting, Task $task)
     {
-        $this->get("omma.app.manager.protocol")->delete($protocol);
+        $this->get("omma.app.manager.task")->delete($task);
 
         return $this->view("");
     }
 
-    protected function processForm(Request $request, Protocol $protocol)
+    protected function processForm(Request $request, Task $task)
     {
-        $new = null === $protocol->getId();
-        $form = $this->createForm(new MeetingProtocolForm(), $protocol, array(
+        $new = null === $task->getId();
+        $form = $this->createForm(new MeetingTaskForm(), $task, array(
             "method" => $new ? "POST" : "PUT",
             "csrf_protection" => false
         ));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->get("omma.app.manager.protocol")->save($protocol);
+            $this->get("omma.app.manager.task")->save($task);
 
-            return $this->view($protocol);
+            return $this->view($task);
         }
 
         return $this->view($form, 400);

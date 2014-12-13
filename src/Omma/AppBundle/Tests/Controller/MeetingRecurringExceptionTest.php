@@ -55,5 +55,9 @@ class MeetingRecurringExceptionTest extends AbstractAuthenticatedTest
 
         $date = $newMeetingRecurringException->getDate()->format("Y-m-d H:i:s");
         $this->assertSame("2014-01-01 08:00:00", $date);
+
+        $this->pushContent("/meetings/" . $newMeeting->getId() . "/recurrings/" . $newMeetingRecurring->getId() . "/recurringexceptions/" . $newMeetingRecurringException->getId() . ".json", array(), "DELETE");
+
+        $content = $this->fetchContent("/meetings/" . $newMeeting->getId() . "/recurrings/" . $newMeetingRecurring->getId() . "/recurringexceptions/" . $newMeetingRecurringException->getId() . ".json", "GET", false, false);
     }
 }
