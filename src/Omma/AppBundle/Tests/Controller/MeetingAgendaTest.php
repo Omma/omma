@@ -1,7 +1,6 @@
 <?php
 namespace Omma\AppBundle\Tests\Controller;
 
-use Omma\AppBundle\Entity\Meeting;
 use Omma\AppBundle\Tests\AbstractAuthenticatedTest;
 
 /**
@@ -24,10 +23,9 @@ class MeetingAgendaTest extends AbstractAuthenticatedTest
 
         $content = $this->pushContent("/meetings/" . $meeting->getId() . "/agendas.json", array(
             "name" => "AgendaText",
-            "sorting_order" => 1,
+            "sorting_order" => 1
         ));
 
-        $serializer = $this->getContainer()->get("jms_serializer");
         $agenda = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Agenda', "json");
 
         $content = $this->fetchContent("/meetings/" . $meeting->getId() . "/agendas/" . $agenda->getId() . ".json");
@@ -40,6 +38,10 @@ class MeetingAgendaTest extends AbstractAuthenticatedTest
 
         $this->assertSame("AgendaText", $newAgenda->getName());
         $this->assertSame(1, $newAgenda->getSortingOrder());
+
+        $this->pushContent("/meetings/" . $meeting->getId() . "/agendas/" . $newAgenda->getId() . ".json", array(), "DELETE");
+
+        $content = $this->fetchContent("/meetings/" . $meeting->getId() . "/agendas/" . $newAgenda->getId() . ".json", "GET", false, false);
     }
 
     public function testTree()

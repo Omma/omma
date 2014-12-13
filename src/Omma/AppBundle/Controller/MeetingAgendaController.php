@@ -1,14 +1,11 @@
 <?php
 namespace Omma\AppBundle\Controller;
 
-use FOS\RestBundle\Controller\Annotations\Post;
-use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Omma\AppBundle\Entity\Agenda;
 use Omma\AppBundle\Entity\Meeting;
-use Omma\AppBundle\Form\Type\MeetingAgendaCollectionForm;
 use Omma\AppBundle\Form\Type\MeetingAgendaForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @RouteResource("Agenda")
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
+ * @author Adrian Woeltche
  */
 class MeetingAgendaController extends FOSRestController implements ClassResourceInterface
 {

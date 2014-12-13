@@ -1,6 +1,7 @@
 <?php
 namespace Omma\AppBundle\Controller;
 
+use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Omma\AppBundle\Entity\Attendee;
@@ -21,33 +22,48 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
 {
 
     /**
+     * @View(serializerEnableMaxDepthChecks=true)
      * @return Meeting[]
      */
-    public function cgetAction()
+    public function cgetAction(Request $request)
     {
         $user = $this->getUser();
-        if ($this->get("security.context")->isGranted("ROLE_SUPER_ADMIN")) {
-            return $this->get("omma.app.manager.meeting")->findAll();
-        } else {
-            $query = $this->get("omma.app.manager.meeting")->createQueryBuilder("m");
-            $query->select("m")
+        $query = $this->get("omma.app.manager.meeting")
+            ->createQueryBuilder("m")
+            ->select("m")
+        ;
+
+        if (!$this->get("security.context")->isGranted("ROLE_SUPER_ADMIN")) {
+            $query
                 ->innerJoin("m.attendees", "a")
                 ->andWhere("a.meeting = m.id")
                 ->innerJoin("a.user", "u")
                 ->andWhere("u.id = :userId")
-                ->setParameter("userId", $user->getId());
-
-            return $query->getQuery()->getResult();
+                ->setParameter("userId", $user->getId())
+            ;
         }
+
+        if (null !== ($search = $request->query->get("search"))) {
+            $query
+                ->andWhere("m.name LIKE :search")
+                ->setParameter("search", "%" . $search . "%")
+                ->orderBy("m.dateStart", "DESC")
+            ;
+        }
+
+        return $query->getQuery()->getResult();
     }
 
     /**
+     * @View(serializerEnableMaxDepthChecks=true)
+     *
      * @param \DateTime $dateStart
      *            Start Date
      * @param \DateTime $dateEnd
      *            End Date
      *
      * @return array
+     *
      */
     public function getRangeAction(\DateTime $dateStart, \DateTime $dateEnd)
     {
@@ -72,6 +88,8 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
+     * @View(serializerEnableMaxDepthChecks=true)
+     *
      * @param Request $request
      *
      * @return \Symfony\Component\Form\Form
@@ -94,6 +112,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
 
     /**
      * @Security("is_granted('edit', meeting)")
+     * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -148,7 +167,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
 
     /**
      * @Security("is_granted('view', meeting)")
-     *
+     * @View(serializerEnableMaxDepthChecks=true)
      */
     public function getAction(Meeting $meeting)
     {
@@ -172,6 +191,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
         $attendee = $this->get("omma.app.manager.attendee")->findOneBy(array(
             "meeting" => $meeting,
             "user"    => $this->getUser(),
+            "owner"   => 0
         ));
         $attendeeForm = null;
         if (null !== $attendee) {
@@ -218,6 +238,6 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
 
         $this->get("omma.app.manager.meeting")->save($meeting);
 
-        return $this->redirect($this->generateUrl("omma_app_get_meeting", array("meeting" => $meeting->getId())));
+        return $this->redirect($this->generateUrl("omma_meeting_details", array("meeting" => $meeting->getId())));
     }
 }

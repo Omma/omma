@@ -29,7 +29,6 @@ class MeetingRecurringTest extends AbstractAuthenticatedTest
             "recurring" => 1
         ));
 
-        $serializer = $this->getContainer()->get("jms_serializer");
         $meetingRecurring = $serializer->deserialize($content, 'Omma\AppBundle\Entity\MeetingRecurring', "json");
 
         $content = $this->fetchContent("/meetings/" . $meeting->getId() . "/recurrings/" . $meetingRecurring->getId() . ".json");
@@ -44,7 +43,17 @@ class MeetingRecurringTest extends AbstractAuthenticatedTest
 
         $this->assertSame($meeting->getId(), $newMeeting->getId());
 
+        $dateStart = $newMeetingRecurring->getDateStart()->format("Y-m-d H:i:s");
+        $this->assertSame("2014-01-01 08:00:00", $dateStart);
+
+        $dateEnd = $newMeetingRecurring->getDateEnd()->format("Y-m-d H:i:s");
+        $this->assertSame("2014-12-31 09:30:00", $dateEnd);
+
         $this->assertSame(MeetingRecurring::TYPE_WEEK, $newMeetingRecurring->getType());
         $this->assertSame(1, $newMeetingRecurring->getRecurring());
+
+        $this->pushContent("/meetings/" . $newMeeting->getId() . "/recurrings/" . $newMeetingRecurring->getId() . ".json", array(), "DELETE");
+
+        $content = $this->fetchContent("/meetings/" . $newMeeting->getId() . "/recurrings/" . $newMeetingRecurring->getId() . ".json", "GET", false, false);
     }
 }

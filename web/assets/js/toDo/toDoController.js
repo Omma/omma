@@ -65,7 +65,7 @@ angular.module('ommaApp')
 
         //Priority
         $scope.getPriorityOfTodo = function(todo){
-            if(todo.priority == 1){
+            if(todo.priority === 1){
                 return true;
             }
             else{

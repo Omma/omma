@@ -8,19 +8,21 @@ angular.module('ommaApp').controller('meetingController', ['$scope', 'Restangula
 
     $scope.meeting = {};
     $scope.init = function(data) {
-        console.log(data);
         $scope.meeting = data;
-
-        $scope.meetingRequest = Restangular.one('meetings', data.id).get().then(function(meeting) {
-            $scope.meeting = meeting;
-
-            $scope.$watch('meeting', _.after(2, _.debounce($scope.saveMeeting, 1000)), true);
-            return meeting;
-        });
-
+        Restangular.restangularizeElement(null, data, 'meetings');
+        if (undefined !== data.prev) {
+            Restangular.restangularizeElement(null, data.prev, 'meetings');
+        }
+        $scope.$watch('meeting', _.after(3, _.debounce($scope.saveMeeting, 1000)), true);
     };
 
     $scope.saveMeeting = function() {
-        $scope.meeting.put();
+        var meeting = $scope.meeting.clone();
+
+        // replace prev meeting object with id
+        if (meeting.prev) {
+            meeting.prev = meeting.prev.id;
+        }
+        meeting.put();
     };
 }]);

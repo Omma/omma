@@ -171,14 +171,4 @@ class Protocol extends Base
     {
         return $this->file;
     }
-
-    /**
-     * Get final
-     *
-     * @return boolean
-     */
-    public function getFinal()
-    {
-        return $this->final;
-    }
 }

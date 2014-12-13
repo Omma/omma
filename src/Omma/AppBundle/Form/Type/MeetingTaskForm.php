@@ -7,31 +7,29 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  *
- *
- * @author Florian Pfitzer <pfitzer@w3p.cc>
+ * @author Adrian Woeltche
  */
-class MeetingAttendeeForm extends AbstractType
+class MeetingTaskForm extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("user", "entity", array(
-                "class" => 'Application\Sonata\UserBundle\Entity\User',
+            ->add("task")
+            ->add("description")
+            ->add("type")
+            ->add("date", "datetime", array(
+                "widget" => "single_text",
             ))
-            ->add("mandatory")
-            ->add("owner", "text", array(
-                "mapped" => false,
-            ))
-            ->add("status", "text", array(
-                "mapped" => false,
-            ))
+            ->add("priority", "integer")
+            ->add("status", "integer")
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            "data_class" => 'Omma\AppBundle\Entity\Attendee'
+            "data_class" => 'Omma\AppBundle\Entity\Task',
         ));
     }
 

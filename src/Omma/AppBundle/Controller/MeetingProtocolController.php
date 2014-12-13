@@ -8,58 +8,76 @@ use Omma\AppBundle\Entity\Meeting;
 use Omma\AppBundle\Entity\Protocol;
 use Omma\AppBundle\Form\Type\MeetingProtocolForm;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  *
  * @RouteResource("Protocol")
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
+ * @author Adrian Woeltche
  */
 class MeetingProtocolController extends FOSRestController implements ClassResourceInterface
 {
 
-    public function cgetAction(Meeting $meeting)
+    /**
+     * @Security("is_granted('view', meeting)")
+     *
+     * @param Meeting $meeting
+     *
+     * @return Protocol
+     */
+    public function getAction(Meeting $meeting)
     {
-        return $this->get("omma.app.manager.protocol")
-            ->createQueryBuilder("p")
-            ->select("p")
-            ->where("p.meeting = :meeting")
-            ->setParameter("meeting", $meeting)
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function cpostAction(Request $request, Meeting $meeting)
-    {
+        $protocol = $meeting->getProtocol();
+        if (null !== $protocol) {
+            return $protocol;
+        }
         $protocol = new Protocol();
         $protocol->setMeeting($meeting);
 
-        return $this->processForm($request, $protocol);
-    }
-
-    public function getAction(Meeting $meeting, Protocol $protocol)
-    {
         return $protocol;
     }
 
-    public function putAction(Request $request, Meeting $meeting, Protocol $protocol)
+    /**
+     * @Security("is_granted('edit', meeting)")
+     *
+     * @param Request $request
+     * @param Meeting $meeting
+     *
+     * @return \FOS\RestBundle\View\View
+     */
+    public function putAction(Request $request, Meeting $meeting)
     {
-        return $this->processForm($request, $protocol);
+        return $this->processForm($request, $this->getAction($meeting));
     }
 
-    public function deleteAction(Meeting $meeting, Protocol $protocol)
+    /**
+     * @Security("is_granted('edit', meeting)")
+     *
+     * @param Meeting $meeting
+     *
+     * @return \FOS\RestBundle\View\View
+     */
+    public function deleteAction(Meeting $meeting)
     {
-        $this->get("omma.app.manager.protocol")->delete($protocol);
+        if (null === $meeting->getProtocol()) {
+            return $this->view("");
+        }
+        $this->get("omma.app.manager.protocol")->delete($meeting->getProtocol());
 
         return $this->view("");
     }
 
     protected function processForm(Request $request, Protocol $protocol)
     {
-        $new = null === $protocol->getId();
+        if ($protocol->isFinal()) {
+            return $this->view("marked as final", Response::HTTP_FORBIDDEN);
+        }
         $form = $this->createForm(new MeetingProtocolForm(), $protocol, array(
-            "method" => $new ? "POST" : "PUT",
-            "csrf_protection" => false
+            "method" => "PUT",
+            "csrf_protection" => false,
         ));
         $form->handleRequest($request);
 

@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  *
  * @RouteResource("Attendee")
+ *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 class MeetingAttendeeController extends FOSRestController implements ClassResourceInterface

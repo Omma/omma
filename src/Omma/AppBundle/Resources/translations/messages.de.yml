@@ -4,9 +4,11 @@ app:
     remember_me: Login merken
     login: einloggen
 
+    add: hinzufügen
     save: speichern
     saved: gespeichert
     saving: wird gespeichert
+    cancel: abbrechen
 
     today: Heute
     year: Jahr
@@ -28,9 +30,17 @@ app:
             maybe: Vielleicht teilnehmen
         message: Nachricht
 
-    date:
-        title: Datum & Uhrzeit
-
+    general:
+        title: Allgemein
+        date: Datum
+        date_start: Beginn
+        date_end: Ende
+        previous_meeting: vorheriges Meeting
+        next_meeting: nächstes Meeting
+        search: Meeting auswählen oder suchen...
+        link: verknüpfen
+        copy_attendees: Teilnehmer übernehmen
+        copy_agenda: Agenda übernehmen
     agenda:
         title: Agenda
 
@@ -46,7 +56,7 @@ app:
         organizer: Organisator
 
     user:
-        search: Person Auswählen oder Suchen...
+        search: Person auswählen oder suchen...
 
     mail:
         invitation:

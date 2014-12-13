@@ -22,7 +22,10 @@ class MeetingForm extends AbstractType
             ->add("date_end", "datetime", array(
                 "widget" => "single_text",
             ))
-            ->add("prev", "integer")
+            ->add("prev", "entity", array(
+                "class"    => 'Omma\AppBundle\Entity\Meeting',
+                "property" => "id",
+            ))
             ->add("next", "integer")
         ;
     }

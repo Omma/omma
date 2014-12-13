@@ -1,0 +1,23 @@
+Omma\AppBundle\Entity\Task:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        meeting:
+            expose: true
+        user:
+            expose: true
+        agenda:
+            expose: true
+        task:
+            expose: true
+        description:
+            expose: true
+        type:
+            expose: true
+        date:
+            expose: true
+        priority:
+            expose: true
+        status:
+            expose: true

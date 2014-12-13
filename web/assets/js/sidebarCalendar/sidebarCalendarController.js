@@ -15,6 +15,7 @@ angular.module('ommaApp').controller('sidebarCalendarController', ['$scope', 'me
         };
     }
 
+
     meetingService.getByDate(current.start, current.end).then(function(events) {
         events = _.map(events, formatDate);
 
@@ -51,14 +52,7 @@ angular.module('ommaApp').controller('sidebarCalendarController', ['$scope', 'me
                     $scope.$apply();
                     return;
                 }
-                var clickedDate = moment(date);
-                $.each(this.specialDates, function (index, value) {
-                    var date = value.dateOrig;
-
-                    if (date.isSame(clickedDate, 'day')) {
-                        $scope.currentEvents.splice(0, 0, value);
-                    }
-                });
+                setCurrentEvents(moment(date));
                 $scope.$apply();
             }
         }).glDatePicker(true);
@@ -75,5 +69,16 @@ angular.module('ommaApp').controller('sidebarCalendarController', ['$scope', 'me
                 });
             }
         });
+
+        function setCurrentEvents(currentDate) {
+            $.each(ommaDatepicker.options.specialDates, function (index, value) {
+                var date = value.dateOrig;
+
+                if (date.isSame(currentDate, 'day')) {
+                    $scope.currentEvents.splice(0, 0, value);
+                }
+            });
+        }
+        setCurrentEvents(moment());
     });
 }]);
