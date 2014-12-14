@@ -95,14 +95,12 @@
                             </div>
                             <div class="day-events ng-hide" ng-show="currentEvents.length > 0">
                                 <h4>Events an diesem Tag:</h4>
-                                <div id="insert-events">
-                                    <ul>
-                                        <li ng-repeat="event in currentEvents">
+                                <div id="insert-events" class="list-group">
+
                                             {% verbatim %}
-                                            <a href="{{ event.data.url }}">{{ event.data.name }}</a>
+                                            <a ng-repeat="event in currentEvents" class="list-group-item" href="{{ event.data.url }}">{{ event.data.name }}</a>
                                             {% endverbatim %}
-                                        </li>
-                                    </ul>
+
                                 </div>
                             </div>
                         </div>
