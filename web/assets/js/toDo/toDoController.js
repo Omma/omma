@@ -6,13 +6,16 @@ angular.module('ommaApp')
     .controller('toDoController', ['$scope', function ($scope) {
 
 
-
+        function persistTodo(id, row, value) {
+            console.log('update todo where id = '+id+': '+row+' => '+value);
+            setTodos();
+        }
 
         function fetchTodosFromJSON() {
             var todos = [
                 {
                     id: 5,
-                    status: 0,
+                    status: 1, //int
                     task: 'test2 bla',
                     user_id: 1,
                     description: 'test3 bla',
@@ -21,7 +24,7 @@ angular.module('ommaApp')
                 },
                 {
                     id: 7,
-                    status: 1,
+                    status: 0, //int
                     task: 'test3 bla',
                     user_id: 1,
                     description: 'test3 bla',
@@ -31,11 +34,10 @@ angular.module('ommaApp')
             ];
             return todos;
         }
-
+        $scope.selectedUser = '';
 
 
         //priority: 1(high) or 0(normal)
-
         $scope.todos = fetchTodosFromJSON();
 
         function setTodos() {
@@ -45,44 +47,88 @@ angular.module('ommaApp')
         //Add new todo
         $scope.addNewTodo = function() {
             console.log('add empty task in db');
+
+            //leeres Objekt wird in DB geschrieben (neue ID wird erzeugt)
+            //und anschließend DB neu auslesen (fetchTodosFromJSON())
+
             setTodos();
         };
 
 
 
 
-        //Edit todo
-        $scope.checkboxDoneChanged = function (todo) {  //done
-            console.log('change into db');
-            console.log(todo);
-        };
-        $scope.checkboxPrioChanged = function (todo) {  //high priority
-            console.log('change into db');
-            console.log(todo);
-        };
-
-
-
-        //Priority
-        $scope.getPriorityOfTodo = function(todo){
-            if(todo.priority === 1){
+        //Render Output
+        $scope.todoIsDone = function(todo) {
+            if(todo.status) {
                 return true;
             }
-            else{
+            else {
+                return false;
+            }
+        };
+
+        $scope.todoIsImportant = function(todo) {
+            if(todo.priority) {
+                return true;
+            }
+            else {
                 return false;
             }
         };
 
 
 
+        //Edit todo
+        $scope.persistStatus = function(todo) {
+
+            var id = todo.id;
+            var row = 'status';
+            var value = todo.status;
+            persistTodo(id, row, value);
+        };
+        $scope.persistPriority = function(todo) {
+
+            var id = todo.id;
+            var row = 'priority';
+            var value = todo.priority;
+            persistTodo(id, row, value);
+        };
+
+        $scope.temp = function() {
+            console.log('K');
+        };
+
+
+
+
+
+
+
+
         //Attendees
 
+        $scope.addUser = function() {
+            var selectedUser = $scope.selectedUser;
+            console.log(selectedUser);
 
-
-        $scope.status = {
-            isFirstOpen: true,
-            isFirstDisabled: false
+            //addUser(selectedUser);
         };
+
+
+
+
+        //Datepicker
+        $scope.timepicker;
+
+
+        $scope.timeChange = function() {
+
+            console.log('K');
+
+        };
+
+
+
 
 
 
@@ -93,46 +139,12 @@ angular.module('ommaApp')
         };
         $scope.deleteModal = function () {
             console.log('delete id: '+tempIdToDelete+'in db');
+            setTodos();
         };
 
 
-        /**************************************
-         * Datepicker
-         */
 
-        $scope.today = function() {
-            $scope.dt = new Date();
-        };
-        $scope.today();
 
-        $scope.clear = function () {
-            $scope.dt = null;
-        };
-
-        // Disable weekend selection
-        $scope.disabled = function(date, mode) {
-            return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-        };
-
-        $scope.toggleMin = function() {
-            $scope.minDate = $scope.minDate ? null : new Date();
-        };
-        $scope.toggleMin();
-
-        $scope.open = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-
-            $scope.opened = true;
-        };
-
-        $scope.dateOptions = {
-            formatYear: 'yy',
-            startingDay: 1
-        };
-
-        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-        $scope.format = $scope.formats[0];
 
 
 }]);

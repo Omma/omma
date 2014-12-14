@@ -59,7 +59,6 @@
             <hr class="invisible" />
 
             <div text-angular-toolbar name="htmlcontenttools"></div>
-            <div class="status">{{ "{{ status }}" }}</div>
 
             <div text-angular="text-angular" name="htmlcontent" ng-model="protocol.text" ta-disabled='disabled' placeholder='Hier können Sie Ihr Protokoll verfassen... ' ta-target-toolbars='htmlcontenttools,statictoolbar'></div>
             <hr class="invisible" />
@@ -94,31 +93,22 @@
 {% endblock %}
 
 {% block todo_tab %}
+    <div class="btn btn-primary pull-right" ng-click="addNewTodo()"><i class="glyphicon glyphicon-plus"></i> </div>
     <h2>{{ "app.todos.title"|trans }}</h2>
+
     {% verbatim %}
     <hr class="invisible"/>
 
-    <!--<div class="input-group form-inline">
-        <input type="text" class="form-control" placeholder="Neuen ToDo-Punkt hinzufügen..." ng-model="newToDoContent">
-        <span class="input-group-addon" ng-click="persistNewToDo()">Speichern</span>
-        <h4>Priorität</h4>
-        <div class="input-group">
-            <input type="radio" name="priority" value="high" ng-checked="true"> Hoch<br>
-            <input type="radio" name="priority" value="normal" ng-checked="false"> Normal
-        </div>
-    </div>
-    <hr>-->
-
-        <div class="btn btn-primary" ng-click="addNewTodo()"><i class="glyphicon glyphicon-plus"></i> </div>
-        <hr class="invisible" />
-
     <div ng-repeat="todo in todos">
 
-        <div ng-class="{'done': todo.status}">
+        <div ng-class="{'done': todoIsDone(todo)}">
             <accordion close-others="oneAtATime">
                 <accordion-group>
-                    <accordion-heading ng-class="done">
-                        <i class="fa" ng-class="{'fa-exclamation': getPriorityOfTodo(todo)}"> </i> {{ todo.task }}
+
+                    <accordion-heading>
+                        <i class="fa" ng-class="{'fa-exclamation': todoIsImportant(todo)}"> </i>
+
+                        {{ todo.task }}
 
                     </accordion-heading>
 
@@ -126,16 +116,18 @@
                     <div class="row">
                         <div class="col-xs-12"><i>{{ todo.description }}</i></div>
 
+
+
+
                     </div>
                     <hr />
                     <div class="row">
                         <div class="col-xs-3">
 
-                            <input type="checkbox" ng-checked="todo.status" ng-model="todo.status" ng-change="checkboxDoneChanged(todo)">
+                            <input type="checkbox" ng-model="status" ng-change="persistStatus(todo)">
                             <span class="bold">Erledigt</span><br><br>
 
-
-                            <input type="checkbox" ng-checked="todo.priority" ng-model="todo.priority" ng-change="checkboxPrioChanged(todo)">
+                            <input type="checkbox" ng-model="priority" ng-change="persistPriority(todo)">
                             <span class="bold">Wichtig</span>
 
                         </div>
@@ -146,24 +138,41 @@
 
                             <span class="bold">Zu erledigen bis</span>
 
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <input date-picker class="form-control date-picker" type="text" date="date.endDate" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12" style="margin-top:35px;">
+                                        <timepicker class="time-picker" ng-model="timepicker" ng-change="timeChange()" hour-step="1" minute-step="5" show-meridian="false"></timepicker>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <p class="input-group">
-                                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-                                  <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                                  </span>
-                            </p>
+
+
                         </div>
-                        <div class="col-xs-4">
-                            <span class="bold">teilnehmer</span>
-                            select field here
+                        <div class="col-xs-6">
+                            <span class="bold">Aufgabe einer Person zuordnen: </span>
+                            <div class="row">
+                                <div class="col-xs-10">
+                                    <user-select selected="selectedUser"></user-select>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="btn btn-primary pull-right" ng-click="addUser()"><i class="fa fa-plus"></i></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <hr class="invisible"/>
+                                    <hr class="invisible"/>
+                                    <div data-toggle="modal" data-target=".todoModal" ng-click="setTempIdToDelete(todo.id)"><div class="btn btn-danger pull-right"><i class="fa fa-remove"></i></div></div>
+                                </div>
+                            </div>
 
 
-
-
-                        </div>
-                        <div class="col-xs-2">
-                            <div class="pull-right" data-toggle="modal" data-target=".todoModal" ng-click="setTempIdToDelete(todo.id)"><i class="fa fa-trash fa-2x"></i></div>
                         </div>
                     </div>
 
@@ -191,7 +200,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Nein, doch nicht</button>
-                    <button type="button" class="btn btn-primary" ng-click="deleteModal()" data-dismiss="modal">Ja, löschen</button>
+                    <button type="button" class="btn btn-danger" ng-click="deleteModal()" data-dismiss="modal">Ja, löschen</button>
                 </div>
             </div>
         </div>

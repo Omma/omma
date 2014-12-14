@@ -47,9 +47,4 @@
                     ></mwl-calendar>
         </div>
     </div>
-    <ul>
-        {% for meeting in meetings %}
-            <li><a href="{{ path("omma_meeting_details", {"meeting": meeting.id}) }}">{{ meeting.name }}</a></li>
-        {% endfor %}
-    </ul>
 {% endblock %}
