@@ -289,6 +289,24 @@ header {
     }
   }
 
+
+  /*Events an diesem Tag*/
+  .day-events {
+    .list-group {
+      a {
+        border: 1px solid @grey;
+        background-color: @light-blue;
+        padding: 4px 8px;
+        &:hover {
+          background-color: @blue;
+          color: white;
+        }
+      }
+    }
+  }
+
+
+
   /*Nächste Events*/
   .naechste-events {
     .list-group {
@@ -463,6 +481,11 @@ header {
     }
   }
 
+  /*Teilnehmer*/
+  .select2-results .select2-highlighted {
+    background-color: @blue;
+  }
+
 }
 
 /*Login*/
@@ -470,6 +493,11 @@ header {
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
+
+  h2 {
+    font-size: 1.6em;
+    margin-bottom:30px;
+  }
 
   .checkbox {
     margin-bottom: 30px;
