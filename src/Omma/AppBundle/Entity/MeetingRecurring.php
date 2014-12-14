@@ -70,11 +70,11 @@ class MeetingRecurring extends Base
     private $type;
 
     /**
-     * @ORM\Column(name="recurring", type="integer")
+     * @ORM\Column(name="recurring", type="array")
      *
-     * @var integer
+     * @var array
      */
-    private $recurring;
+    private $recurring = array();
 
     /**
      * Constructor
@@ -241,11 +241,11 @@ class MeetingRecurring extends Base
     /**
      * Set recurring
      *
-     * @param integer $recurring
+     * @param array $recurring
      *
      * @return MeetingRecurring
      */
-    public function setRecurring($recurring)
+    public function setRecurring(array $recurring)
     {
         $this->recurring = $recurring;
 
@@ -255,7 +255,7 @@ class MeetingRecurring extends Base
     /**
      * Get recurring
      *
-     * @return integer
+     * @return array
      */
     public function getRecurring()
     {

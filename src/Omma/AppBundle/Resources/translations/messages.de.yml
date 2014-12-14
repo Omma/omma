@@ -18,6 +18,8 @@ app:
 
     options: Optionen
 
+    meetings: Meetings
+
     confirmation:
         title: Bestätigung
         info: |
@@ -41,6 +43,28 @@ app:
         link: verknüpfen
         copy_attendees: Teilnehmer übernehmen
         copy_agenda: Agenda übernehmen
+        recurring:
+            title: Wiederholungen
+            type: Typ
+            types:
+                daily: täglich
+                weekly: wöchentlich
+                monthly: monatlich
+                yearly: jährlich
+            every: Jede / Jeden
+            day: -ten Tag
+            week: -te Woche
+            month: -ten Monat
+            year: -tes Jahr
+            weekdays: Wochentage
+            at: am
+            first: ersten
+            second: zweiten
+            third: dritten
+            fourth: vierten
+            last: letzten
+            end: Ende
+            after: nach
     agenda:
         title: Agenda
 
