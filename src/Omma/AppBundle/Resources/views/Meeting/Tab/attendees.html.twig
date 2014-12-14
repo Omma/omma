@@ -1,0 +1,51 @@
+{#
+ # @author Florian Pfitzer <pfitzer@w3p.cc>
+ #}
+<h2>{{ "app.attendees.title"|trans }}</h2>
+<hr class="invisible" />
+{% if can_edit %}
+    <form role="form">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <user-select selected="selectedUser"></user-select>
+                </div>
+                <div class="col-md-6">
+                    <button ng-click="addUser()" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i></button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endif %}
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th style="width: 20px">&nbsp;</th>
+        <th>{{ "app.attendees.user"|trans }}</th>
+        {% if can_edit %}
+            <th>{{ "app.options"|trans }}</th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="attendee in attendees">
+        <td ng-switch on="attendee.status">
+            <i ng-switch-when="invited" class="glyphicon glyphicon-time" data-toggle="tooltip" title="Invited"></i>
+            <i ng-switch-when="accepted" class="glyphicon glyphicon-ok-sign"></i>
+            <i ng-switch-when="declined" class="glyphicon glyphicon-remove-sign"></i>
+            <i ng-switch-when="maybe" class="glyphicon glyphicon-question-sign"></i>
+        </td>
+        <td>
+            {{ "{{ attendee.user.username }}" }}
+            <span ng-show="attendee.owner" class="label label-primary">
+                    {{ "app.attendees.organizer"|trans }}
+                </span>
+        </td>
+        {% if can_edit %}
+            <td>
+                <a class="btn btn-xs btn-danger" ng-click="removeAttendee(attendee)" ng-hide="attendee.owner"><i class="glyphicon glyphicon-remove"></i></a>
+            </td>
+        {% endif %}
+    </tr>
+    </tbody>
+</table>

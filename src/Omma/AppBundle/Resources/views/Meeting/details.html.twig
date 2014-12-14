@@ -1,50 +1,5 @@
 {% extends "OmmaAppBundle::layout.html.twig" %}
 
-{% block agenda_tab %}
-    {% if can_edit %}
-        <div class="header-button" ng-switch on="status">
-            <button ng-switch-when="not_saved" class="btn btn-primary" ng-click="saveTree()"><span class="glyphicon glyphicon-file"></span> {{ "app.save"|trans }}</button>
-            <button ng-switch-when="saving" class="btn btn-default disabled" ng-click="saveTree()"><span class="glyphicon glyphicon-refresh"></span> {{ "app.saving"|trans }}</button>
-            <button ng-switch-when="saved" class="btn btn-default disabled" ng-click="saveTree()"><span class="glyphicon glyphicon-ok"></span> {{ "app.saved"|trans }}</button>
-        </div>
-    {% endif %}
-    <h2>{{ "app.agenda.title"|trans }}</h2>
-    <hr class="invisible" />
-    <!-- Nested node template -->
-    <script type="text/ng-template" id="nodes_renderer.html">
-        <div ui-tree-handle>
-            <form class="form-inline" role="form" ng-show="node.editing">
-                <div class="form-group">
-                    <label class="sr-only" for="name">Name</label>
-                    <input type="text" class="form-control" placeholder="Name" ng-model="node.name">
-                </div>
-                <button type="submit" class="btn btn-primary" ng-click="save(node)">Save</button>
-                <button type="submit" class="btn btn-default" ng-click="cancelEditing(node)">Cancel</button>
-            </form>
-            <div ng-show="!node.editing">
-                {{ "{{ node.name }}" }}
-                <div class="pull-right">
-                    <a href="" class="btn btn-success btn-xs" data-nodrag ng-click="newNode(node)"><span class="glyphicon glyphicon-plus"></span></a>
-                    <a href="" class="btn btn-primary btn-xs" data-nodrag ng-click="edit(node)"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <a href="" class="btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
-                </div>
-            </div>
-        </div>
-        <ol ui-tree-nodes="" ng-model="node.children">
-            <li ng-repeat="node in node.children" ui-tree-node ng-include="'nodes_renderer.html'">
-            </li>
-        </ol>
-    </script>
-    <div ui-tree>
-        <ol ui-tree-nodes="" ng-model="rootAgenda.children" id="tree-root">
-            <li ng-repeat="node in rootAgenda.children" ui-tree-node ng-include="'nodes_renderer.html'"></li>
-        </ol>
-        <hr class="invisible" />
-        <a href="" class="btn btn-success" data-nodrag ng-click="newNode(rootAgenda)"><span class="glyphicon glyphicon-plus"></span></a>
-    </div>
-{% endblock %}
-
-
 {% block protocol_tab %}
     <h2>Protokoll zu dieser Veranstaltung</h2>
     {% if can_edit %}
@@ -216,54 +171,7 @@
 
 
 {% block attendee_tab %}
-    <h2>{{ "app.attendees.title"|trans }}</h2>
-    <hr class="invisible" />
-    {% if can_edit %}
-    <form role="form">
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-6">
-                    <user-select selected="selectedUser"></user-select>
-                </div>
-                <div class="col-md-6">
-                    <button ng-click="addUser()" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i></button>
-                </div>
-            </div>
-        </div>
-    </form>
-    {% endif %}
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th style="width: 20px">&nbsp;</th>
-            <th>{{ "app.attendees.user"|trans }}</th>
-            {% if can_edit %}
-                <th>{{ "app.options"|trans }}</th>
-            {% endif %}
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="attendee in attendees">
-            <td ng-switch on="attendee.status">
-                <i ng-switch-when="invited" class="glyphicon glyphicon-time" data-toggle="tooltip" title="Invited"></i>
-                <i ng-switch-when="accepted" class="glyphicon glyphicon-ok-sign"></i>
-                <i ng-switch-when="declined" class="glyphicon glyphicon-remove-sign"></i>
-                <i ng-switch-when="maybe" class="glyphicon glyphicon-question-sign"></i>
-            </td>
-            <td>
-                {{ "{{ attendee.user.username }}" }}
-                <span ng-show="attendee.owner" class="label label-primary">
-                    {{ "app.attendees.organizer"|trans }}
-                </span>
-            </td>
-            {% if can_edit %}
-            <td>
-                <a class="btn btn-xs btn-danger" ng-click="removeAttendee(attendee)" ng-hide="attendee.owner"><i class="glyphicon glyphicon-remove"></i></a>
-            </td>
-            {% endif %}
-        </tr>
-        </tbody>
-    </table>
+
 {% endblock %}
 
 {% block content %}
@@ -308,10 +216,10 @@
                     {{ block('confirmation_form') }}
                 {% endif %}
                 <h2>{{ "app.general.title"|trans }}</h2>
-                {{ block('general_tab') }}
+                {% include "OmmaAppBundle:Meeting/Tab:general.html.twig" %}
             </div>
             <div class="tab-pane" id="agenda" ng-controller="meetingAgendaController">
-                {{ block('agenda_tab') }}
+                {% include "OmmaAppBundle:Meeting/Tab:agenda.html.twig" %}
             </div>
             <div class="tab-pane" id="todos" ng-controller="toDoController">
                 {{ block('todo_tab') }}
@@ -320,7 +228,7 @@
                 {{ block('protocol_tab') }}
             </div>
             <div class="tab-pane" id="attendees" ng-controller="meetingAttendeeController">
-                {{ block('attendee_tab') }}
+                {% include "OmmaAppBundle:Meeting/Tab:attendees.html.twig" %}
             </div>
         </div>
     </div>
@@ -343,111 +251,4 @@
         </div>
     </div>
     {{ form_end(attendeeForm) }}
-{% endblock %}
-
-{% block general_tab %}
-    {# @author Florian Pfitzer <pfitzer@w3p.cc> #}
-    <form class="form-horizontal">
-        <div class="form-group">
-            <label for="previous" class="col-sm-3 control-label">{{ "app.general.previous_meeting"|trans }}</label>
-            <div class="col-sm-9">
-                {% if can_edit %}
-                <button class="btn btn-primary" ng-click="editPrevMeeting()" ng-hide="editingPrevMeeting || prevMeeting != null">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    {{ "app.add"|trans }}
-                </button>
-                {% endif %}
-                <div class="form-control-static" ng-show="!editingPrevMeeting && prevMeeting != null">
-                    {% verbatim %}
-                        <a target="_blank" ng-href="/meetings/{{ prevMeeting.id }}/details">{{ prevMeeting.name }}<br />
-                            {{ prevMeeting.date_start | moment }} - {{ prevMeeting.date_end | moment }}
-                        </a>
-                    {% endverbatim %}
-                    {% if can_edit %}
-                    <br /><br />
-                    <button class="btn btn-default" ng-click="copyAttendees()">
-                        {{ "app.general.copy_attendees"|trans }}
-                    </button>
-                    <button class="btn btn-default" ng-click="copyAgenda()">
-                        {{ "app.general.copy_agenda"|trans }}
-                    </button>
-                    {% endif %}
-                </div>
-                {% if can_edit %}
-                <div class="well" ng-show="editingPrevMeeting">
-                    <ui-select ng-model="$parent.prevMeeting" theme="select2" class="form-control">
-                        <ui-select-match placeholder="{{ "app.general.search"|trans }}">
-                            {{ "{{ $select.selected.name}} ({{ $select.selected.date_start | moment }} - {{ $select.selected.date_end | moment }}) " }}
-                        </ui-select-match>
-                        <ui-select-choices repeat="item in prevMeetings | filter: $select.search">
-                            <div ng-bind-html="item.name | highlight: $select.search"></div>
-                            <small>
-                                <span ng-bind-html="item.date_start | moment | highlight: $select.search"></span>
-                                -
-                                <span ng-bind-html="item.date_end | moment | highlight: $select.search"></span>
-                            </small>
-                        </ui-select-choices>
-                    </ui-select>
-                    <br />
-                    <button class="btn btn-success" ng-click="linkMeeting()">
-                        <i class="glyphicon glyphicon-ok"></i>
-                        {{ "app.general.link"|trans }}
-                    </button>
-                    <button class="btn btn-default" ng-click="cancelEditPrevMeeting()">
-                        <i class="glyphicon glyphicon-remove"></i>
-                        {{ "app.cancel"|trans }}
-                    </button>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-        {% if meeting.next is not null %}
-            <div class="form-group">
-                <label for="next" class="col-sm-3 control-label">{{ "app.general.next_meeting"|trans }}</label>
-                <div class="col-sm-9">
-                    <div class="form-control-static">
-                        {% verbatim %}
-                        <a target="_blank" ng-href="/meetings/{{ nextMeeting.id }}/details">{{ nextMeeting.name }}<br />
-                            {{ prevMeeting.date_start | moment }} - {{ prevMeeting.date_end | moment }}
-                        </a>
-                        {% endverbatim %}
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-        <div class="form-group" style="margin-top: 35px">
-            <label for="startDate" class="col-sm-3 control-label">{{ "app.general.date_start"|trans }}</label>
-            {% if can_edit %}
-                <div class="col-sm-5">
-                    <input date-picker id="startDate" class="form-control date-picker" type="text" date="date.startDate" />
-                </div>
-                <div class="col-sm-3">
-                    <timepicker class="time-picker" ng-model="date.startDate" hour-step="1" minute-step="5" show-meridian="false"></timepicker>
-                </div>
-            {% else %}
-                <div class="col-sm-9">
-                    <div class="form-control-static">
-                        {{ "{{ date.startDate|moment }}" }}
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-        <div class="form-group" style="margin-top: 35px">
-            <label for="endDate" class="col-sm-3 control-label">{{ "app.general.date_end"|trans }}</label>
-            {% if can_edit %}
-                <div class="col-sm-5">
-                    <input date-picker id="endDate" class="form-control date-picker" type="text" date="date.endDate" />
-                </div>
-                <div class="col-sm-3">
-                    <timepicker class="time-picker" ng-model="date.endDate" hour-step="1" minute-step="5" show-meridian="false"></timepicker>
-                </div>
-            {% else %}
-                <div class="col-sm-9">
-                    <div class="form-control-static">
-                        {{ "{{ date.endDate|moment }}" }}
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-    </form>
 {% endblock %}
