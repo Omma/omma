@@ -126,7 +126,7 @@ module.exports = function (grunt) {
                     paths: ['css']
                 },
                 files: {
-                    'web/assets/build/style.css': files.css
+                    'web/assets/build/less.less': files.less
                 }
             },
             dev: {
