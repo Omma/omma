@@ -18,7 +18,7 @@
 
         <div text-angular="text-angular" name="htmlcontent" ng-model="protocol.text" ta-disabled='disabled' placeholder='Hier können Sie Ihr Protokoll verfassen... ' ta-target-toolbars='htmlcontenttools,statictoolbar'></div>
         <hr class="invisible" />
-        <div class="btn btn-primary {{ "{{ getButtonClass() }}" }}" data-toggle="modal" data-target=".protocolModal">Protokoll als "Final" markieren</div>
+        <div class="btn btn-primary" data-toggle="modal" data-target=".protocolModal" ng-hide="protocol.final">Protokoll als "Final" markieren</div>
     </div>
     <!-- Todo Modal -->
     <div class="modal fade protocolModal" tabindex="-1" role="dialog" aria-hidden="true">
