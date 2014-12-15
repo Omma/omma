@@ -6,10 +6,7 @@ angular.module('ommaApp')
     .controller('toDoController', ['$scope', function ($scope) {
 
 
-        function persistTodo(id, row, value) {
-            console.log('update todo where id = '+id+': '+row+' => '+value);
-            setTodos();
-        }
+
 
         function fetchTodosFromJSON() {
             var todos = [
@@ -20,7 +17,7 @@ angular.module('ommaApp')
                     user_id: 1,
                     description: 'test3 bla',
                     date: '2014-213-123-123-132321',
-                    priority: 0
+                    priority: 0,
                 },
                 {
                     id: 7,
@@ -34,15 +31,13 @@ angular.module('ommaApp')
             ];
             return todos;
         }
-        $scope.selectedUser = '';
 
 
         //priority: 1(high) or 0(normal)
         $scope.todos = fetchTodosFromJSON();
 
-        function setTodos() {
-            $scope.todos = fetchTodosFromJSON();
-        }
+        $scope.user;
+
 
         //Add new todo
         $scope.addNewTodo = function() {
@@ -51,9 +46,7 @@ angular.module('ommaApp')
             //leeres Objekt wird in DB geschrieben (neue ID wird erzeugt)
             //und anschließend DB neu auslesen (fetchTodosFromJSON())
 
-            setTodos();
         };
-
 
 
 
@@ -79,37 +72,27 @@ angular.module('ommaApp')
 
 
         //Edit todo
-        $scope.persistStatus = function(todo) {
 
-            var id = todo.id;
-            var row = 'status';
-            var value = todo.status;
-            persistTodo(id, row, value);
-        };
-        $scope.persistPriority = function(todo) {
 
-            var id = todo.id;
-            var row = 'priority';
-            var value = todo.priority;
-            persistTodo(id, row, value);
-        };
+
+
 
         $scope.temp = function() {
-            console.log('K');
+            alert('test erfolgreich');
         };
-
-
-
 
 
 
 
 
         //Attendees
+        $scope.addUser = function(todo) {
 
-        $scope.addUser = function() {
-            var selectedUser = $scope.selectedUser;
-            console.log(selectedUser);
+
+            todo.user_id = todo.user.id;
+            delete todo.user;
+
+            console.log('add'+todo);
 
             //addUser(selectedUser);
         };
@@ -118,14 +101,6 @@ angular.module('ommaApp')
 
 
         //Datepicker
-        $scope.timepicker;
-
-
-        $scope.timeChange = function() {
-
-            console.log('K');
-
-        };
 
 
 
@@ -139,7 +114,9 @@ angular.module('ommaApp')
         };
         $scope.deleteModal = function () {
             console.log('delete id: '+tempIdToDelete+'in db');
-            setTodos();
+            //setTodos();
+
+            //remove todo
         };
 
 
