@@ -4,7 +4,6 @@
 angular.module('ommaApp').controller('meetingRecurringController', ['$scope', function($scope) {
     $scope.recurrings = [];
     var defaults = {
-        type: 'day',
         every: 1,
         month_type: 'relative',
         month_weekdays: {},
@@ -29,6 +28,7 @@ angular.module('ommaApp').controller('meetingRecurringController', ['$scope', fu
 
     $scope.add = function() {
         var recurring = {
+            type: 'day',
             config: _.assign({}, defaults)
         };
         var currentWeekday = moment().format('E');

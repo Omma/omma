@@ -125,7 +125,7 @@
                 <label for="every" class="col-sm-3 control-label">{{ "app.general.recurring.every"|trans }}</label>
                 <div class="col-sm-4">
                     <div class="input-group">
-                        <input type="number" id="every" class="form-control" ng-model="recurring.every" />
+                        <input type="number" id="every" class="form-control" ng-model="config.every" />
                         {% for type in ['day', 'week', 'month'] %}
                         <span ng-show="recurring.type == '{{ type }}'" class="input-group-addon">
                             {{ ("app.general.recurring." ~ type)|trans }}
@@ -138,7 +138,7 @@
                 <label for="" class="col-sm-3 control-label">{{ "app.general.recurring.weekdays"|trans }}</label>
                 <div class="col-md-9">
                     <label class="checkbox-inline" ng-repeat="weekday in weekdays">
-                        <input type="checkbox" ng-model="recurring.month_weekdays[weekday.value]" value="1"> {{ "{{ weekday.name }}" }}
+                        <input type="checkbox" ng-model="config.month_weekdays[weekday.value]" value="1"> {{ "{{ weekday.name }}" }}
                     </label>
                 </div>
             </div>
@@ -147,25 +147,29 @@
                 <div class="col-sm-9">
                     <div class="radio">
                         <label>
-                            <input type="radio" ng-model="recurring.month_type" value="relative">
-                            <select ng-model="recurring.rel_month" ng-disabled="recurring.month_type != 'relative'">
-                                <option value="first">{{ "app.general.recurring.first"|trans }}</option>
-                                <option value="second">{{ "app.general.recurring.second"|trans }}</option>
-                                <option value="third">{{ "app.general.recurring.third"|trans }}</option>
-                                <option value="fourth">{{ "app.general.recurring.fourth"|trans }}</option>
-                                <option value="last">{{ "app.general.recurring.last"|trans }}</option>
-                            </select>
-                            <select
-                                    ng-model="recurring.rel_month_day"
-                                    ng-options="weekday.value as weekday.name for weekday in weekdays"
-                                    ng-disabled="recurring.month_type != 'relative'">
-                            </select>
+                            <input type="radio" ng-model="config.month_type" value="relative">
+                            <div class="form-inline">
+                                <select class="form-control" ng-model="config.rel_month" ng-disabled="config.month_type != 'relative'">
+                                    <option value="first">{{ "app.general.recurring.first"|trans }}</option>
+                                    <option value="second">{{ "app.general.recurring.second"|trans }}</option>
+                                    <option value="third">{{ "app.general.recurring.third"|trans }}</option>
+                                    <option value="fourth">{{ "app.general.recurring.fourth"|trans }}</option>
+                                    <option value="last">{{ "app.general.recurring.last"|trans }}</option>
+                                </select>
+                                <select
+                                        class="form-control"
+                                        ng-model="config.rel_month_day"
+                                        ng-options="weekday.value as weekday.name for weekday in weekdays"
+                                        ng-disabled="config.month_type != 'relative'">
+                                </select>
+                            </div>
+
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" ng-model="recurring.month_type" value="absolute">
-                            <input type="number" class="form-control" ng-model="recurring.abs_month_day" ng-disabled="recurring.month_type != 'absolute'" />
+                            <input type="radio" ng-model="config.month_type" value="absolute">
+                            <input type="number" class="form-control" ng-model="config.abs_month_day" ng-disabled="config.month_type != 'absolute'" />
                         </label>
                     </div>
                 </div>
@@ -175,16 +179,17 @@
                 <div class="col-sm-9">
                     <div class="radio">
                         <label>
-                            <input type="radio" ng-model="recurring.end_type" value="absolute">
-                            <input date-picker id="startDate" class="form-control date-picker" type="text" date="recurring.end_date" allow-empty ng-disabled="recurring.end_type != 'absolute'" />
+                            <input type="radio" ng-model="config.end_type" value="absolute">
+                            <input date-picker id="startDate" class="form-control date-picker" type="text" date="config.end_date"
+                                   allow-empty ng-disabled="config.end_type != 'absolute'" />
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" ng-model="recurring.end_type" value="relative">
+                            <input type="radio" ng-model="config.end_type" value="relative">
                             <div class="input-group">
                                 <span class="input-group-addon">{{ "app.general.recurring.after"|trans }}</span>
-                                <input type="number" class="form-control" ng-value="recurring.end_after" ng-disabled="recurring.end_type != 'relative'">
+                                <input type="number" class="form-control" ng-value="config.end_after" ng-disabled="config.end_type != 'relative'">
                                 <span class="input-group-addon">{{ "app.meetings"|trans }}</span>
                             </div>
                         </label>
