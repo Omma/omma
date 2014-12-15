@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 
     var files = {
         jsLibs: [
-            'web/assets/components/jquery/jquery.min.js',
+            'web/assets/components/jquery/dist/jquery.min.js',
             'web/assets/components/lodash/dist/lodash.min.js',
             'web/assets/components/bootstrap/dist/js/bootstrap.min.js',
             'web/assets/components/angular/angular.min.js',
