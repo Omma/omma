@@ -1,4 +1,6 @@
+# Adrian Woeltche
+
 Omma\AppBundle\Entity\Attendee:
-    attendee{1..10}:
+    attendee{1..100}:
         meeting: "@meeting*"
         user: "@user*"

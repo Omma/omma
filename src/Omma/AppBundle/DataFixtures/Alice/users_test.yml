@@ -1,4 +1,5 @@
 # Adrian Woeltche
+# only for use case tests
 
 Application\Sonata\UserBundle\Entity\User:
     user1:
@@ -11,9 +12,4 @@ Application\Sonata\UserBundle\Entity\User:
         username: test
         email: test@omma.local
         plainPassword: test
-        enabled: true
-    user{3..100}:
-        username: <userName()>
-        email: <lexify(@self->username.'\@omma.local')>
-        plainPassword: <@self->username>
         enabled: true

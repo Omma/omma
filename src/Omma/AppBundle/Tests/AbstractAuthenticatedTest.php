@@ -18,7 +18,7 @@ abstract class AbstractAuthenticatedTest extends WebTestCase
         $this->loadFixtures(array());
 
         $fixtureManager = $this->getContainer()->get("h4cc_alice_fixtures.manager");
-        $fixtureManager->load(require (__DIR__ . "/../DataFixtures/Alice/OmmaDataFixtureSet.php"));
+        $fixtureManager->load(require (__DIR__ . "/../DataFixtures/Alice/OmmaDataFixtureTestSet.php"));
 
         $this->login("admin");
     }
