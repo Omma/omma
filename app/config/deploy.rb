@@ -62,6 +62,9 @@ after 'npm:install', 'grunt:build'
 namespace :npm do
  desc 'Run npm install'
  task :install do
+   capifony_pretty_print "--> Copy npm modules from previous release"
+   run "dir_name=#{current_path}/node_modules; if [ -d $dir_name ] || [ -h $dir_name ]; then cp -a $dir_name #{latest_release}/node_modules; fi;"
+
    capifony_pretty_print "--> Installing npm components"
    invoke_command "sh -c 'cd #{latest_release} && npm install'"
    capifony_puts_ok
@@ -71,6 +74,9 @@ end
 namespace :bower do
     desc 'Run bower install'
     task :install do
+      capifony_pretty_print "--> Copy bower files from previous release"
+      run "dir_name=#{current_path}/web/assets/components; if [ -d $dir_name ] || [ -h $dir_name ]; then cp -a $dir_name #{latest_release}/web/assets/components; fi;"
+
       capifony_pretty_print "--> Installing bower components"
       invoke_command "sh -c 'cd #{latest_release} && bower install'"
       capifony_puts_ok
