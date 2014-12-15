@@ -86,5 +86,8 @@ namespace :grunt do
     end
 end
 
+# autocleanup
+after "deploy:update", "deploy:cleanup"
+
 # Be more verbose by uncommenting the following line
 logger.level = Logger::MAX_LEVEL
