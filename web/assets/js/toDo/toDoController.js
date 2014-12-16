@@ -30,7 +30,8 @@ angular.module('ommaApp')
                 date: moment().format(),
                 type: 1,
                 priority: 0,
-                status: 0
+                status: 0,
+                user:{id:null}
             };
 
             toDoService.add($scope.$parent.meeting, newTodo).then(function(todo) {

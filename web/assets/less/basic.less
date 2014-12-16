@@ -485,12 +485,24 @@ header {
       padding-top:20px;
     }
 
-    i.edit-description {
-      a, a:hover {
-        color:@grey;
-        border-bottom: none;
+    i,span {
+      &.edit-description {
+        a, a:hover {
+          color: @grey;
+          border-bottom: none;
+        }
       }
     }
+
+    span {
+      &.edit-description {
+        a, a:hover {
+          color: @font-color;
+        }
+      }
+    }
+
+
     i.edit-description a:hover:after {
       font-family: "Glyphicons Halflings";
       content:" \270f"

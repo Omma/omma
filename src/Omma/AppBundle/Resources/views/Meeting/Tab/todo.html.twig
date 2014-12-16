@@ -25,19 +25,28 @@
 <div ng-repeat="todo in todos">
 
     <div ng-class="{'done': todoIsDone(todo)}">
-        <accordion close-others="oneAtATime">
+        <accordion>
             <accordion-group>
 
                 <accordion-heading>
                     <i class="fa" ng-class="{'fa-exclamation': todoIsImportant(todo)}"> </i>
 
-                    <a href="#" editable-text="todo.task">{{ todo.task || "empty" }}</a>
+                    {{ todo.task }}
 
                 </accordion-heading>
 
 
                 <div class="row">
-                    <div class="col-xs-12"><i class="edit-description"><a href="#" editable-text="todo.description">{{ todo.description || "empty" }}</a></i></div>
+                    <div class="col-xs-12">
+                        <p>
+                            <span class="bold">Titel: </span>
+                            <span class="edit-description"><a href="#" editable-text="todo.task">{{ todo.task || "empty" }}</a></span>
+                        </p>
+                        <p>
+                            <span class="bold">Beschreibung: </span><br>
+                            <i class="edit-description"><a href="#" editable-text="todo.description">{{ todo.description || "empty" }}</a></i>
+                        </p>
+                    </div>
                     <div data-toggle="modal" data-target=".todoModal" ng-click="setTempTodoToDelete(todo)"><div class="btn btn-danger pull-right" style="margin-right:10px;"><i class="fa fa-remove"></i></div></div>
 
 
