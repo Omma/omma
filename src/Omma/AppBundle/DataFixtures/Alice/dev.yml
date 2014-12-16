@@ -30,3 +30,23 @@ Omma\AppBundle\Entity\Attendee:
     attendee{1..100}:
         meeting: "@meeting*"
         user: "@user*"
+
+Omma\AppBundle\Entity\Agenda:
+    agenda{1..100}:
+        meeting: "@meeting*"
+        name: <word()>
+
+Omma\AppBundle\Entity\Task:
+    task{1..100}:
+        meeting: "@meeting*"
+        type: "Task"
+        date: <dateTime(@self->meeting ->getDateStart()->format("Y-m-d H:i:s")." +1 day")>
+        task: <word()>
+        description: <sentence()>
+        priority: <numberBetween(1,3)>
+        status: <numberBetween(1, 100)>
+
+Omma\AppBundle\Entity\Protocol:
+    protocol{1..10}:
+        meeting (unique): "@meeting*"
+        text: <paragraph()>
