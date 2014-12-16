@@ -121,13 +121,15 @@ class Meeting extends Base
 
     /**
      * Temporary and not saved meeting
-     * @var boolean
      * @ORM\Column(type="boolean", nullable=true)
+     *
+     * @var boolean
      */
     protected $temp = false;
 
     /**
-     * @var bool
+     *
+     * @var boolean
      */
     protected $sendInvitations = false;
 
@@ -225,6 +227,7 @@ class Meeting extends Base
     }
 
     /**
+     *
      * @param Attendee[] $attendees
      *
      * @return $this
@@ -240,13 +243,14 @@ class Meeting extends Base
     }
 
     /**
+     *
      * @param Attendee $attendee
      *
      * @return $this
      */
     public function addAttendee(Attendee $attendee)
     {
-        if (!$this->attendees->contains($attendee)) {
+        if (! $this->attendees->contains($attendee)) {
             $this->attendees->add($attendee);
             $attendee->setMeeting($this);
         }
@@ -255,6 +259,7 @@ class Meeting extends Base
     }
 
     /**
+     *
      * @param Attendee $attendee
      *
      * @return $this
@@ -269,6 +274,7 @@ class Meeting extends Base
     }
 
     /**
+     *
      * @return Attendee[]
      */
     public function getAttendees()
@@ -284,7 +290,7 @@ class Meeting extends Base
      */
     public function addGroup(Group $group)
     {
-        if (!$this->groups->contains($group)) {
+        if (! $this->groups->contains($group)) {
             $this->groups->add($group);
             $group->addMeeting($this);
         }
@@ -328,7 +334,7 @@ class Meeting extends Base
      */
     public function addMeetingRecurring(MeetingRecurring $meetingRecurring)
     {
-        if (!$this->meetingRecurrings->contains($meetingRecurring)) {
+        if (! $this->meetingRecurrings->contains($meetingRecurring)) {
             $this->meetingRecurrings->add($meetingRecurring);
             $meetingRecurring->setMeeting($this);
         }
@@ -367,7 +373,7 @@ class Meeting extends Base
      */
     public function addTask(Task $task)
     {
-        if (!$this->tasks->contains($task)) {
+        if (! $this->tasks->contains($task)) {
             $this->tasks->add($task);
             $task->setMeeting($this);
         }
@@ -402,6 +408,7 @@ class Meeting extends Base
     }
 
     /**
+     *
      * @return Agenda[]
      */
     public function getAgendas()
@@ -410,6 +417,7 @@ class Meeting extends Base
     }
 
     /**
+     *
      * @param Agenda[] $agendas
      *
      * @return $this
@@ -425,13 +433,14 @@ class Meeting extends Base
     }
 
     /**
+     *
      * @param Agenda $agenda
      *
      * @return $this
      */
     public function addAgenda(Agenda $agenda)
     {
-        if (!$this->agendas->contains($agenda)) {
+        if (! $this->agendas->contains($agenda)) {
             $this->agendas->add($agenda);
             $agenda->setMeeting($this);
         }
@@ -440,6 +449,7 @@ class Meeting extends Base
     }
 
     /**
+     *
      * @param Agenda $agenda
      *
      * @return $this
@@ -452,7 +462,6 @@ class Meeting extends Base
 
         return $this;
     }
-
 
     /**
      * Set protocol
@@ -489,7 +498,7 @@ class Meeting extends Base
      */
     public function addFile(File $file)
     {
-        if (!$this->files->contains($file)) {
+        if (! $this->files->contains($file)) {
             $this->files->add($file);
             $file->setMeeting($this);
         }
@@ -582,6 +591,7 @@ class Meeting extends Base
     }
 
     /**
+     *
      * @return boolean
      */
     public function isTemp()
@@ -590,6 +600,7 @@ class Meeting extends Base
     }
 
     /**
+     *
      * @param boolean $temp
      *
      * @return self
@@ -602,6 +613,7 @@ class Meeting extends Base
     }
 
     /**
+     *
      * @return boolean
      */
     public function isSendInvitations()
@@ -610,6 +622,7 @@ class Meeting extends Base
     }
 
     /**
+     *
      * @param boolean $sendInvitations
      *
      * @return $this
