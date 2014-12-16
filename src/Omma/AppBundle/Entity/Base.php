@@ -21,14 +21,14 @@ class Base
      *
      * @var \DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @ORM\Column(type="datetime")
      *
      * @var \DateTime
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @ORM\PrePersist

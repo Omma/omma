@@ -1,6 +1,0 @@
-# Adrian Woeltche
-
-Omma\AppBundle\Entity\Attendee:
-    attendee{1..1000}:
-        meeting: "@meeting*"
-        user: "@user*"

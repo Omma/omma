@@ -23,7 +23,7 @@ class Protocol extends Base
      *
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\OneToOne(targetEntity="Meeting", inversedBy="protocol")
@@ -31,7 +31,7 @@ class Protocol extends Base
      *
      * @var Meeting
      */
-    private $meeting;
+    protected $meeting;
 
     /**
      * @ORM\OneToOne(targetEntity="File", inversedBy="protocol")
@@ -39,7 +39,7 @@ class Protocol extends Base
      *
      * @var File
      */
-    private $file;
+    protected $file;
 
     /**
      * @ORM\Column(name="text", type="text")
@@ -47,14 +47,14 @@ class Protocol extends Base
      *
      * @var string
      */
-    private $text;
+    protected $text;
 
     /**
      * @ORM\Column(name="final", type="boolean", nullable=true)
      *
      * @var boolean
      */
-    private $final;
+    protected $final;
 
     /**
      * Get id

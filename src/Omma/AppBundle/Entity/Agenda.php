@@ -26,7 +26,7 @@ class Agenda extends Base
      *
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="agendas")
@@ -34,21 +34,21 @@ class Agenda extends Base
      *
      * @var Meeting
      */
-    private $meeting;
+    protected $meeting;
 
     /**
      * @ORM\OneToOne(targetEntity="Task", mappedBy="agenda")
      *
      * @var Task
      */
-    private $task;
+    protected $task;
 
     /**
      * @ORM\OneToMany(targetEntity="Agenda", mappedBy="parent", cascade={"persist", "remove"})
      *
      * @var ArrayCollection
      */
-    private $children;
+    protected $children;
 
     /**
      * @ORM\ManyToOne(targetEntity="Agenda", inversedBy="children")
@@ -56,7 +56,7 @@ class Agenda extends Base
      *
      * @var Agenda
      */
-    private $parent;
+    protected $parent;
 
     /**
      * @ORM\Column(name="name", type="string", length=255)
@@ -64,7 +64,7 @@ class Agenda extends Base
      *
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(name="sortingOrder", type="integer")
@@ -72,7 +72,7 @@ class Agenda extends Base
      *
      * @var integer
      */
-    private $sortingOrder = 1;
+    protected $sortingOrder = 1;
 
     /**
      * Constructor

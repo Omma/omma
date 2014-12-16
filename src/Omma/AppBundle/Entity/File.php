@@ -23,7 +23,7 @@ class File extends Base
      *
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="files")
@@ -31,21 +31,21 @@ class File extends Base
      *
      * @var Meeting
      */
-    private $meeting;
+    protected $meeting;
 
     /**
      * @ORM\OneToOne(targetEntity="Protocol", mappedBy="file")
      *
      * @var Protocol
      */
-    private $protocol;
+    protected $protocol;
 
     /**
      * @ORM\OneToMany(targetEntity="File", mappedBy="parent")
      *
      * @var ArrayCollection
      */
-    private $subFiles;
+    protected $subFiles;
 
     /**
      * @ORM\ManyToOne(targetEntity="File", inversedBy="subFiles")
@@ -53,21 +53,21 @@ class File extends Base
      *
      * @var File
      */
-    private $parent;
+    protected $parent;
 
     /**
      * @ORM\Column(name="type", type="boolean")
      *
      * @var boolean
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(name="url", type="text")
      *
      * @var string
      */
-    private $url;
+    protected $url;
 
     /**
      * Constructor

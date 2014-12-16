@@ -26,14 +26,14 @@ class Meeting extends Base
      *
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\OneToMany(targetEntity="Omma\AppBundle\Entity\Attendee", mappedBy="meeting", orphanRemoval=true, cascade="all")
      *
      * @var ArrayCollection
      */
-    private $attendees;
+    protected $attendees;
 
     /**
      * @ORM\ManyToMany(targetEntity="\Application\Sonata\UserBundle\Entity\Group", inversedBy="meetings", orphanRemoval=true)
@@ -41,42 +41,42 @@ class Meeting extends Base
      *
      * @var Group
      */
-    private $groups;
+    protected $groups;
 
     /**
      * @ORM\OneToMany(targetEntity="MeetingRecurring", mappedBy="meeting", orphanRemoval=true)
      *
      * @var MeetingRecurring
      */
-    private $meetingRecurrings;
+    protected $meetingRecurrings;
 
     /**
      * @ORM\OneToMany(targetEntity="Task", mappedBy="meeting", orphanRemoval=true)
      *
      * @var ArrayCollection
      */
-    private $tasks;
+    protected $tasks;
 
     /**
      * @ORM\OneToMany(targetEntity="Agenda", mappedBy="meeting", orphanRemoval=true)
      *
      * @var ArrayCollection
      */
-    private $agendas;
+    protected $agendas;
 
     /**
      * @ORM\OneToOne(targetEntity="Protocol", mappedBy="meeting", orphanRemoval=true)
      *
      * @var Protocol
      */
-    private $protocol;
+    protected $protocol;
 
     /**
      * @ORM\OneToMany(targetEntity="File", mappedBy="meeting", orphanRemoval=true)
      *
      * @var ArrayCollection
      */
-    private $files;
+    protected $files;
 
     /**
      * @ORM\Column(name="name", type="string", length=255)
@@ -84,7 +84,7 @@ class Meeting extends Base
      *
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\OneToOne(targetEntity="Meeting", inversedBy="next")
@@ -92,14 +92,14 @@ class Meeting extends Base
      *
      * @var Meeting
      */
-    private $prev;
+    protected $prev;
 
     /**
      * @ORM\OneToOne(targetEntity="Meeting", mappedBy="prev")
      *
      * @var Meeting
      */
-    private $next;
+    protected $next;
 
     /**
      * @ORM\Column(name="date_start", type="datetime", nullable=true)
@@ -108,7 +108,7 @@ class Meeting extends Base
      *
      * @var \DateTime
      */
-    private $dateStart;
+    protected $dateStart;
 
     /**
      * @ORM\Column(name="date_end", type="datetime", nullable=true)
@@ -117,7 +117,7 @@ class Meeting extends Base
      *
      * @var \DateTime
      */
-    private $dateEnd;
+    protected $dateEnd;
 
     /**
      * Temporary and not saved meeting

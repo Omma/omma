@@ -1,0 +1,32 @@
+# Adrian Woeltche
+
+Application\Sonata\UserBundle\Entity\User:
+    user{1..10}:
+        username: <userName()>
+        email: <lexify(@self->username.'\@omma.local')>
+        plainPassword: <@self->username>
+        enabled: true
+
+Omma\AppBundle\Entity\Meeting:
+    meeting{1..100}:
+        name: <word()>
+        dateStart: <dateTimeBetween("2014-01-01", "2015-12-31")>
+        dateEnd: <dateTimeBetween(@self->dateStart, @self->dateStart ->format("Y-m-d H:i:s")." +1 day")>
+
+Omma\AppBundle\Entity\MeetingRecurring:
+    recurring{1..10}:
+        meeting: "@meeting*"
+        dateStart: <dateTime(@self->meeting ->getDateStart())>
+        dateEnd: <dateTimeBetween(@self->dateStart, @self->meeting ->getDateEnd())>
+        type: <randomElement(array(1, 2, 3, 4))>
+        recurring: <numberBetween(1,4)>
+
+Omma\AppBundle\Entity\MeetingRecurringException:
+    exception{1..10}:
+        meetingRecurring: "@recurring*"
+        date: <dateTime(@self->meetingRecurring ->getDateStart()->format("Y-m-d H:i:s")." +".@self->meetingRecurring ->getRecurring()." day")>
+
+Omma\AppBundle\Entity\Attendee:
+    attendee{1..100}:
+        meeting: "@meeting*"
+        user: "@user*"

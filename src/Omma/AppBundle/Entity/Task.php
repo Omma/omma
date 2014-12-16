@@ -24,7 +24,7 @@ class Task extends Base
      *
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="tasks")
@@ -32,7 +32,7 @@ class Task extends Base
      *
      * @var Meeting
      */
-    private $meeting;
+    protected $meeting;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\User", inversedBy="tasks")
@@ -40,7 +40,7 @@ class Task extends Base
      *
      * @var User
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\OneToOne(targetEntity="Agenda", inversedBy="task")
@@ -48,49 +48,49 @@ class Task extends Base
      *
      * @var Agenda
      */
-    private $agenda;
+    protected $agenda;
 
     /**
      * @ORM\Column(name="task", type="string", length=255)
      *
      * @var string
      */
-    private $task;
+    protected $task;
 
     /**
      * @ORM\Column(name="description", type="text")
      *
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * @ORM\Column(name="type", type="string", length=255)
      *
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(name="date", type="datetime")
      *
      * @var \DateTime
      */
-    private $date;
+    protected $date;
 
     /**
      * @ORM\Column(name="priority", type="integer")
      *
      * @var integer
      */
-    private $priority;
+    protected $priority;
 
     /**
      * @ORM\Column(name="status", type="integer")
      *
      * @var integer
      */
-    private $status;
+    protected $status;
 
     /**
      * Get id
