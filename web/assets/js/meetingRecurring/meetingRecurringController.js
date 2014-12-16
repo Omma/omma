@@ -1,7 +1,7 @@
 /**
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
-angular.module('ommaApp').controller('meetingRecurringController', ['$scope', function($scope, meetingRecurringService) {
+angular.module('ommaApp').controller('meetingRecurringController', ['$scope', function($scope) {
     $scope.recurring = _.cloneDeep($scope.$parent.meeting.meeting_recurring || {});
     $scope.recurring = _.assign({
         type: 'none',
