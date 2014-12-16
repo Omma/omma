@@ -87,7 +87,7 @@ class Meeting extends Base
     private $name;
 
     /**
-     * @ORM\OneToOne(targetEntity="Meeting", inversedBy="next")
+     * @ORM\OneToOne(targetEntity="Meeting", inversedBy="next", cascade={"persist"})
      * @ORM\JoinColumn(name="prev", referencedColumnName="id")
      *
      * @var Meeting
@@ -95,7 +95,7 @@ class Meeting extends Base
     private $prev;
 
     /**
-     * @ORM\OneToOne(targetEntity="Meeting", mappedBy="prev")
+     * @ORM\OneToOne(targetEntity="Meeting", mappedBy="prev", cascade={"persist"})
      *
      * @var Meeting
      */

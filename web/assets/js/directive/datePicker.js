@@ -29,6 +29,9 @@ angular.module('ommaApp').directive('datePicker', [function() {
                     $element.val('');
                     return;
                 }
+                if (!moment.isMoment(newDate)) {
+                    $scope.date = newDate = moment(newDate);
+                }
                 $element.data('daterangepicker').setStartDate(newDate);
                 $element.data('daterangepicker').setEndDate(newDate);
             });

@@ -1,31 +1,39 @@
 /**
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
-angular.module('ommaApp').controller('meetingRecurringController', ['$scope', 'meetingRecurringService', function($scope, meetingRecurringService) {
+angular.module('ommaApp').controller('meetingRecurringController', ['$scope', function($scope, meetingRecurringService) {
     $scope.recurring = _.cloneDeep($scope.$parent.meeting.meeting_recurring || {});
     $scope.recurring = _.assign({
         type: 'none',
-        config: {
-            every: 1,
-            month_type: 'relative',
-            month_weekdays: {},
-            rel_month: 'first',
-            rel_month_day: moment().format('E'),
-            abs_month_day: parseInt(moment().format('D')),
-            end_type: 'absolute',
-            end_date: undefined,
-            end_after: undefined
-        }
+        date_start: moment($scope.$parent.meeting.date_start)
     }, $scope.recurring);
-    console.log($scope.recurring.config);
+    $scope.recurring.config = _.assign({
+        every: 1,
+        week_weekdays: {},
+        month_type: 'relative',
+        rel_month: 'first',
+        rel_month_day: moment().format('E'),
+        abs_month_day: parseInt(moment().format('D'))
+    }, $scope.recurring.config);
+    console.log($scope.recurring);
 
     function getValue() {
         var recurring = $scope.recurring;
-        console.log(recurring);
-        if (recurring.type === 'none') {
-            return {};
+        switch (recurring.type) {
+            case 'none':
+                return {};
+            case 'day':
+                recurring.config = _.pick(recurring.config, ['every']);
+                break;
+            case 'week':
+                recurring.config = _.pick(recurring.config, ['every', 'week_weekdays']);
+                break;
+            case 'month':
+                recurring.config = _.pick(recurring.config, ['every', 'month_type', 'rel_month', 'rel_month_day', 'abs_month_day']);
+                break;
+            case 'year':
+                recurring.config = _.pick(recurring.config, ['every']);
         }
-
         return recurring;
     }
 

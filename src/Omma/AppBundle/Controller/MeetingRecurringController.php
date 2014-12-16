@@ -25,13 +25,7 @@ class MeetingRecurringController extends FOSRestController implements ClassResou
      */
     public function cgetAction(Meeting $meeting)
     {
-        return $this->get("omma.app.manager.meeting_recurring")
-            ->createQueryBuilder("r")
-            ->select("r")
-            ->where("r.meeting = :meeting")
-            ->setParameter("meeting", $meeting)
-            ->getQuery()
-            ->getResult();
+        return $meeting->getMeetingRecurring();
     }
 
     /**
@@ -43,7 +37,7 @@ class MeetingRecurringController extends FOSRestController implements ClassResou
     public function cpostAction(Request $request, Meeting $meeting)
     {
         $meetingRecurring = new MeetingRecurring();
-        $meetingRecurring->setMeeting($meeting);
+        $meetingRecurring->addMeeting($meeting);
 
         return $this->processForm($request, $meetingRecurring);
     }

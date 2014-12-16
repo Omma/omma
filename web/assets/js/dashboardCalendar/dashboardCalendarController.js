@@ -7,7 +7,7 @@ angular.module('ommaApp').controller('dashboarCalendarController', ['$scope', '$
     var eventsById = {};
 
     $scope.eventClicked = function(event) {
-        window.location.href = '/meetings/' + event.id + '/details';
+        window.location.href = event.url;
     };
 
     $scope.setCalendarToToday = function() {
@@ -31,6 +31,7 @@ angular.module('ommaApp').controller('dashboarCalendarController', ['$scope', '$
                     id: meeting.id,
                     title: meeting.name,
                     type: 'info',
+                    url: meeting.url,
                     starts_at: moment(meeting.date_start).toDate(),
                     ends_at: moment(meeting.date_end).toDate(),
                     editable: false,

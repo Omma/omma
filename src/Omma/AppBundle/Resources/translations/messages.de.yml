@@ -47,6 +47,7 @@ app:
             title: Wiederholungen
             type: Typ
             types:
+                none: keine
                 daily: täglich
                 weekly: wöchentlich
                 monthly: monatlich
@@ -63,6 +64,7 @@ app:
             third: dritten
             fourth: vierten
             last: letzten
+            start: Anfang
             end: Ende
             after: nach
     agenda:

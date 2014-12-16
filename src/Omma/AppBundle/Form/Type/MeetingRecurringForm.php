@@ -3,6 +3,9 @@ namespace Omma\AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Range;
 
@@ -19,6 +22,7 @@ class MeetingRecurringForm extends AbstractType
         $builder
             ->add("type", "choice", array(
                 "choices" => array(
+                    "none"  => "none",
                     "day"   => "day",
                     "week"  => "week",
                     "month" => "month",
@@ -41,16 +45,16 @@ class MeetingRecurringForm extends AbstractType
             ->add("every", "integer", array(
                 "constraints" => array(new Range(array("min" => 1))),
             ))
+            ->add("week_weekdays", "collection", array(
+                "type" => "text",
+                "allow_add" => true,
+                "allow_delete" => true,
+            ))
             ->add("month_type", "choice", array(
                 "choices" => array(
                     "absolute" => "absolute",
                     "relative" => "relative",
                 ),
-            ))
-            ->add("month_weekdays", "collection", array(
-                "type" => "text",
-                "allow_add" => true,
-                "allow_delete" => true,
             ))
             ->add("rel_month", "choice", array(
                 "choices" => array(
@@ -66,18 +70,6 @@ class MeetingRecurringForm extends AbstractType
             ))
             ->add("abs_month_day", "integer", array(
                 "constraints" => array(new Range(array("min" => 1, "max" => 31))),
-            ))
-            ->add("end_type", "choice", array(
-                "choices" => array(
-                    "absolute" => "absolute",
-                    "relative" => "relative",
-                )
-            ))
-            ->add("end_date", "datetime", array(
-                "widget" => "single_text",
-            ))
-            ->add("end_after", "integer", array(
-                "constraints" => array(new Range(array("min" => 1))),
             ))
         ;
     }

@@ -6,12 +6,15 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Omma\AppBundle\Entity\Attendee;
 use Omma\AppBundle\Entity\Meeting;
+use Omma\AppBundle\Entity\MeetingRecurring;
 use Omma\AppBundle\Form\Type\MeetingConfirmationForm;
 use Omma\AppBundle\Form\Type\MeetingForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  *
@@ -166,6 +169,13 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
 
         if ($form->isValid()) {
             $meeting->setTemp(false);
+            // remove reccuring meeting if set to none
+            $recurring = $meeting->getMeetingRecurring();
+            if (null !== $recurring and
+                (MeetingRecurring::TYPE_NONE === $recurring->getType() or null === $recurring->getType())
+            ) {
+                $meeting->setMeetingRecurring(null);
+            }
             $this->get("omma.app.manager.meeting")->save($meeting);
 
             return $this->view($meeting);
@@ -227,25 +237,67 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $user = $this->getUser();
+        $meetingManager = $this->get("omma.app.manager.meeting");
 
         $meeting = new Meeting();
-        $meeting
-            ->setName("temp-" . date("Y-m-d"))
-            ->setTemp(true)
-            ->setDateStart(new \DateTime())
-            ->setDateEnd(new \DateTime("+1hour"))
-        ;
-        $attendee = new Attendee();
-        $attendee
-            ->setMeeting($meeting)
-            ->setUser($user)
-            ->setOwner(true)
-        ;
+        if (0 !== ($recurringId = $request->query->getInt("recurring"))) {
+            $recurringManager = $this->get("omma.app.manager.meeting_recurring");
+            /** @var MeetingRecurring $recurring */
+            $recurring = $recurringManager->find($recurringId);
+            if (null === $recurring) {
+                throw new NotFoundHttpException(sprintf("no recurring found with id %d", $recurringId));
+            }
+            $date = new \DateTime($request->query->get("date"));
+            if (false === $date) {
+                throw new BadRequestHttpException("invalid date");
+            }
+            $previous = $this->get("omma.app.manager.meeting")->findPrevious($recurring, $date);
+            if (null === $previous) {
+                throw new BadRequestHttpException("previous meeting not found");
+            }
+            $next = $previous->getNext();
 
-        $this->get("omma.app.manager.meeting")->save($meeting);
+            $duration = $previous->getDateEnd()->diff($previous->getDateStart());
+            $end = clone $date;
+            $end->add($duration);
+            $meeting
+                ->setName($previous->getName())
+                ->setDateStart($date)
+                ->setDateEnd($end)
+                ->setTemp(false)
+                ->setMeetingRecurring($recurring)
+            ;
+            // break linked list, otherwise doctrine will throw an error
+            if (null !== $next) {
+                $next->setPrev(null);
+                $meetingManager->save($next, false);
+                $meetingManager->save($meeting, false);
+                $meetingManager->flush();
+                $meeting
+                    ->setPrev($previous)
+                    ->setNext($next)
+                ;
+            }
+
+        } else {
+            // normal new meeting
+            $meeting
+                ->setName("temp-" . date("Y-m-d"))
+                ->setTemp(true)
+                ->setDateStart(new \DateTime())
+                ->setDateEnd(new \DateTime("+1hour"))
+            ;
+            $attendee = new Attendee();
+            $attendee
+                ->setMeeting($meeting)
+                ->setUser($user)
+                ->setOwner(true)
+            ;
+        }
+        $meetingManager->save($meeting);
 
         return $this->redirect($this->generateUrl("omma_meeting_details", array("meeting" => $meeting->getId())));
     }
