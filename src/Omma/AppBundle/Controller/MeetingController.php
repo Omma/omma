@@ -30,7 +30,8 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
         $user = $this->getUser();
         $query = $this->get("omma.app.manager.meeting")
             ->createQueryBuilder("m")
-            ->select("m")
+            ->select("m, r")
+            ->leftJoin("m.meetingRecurring", "r")
         ;
 
         if (!$this->get("security.context")->isGranted("ROLE_SUPER_ADMIN")) {
@@ -70,9 +71,17 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
         $user = $this->getUser();
 
         $query = $this->get("omma.app.manager.meeting")->createQueryBuilder("m");
-        $query->select("m")
-            ->where("m.dateStart BETWEEN :dateStart AND :dateEnd")
-            ->andWhere("m.dateEnd BETWEEN :dateStart AND :dateEnd")
+        $query
+            ->select("m, r")
+            ->leftJoin("m.meetingRecurring", "r")
+            ->where("
+                (
+                    m.dateStart BETWEEN :dateStart AND :dateEnd
+                    AND m.dateEnd BETWEEN :dateStart AND :dateEnd
+                ) OR (
+                    r.dateStart < :dateStart AND (r.dateEnd > :dateEnd OR r.dateEnd IS NULL)
+                )
+            ")
             ->setParameter("dateStart", $dateStart)
             ->setParameter("dateEnd", $dateEnd);
 

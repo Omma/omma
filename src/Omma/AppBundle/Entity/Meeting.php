@@ -44,11 +44,11 @@ class Meeting extends Base
     private $groups;
 
     /**
-     * @ORM\OneToMany(targetEntity="MeetingRecurring", mappedBy="meeting", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="MeetingRecurring", inversedBy="meetings", cascade={"persist"})
      *
      * @var MeetingRecurring
      */
-    private $meetingRecurrings;
+    private $meetingRecurring;
 
     /**
      * @ORM\OneToMany(targetEntity="Task", mappedBy="meeting", orphanRemoval=true)
@@ -138,7 +138,6 @@ class Meeting extends Base
     {
         $this->attendees = new ArrayCollection();
         $this->groups = new ArrayCollection();
-        $this->meetingRecurrings = new ArrayCollection();
         $this->tasks = new ArrayCollection();
         $this->agendas = new ArrayCollection();
         $this->files = new ArrayCollection();
@@ -320,42 +319,28 @@ class Meeting extends Base
     }
 
     /**
-     * Add meetingRecurring
-     *
      * @param MeetingRecurring $meetingRecurring
      *
-     * @return Meeting
+     * @return $this
      */
-    public function addMeetingRecurring(MeetingRecurring $meetingRecurring)
+    public function setMeetingRecurring(MeetingRecurring $meetingRecurring = null)
     {
-        if (!$this->meetingRecurrings->contains($meetingRecurring)) {
-            $this->meetingRecurrings->add($meetingRecurring);
-            $meetingRecurring->setMeeting($this);
+        if ($this->meetingRecurring !== $meetingRecurring) {
+            $this->meetingRecurring = $meetingRecurring;
+            if (null !== $meetingRecurring) {
+                $meetingRecurring->addMeeting($this);
+            }
         }
 
         return $this;
     }
 
     /**
-     * Remove meetingRecurring
-     *
-     * @param MeetingRecurring $meetingRecurring
+     * @return MeetingRecurring
      */
-    public function removeMeetingRecurring(MeetingRecurring $meetingRecurring)
+    public function getMeetingRecurring()
     {
-        if ($this->meetingRecurrings->removeElement($meetingRecurring)) {
-            $meetingRecurring->setMeeting(null);
-        }
-    }
-
-    /**
-     * Get meetingRecurrings
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getMeetingRecurrings()
-    {
-        return $this->meetingRecurrings;
+        return $this->meetingRecurring;
     }
 
     /**

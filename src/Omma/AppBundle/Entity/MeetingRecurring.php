@@ -16,13 +16,13 @@ use Doctrine\ORM\Mapping as ORM;
 class MeetingRecurring extends Base
 {
 
-    const TYPE_DAY = 1;
+    const TYPE_DAY = "day";
 
-    const TYPE_WEEK = 2;
+    const TYPE_WEEK = "week";
 
-    const TYPE_MONTH = 3;
+    const TYPE_MONTH = "month";
 
-    const TYPE_YEAR = 4;
+    const TYPE_YEAR = "year";
 
     /**
      * @ORM\Column(name="id", type="integer")
@@ -34,12 +34,11 @@ class MeetingRecurring extends Base
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="meetingRecurrings")
-     * @ORM\JoinColumn(name="meeting_id", referencedColumnName="id", nullable=false)
+     * @ORM\OneToMany(targetEntity="Meeting", mappedBy="meetingRecurring")
      *
-     * @var Meeting
+     * @var ArrayCollection
      */
-    private $meeting;
+    private $meetings;
 
     /**
      * @ORM\OneToMany(targetEntity="MeetingRecurringException", mappedBy="meetingRecurring")
@@ -49,21 +48,21 @@ class MeetingRecurring extends Base
     private $meetingRecurringExceptions;
 
     /**
-     * @ORM\Column(name="date_start", type="datetime")
+     * @ORM\Column(name="date_start", type="datetime", nullable=true)
      *
      * @var \DateTime
      */
     private $dateStart;
 
     /**
-     * @ORM\Column(name="date_end", type="datetime")
+     * @ORM\Column(name="date_end", type="datetime", nullable=true)
      *
      * @var \DateTime
      */
     private $dateEnd;
 
     /**
-     * @ORM\Column(name="type", type="integer")
+     * @ORM\Column(name="type", type="string")
      *
      * @var integer
      */
@@ -74,13 +73,14 @@ class MeetingRecurring extends Base
      *
      * @var array
      */
-    private $recurring = array();
+    private $config = array();
 
     /**
      * Constructor
      */
     public function __construct()
     {
+        $this->meetings = new ArrayCollection();
         $this->meetingRecurringExceptions = new ArrayCollection();
     }
 
@@ -167,32 +167,40 @@ class MeetingRecurring extends Base
     }
 
     /**
-     * Set meeting
-     *
      * @param Meeting $meeting
      *
-     * @return MeetingRecurring
+     * @return $this
      */
-    public function setMeeting(Meeting $meeting)
+    public function addMeeting(Meeting $meeting)
     {
-        if ($this->meeting !== $meeting) {
-            $this->meeting = $meeting;
-            if (null !== $meeting) {
-                $meeting->addMeetingRecurring($this);
-            }
+        if (!$this->meetings->contains($meeting)) {
+            $this->meetings->add($meeting);
+            $meeting->setMeetingRecurring($this);
         }
 
         return $this;
     }
 
     /**
-     * Get meeting
+     * @param Meeting $meeting
      *
-     * @return Meeting
+     * @return $this
      */
-    public function getMeeting()
+    public function removeMeeting(Meeting $meeting)
     {
-        return $this->meeting;
+        if ($this->meetings->removeElement($meeting)) {
+            $meeting->setMeetingRecurring(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Meeting[]
+     */
+    public function getMeetings()
+    {
+        return $this->meetings;
     }
 
     /**
@@ -239,26 +247,22 @@ class MeetingRecurring extends Base
     }
 
     /**
-     * Set recurring
-     *
-     * @param array $recurring
-     *
-     * @return MeetingRecurring
+     * @return array
      */
-    public function setRecurring(array $recurring)
+    public function getConfig()
     {
-        $this->recurring = $recurring;
-
-        return $this;
+        return $this->config;
     }
 
     /**
-     * Get recurring
+     * @param array $config
      *
-     * @return array
+     * @return self
      */
-    public function getRecurring()
+    public function setConfig($config)
     {
-        return $this->recurring;
+        $this->config = $config;
+
+        return $this;
     }
 }

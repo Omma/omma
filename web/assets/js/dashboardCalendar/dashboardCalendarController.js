@@ -24,7 +24,7 @@ angular.module('ommaApp').controller('dashboarCalendarController', ['$scope', '$
         var end = moment(date).endOf(view);
         meetingService.getByDate(start, end).then(function(meetings) {
             angular.forEach(meetings, function(meeting) {
-                if (undefined !== eventsById[meeting.id]) {
+                if (undefined !== eventsById[meeting.identifier]) {
                     return;
                 }
                 var event = {
@@ -37,7 +37,7 @@ angular.module('ommaApp').controller('dashboarCalendarController', ['$scope', '$
                     deletable: false
                 };
 
-                eventsById[meeting.id] = event;
+                eventsById[meeting.identifier] = event;
                 $scope.events.push(event);
             });
         });

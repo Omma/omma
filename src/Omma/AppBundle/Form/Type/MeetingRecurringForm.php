@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints\Range;
 /**
  *
  * @author Adrian Woeltche
+ * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 class MeetingRecurringForm extends AbstractType
 {
@@ -16,7 +17,14 @@ class MeetingRecurringForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("type", "integer")
+            ->add("type", "choice", array(
+                "choices" => array(
+                    "day"   => "day",
+                    "week"  => "week",
+                    "month" => "month",
+                    "year"  => "year",
+                )
+            ))
             ->add("date_start", "datetime", array(
                 "widget" => "single_text",
             ))
@@ -25,36 +33,39 @@ class MeetingRecurringForm extends AbstractType
             ))
         ;
 
-        $recurring = $builder->create("config");
-        $recurring
+        $config = $builder->create("config", "form", array(
+            "compound" => true,
+        ));
+        $builder->add($config);
+        $config
             ->add("every", "integer", array(
-                "constraints" => array(new Range(array("min" => 1)))
+                "constraints" => array(new Range(array("min" => 1))),
             ))
             ->add("month_type", "choice", array(
                 "choices" => array(
                     "absolute" => "absolute",
-                    "relative" => "relative"
-                )
+                    "relative" => "relative",
+                ),
             ))
             ->add("month_weekdays", "collection", array(
-                "type" => "text"
+                "type" => "text",
+                "allow_add" => true,
+                "allow_delete" => true,
             ))
             ->add("rel_month", "choice", array(
                 "choices" => array(
-                    "choices" => array(
-                        "first"  => "first",
-                        "second" => "second",
-                        "third"  => "third",
-                        "fourth" => "fourth",
-                        "last"   => "last",
-                    )
-                )
+                    "first"  => "first",
+                    "second" => "second",
+                    "third"  => "third",
+                    "fourth" => "fourth",
+                    "last"   => "last",
+                ),
             ))
             ->add("rel_month_day", "integer", array(
-                "constraints" => array(new Range(array("min" => 1, "max" => 7)))
+                "constraints" => array(new Range(array("min" => 1, "max" => 7))),
             ))
             ->add("abs_month_day", "integer", array(
-                "constraints" => array(new Range(array("min" => 1, "max" => 31)))
+                "constraints" => array(new Range(array("min" => 1, "max" => 31))),
             ))
             ->add("end_type", "choice", array(
                 "choices" => array(
@@ -62,9 +73,11 @@ class MeetingRecurringForm extends AbstractType
                     "relative" => "relative",
                 )
             ))
-            ->add("end_date", "datetime")
+            ->add("end_date", "datetime", array(
+                "widget" => "single_text",
+            ))
             ->add("end_after", "integer", array(
-                "constraints" => arra(new Range(array("min" => 1)))
+                "constraints" => array(new Range(array("min" => 1))),
             ))
         ;
     }
@@ -74,6 +87,11 @@ class MeetingRecurringForm extends AbstractType
         $resolver->setDefaults(array(
             "data_class" => 'Omma\AppBundle\Entity\MeetingRecurring',
         ));
+    }
+
+    public function getParent()
+    {
+        return "omma_rest_base";
     }
 
     public function getName()
