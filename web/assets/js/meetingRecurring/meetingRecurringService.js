@@ -1,7 +1,7 @@
 /**
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
-angular.module('ommaApp').service('meetingRecurringSerive', ['$http', function($http) {
+angular.module('ommaApp').service('meetingRecurringService', ['$http', function($http) {
     return {
         load: function(meeting) {
             return $http.get('/meetings/' + meeting.id + '/recurrings.json').then(function(data) {
@@ -9,7 +9,7 @@ angular.module('ommaApp').service('meetingRecurringSerive', ['$http', function($
             });
         },
         save: function(meeting, recurring) {
-            
+
         }
     }
 }]);
