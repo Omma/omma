@@ -23,6 +23,10 @@ class MeetingTaskForm extends AbstractType
             ))
             ->add("priority", "integer")
             ->add("status", "integer")
+            ->add("user", "entity", array(
+                "class"    => 'Application\Sonata\UserBundle\Entity\User',
+                "property" => "id",
+            ))
         ;
     }
 
@@ -31,6 +35,11 @@ class MeetingTaskForm extends AbstractType
         $resolver->setDefaults(array(
             "data_class" => 'Omma\AppBundle\Entity\Task',
         ));
+    }
+
+    public function getParent()
+    {
+        return "omma_rest_base";
     }
 
     public function getName()
