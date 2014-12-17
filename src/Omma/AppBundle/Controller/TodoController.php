@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *
  * @author Johannes Höhn <johannes.hoehn@hof-university.de>
  */
-class ProfileController extends Controller
+class TodoController extends Controller
 {
     /**
      * @Route("/todos")
