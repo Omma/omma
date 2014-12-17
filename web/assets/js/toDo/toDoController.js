@@ -56,7 +56,7 @@ angular.module('ommaApp')
         };
         $scope.deleteModal = function () {
             $scope.status = 'saving';
-            toDoService.delete($scope.$parent.meeting, tempTodoToDelete).then(function(todo) {
+            toDoService.delete($scope.$parent.meeting, tempTodoToDelete).then(function() {
                 toDoService.load($scope.$parent.meeting).then(function(todo) {
                     $scope.todos = todo;
                     $scope.status = 'saved';
