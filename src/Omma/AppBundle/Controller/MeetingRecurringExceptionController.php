@@ -28,16 +28,7 @@ class MeetingRecurringExceptionController extends FOSRestController implements C
      */
     public function cgetAction(Meeting $meeting, MeetingRecurring $meetingRecurring)
     {
-        return $this->get("omma.app.manager.meeting_recurring_exception")
-            ->createQueryBuilder("e")
-            ->select("e")
-            ->innerJoin("e.meetingRecurring", "r")
-            ->where("r.meeting = :meeting")
-            ->andWhere("e.meetingRecurring = :meetingRecurring")
-            ->setParameter("meeting", $meeting)
-            ->setParameter("meetingRecurring", $meetingRecurring)
-            ->getQuery()
-            ->getResult();
+        return $meetingRecurring->getMeetingRecurringExceptions();
     }
 
     /**
@@ -53,7 +44,7 @@ class MeetingRecurringExceptionController extends FOSRestController implements C
      */
     public function cpostAction(Request $request, Meeting $meeting, MeetingRecurring $meetingRecurring)
     {
-        if ($meeting !== $meetingRecurring->getMeeting()) {
+        if (!$meetingRecurring->getMeetings()->contains($meeting)) {
             throw new InvalidOptionsException("Meeting and MeetingRecurring are not linked", 500);
         }
 

@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block content %}
-    <div ng-controller="dashboarCalendarController">
+    <div ng-controller="dashboarCalendarController" class="calendar-start">
         {% verbatim %}
         <h2 class="text-center">{{ calendarControl.getTitle() }}</h2>
         {% endverbatim %}
@@ -47,9 +47,4 @@
                     ></mwl-calendar>
         </div>
     </div>
-    <ul>
-        {% for meeting in meetings %}
-            <li><a href="{{ path("omma_meeting_details", {"meeting": meeting.id}) }}">{{ meeting.name }}</a></li>
-        {% endfor %}
-    </ul>
 {% endblock %}

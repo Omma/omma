@@ -1,0 +1,190 @@
+{#
+ # @author Florian Pfitzer <pfitzer@w3p.cc>
+ #}
+<form class="form-horizontal">
+    <div class="form-group">
+        <label for="previous" class="col-sm-3 control-label">{{ "app.general.previous_meeting"|trans }}</label>
+        <div class="col-sm-9">
+            {% if can_edit %}
+                <button class="btn btn-primary" ng-click="editPrevMeeting()" ng-hide="editingPrevMeeting || prevMeeting != null">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    {{ "app.add"|trans }}
+                </button>
+            {% endif %}
+            <div class="form-control-static" ng-show="!editingPrevMeeting && prevMeeting != null">
+                {% verbatim %}
+                <a target="_blank" ng-href="/meetings/{{ prevMeeting.id }}/details">{{ prevMeeting.name }}<br />
+                    {{ prevMeeting.date_start | moment }} - {{ prevMeeting.date_end | moment }}
+                </a>
+                {% endverbatim %}
+                {% if can_edit %}
+                    <br /><br />
+                    <button class="btn btn-default" ng-click="copyAttendees()">
+                        {{ "app.general.copy_attendees"|trans }}
+                    </button>
+                    <button class="btn btn-default" ng-click="copyAgenda()">
+                        {{ "app.general.copy_agenda"|trans }}
+                    </button>
+                {% endif %}
+            </div>
+            {% if can_edit %}
+                <div class="well" ng-show="editingPrevMeeting">
+                    <ui-select ng-model="$parent.prevMeeting" theme="select2" class="form-control">
+                        <ui-select-match placeholder="{{ "app.general.search"|trans }}">
+                            {{ "{{ $select.selected.name}} ({{ $select.selected.date_start | moment }} - {{ $select.selected.date_end | moment }}) " }}
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in prevMeetings | filter: $select.search">
+                            <div ng-bind-html="item.name | highlight: $select.search"></div>
+                            <small>
+                                <span ng-bind-html="item.date_start | moment | highlight: $select.search"></span>
+                                -
+                                <span ng-bind-html="item.date_end | moment | highlight: $select.search"></span>
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <br />
+                    <button class="btn btn-success" ng-click="linkMeeting()">
+                        <i class="glyphicon glyphicon-ok"></i>
+                        {{ "app.general.link"|trans }}
+                    </button>
+                    <button class="btn btn-default" ng-click="cancelEditPrevMeeting()">
+                        <i class="glyphicon glyphicon-remove"></i>
+                        {{ "app.cancel"|trans }}
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if meeting.next is not null %}
+        <div class="form-group">
+            <label for="next" class="col-sm-3 control-label">{{ "app.general.next_meeting"|trans }}</label>
+            <div class="col-sm-9">
+                <div class="form-control-static">
+                    {% verbatim %}
+                    <a target="_blank" ng-href="/meetings/{{ nextMeeting.id }}/details">{{ nextMeeting.name }}<br />
+                        {{ nextMeeting.date_start | moment }} - {{ nextMeeting.date_end | moment }}
+                    </a>
+                    {% endverbatim %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="form-group" style="margin-top: 35px">
+        <label for="startDate" class="col-sm-3 control-label">{{ "app.general.date_start"|trans }}</label>
+        {% if can_edit %}
+            <div class="col-sm-5">
+                <input date-picker id="startDate" class="form-control date-picker" type="text" date="date.startDate" />
+            </div>
+            <div class="col-sm-3">
+                <timepicker class="time-picker" ng-model="date.startDate" hour-step="1" minute-step="5" show-meridian="false"></timepicker>
+            </div>
+        {% else %}
+            <div class="col-sm-9">
+                <div class="form-control-static">
+                    {{ "{{ date.startDate|moment }}" }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="form-group" style="margin-top: 35px">
+        <label for="endDate" class="col-sm-3 control-label">{{ "app.general.date_end"|trans }}</label>
+        {% if can_edit %}
+            <div class="col-sm-5">
+                <input date-picker id="endDate" class="form-control date-picker" type="text" date="date.endDate" />
+            </div>
+            <div class="col-sm-3">
+                <timepicker class="time-picker" ng-model="date.endDate" hour-step="1" minute-step="5" show-meridian="false"></timepicker>
+            </div>
+        {% else %}
+            <div class="col-sm-9">
+                <div class="form-control-static">
+                    {{ "{{ date.endDate|moment }}" }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+
+    <h2>{{ "app.general.recurring.title"|trans }}</h2>
+    <div ng-controller="meetingRecurringController">
+        <div class="form-group" style="margin-top: 25px">
+            <label for="type" class="col-sm-3 control-label">{{ "app.general.recurring.type"|trans }}</label>
+            <div class="col-sm-9">
+                <select id="type" class="form-control" ng-model="recurring.type">
+                    <option value="none">{{ "app.general.recurring.types.none"|trans }}</option>
+                    <option value="day">{{ "app.general.recurring.types.daily"|trans }}</option>
+                    <option value="week">{{ "app.general.recurring.types.weekly"|trans }}</option>
+                    <option value="month">{{ "app.general.recurring.types.monthly"|trans }}</option>
+                    <option value="year">{{ "app.general.recurring.types.yearly"|trans }}</option>
+                </select>
+            </div>
+        </div>
+        <div ng-show="recurring.type.length > 0 && recurring.type != 'none' && recurring.type != 'year'" class="form-group">
+            <label for="every" class="col-sm-3 control-label">{{ "app.general.recurring.every"|trans }}</label>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <input type="number" id="every" class="form-control" ng-model="recurring.config.every" />
+                    {% for type in ['day', 'week', 'month'] %}
+                    <span ng-show="recurring.type == '{{ type }}'" class="input-group-addon">
+                        {{ ("app.general.recurring." ~ type)|trans }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div ng-show="recurring.type == 'week'" class="form-group">
+            <label for="" class="col-sm-3 control-label">{{ "app.general.recurring.weekdays"|trans }}</label>
+            <div class="col-sm-9">
+                <label class="checkbox-inline" ng-repeat="weekday in weekdays">
+                    <input type="checkbox" ng-model="recurring.config.week_weekdays[weekday.value]" ng-true-value="'1'" ng-false-value="'0'" value="1"> {{ "{{ weekday.name }}" }}
+                </label>
+            </div>
+        </div>
+        <div ng-show="recurring.type == 'month'" class="form-group">
+            <label for="" class="col-sm-3 control-label">{{ "app.general.recurring.at"|trans }}</label>
+            <div class="col-sm-9">
+                <div class="radio">
+                    <label>
+                        <input type="radio" ng-model="recurring.config.month_type" value="relative">
+                        <div class="form-inline">
+                            <select class="form-control" ng-model="recurring.config.rel_month" ng-disabled="recurring.config.month_type != 'relative'">
+                                <option value="first">{{ "app.general.recurring.first"|trans }}</option>
+                                <option value="second">{{ "app.general.recurring.second"|trans }}</option>
+                                <option value="third">{{ "app.general.recurring.third"|trans }}</option>
+                                <option value="fourth">{{ "app.general.recurring.fourth"|trans }}</option>
+                                <option value="last">{{ "app.general.recurring.last"|trans }}</option>
+                            </select>
+                            <select
+                                    class="form-control"
+                                    ng-model="recurring.config.rel_month_day"
+                                    ng-options="weekday.value as weekday.name for weekday in weekdays"
+                                    ng-disabled="recurring.config.month_type != 'relative'">
+                            </select>
+                        </div>
+
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" ng-model="recurring.config.month_type" value="absolute">
+                        <input type="number" class="form-control" ng-model="recurring.config.abs_month_day" ng-disabled="recurring.config.month_type != 'absolute'" />
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div ng-show="recurring.type != 'none'" class="form-group">
+            <label for="recurringStartDate" class="col-sm-3 control-label">{{ "app.general.recurring.start"|trans }}</label>
+            <div class="col-sm-9">
+                <input date-picker id="recurringStartDate" class="form-control date-picker" type="text" date="recurring.date_start"
+                       allow-empty />
+            </div>
+        </div>
+        <div ng-show="recurring.type != 'none'" class="form-group">
+            <label for="recurringEndDate" class="col-sm-3 control-label">{{ "app.general.recurring.end"|trans }}</label>
+            <div class="col-sm-9">
+                <input date-picker id="recurringEndDate" class="form-control date-picker" type="text" date="recurring.date_end"
+                       allow-empty />
+            </div>
+        </div>
+    </div>
+</form>

@@ -15,3 +15,7 @@ Omma\AppBundle\Entity\Meeting:
         next:
             expose: true
             max_depth: 1
+
+        meetingRecurring:
+            expose: true
+            max_depth: 1

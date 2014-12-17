@@ -3,13 +3,11 @@ Omma\AppBundle\Entity\MeetingRecurring:
     properties:
         id:
             expose: true
-        meeting:
-            expose: true
         dateStart:
             expose: true
         dateEnd:
             expose: true
         type:
             expose: true
-        recurring:
+        config:
             expose: true

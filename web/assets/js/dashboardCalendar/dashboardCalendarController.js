@@ -7,7 +7,7 @@ angular.module('ommaApp').controller('dashboarCalendarController', ['$scope', '$
     var eventsById = {};
 
     $scope.eventClicked = function(event) {
-        window.location.href = '/meetings/' + event.id + '/details';
+        window.location.href = event.url;
     };
 
     $scope.setCalendarToToday = function() {
@@ -24,20 +24,21 @@ angular.module('ommaApp').controller('dashboarCalendarController', ['$scope', '$
         var end = moment(date).endOf(view);
         meetingService.getByDate(start, end).then(function(meetings) {
             angular.forEach(meetings, function(meeting) {
-                if (undefined !== eventsById[meeting.id]) {
+                if (undefined !== eventsById[meeting.identifier]) {
                     return;
                 }
                 var event = {
                     id: meeting.id,
                     title: meeting.name,
                     type: 'info',
+                    url: meeting.url,
                     starts_at: moment(meeting.date_start).toDate(),
                     ends_at: moment(meeting.date_end).toDate(),
                     editable: false,
                     deletable: false
                 };
 
-                eventsById[meeting.id] = event;
+                eventsById[meeting.identifier] = event;
                 $scope.events.push(event);
             });
         });

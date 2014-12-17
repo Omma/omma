@@ -1,0 +1,44 @@
+{#
+ # @author Florian Pfitzer <pfitzer@w3p.cc>
+ #}
+{% if can_edit %}
+    <div class="header-button" ng-switch on="status">
+        <button ng-switch-when="not_saved" class="btn btn-primary" ng-click="saveTree()"><span class="glyphicon glyphicon-file"></span> {{ "app.save"|trans }}</button>
+        <button ng-switch-when="saving" class="btn btn-default disabled" ng-click="saveTree()"><span class="glyphicon glyphicon-refresh"></span> {{ "app.saving"|trans }}</button>
+        <button ng-switch-when="saved" class="btn btn-default disabled" ng-click="saveTree()"><span class="glyphicon glyphicon-ok"></span> {{ "app.saved"|trans }}</button>
+    </div>
+{% endif %}
+<h2>{{ "app.agenda.title"|trans }}</h2>
+<hr class="invisible" />
+<!-- Nested node template -->
+<script type="text/ng-template" id="nodes_renderer.html">
+    <div ui-tree-handle>
+        <form class="form-inline" role="form" ng-show="node.editing">
+            <div class="form-group">
+                <label class="sr-only" for="name">Name</label>
+                <input type="text" class="form-control" placeholder="Name" ng-model="node.name">
+            </div>
+            <button type="submit" class="btn btn-primary" ng-click="save(node)">Save</button>
+            <button type="submit" class="btn btn-default" ng-click="cancelEditing(node)">Cancel</button>
+        </form>
+        <div ng-show="!node.editing">
+            {{ "{{ node.name }}" }}
+            <div class="pull-right">
+                <a href="" class="btn btn-success btn-xs" data-nodrag ng-click="newNode(node)"><span class="glyphicon glyphicon-plus"></span></a>
+                <a href="" class="btn btn-primary btn-xs" data-nodrag ng-click="edit(node)"><i class="glyphicon glyphicon-pencil"></i></a>
+                <a href="" class="btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+            </div>
+        </div>
+    </div>
+    <ol ui-tree-nodes="" ng-model="node.children">
+        <li ng-repeat="node in node.children" ui-tree-node ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+</script>
+<div ui-tree>
+    <ol ui-tree-nodes="" ng-model="rootAgenda.children" id="tree-root">
+        <li ng-repeat="node in rootAgenda.children" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+    </ol>
+    <hr class="invisible" />
+    <a href="" class="btn btn-success" data-nodrag ng-click="newNode(rootAgenda)"><span class="glyphicon glyphicon-plus"></span></a>
+</div>

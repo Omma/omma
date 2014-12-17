@@ -16,7 +16,22 @@ angular.module('ommaApp').directive('datePicker', [function() {
                 singleDatePicker: true
             });
 
+            // allow emptying by user
+            $element.change(function() {
+                if (0 === $element.val().length) {
+                    $scope.date = undefined;
+                    $scope.$apply();
+                }
+            });
+
             $scope.$watch('date', function(newDate) {
+                if (undefined === newDate) {
+                    $element.val('');
+                    return;
+                }
+                if (!moment.isMoment(newDate)) {
+                    $scope.date = newDate = moment(newDate);
+                }
                 $element.data('daterangepicker').setStartDate(newDate);
                 $element.data('daterangepicker').setEndDate(newDate);
             });

@@ -27,6 +27,7 @@ class MeetingForm extends AbstractType
                 "property" => "id",
             ))
             ->add("next", "integer")
+            ->add("meeting_recurring", new MeetingRecurringForm())
         ;
     }
 
