@@ -32,49 +32,49 @@ class MeetingRecurring extends Base
      *
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\OneToMany(targetEntity="Meeting", mappedBy="meetingRecurring")
      *
      * @var ArrayCollection
      */
-    private $meetings;
+    protected $meetings;
 
     /**
      * @ORM\OneToMany(targetEntity="MeetingRecurringException", mappedBy="meetingRecurring")
      *
      * @var ArrayCollection
      */
-    private $meetingRecurringExceptions;
+    protected $meetingRecurringExceptions;
 
     /**
      * @ORM\Column(name="date_start", type="datetime", nullable=true)
      *
      * @var \DateTime
      */
-    private $dateStart;
+    protected $dateStart;
 
     /**
      * @ORM\Column(name="date_end", type="datetime", nullable=true)
      *
      * @var \DateTime
      */
-    private $dateEnd;
+    protected $dateEnd;
 
     /**
      * @ORM\Column(name="type", type="string")
      *
      * @var integer
      */
-    private $type;
+    protected $type;
 
     /**
-     * @ORM\Column(name="recurring", type="array")
+     * @ORM\Column(type="array")
      *
      * @var array
      */
-    private $config = array();
+    protected $config = array();
 
     /**
      * Constructor

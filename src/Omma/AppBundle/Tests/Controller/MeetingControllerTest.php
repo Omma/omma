@@ -12,18 +12,41 @@ class MeetingControllerTest extends AbstractAuthenticatedTest
 
     public function testCgetAdmin()
     {
+        $content = $this->pushContent("/meetings.json", array(
+            "name" => "TestMeeting",
+            "date_start" => "2014-01-01 08:00:00",
+            "date_end" => "2014-01-01 09:30:00"
+        ));
+
         $this->fetchContent("/meetings.json");
     }
 
     public function testCgetUser()
     {
         $this->login("test");
+        $content = $this->pushContent("/meetings.json", array(
+            "name" => "TestMeeting",
+            "date_start" => "2014-01-01 08:00:00",
+            "date_end" => "2014-01-01 09:30:00"
+        ));
+
         $this->fetchContent("/meetings.json");
     }
 
     public function testGetAdmin()
     {
-        $this->fetchContent("/meetings/1.json");
+        $content = $this->pushContent("/meetings.json", array(
+            "name" => "TestMeeting",
+            "date_start" => "2014-01-01 08:00:00",
+            "date_end" => "2014-01-01 09:30:00"
+        ));
+
+        $serializer = $this->getContainer()->get("jms_serializer");
+        $meeting = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Meeting', "json");
+
+        $this->assertInstanceOf('Omma\AppBundle\Entity\Meeting', $meeting);
+
+        $this->fetchContent("/meetings/" . $meeting->getId() . ".json");
     }
 
     public function testCpost()

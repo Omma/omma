@@ -1,3 +1,6 @@
+# Adrian Woeltche
+# only for use case tests
+
 Application\Sonata\UserBundle\Entity\User:
     user1:
         username: admin

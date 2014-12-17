@@ -22,7 +22,7 @@ class MeetingRecurringException extends Base
      *
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="MeetingRecurring", inversedBy="meetingRecurringExceptions")
@@ -30,14 +30,14 @@ class MeetingRecurringException extends Base
      *
      * @var MeetingRecurring
      */
-    private $meetingRecurring;
+    protected $meetingRecurring;
 
     /**
      * @ORM\Column(name="date", type="datetime")
      *
      * @var \DateTime
      */
-    private $date;
+    protected $date;
 
     /**
      * Get id
