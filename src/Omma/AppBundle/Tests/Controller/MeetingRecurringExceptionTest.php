@@ -26,7 +26,7 @@ class MeetingRecurringExceptionTest extends AbstractAuthenticatedTest
             "date_start" => "2014-01-01 08:00:00",
             "date_end" => "2014-12-31 09:30:00",
             "type" => MeetingRecurring::TYPE_WEEK,
-            "recurring" => 1
+            "config" => array()
         ));
 
         $meetingRecurring = $serializer->deserialize($content, 'Omma\AppBundle\Entity\MeetingRecurring', "json");
@@ -43,21 +43,17 @@ class MeetingRecurringExceptionTest extends AbstractAuthenticatedTest
 
         $newMeetingRecurring = $newMeetingRecurringException->getMeetingRecurring();
 
-        $newMeeting = $newMeetingRecurring->getMeeting();
-
         $this->assertInstanceOf('Omma\AppBundle\Entity\MeetingRecurringException', $newMeetingRecurringException);
 
         $this->assertSame($meetingRecurringException->getId(), $newMeetingRecurringException->getId());
 
         $this->assertSame($meetingRecurring->getId(), $newMeetingRecurring->getId());
 
-        $this->assertSame($meeting->getId(), $newMeeting->getId());
-
         $date = $newMeetingRecurringException->getDate()->format("Y-m-d H:i:s");
         $this->assertSame("2014-01-01 08:00:00", $date);
 
-        $this->pushContent("/meetings/" . $newMeeting->getId() . "/recurrings/" . $newMeetingRecurring->getId() . "/recurringexceptions/" . $newMeetingRecurringException->getId() . ".json", array(), "DELETE");
+        $this->pushContent("/meetings/" . $meeting->getId() . "/recurrings/" . $newMeetingRecurring->getId() . "/recurringexceptions/" . $newMeetingRecurringException->getId() . ".json", array(), "DELETE");
 
-        $content = $this->fetchContent("/meetings/" . $newMeeting->getId() . "/recurrings/" . $newMeetingRecurring->getId() . "/recurringexceptions/" . $newMeetingRecurringException->getId() . ".json", "GET", false, false);
+        $content = $this->fetchContent("/meetings/" . $meeting->getId() . "/recurrings/" . $newMeetingRecurring->getId() . "/recurringexceptions/" . $newMeetingRecurringException->getId() . ".json", "GET", false, false);
     }
 }

@@ -26,22 +26,22 @@ class MeetingRecurringTest extends AbstractAuthenticatedTest
             "date_start" => "2014-01-01 08:00:00",
             "date_end" => "2014-12-31 09:30:00",
             "type" => MeetingRecurring::TYPE_WEEK,
-            "recurring" => 1
+            "config" => array(
+                "every" => 1,
+                "week_weekdays" => array(),
+            ),
         ));
 
         $meetingRecurring = $serializer->deserialize($content, 'Omma\AppBundle\Entity\MeetingRecurring', "json");
 
         $content = $this->fetchContent("/meetings/" . $meeting->getId() . "/recurrings/" . $meetingRecurring->getId() . ".json");
 
+        /** @var MeetingRecurring $newMeetingRecurring */
         $newMeetingRecurring = $serializer->deserialize($content, 'Omma\AppBundle\Entity\MeetingRecurring', "json");
-
-        $newMeeting = $newMeetingRecurring->getMeeting();
 
         $this->assertInstanceOf('Omma\AppBundle\Entity\MeetingRecurring', $newMeetingRecurring);
 
         $this->assertSame($meetingRecurring->getId(), $newMeetingRecurring->getId());
-
-        $this->assertSame($meeting->getId(), $newMeeting->getId());
 
         $dateStart = $newMeetingRecurring->getDateStart()->format("Y-m-d H:i:s");
         $this->assertSame("2014-01-01 08:00:00", $dateStart);
@@ -50,10 +50,13 @@ class MeetingRecurringTest extends AbstractAuthenticatedTest
         $this->assertSame("2014-12-31 09:30:00", $dateEnd);
 
         $this->assertSame(MeetingRecurring::TYPE_WEEK, $newMeetingRecurring->getType());
-        $this->assertSame(1, $newMeetingRecurring->getRecurring());
+        $this->assertSame(array(
+            "every" => 1,
+            "week_weekdays" => array(),
+        ), $newMeetingRecurring->getConfig());
 
-        $this->pushContent("/meetings/" . $newMeeting->getId() . "/recurrings/" . $newMeetingRecurring->getId() . ".json", array(), "DELETE");
+        $this->pushContent("/meetings/" . $meeting->getId() . "/recurrings/" . $newMeetingRecurring->getId() . ".json", array(), "DELETE");
 
-        $content = $this->fetchContent("/meetings/" . $newMeeting->getId() . "/recurrings/" . $newMeetingRecurring->getId() . ".json", "GET", false, false);
+        $content = $this->fetchContent("/meetings/" . $meeting->getId() . "/recurrings/" . $newMeetingRecurring->getId() . ".json", "GET", false, false);
     }
 }

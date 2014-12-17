@@ -44,7 +44,6 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
                 );
         },
         _getRecurrings: function(meeting, start, end) {
-            var self = this;
             var meetings = [];
             meeting.isVirtual = false;
             meeting.identifier = meeting.id;
