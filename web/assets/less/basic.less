@@ -469,7 +469,8 @@ header {
   }
 
   /*Todos*/
-  div.tab-pane#todos {
+  div.tab-pane#todos, .all-todos {
+
     .panel-default > .panel-heading {
       background-color: @light-blue;
       cursor: pointer;
@@ -487,7 +488,7 @@ header {
     }
 
     i,span {
-      &.edit-description {
+      &.edit-description, &.edit-title {
         a, a:hover {
           color: @grey;
           border-bottom: none;
@@ -496,17 +497,22 @@ header {
     }
 
     span {
-      &.edit-description {
+      &.edit-title {
         a, a:hover {
           color: @font-color;
         }
       }
     }
 
-
+    span.edit-title a:hover:after {
+      font-family: "Glyphicons Halflings";
+      content:" \270f";
+      line-height: .9;
+    }
     i.edit-description a:hover:after {
       font-family: "Glyphicons Halflings";
-      content:" \270f"
+      content:" \270f";
+      line-height: .9;
     }
 
 
@@ -584,5 +590,3 @@ header {
 .time-picker{
     margin-top: -34px;
 }
-
-

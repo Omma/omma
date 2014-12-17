@@ -1,10 +1,29 @@
 {% extends "OmmaAppBundle::layout.html.twig" %}
 
 {% block content %}
+
+
+    <script type="text/ng-template" id="user_select.html">
+        <div class="input-group">
+            <input type="text" class="form-control" readonly placeholder="eigener Name">
+        </div>
+    </script>
+
+    <div class="pull-right">
+
+        <div class="header-button" on="status" ng-switch="" style="margin-bottom: 25px;">
+            <button ng-switch-when="saving" class="btn btn-default disabled"><span class="glyphicon glyphicon-refresh"></span> {{ "app.saving"|trans }}</button>
+            <button ng-switch-when="saved" class="btn btn-default disabled"><span class="glyphicon glyphicon-ok"></span> {{ "app.saved"|trans }}</button>
+        </div>
+
+    </div>
+
+
     {% verbatim %}
+
     <h1>Alle ToDos</h1>
 
-    <div ng-controller="allTodosController">
+    <div ng-controller="allTodosController" class="all-todos">
 
 
         <div ng-repeat="todo in todos">
@@ -25,7 +44,7 @@
                             <div class="col-xs-12">
                                 <p>
                                     <span class="bold">Titel: </span>
-                                    <span class="edit-description"><a href="#" editable-text="todo.task">{{ todo.task || "empty" }}</a></span>
+                                    <span class="edit-title"><a href="#" editable-text="todo.task">{{ todo.task || "empty" }}</a></span>
                                 </p>
                                 <p>
                                     <span class="bold">Beschreibung: </span><br>

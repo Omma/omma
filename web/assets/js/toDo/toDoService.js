@@ -6,7 +6,11 @@ angular.module('ommaApp').factory('toDoService', ['$http', function($http) {
     return {
         _prepareTodo: function(todo) {
             var newTodo = _.clone(todo);
-            newTodo.user = todo.user.id;
+
+            if(newTodo.user !== undefined) {
+                newTodo.user = todo.user.id;
+            }
+
 
             return newTodo;
         },

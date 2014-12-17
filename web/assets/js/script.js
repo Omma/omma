@@ -34,11 +34,11 @@ $(document).ready(function() {
     }
 
     //todo trigger click
-    $('body').on( 'click', '.panel-heading', function() {
+    /*$('body').on( 'click', '.panel-heading', function() {
 
         var element = $(this).find('a');
         $(element).trigger('click');
-    });
+    });*/
 
 
 

@@ -31,7 +31,7 @@ angular.module('ommaApp')
                 type: 1,
                 priority: 0,
                 status: 0,
-                user:{id:null}
+                user:undefined
             };
 
             toDoService.add($scope.$parent.meeting, newTodo).then(function(todo) {
