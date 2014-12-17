@@ -1,22 +1,20 @@
 {% extends "OmmaAppBundle::layout.html.twig" %}
 
 {% block content %}
+    <h1>{{ "app.profile.title"|trans }}</h1>
+    {% if user.ldapId %}
     <div class="alert alert-info">
-        Sie haben sich via LDAP eingeloggt. <br>Daher können keine Profildaten bearbeitet werden.
+        {{ "app.profile.ldap_info"|trans }}
     </div>
-
-
-    <div class="form-group">
-        <label for="name">Name:</label>
-        <input type="text" class="form-control" id="name" value="Philipp Lahm" disabled>
-    </div>
-
-    <div class="form-group">
-        <label for="email">E-Mail: </label>
-        <input type="email" class="form-control" id="email" value="phillipp.lahm@fcb.de" disabled>
-    </div>
-    <div class="form-group">
-        <label for="password">Passwort:</label>
-        <input type="password" class="form-control" id="password" value="1234567" disabled>
-    </div>
+    {% endif %}
+    {{ form_start(form) }}
+        {{ form_rest(form) }}
+        <div class="form-group">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-file"></i> {{ "app.save"|trans }}
+                </button>
+            </div>
+        </div>
+    {{ form_end(form) }}
 {% endblock %}

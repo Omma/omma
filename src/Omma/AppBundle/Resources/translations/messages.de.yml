@@ -97,3 +97,13 @@ app:
 
                 ---
                 Open Meeting Manager
+    profile:
+        title: Profil
+        ldap_info: |
+            Sie haben sich via LDAP eingeloggt.
+            Daher können keine Profildaten bearbeitet werden.
+        username: Benutzername
+        email: E-Mail
+        firstname: Vorname
+        lastname: Nachname
+        password: Passwort
