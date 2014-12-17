@@ -76,8 +76,10 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
                     break;
                 case 'month':
                     while (current.isBefore(end)) {
-                        meetings = meetings.concat(this._getWeekRecurrings(current, recurring, meeting));
-                        current.add(config.every, 'month');
+                        meetings = meetings.concat(this._getMonthRecurrings(current, recurring, meeting));
+                        console.log('current', current.format());
+                        current.add(config.every, 'month').add(1, 'day');
+                        console.log('added', current.format());
                     }
                     break;
             }
@@ -115,6 +117,37 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
         },
         _getMonthRecurrings: function(date, recurring, meeting) {
             var meetings = [];
+            var config = recurring.config;
+
+            date.startOf('month');
+            // get first monday (1)
+            while (1 !== date.isoWeekday()) {
+                date.add(1, 'day');
+            }
+            if ('relative' === config.month_type) {
+                switch(config.rel_month) {
+                    case 'first':
+                        break;
+                    case 'second':
+                        date.add(1, 'week');
+                        break;
+                    case 'third':
+                        date.add(2, 'week');
+                        break;
+                    case 'fourth':
+                        date.add(3, 'week');
+                        break;
+                    case 'last':
+                        date.endOf('month');
+                        date.startOf('week');
+                        break;
+                }
+                date.isoWeekday(config.rel_month_day);
+            }
+            if (this._isDateInRange(recurring, date)) {
+                meetings.push(this._createVirtualMeeting(meeting, date));
+            }
+            return meetings;
         },
         /**
          * Get Meetings for date range
