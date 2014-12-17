@@ -46,7 +46,7 @@ angular.module('ommaApp').controller('meetingRecurringController', ['$scope', fu
     var date = moment().startOf('week');
     for (var i = 0; i < 7; i++) {
         $scope.weekdays.push({
-            value: date.format('E'),
+            value: parseInt(date.format('E')),
             name: date.format('dddd')
         });
         date.add(1, 'day');

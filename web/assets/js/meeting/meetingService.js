@@ -77,9 +77,18 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
                 case 'month':
                     while (current.isBefore(end)) {
                         meetings = meetings.concat(this._getMonthRecurrings(current, recurring, meeting));
-                        console.log('current', current.format());
-                        current.add(config.every, 'month').add(1, 'day');
-                        console.log('added', current.format());
+                        // +1 day otherwise a endless recursion can occur
+                        current
+                            .add(config.every, 'month')
+                            .add(1, 'day')
+                        ;
+                    }
+                    break;
+                case 'year':
+                    current = moment(meeting.date_start);
+                    while (current.isBefore(end)) {
+                        meetings = meetings.concat(this._getYearRecurrings(current, recurring, meeting));
+                        current.add(config.every, 'year');
                     }
                     break;
             }
@@ -139,14 +148,29 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
                         break;
                     case 'last':
                         date.endOf('month');
-                        date.startOf('week');
+                        while (config.rel_month_day !== date.isoWeekday()) {
+                            date.subtract(1, 'day');
+                        }
                         break;
                 }
-                date.isoWeekday(config.rel_month_day);
+                if ('last' !== config.rel_month) {
+                    date.isoWeekday(config.rel_month_day);
+                }
+            } else {
+                date.date(config.abs_month_day);
             }
             if (this._isDateInRange(recurring, date)) {
                 meetings.push(this._createVirtualMeeting(meeting, date));
             }
+
+            return meetings;
+        },
+        _getYearRecurrings: function(date, recurring, meeting) {
+            var meetings = [];
+            if (this._isDateInRange(recurring, date)) {
+                meetings.push(this._createVirtualMeeting(meeting, date));
+            }
+
             return meetings;
         },
         /**
