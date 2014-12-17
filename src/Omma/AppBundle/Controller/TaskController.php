@@ -5,6 +5,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Omma\AppBundle\Entity\Task;
 use Omma\AppBundle\Form\Type\MeetingTaskForm;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -26,11 +27,26 @@ class TaskController extends FOSRestController implements ClassResourceInterface
         return $task;
     }
 
+    /**
+     * @Security("is_granted('edit', task)")
+     *
+     * @param Request $request
+     * @param Task    $task
+     *
+     * @return \FOS\RestBundle\View\View
+     */
     public function putAction(Request $request, Task $task)
     {
         return $this->processForm($request, $task);
     }
 
+    /**
+     * @Security("is_granted('edit', task)")
+     *
+     * @param Task $task
+     *
+     * @return \FOS\RestBundle\View\View
+     */
     public function deleteAction(Task $task)
     {
         $this->get("omma.app.manager.task")->delete($task);
