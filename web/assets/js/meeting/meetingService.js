@@ -62,12 +62,32 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
 
             var current = start;
             switch (meeting.meeting_recurring.type) {
+                case 'day':
+                    while (current.isBefore(end)) {
+                        meetings = meetings.concat(this._getDayRecurrings(current, recurring, meeting));
+                        current.add(config.every, 'day');
+                    }
+                    break;
                 case 'week':
-                    while(current.isBefore(end)) {
+                    while (current.isBefore(end)) {
                         meetings = meetings.concat(this._getWeekRecurrings(current, recurring, meeting));
                         current.add(config.every, 'week');
                     }
                     break;
+                case 'month':
+                    while (current.isBefore(end)) {
+                        meetings = meetings.concat(this._getWeekRecurrings(current, recurring, meeting));
+                        current.add(config.every, 'month');
+                    }
+                    break;
+            }
+
+            return meetings;
+        },
+        _getDayRecurrings: function(date, recurring, meeting) {
+            var meetings = [];
+            if (this._isDateInRange(recurring, date)) {
+                meetings.push(this._createVirtualMeeting(meeting, date));
             }
 
             return meetings;
@@ -92,6 +112,9 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
             }, this);
 
             return meetings;
+        },
+        _getMonthRecurrings: function(date, recurring, meeting) {
+            var meetings = [];
         },
         /**
          * Get Meetings for date range
