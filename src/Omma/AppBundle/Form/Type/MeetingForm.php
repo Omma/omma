@@ -26,7 +26,6 @@ class MeetingForm extends AbstractType
                 "class"    => 'Omma\AppBundle\Entity\Meeting',
                 "property" => "id",
             ))
-            ->add("next", "integer")
             ->add("meeting_recurring", new MeetingRecurringForm())
         ;
     }

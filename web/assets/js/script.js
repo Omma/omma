@@ -62,33 +62,6 @@ $(document).ready(function() {
      ************************************************************/
 
 
-
-    /* Nächste Events */
-    $.getJSON( '/temp_jsons/next-events-left-col.json?start='+utils.getCurrentMonth('').start, function( data ) {
-
-        $.each( data, function( key,value ) {
-            var active;
-            if(key===0) {
-                active = 'active';
-            }
-
-            var formatDate = value.date;
-
-            var date = moment(formatDate).format('DD.MM.YYYY [um] HH:mm');
-
-            $('.left-col div.naechste-events .list-group').append(
-                '<a href=\''+value.url+'\' class=\'list-group-item '+active+'\'>' +
-                '<p>'+value.title+'</p>' +
-                '<p class=\'list-group-item-text\'><small>'+date+'</small></p>' +
-                '</a>'
-            );
-        });
-    });
-
-
-
-
-
     /* Todos */
     $.getJSON( '/temp_jsons/todos-left-col.json?start='+utils.getCurrentMonth('').start, function( data ) {
         $.each( data, function( key,value ) {

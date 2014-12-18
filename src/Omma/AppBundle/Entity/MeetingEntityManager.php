@@ -1,6 +1,8 @@
 <?php
 namespace Omma\AppBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
  *
  *
@@ -28,5 +30,28 @@ class MeetingEntityManager extends AbstractEntityManager
             ->getQuery()
             ->getSingleResult()
             ;
+    }
+
+    /**
+     * Get next 5 meetings for a user
+     *
+     * @param UserInterface $user
+     *
+     * @return Meeting[]
+     */
+    public function getUpcommingForUser(UserInterface $user)
+    {
+        $date = new \DateTime();
+        return $this->createQueryBuilder("m")
+            ->select("m")
+            ->leftJoin("m.attendees", "a")
+            ->where("m.dateStart > :date AND a.user = :user")
+            ->setParameter("user", $user)
+            ->setParameter("date", $date)
+            ->orderBy("m.dateStart", "ASC")
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }

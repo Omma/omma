@@ -48,3 +48,20 @@ services:
         arguments:
             - @omma.app.mail.abstract
             - @omma.app.manager.attendee
+
+    omma.app.twig.extension.meeting:
+        class: Omma\AppBundle\Twig\MeetingTwigExtension
+        tags:
+            - { name: twig.extension }
+        arguments:
+            - @omma.app.manager.meeting
+            - @security.token_storage
+
+    omma.app.twig.extension.task:
+        class: Omma\AppBundle\Twig\TaskTwigExtension
+        tags:
+            - { name: twig.extension }
+        arguments:
+            - @omma.app.manager.task
+            - @security.token_storage
+

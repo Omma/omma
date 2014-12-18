@@ -19,6 +19,9 @@ app:
     options: Optionen
 
     meetings: Meetings
+    upcomming_meetings: Bevorstehende Meetings
+    open_todos: Offene ToDos
+
 
     confirmation:
         title: Bestätigung
@@ -107,3 +110,4 @@ app:
         firstname: Vorname
         lastname: Nachname
         password: Passwort
+

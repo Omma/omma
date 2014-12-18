@@ -16,6 +16,11 @@ use Omma\AppBundle\Entity\Meeting;
  */
 class Task extends Base
 {
+    const STATUS_OPEN = "open";
+
+    const STATUS_CLOSED = "closed";
+
+    const STATUS_IN_PROGESS = "in_progress";
 
     /**
      * @ORM\Column(name="id", type="integer")
@@ -81,14 +86,14 @@ class Task extends Base
     /**
      * @ORM\Column(name="priority", type="integer")
      *
-     * @var integer
+     * @var integer Higher value means higher priority
      */
     protected $priority;
 
     /**
-     * @ORM\Column(name="status", type="integer")
+     * @ORM\Column(type="string")
      *
-     * @var integer
+     * @var string
      */
     protected $status;
 
@@ -220,7 +225,7 @@ class Task extends Base
     /**
      * Set status
      *
-     * @param integer $status
+     * @param string $status
      * @return Task
      */
     public function setStatus($status)
@@ -233,7 +238,7 @@ class Task extends Base
     /**
      * Get status
      *
-     * @return integer
+     * @return string
      */
     public function getStatus()
     {

@@ -1,11 +1,13 @@
 /**
  * @author Johannes Höhn <johannes.hoehn@hof-university.de>
+ * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
     return {
         /**
          * Create virtual meeting
          *
+         * @author Florian Pfitzer <pfitzer@w3p.cc>
          * @param meeting base meeting
          * @param date
          * @returns {*}
@@ -37,12 +39,31 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
 
             return newMeeting;
         },
+        /**
+         * check if date is a recurring range
+         *
+         * @author Florian Pfitzer <pfitzer@w3p.cc>
+         * @param recurring
+         * @param date
+         * @returns {*|boolean}
+         * @private
+         */
         _isDateInRange: function (recurring, date) {
             return date.isAfter(recurring.date_start) &&
                 (
                     undefined === recurring.date_end || date.isBefore(recurring.date_end)
                 );
         },
+        /**
+         * calculate recurrings for a meeting
+         *
+         * @author Florian Pfitzer <pfitzer@w3p.cc>
+         * @param meeting
+         * @param start
+         * @param end
+         * @returns {Array}
+         * @private
+         */
         _getRecurrings: function(meeting, start, end) {
             var meetings = [];
             meeting.isVirtual = false;
@@ -55,7 +76,6 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
             recurring.date_start = moment(recurring.date_start);
             recurring.date_end = undefined !== recurring.date_end ? moment(recurring.date_end) : undefined;
             var config = recurring.config;
-            console.log('config', config);
 
             meeting.identifier = 'rec-' + recurring.id + '_' + moment(meeting.date_start).format('YY-M-D');
 
@@ -94,6 +114,16 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
 
             return meetings;
         },
+        /**
+         * Get virtual meetings for daily recurrings
+         *
+         * @author Florian Pfitzer <pfitzer@w3p.cc>
+         * @param date
+         * @param recurring
+         * @param meeting
+         * @returns {Array}
+         * @private
+         */
         _getDayRecurrings: function(date, recurring, meeting) {
             var meetings = [];
             if (this._isDateInRange(recurring, date)) {
@@ -104,6 +134,8 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
         },
         /**
          * Get virtual meetings for weekly recurrings
+         *
+         * @author Florian Pfitzer <pfitzer@w3p.cc>
          * @param date
          * @param recurring
          * @param meeting
@@ -123,6 +155,16 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
 
             return meetings;
         },
+        /**
+         * Get virtual meetings for weekly recurrings
+         *
+         * @author Florian Pfitzer <pfitzer@w3p.cc>
+         * @param date
+         * @param recurring
+         * @param meeting
+         * @returns {Array}
+         * @private
+         */
         _getMonthRecurrings: function(date, recurring, meeting) {
             var meetings = [];
             var config = recurring.config;
@@ -164,6 +206,16 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
 
             return meetings;
         },
+        /**
+         * Get virtual meetings for weekly recurrings
+         *
+         * @author Florian Pfitzer <pfitzer@w3p.cc>
+         * @param date
+         * @param recurring
+         * @param meeting
+         * @returns {Array}
+         * @private
+         */
         _getYearRecurrings: function(date, recurring, meeting) {
             var meetings = [];
             if (this._isDateInRange(recurring, date)) {
@@ -174,6 +226,8 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
         },
         /**
          * Get Meetings for date range
+         *
+         * @author Johannes Höhn <johannes.hoehn@hof-university.de>
          * @param {Date|moment} start date
          * @param {Date|moment} end date
          * @returns {*}
@@ -191,6 +245,7 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
                     return data.data;
                 })
                 .then(function(meetings) {
+                    // add recurrings
                     var newMeetings = [];
                     angular.forEach(meetings, function(meeting) {
                         meeting.url = '/meetings/' + meeting.id + '/details';
@@ -202,24 +257,34 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
                 .then(function(meetings) {
                     // remove duplicates, added by recurrings
                     var meetingsById = {};
+
+                    // can't modify array in foreach -> second array
+                    var newMeetings = [];
+
                     angular.forEach(meetings, function(meeting) {
                         var meeting2 = meetingsById[meeting.identifier];
                         if (undefined !== meeting2) {
                             // override virtual meeting with real
                             if (meeting2.isVirtual && !meeting.isVirtual) {
-                                _.pull(meetings, meeting2);
+                                _.pull(newMeetings, meeting2);
                             } else {
-                                _.pull(meetings, meeting);
+                                _.pull(newMeetings, meeting);
                                 return;
                             }
                         }
                         meetingsById[meeting.identifier] = meeting;
+                        newMeetings.push(meeting);
                     });
 
-                    return meetings;
+                    return newMeetings;
                 })
             ;
         },
+        /**
+         * @author Johannes Höhn <johannes.hoehn@hof-university.de>
+         * @param term
+         * @returns {*}
+         */
         search: function(term) {
             return $http.get('/meetings.json', {
                 params: {

@@ -1,6 +1,7 @@
 <?php
 namespace Omma\AppBundle\Tests\Controller;
 
+use Omma\AppBundle\Entity\Task;
 use Omma\AppBundle\Tests\AbstractAuthenticatedTest;
 
 /**
@@ -27,7 +28,7 @@ class MeetingTaskTest extends AbstractAuthenticatedTest
             "type" => "TaskType",
             "date" => "2014-01-02 08:00:00",
             "priority" => 1,
-            "status" => 0
+            "status" => Task::STATUS_OPEN,
         ));
 
         $task = $serializer->deserialize($content, 'Omma\AppBundle\Entity\Task', "json");
@@ -52,7 +53,7 @@ class MeetingTaskTest extends AbstractAuthenticatedTest
         $this->assertSame("2014-01-02 08:00:00", $date);
 
         $this->assertSame(1, $newTask->getPriority());
-        $this->assertSame(0, $newTask->getStatus());
+        $this->assertSame(Task::STATUS_OPEN, $newTask->getStatus());
 
         $this->pushContent("/meetings/" . $newMeeting->getId() . "/tasks/" . $newTask->getId() . ".json", array(), "DELETE");
 
