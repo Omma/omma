@@ -58,14 +58,14 @@ class Meeting extends Base
     protected $tasks;
 
     /**
-     * @ORM\OneToMany(targetEntity="Agenda", mappedBy="meeting", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Agenda", mappedBy="meeting", orphanRemoval=true, cascade={"remove"})
      *
      * @var ArrayCollection
      */
     protected $agendas;
 
     /**
-     * @ORM\OneToOne(targetEntity="Protocol", mappedBy="meeting", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="Protocol", mappedBy="meeting", orphanRemoval=true, cascade={"remove"})
      *
      * @var Protocol
      */

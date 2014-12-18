@@ -243,6 +243,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
         $meetingManager = $this->get("omma.app.manager.meeting");
 
         $meeting = new Meeting();
+        // create new meeting from reccuring series
         if (0 !== ($recurringId = $request->query->getInt("recurring"))) {
             $recurringManager = $this->get("omma.app.manager.meeting_recurring");
             /** @var MeetingRecurring $recurring */
@@ -250,22 +251,23 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
             if (null === $recurring) {
                 throw new NotFoundHttpException(sprintf("no recurring found with id %d", $recurringId));
             }
-            $date = new \DateTime($request->query->get("date"));
-            if (false === $date) {
+            $start = new \DateTime($request->query->get("date"));
+            if (false === $start) {
                 throw new BadRequestHttpException("invalid date");
             }
-            $previous = $this->get("omma.app.manager.meeting")->findPrevious($recurring, $date);
+            // find previous meeting
+            $previous = $this->get("omma.app.manager.meeting")->findPrevious($recurring, $start);
             if (null === $previous) {
                 throw new BadRequestHttpException("previous meeting not found");
             }
             $next = $previous->getNext();
 
             $duration = $previous->getDateEnd()->diff($previous->getDateStart());
-            $end = clone $date;
+            $end = clone $start;
             $end->add($duration);
             $meeting
                 ->setName($previous->getName())
-                ->setDateStart($date)
+                ->setDateStart($start)
                 ->setDateEnd($end)
                 ->setTemp(false)
                 ->setMeetingRecurring($recurring)
@@ -280,15 +282,29 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
                     ->setPrev($previous)
                     ->setNext($next)
                 ;
+            } else {
+                $meeting->setPrev($previous);
+            }
+
+            // copy attendees
+            foreach ($previous->getAttendees() as $attendee) {
+                $meeting->addAttendee(clone $attendee);
             }
 
         } else {
             // normal new meeting
+
+            // current date with full hour
+            $start = new \DateTime();
+            $start->setTime($start->format("H"), 0, 0);
+
+            $end = clone $start;
+            $end->modify("+1hour");
             $meeting
                 ->setName("temp-" . date("Y-m-d"))
                 ->setTemp(true)
-                ->setDateStart(new \DateTime())
-                ->setDateEnd(new \DateTime("+1hour"))
+                ->setDateStart($start)
+                ->setDateEnd($end)
             ;
             $attendee = new Attendee();
             $attendee

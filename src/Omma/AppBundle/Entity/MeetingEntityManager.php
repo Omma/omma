@@ -23,7 +23,7 @@ class MeetingEntityManager extends AbstractEntityManager
         return $this->createQueryBuilder("m")
             ->select("m")
             ->where("m.meetingRecurring = :recurring AND m.dateStart < :date")
-            ->orderBy("m.dateStart")
+            ->orderBy("m.dateStart", "DESC")
             ->setMaxResults(1)
             ->setParameter("recurring", $recurring)
             ->setParameter("date", $date)

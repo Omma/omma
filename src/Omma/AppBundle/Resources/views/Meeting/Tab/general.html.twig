@@ -13,7 +13,7 @@
             {% endif %}
             <div class="form-control-static" ng-show="!editingPrevMeeting && prevMeeting != null">
                 {% verbatim %}
-                <a target="_blank" ng-href="/meetings/{{ prevMeeting.id }}/details">{{ prevMeeting.name }}<br />
+                <a ng-href="/meetings/{{ prevMeeting.id }}/details">{{ prevMeeting.name }}<br />
                     {{ prevMeeting.date_start | moment }} - {{ prevMeeting.date_end | moment }}
                 </a>
                 {% endverbatim %}
@@ -61,7 +61,7 @@
             <div class="col-sm-9">
                 <div class="form-control-static">
                     {% verbatim %}
-                    <a target="_blank" ng-href="/meetings/{{ nextMeeting.id }}/details">{{ nextMeeting.name }}<br />
+                    <a ng-href="/meetings/{{ nextMeeting.id }}/details">{{ nextMeeting.name }}<br />
                         {{ nextMeeting.date_start | moment }} - {{ nextMeeting.date_end | moment }}
                     </a>
                     {% endverbatim %}

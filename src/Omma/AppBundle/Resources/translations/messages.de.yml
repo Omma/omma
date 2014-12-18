@@ -9,6 +9,9 @@ app:
     saved: gespeichert
     saving: wird gespeichert
     cancel: abbrechen
+    cancel_modal: Nein, doch nicht
+    delete: löschen
+
 
     today: Heute
     year: Jahr
@@ -70,6 +73,11 @@ app:
             start: Anfang
             end: Ende
             after: nach
+        delete:
+            title: Meeting löschen
+            confirmation: |
+                Meeting wirklich löschen? Dieser Schritt kann nicht rückgängig gemacht werden.
+            ok: Ja, Meeting löschen
     agenda:
         title: Agenda
 
@@ -122,4 +130,3 @@ app:
         firstname: Vorname
         lastname: Nachname
         password: Passwort
-

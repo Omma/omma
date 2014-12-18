@@ -7,7 +7,7 @@ angular.module('ommaApp').filter('moment', [function() {
             input = moment(input);
         }
         if (undefined === format) {
-            format = 'DD. MMMM. YYYY HH:mm';
+            format = 'LLLL';
         }
 
         return input.format(format);

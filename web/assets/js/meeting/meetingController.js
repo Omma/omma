@@ -28,4 +28,10 @@ angular.module('ommaApp').controller('meetingController', ['$scope', 'Restangula
         }
         meeting.put();
     };
+
+    $scope.deleteMeeting = function() {
+        $scope.meeting.remove().then(function() {
+            window.location.href = "/dashboard";
+        })
+    };
 }]);
