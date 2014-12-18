@@ -60,7 +60,7 @@
                     <li><a href="{{ path("omma_logout") }}"><i class="fa fa-power-off"> </i> Ausloggen</a></li>
                 </ul>
 
-                <div class="form-group">
+                <div class="form-group" ng-controller="searchController">
                     <input id="tags" class="typeahead form-control" type="text" placeholder="Veranstaltung suchen">
                 </div>
                 {% endif %}

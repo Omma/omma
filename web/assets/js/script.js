@@ -62,64 +62,6 @@ $(document).ready(function() {
      ************************************************************/
 
 
-    /* Todos */
-    $.getJSON( '/temp_jsons/todos-left-col.json?start='+utils.getCurrentMonth('').start, function( data ) {
-        $.each( data, function( key,value ) {
-            //$('.left-col ul.todos').append('<li><a href=\''+value.url+'\'>'+value.title+'</a></li>');
-            $('.left-col #insert-todos').append('<a href="'+value.url+'" class="list-group-item">'+value.title+'</a>');
-        });
-    });
-
-    /************************************************************
-     Typeahead Suche
-     ************************************************************/
-
-    //var substringMatcher = function(strs) {
-    var substringMatcher = function() {
-        return function findMatches(q, cb) {
-
-            if(q !== '') {
-                $.getJSON('/temp_jsons/typeahead.json?q=' + q, function (data) {
-
-                    var matches = [];
-
-                    var substrRegex = new RegExp(q, 'i');
-
-                    $.each(data, function (i, str) {
-
-                        if (substrRegex.test(str.title)) {
-                            var value = '<a href=\'' + str.url + '\'>';
-                            value += str.title + '<br />';
-                            value += '<small>';
-                            value += moment(str.date).format('DD.MM.YYYY [um] HH:mm');
-                            value += '</small></a>';
-                            matches.push({value: value});
-                        }
-                    });
-
-                    cb(matches);
-
-                });
-            }
-
-        };
-    };
-
-    var events = [];
-
-    $('input.typeahead').typeahead(
-        {
-            hint: true,
-            highlight: true,
-            minLength: 1
-        },
-        {
-            name: 'events',
-            displayKey: 'value',
-            source: substringMatcher(events)
-        }
-    );
-
     // initalize tooltips
     $('[data-toggle="tooltip"]').tooltip();
 });
