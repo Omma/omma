@@ -100,6 +100,18 @@ app:
 
                 ---
                 Open Meeting Manager
+        task:
+            subject: Neue Aufgabe angelegt
+            message: |
+                Hallo %username%,
+
+                für Sie wurde im Meeting %meeting% die Aufgabe %taskName% angelegt.
+                Klicken Sie auf folgende URL um zum Meeting zu gelangen:
+
+                %meetingUrl%
+
+                ---
+                Open Meeting Manager
     profile:
         title: Profil
         ldap_info: |

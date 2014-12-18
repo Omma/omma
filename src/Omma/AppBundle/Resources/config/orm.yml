@@ -57,3 +57,12 @@ services:
             - { name: doctrine.event_listener, event: postPersist }
         arguments:
             - @service_container
+
+    omma.app.listener.task:
+        class: Omma\AppBundle\EventListener\ORM\TaskListener
+        tags:
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: doctrine.event_listener, event: postPersist }
+        arguments:
+            - @service_container
+

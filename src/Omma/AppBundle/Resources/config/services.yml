@@ -49,6 +49,11 @@ services:
             - @omma.app.mail.abstract
             - @omma.app.manager.attendee
 
+    omma.app.mail.task:
+        class: Omma\AppBundle\Mail\TaskMailer
+        arguments:
+            - @omma.app.mail.abstract
+
     omma.app.twig.extension.meeting:
         class: Omma\AppBundle\Twig\MeetingTwigExtension
         tags:

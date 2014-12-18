@@ -1,0 +1,20 @@
+{% block subject %}
+{% autoescape false %}
+{{ 'app.mail.task.subject'|trans({
+    '%username%': username,
+    '%taskName%': task.name
+    '%meeting%': meeting.name,
+    '%meetingUrl%': meetingUrl,
+}) }}
+{% endautoescape %}
+{% endblock %}
+{% block body_text %}
+{% autoescape false %}
+{{ 'app.mail.task.message'|trans({
+    '%username%': username,
+    '%taskName%': task,
+    '%meeting%': meeting.name,
+    '%meetingUrl%': meetingUrl,
+}) }}{% endautoescape %}
+{% endblock %}
+{% block body_html %}{% endblock %}
