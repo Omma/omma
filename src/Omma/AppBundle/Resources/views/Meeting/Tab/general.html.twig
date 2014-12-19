@@ -43,7 +43,7 @@
                         </ui-select-choices>
                     </ui-select>
                     <br />
-                    <button class="btn btn-success" ng-click="linkMeeting()">
+                    <button class="btn btn-primary" ng-click="linkMeeting()">
                         <i class="glyphicon glyphicon-ok"></i>
                         {{ "app.general.link"|trans }}
                     </button>
@@ -107,7 +107,7 @@
 
     <h2>{{ "app.general.recurring.title"|trans }}</h2>
     <div ng-controller="meetingRecurringController">
-        <button class="btn btn-success" ng-click="add()"><i class="glyphicon glyphicon-plus"></i> {{ "app.add"|trans }}</button>
+        <button class="btn btn-primary" ng-click="add()"><i class="glyphicon glyphicon-plus"></i> {{ "app.add"|trans }}</button>
         <div class="well" ng-repeat="recurring in recurrings" ng-init="config = recurring.config">
             <button type="button" class="close" ng-click="remove(recurring)"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             <div class="form-group" style="margin-top: 25px">
