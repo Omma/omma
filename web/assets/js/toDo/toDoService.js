@@ -10,6 +10,9 @@ angular.module('ommaApp').factory('toDoService', ['$http', function($http) {
             if(newTodo.user !== undefined) {
                 newTodo.user = todo.user.id;
             }
+            if(newTodo.meeting !== undefined) {
+                delete newTodo.meeting;
+            }
 
 
             return newTodo;

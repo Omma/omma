@@ -8,9 +8,8 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
         children: []
     };
     $scope.status = 'saved';
-    $scope.meeting = $scope.$parent.meeting;
 
-    agendaService.getAll($scope.meeting).then(function(agendas) {
+    agendaService.getAll($scope.$parent.meeting).then(function(agendas) {
         $scope.rootAgenda = agendas;
         watchAgendas();
     });

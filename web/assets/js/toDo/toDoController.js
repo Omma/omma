@@ -8,13 +8,29 @@ angular.module('ommaApp')
         toDoService.load($scope.$parent.meeting).then(function(todos) {
             $scope.todos = todos;
             angular.forEach($scope.todos, function(todo) {
-                $scope.$watch(function() {
-                    return todo;
-                }, _.debounce(function() {
-                    save(todo);
-                }, 800), true);
+                watchTodo(todo);
             });
         });
+
+        function watchTodo(todo) {
+
+            $scope.$watch(
+                function() {
+                    return todo;
+                },
+                _.after(
+                    3,
+                    _.debounce(
+                        function() {
+                            save(todo);
+                        },
+                        800
+                    )
+                ),
+                true
+            );
+
+        }
 
         $scope.status = 'saved';
 
@@ -37,6 +53,7 @@ angular.module('ommaApp')
             toDoService.add($scope.$parent.meeting, newTodo).then(function(todo) {
                 $scope.todos.push(todo);
                 $scope.status = 'saved';
+                watchTodo(todo);
             });
         };
 
