@@ -43,6 +43,21 @@
 {% block body %}
 
 <div class="container">
+    <div class="alert alert-danger" id="http_error" ng-show="show" ng-controller="errorController">
+        <div class="btn-group pull-right">
+            <div class="btn btn-danger" ng-click="reload()">
+                <i class="glyphicon glyphicon-repeat"></i>
+                {{ "app.reload_page"|trans }}
+            </div>
+            <div class="btn btn-default" ng-click="show=false">
+                <i class="glyphicon glyphicon-remove"></i>
+                {{ "app.close"|trans }}
+            </div>
+        </div>
+
+        <strong>{{ "app.http_error"|trans }}:</strong>
+        <span ng-bind-html="message"></span>
+    </div>
     <header>
         <div class="row">
             <div class="col-xs-4">

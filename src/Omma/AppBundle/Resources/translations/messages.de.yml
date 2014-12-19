@@ -11,6 +11,7 @@ app:
     cancel: abbrechen
     cancel_modal: Nein, doch nicht
     delete: löschen
+    close: schließen
 
 
     today: Heute
@@ -28,6 +29,10 @@ app:
     open_todos: Offene ToDos
 
     logout: Ausloggen
+
+    http_error: Fehler bei der Kommunikation mit dem Server
+    reload_page: Seite neu laden
+
 
     confirmation:
         title: Bestätigung
