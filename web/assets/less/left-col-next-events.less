@@ -1,0 +1,36 @@
+/**
+ * @author Johannes Höhn <johannes.hoehn@hof-university.de>
+ */
+
+ /*Nächste Events*/
+.naechste-events {
+  .list-group {
+    a {
+      padding: 15px 10px;
+      border: 1px solid @grey;
+      background-color: @light-blue;
+
+      &.active, &:hover {
+        background-color: @blue;
+        p {
+          color: white;
+        }
+      }
+    }
+    p:first-child {
+      font-size: 1.1em;
+      line-height: .9em;
+    }
+  }
+}
+@media (min-width: 992px) {
+  .row > div {
+    display: block !important;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .kalender {
+    margin: 0 auto;
+  }
+}

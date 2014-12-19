@@ -1,0 +1,44 @@
+/**
+ * @author Florian Pfitzer <pfitzer@w3p.cc>
+ */
+
+ /*Tabs*/
+ul.nav.nav-tabs li {
+
+  &.active a {
+    background-color: @light-blue;
+  }
+  a {
+    font-size: 1.1em;
+  }
+}
+
+/*Meeting Title*/
+.header-button {
+  .pull-right();
+  margin-top: 22px;
+}
+
+.meeting-name {
+  margin-bottom: 20px;
+  h1 {
+    &:after {
+      .glyphicon();
+      content: "\270f"; // pencil
+      font-size: 16px;
+    }
+  }
+  .editable-wrap {
+    margin-top: 20px;
+  }
+
+  .editable-click, a.editable-click {
+    color: @font-color;
+    .transition();
+
+    &:hover {
+      color: @grey;
+    }
+  }
+
+}

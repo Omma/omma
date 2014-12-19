@@ -3,8 +3,6 @@ Omma\AppBundle\Entity\Task:
     properties:
         id:
             expose: true
-        meeting:
-            expose: true
         user:
             expose: true
         agenda:

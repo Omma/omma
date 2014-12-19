@@ -4,13 +4,19 @@ services:
         tags:
             - { name: twig.extension }
 
-    security.access.post_voter:
+    security.access.voter.post:
         class: Omma\AppBundle\Voter\MeetingVoter
         public: false
         tags:
             - { name: security.voter }
         arguments:
             - @omma.app.manager.attendee
+
+    security.access.voter.task:
+        class: Omma\AppBundle\Voter\TaskVoter
+        public: false
+        tags:
+            - { name: security.voter }
 
     omma.app.request.listener.locale:
         class: Omma\AppBundle\EventListener\Request\LocaleListener

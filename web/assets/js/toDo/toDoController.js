@@ -3,52 +3,66 @@
  */
 
 angular.module('ommaApp')
-    .controller('toDoController', ['$scope', function ($scope) {
+    .controller('toDoController', ['$scope', 'toDoService', function ($scope, toDoService) {
 
+        toDoService.load($scope.$parent.meeting).then(function(todos) {
+            $scope.todos = todos;
+            angular.forEach($scope.todos, function(todo) {
+                $scope.$watch(function() {
+                    return todo;
+                }, _.debounce(function() {
+                    save(todo);
+                }, 800), true);
+            });
+        });
 
-
-
-        function fetchTodosFromJSON() {
-            var todos = [
-                {
-                    id: 5,
-                    status: 1, //int
-                    task: 'test2 bla',
-                    user_id: 1,
-                    description: 'test3 bla',
-                    date: '2014-213-123-123-132321',
-                    priority: 0,
-                },
-                {
-                    id: 7,
-                    status: 0, //int
-                    task: 'test3 bla',
-                    user_id: 1,
-                    description: 'test3 bla',
-                    date: '2014-213-123-123-132321',
-                    priority: 1
-                }
-            ];
-            return todos;
-        }
-
-
-        //priority: 1(high) or 0(normal)
-        $scope.todos = fetchTodosFromJSON();
-
-        $scope.user;
+        $scope.status = 'saved';
 
 
         //Add new todo
         $scope.addNewTodo = function() {
-            console.log('add empty task in db');
 
-            //leeres Objekt wird in DB geschrieben (neue ID wird erzeugt)
-            //und anschließend DB neu auslesen (fetchTodosFromJSON())
+            $scope.status = 'saved';
 
+            var newTodo = {
+                task:'[Bezeichnung des Todo-Punktes hier eingeben]',
+                description:'[Hier ist Platz für die Beschreibung des Todo-Punktes...]',
+                date: moment().format(),
+                type: 1,
+                priority: 0,
+                status: 0,
+                user:undefined
+            };
+
+            toDoService.add($scope.$parent.meeting, newTodo).then(function(todo) {
+                $scope.todos.push(todo);
+                $scope.status = 'saved';
+            });
         };
 
+        function save(todo) {
+            $scope.status = 'saving';
+            toDoService.save($scope.$parent.meeting, todo).then(function() {
+                $scope.status = 'saved';
+            });
 
+        }
+
+
+        //Delete Modal
+        var tempTodoToDelete;
+        $scope.setTempTodoToDelete = function(todo) {
+            tempTodoToDelete = todo;
+        };
+        $scope.deleteModal = function () {
+            $scope.status = 'saving';
+            toDoService.delete($scope.$parent.meeting, tempTodoToDelete).then(function() {
+                toDoService.load($scope.$parent.meeting).then(function(todo) {
+                    $scope.todos = todo;
+                    $scope.status = 'saved';
+                });
+            });
+        };
 
         //Render Output
         $scope.todoIsDone = function(todo) {
@@ -59,7 +73,6 @@ angular.module('ommaApp')
                 return false;
             }
         };
-
         $scope.todoIsImportant = function(todo) {
             if(todo.priority) {
                 return true;
@@ -68,60 +81,4 @@ angular.module('ommaApp')
                 return false;
             }
         };
-
-
-
-        //Edit todo
-
-
-
-
-
-        $scope.temp = function() {
-            alert('test erfolgreich');
-        };
-
-
-
-
-
-        //Attendees
-        $scope.addUser = function(todo) {
-
-
-            todo.user_id = todo.user.id;
-            delete todo.user;
-
-            console.log('add'+todo);
-
-            //addUser(selectedUser);
-        };
-
-
-
-
-        //Datepicker
-
-
-
-
-
-
-        //Delete Modal
-        var tempIdToDelete;
-        $scope.setTempIdToDelete = function(id) {
-            tempIdToDelete = id;
-        };
-        $scope.deleteModal = function () {
-            console.log('delete id: '+tempIdToDelete+'in db');
-            //setTodos();
-
-            //remove todo
-        };
-
-
-
-
-
-
 }]);

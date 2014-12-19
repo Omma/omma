@@ -1,12 +1,14 @@
 app:
     username: Username
     password: Password
-    remember_me: Remember Login
-    login: Login
+    remember_me: Remember me
+    login: login
 
-    save: Save
-    saved: Saved
-    saving: Saving
+    add: add
+    save: save
+    saved: saved
+    saving: saving...
+    cancel: cancel
 
     today: Today
     year: Year
@@ -14,8 +16,82 @@ app:
     week: Week
     day: Day
 
+    options: Options
+
+    meetings: Meetings
+
     confirmation:
         title: Confirmation
+        info: |
+            You have bin invited to this meeting. Please respond if you can participate.
+
+        status:
+            title: Status
+            accepted: Attend
+            declined: Deny
+            maybe: Possible participant
+        message: Nachricht
+
+    general:
+        title: General
+        date: Date
+        date_start: Begin
+        date_end: End
+        previous_meeting: Previous meeting
+        next_meeting: Next meeting
+        search: Choose or search Meeting..
+        link: link
+        copy_attendees: Copy Attendee
+        copy_agenda: Copy agenda
+        recurring:
+            title: Repetitions
+            type: Type
+            types:
+                daily: daily
+                weekly: weekly
+                monthly: mothly
+                yearly: yearly
+            every: Every
+            day: -tth day
+            week: -th week
+            month: -th month
+            year: -th year
+            weekdays: weekdays
+            at: at
+            first: first
+            second: second
+            third: third
+            fourth: fourth
+            last: last
+            end: end
+            after: after
+    agenda:
+        title: Agenda
+
+    todos:
+        title: Todos
+
+    protocol:
+        title: Protocol
+
+    attendees:
+        title: Attendees
+        user: User
+        organizer: Organisator
 
     user:
-        search: Select or search a person in the list...
+        search: Choose or search person..
+
+    mail:
+        invitation:
+            subject: Invitation to %meeting%
+            message: |
+                Hello %username%,
+
+                you have been invited to the meeting %meeting%.
+                Please confirm by klicking following URL:
+
+                %meetingUrl%
+
+                ---
+                Open Meeting Manager
