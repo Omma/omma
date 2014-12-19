@@ -25,7 +25,7 @@ class MeetingTaskTest extends AbstractAuthenticatedTest
         $content = $this->pushContent("/meetings/" . $meeting->getId() . "/tasks.json", array(
             "task" => "Task",
             "description" => "Description",
-            "type" => "TaskType",
+            "type" => 1,
             "date" => "2014-01-02 08:00:00",
             "priority" => 1,
             "status" => Task::STATUS_OPEN,
@@ -47,7 +47,7 @@ class MeetingTaskTest extends AbstractAuthenticatedTest
 
         $this->assertSame("Task", $newTask->getTask());
         $this->assertSame("Description", $newTask->getDescription());
-        $this->assertSame("TaskType", $newTask->getType());
+        $this->assertEquals(1, $newTask->getType());
 
         $date = $newTask->getDate()->format("Y-m-d H:i:s");
         $this->assertSame("2014-01-02 08:00:00", $date);
