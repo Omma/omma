@@ -12,7 +12,7 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
 
     agendaService.getAll($scope.meeting).then(function(agendas) {
         $scope.rootAgenda = agendas;
-        watchAgendas($scope.meeting);
+        watchAgendas();
     });
 
     $scope.newNode = function(parent) {

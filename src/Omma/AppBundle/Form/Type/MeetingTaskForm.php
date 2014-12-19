@@ -18,18 +18,18 @@ class MeetingTaskForm extends AbstractType
         $builder
             ->add("task")
             ->add("description")
-            ->add("type", "choice", array(
+            ->add("type", "integer")
+            ->add("date", "datetime", array(
+                "widget" => "single_text",
+            ))
+            ->add("priority", "integer")
+            ->add("status", "choice", array(
                 "choices" => array(
                     Task::STATUS_OPEN => Task::STATUS_OPEN,
                     Task::STATUS_CLOSED => Task::STATUS_CLOSED,
                     Task::STATUS_IN_PROGESS => Task::STATUS_IN_PROGESS,
                 ),
             ))
-            ->add("date", "datetime", array(
-                "widget" => "single_text",
-            ))
-            ->add("priority", "integer")
-            ->add("status", "integer")
             ->add("user", "entity", array(
                 "class"    => 'Application\Sonata\UserBundle\Entity\User',
                 "property" => "id",

@@ -57,7 +57,7 @@
                 <div class="row">
                     <div class="col-xs-2">
 
-                        <input type="checkbox" ng-model="todo.status" ng-checked="todo.status">
+                        <input type="checkbox" ng-model="todo.status" ng-true-value="'closed'" ng-false-value="'open'">
                         <span class="bold">Erledigt</span><br><br>
 
                         <input type="checkbox" ng-model="todo.priority" ng-checked="todo.priority">

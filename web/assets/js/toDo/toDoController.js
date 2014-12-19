@@ -30,7 +30,7 @@ angular.module('ommaApp')
                 date: moment().format(),
                 type: 1,
                 priority: 0,
-                status: 0,
+                status: 'open',
                 user:undefined
             };
 
@@ -66,7 +66,7 @@ angular.module('ommaApp')
 
         //Render Output
         $scope.todoIsDone = function(todo) {
-            if(todo.status) {
+            if(todo.status === 'closed') {
                 return true;
             }
             else {

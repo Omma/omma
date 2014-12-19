@@ -83,6 +83,7 @@ app:
             ok: Ja, Meeting löschen
     agenda:
         title: Agenda
+        name: Name
 
     todos:
         title: ToDos
