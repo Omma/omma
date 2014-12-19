@@ -55,10 +55,10 @@
                         <a class="lang de" href="{{ path("omma_switch_language", {language: 'de_DE'}) }}"></a>
                         <a class="lang us" href="{{ path("omma_switch_language", {language: 'en_US'}) }}"></a>
                     </li>
-                    <li><a href="{{ path("omma_app_meeting_create") }}"><i class="fa fa-plus"> </i> Meeting erstellen</a></li>
-                    <li><a href="{{ path("omma_app_todo_index") }}"><i class="fa fa-tag"> </i> ToDos</a></li>
-                    <li><a href="{{ path("omma_app_profile") }}"><i class="fa fa-user"> </i> Profil</a></li>
-                    <li><a href="{{ path("omma_logout") }}"><i class="fa fa-power-off"> </i> Ausloggen</a></li>
+                    <li><a href="{{ path("omma_app_meeting_create") }}"><i class="fa fa-plus"> </i> {{ "app.create_meeting"|trans }}</a></li>
+                    <li><a href="{{ path("omma_app_todo_index") }}"><i class="fa fa-tag"> </i> {{ "app.todos.title"|trans }}</a></li>
+                    <li><a href="{{ path("omma_app_profile") }}"><i class="fa fa-user"> </i> {{ "app.profile.title"|trans }}</a></li>
+                    <li><a href="{{ path("omma_logout") }}"><i class="fa fa-power-off"> </i> {{ "app.logout"|trans }}</a></li>
                 </ul>
 
                 <div class="form-group" ng-controller="searchController">
@@ -84,64 +84,74 @@
             <div class="row">
                 {% if app.user %}
                     {% block side_calendar %}
-                    <div class="col-xs-5">
-                        <div ng-controller="sidebarCalendarController">
-                            <div class="kalender">
-                                <input id="calendar-left-col" type="text" gldp-id="left-col-date" style="visibility:hidden"/>
+                        <div class="col-xs-5">
+                            <div ng-controller="sidebarCalendarController">
+                                <div class="kalender">
+                                    <input id="calendar-left-col" type="text" gldp-id="left-col-date" style="visibility:hidden"/>
 
-                                <div gldp-el="left-col-date"
-                                     style="width:100%; height:300px; position:relative; top:0px;left:0px;">
+                                    <div gldp-el="left-col-date"
+                                         style="width:100%; height:300px; position:relative; top:0px;left:0px;">
+                                    </div>
+
                                 </div>
-
-                            </div>
-                            <div class="day-events ng-hide" ng-show="currentEvents.length > 0">
-                                <h4>Events an diesem Tag:</h4>
-                                <div id="insert-events" class="list-group">
-                                    {% verbatim %}
-                                    <a ng-repeat="event in currentEvents" class="list-group-item" href="{{ event.data.url }}">
-                                        <p>{{ event.data.name }}</p>
-                                        <p><small>{{ event.data.date_start | moment:'LT' }} - {{ event.data.date_end | moment:'LT' }}</small></p>
-                                    </a>
-                                    {% endverbatim %}
+                                <div class="day-events ng-hide" ng-show="currentEvents.length > 0">
+                                    <h4>Events an diesem Tag:</h4>
+                                    <div id="insert-events" class="list-group">
+                                        {% verbatim %}
+                                        <a ng-repeat="event in currentEvents" class="list-group-item" href="{{ event.data.url }}">
+                                            <p>{{ event.data.name }}</p>
+                                            <p><small>{{ event.data.date_start | moment:'LT' }} - {{ event.data.date_end | moment:'LT' }}</small></p>
+                                        </a>
+                                        {% endverbatim %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     {% endblock %}
-                <div class="col-xs-4">
-                    <div class="naechste-events">
-                        <h3>{{ "app.upcomming_meetings"|trans }}</h3>
+                    <div class="col-xs-4">
+                        <div class="naechste-events">
+                            <h3>{{ "app.upcomming_meetings"|trans }}</h3>
 
-                        <div class="list-group">
-                            {% for meeting in meeting_get_upcomming() %}
-                                <a href="{{ path("omma_app_details_meeting", {meeting: meeting.id}) }}" class="list-group-item">
-                                    <p>{{ meeting.name }}</p>
-                                    <p class="list-group-item-text">
-                                        <small>
-                                            {{ meeting.dateStart|localizeddate('full') }}
-                                        </small>
-                                    </p>
+                            {% set upcomming_meetings = meeting_get_upcomming() %}
+                            {% if upcomming_meetings|length > 0 %}
+                                <div class="list-group">
+                                    {% for meeting in upcomming_meetings %}
+                                        <a href="{{ path("omma_app_details_meeting", {meeting: meeting.id}) }}" class="list-group-item">
+                                            <p>{{ meeting.name }}</p>
+                                            <p class="list-group-item-text">
+                                                <small>
+                                                    {{ meeting.dateStart|localizeddate('full') }}
+                                                </small>
+                                            </p>
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="alert alert-info">
+                                    <p>{{ "app.upcomming_empty"|trans }}</p>
+                                </div>
+                                <a href="{{ path("omma_app_create_meeting") }}" class="btn btn-primary">
+                                    <i class="glyphicon glyphicon-plus"></i> {{ "app.create_meeting"|trans }}
                                 </a>
-                            {% endfor %}
-                        </div>
+                            {% endif %}
 
-                    </div>
-                </div>
-                <div class="col-xs-3">
-                    <div class="todos">
-                        <h3>{{ "app.open_todos"|trans }}</h3>
-                        <div class="list-group" id="insert-todos">
-                            {% for task in task_get_open() %}
-                                <a href="" class="list-group-item">{{ task.task }}</a>
-                            {% endfor %}
                         </div>
                     </div>
+                    {% set open_tasks = task_get_open() %}
+                    {% if open_tasks|length > 0 %}
+                        <div class="col-xs-3">
+                            <div class="todos">
+                                <h3>{{ "app.open_todos"|trans }}</h3>
+                                <div class="list-group" id="insert-todos">
+                                    {% for task in open_tasks %}
+                                        <a href="" class="list-group-item">{{ task.task }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
-                {% endif %}
-
-            </div>
-
-
+            {% endif %}
         </div>
 
         <div class="col-md-8 right-col">

@@ -22,9 +22,12 @@ app:
     options: Optionen
 
     meetings: Meetings
+    create_meeting: Meeting erstellen
     upcomming_meetings: Bevorstehende Meetings
+    upcomming_empty: Sie haben zurzeit keine bevorstehenden Meetings
     open_todos: Offene ToDos
 
+    logout: Ausloggen
 
     confirmation:
         title: Bestätigung

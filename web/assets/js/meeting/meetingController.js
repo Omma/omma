@@ -31,7 +31,7 @@ angular.module('ommaApp').controller('meetingController', ['$scope', 'Restangula
 
     $scope.deleteMeeting = function() {
         $scope.meeting.remove().then(function() {
-            window.location.href = "/dashboard";
-        })
+            window.location.href = '/dashboard';
+        });
     };
 }]);
