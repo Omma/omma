@@ -2,7 +2,7 @@
 {% autoescape false %}
 {{ 'app.mail.task.subject'|trans({
     '%username%': username,
-    '%taskName%': task.name
+    '%taskName%': task.task,
     '%meeting%': meeting.name,
     '%meetingUrl%': meetingUrl,
 }) }}
@@ -12,7 +12,7 @@
 {% autoescape false %}
 {{ 'app.mail.task.message'|trans({
     '%username%': username,
-    '%taskName%': task,
+    '%taskName%': task.task,
     '%meeting%': meeting.name,
     '%meetingUrl%': meetingUrl,
 }) }}{% endautoescape %}

@@ -25,13 +25,13 @@ class TaskMailer
     {
         $url = $this->mailer->getUrlGenerator()->generate(
             "omma_meeting_details",
-            array("task" => $task->getId()),
+            array("meeting" => $task->getMeeting()->getId()),
             UrlGeneratorInterface::ABSOLUTE_URL
         );
         $context = array(
-            "taskUrl" => $url,
-            "meeting" => $task->getMeeting(),
-            "task"    => $task,
+            "meetingUrl" => $url,
+            "meeting"    => $task->getMeeting(),
+            "task"       => $task,
         );
         $this->mailer->sendMessageToUser(
             "OmmaAppBundle:Task:notification_mail.txt.twig",
