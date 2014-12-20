@@ -63,7 +63,7 @@ class Task extends Base
     protected $task;
 
     /**
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      *
      * @var string
      */

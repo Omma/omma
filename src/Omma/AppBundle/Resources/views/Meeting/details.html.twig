@@ -2,21 +2,6 @@
 
 
 {% block content %}
-    <script type="text/ng-template" id="user_select.html">
-        <ui-select ng-model="$parent.selected" theme="select2" class="form-control">
-            <ui-select-match placeholder="{{ "app.user.search"|trans }}">
-            {{ "{{ $select.selected.username}}" }}
-            </ui-select-match>
-            <ui-select-choices refresh="search($select.search)" refresh-delay="1000" repeat="item in users | filter: $select.search">
-                <div ng-bind-html="item.username | highlight: $select.search"></div>
-                <small>
-                    <span ng-bind-html="item.firstname | highlight: $select.search"></span>
-                    <span ng-bind-html="item.lastname | highlight: $select.search"></span>
-                </small>
-            </ui-select-choices>
-        </ui-select>
-    </script>
-
     <div ng-controller="meetingController" ng-init="init({{ meeting|serialize('json') }})">
         {% if can_edit %}
             <div class="pull-right">
@@ -56,7 +41,7 @@
         <ul class="nav nav-tabs" data-tabs="tabs">
             <li class="active"><a href="#general" data-toggle="tab">{{ "app.general.title"|trans }}</a></li>
             <li><a href="#agenda" data-toggle="tab">{{ "app.agenda.title"|trans }}</a></li>
-            <li><a href="#todos" data-toggle="tab">{{ "app.todos.title"|trans }}</a></li>
+            <li><a href="#todos" data-toggle="tab">{{ "app.todos.tab_title"|trans }}</a></li>
             <li><a href="#protocol" data-toggle="tab">{{ "app.protocol.title"|trans }}</a></li>
             <li><a href="#attendees" data-toggle="tab">{{ "app.attendees.title"|trans }}</a></li>
         </ul>

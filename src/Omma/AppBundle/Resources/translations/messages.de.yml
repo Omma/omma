@@ -91,8 +91,19 @@ app:
         name: Name
 
     todos:
-        title: ToDos
-
+        tab_title: ToDos
+        title: Titel
+        description: Beschreibung
+        done: Erledigt
+        important: Wichtig
+        date: Zu erledigen bis
+        user: Aufgabe einer Person zuordnen
+        delete: ToDo löschen
+        delete_text: Wollen Sie diesen ToDo Punkt wirklich unwiderruflich löschen?
+        do_delete: Ja, löschen
+        empty_title: "[Bezeichnung des Todo-Punktes hier eingeben]"
+        empty_description: '[Hier ist Platz für die Beschreibung des Todo-Punktes...]'
+        new_title: Neues Todo
     protocol:
         title: Protokoll
 
@@ -139,3 +150,5 @@ app:
         firstname: Vorname
         lastname: Nachname
         password: Passwort
+
+    all_todos: Meine ToDos

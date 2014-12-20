@@ -17,26 +17,49 @@ angular.module('ommaApp').factory('toDoService', ['$http', function($http) {
 
             return newTodo;
         },
+        _getUrl: function(meeting, todo) {
+            var url = '/tasks';
+            if (undefined !== meeting) {
+                url = '/meetings/' + meeting.id + '/tasks';
+            }
+            if (undefined !== todo && undefined !== todo.id) {
+                url += '/' + todo.id;
+            }
+
+            url += '.json';
+
+            return url;
+        },
 
         //e.g. http://localhost/meetings/2/tasks.json
         load: function(meeting) {
-            return $http.get('/meetings/' + meeting.id + '/tasks.json').then(function(data) {
+            return $http.get(this._getUrl(meeting)).then(function(data) {
                 return data.data;
             });
         },
 
         add: function(meeting, todo) {
-            return $http.post('/meetings/' + meeting.id + '/tasks.json', this._prepareTodo(todo)).then(function(data) {
+            return $http.post(this._getUrl(meeting, todo), this._prepareTodo(todo)).then(function(data) {
                 return data.data;
             });
         },
 
         save: function(meeting, todo) {
-            return $http.put('/meetings/' + meeting.id + '/tasks/' + todo.id + '.json', this._prepareTodo(todo));
+            if (undefined === todo.task) {
+                return;
+            }
+
+            if (undefined !== todo.id) {
+                return $http.put(this._getUrl(meeting, todo), this._prepareTodo(todo));
+            } else {
+                return $http.post(this._getUrl(meeting, todo), this._prepareTodo(todo)).then(function(data) {
+                   todo.id = data.data.id;
+                });
+            }
         },
 
-        delete: function(meeting, todo) {
-            return $http.delete('/meetings/' + meeting.id + '/tasks/' + todo.id + '.json');
+        remove: function(meeting, todo) {
+            return $http.delete(this._getUrl(meeting, todo));
         }
     };
 

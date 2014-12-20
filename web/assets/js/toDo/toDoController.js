@@ -16,7 +16,9 @@ angular.module('ommaApp')
 
             $scope.$watch(
                 function() {
-                    return todo;
+                    // don't watch id
+
+                    return _.omit(todo, ['id']);
                 },
                 _.after(
                     3,
@@ -40,9 +42,9 @@ angular.module('ommaApp')
 
             $scope.status = 'saved';
 
-            var newTodo = {
-                task:'[Bezeichnung des Todo-Punktes hier eingeben]',
-                description:'[Hier ist Platz für die Beschreibung des Todo-Punktes...]',
+            var todo = {
+                task: undefined,
+                description: undefined,
                 date: moment().format(),
                 type: 1,
                 priority: 0,
@@ -50,11 +52,8 @@ angular.module('ommaApp')
                 user:undefined
             };
 
-            toDoService.add($scope.$parent.meeting, newTodo).then(function(todo) {
-                $scope.todos.push(todo);
-                $scope.status = 'saved';
-                watchTodo(todo);
-            });
+            $scope.todos.push(todo);
+            watchTodo(todo);
         };
 
         function save(todo) {
@@ -73,29 +72,9 @@ angular.module('ommaApp')
         };
         $scope.deleteModal = function () {
             $scope.status = 'saving';
-            toDoService.delete($scope.$parent.meeting, tempTodoToDelete).then(function() {
-                toDoService.load($scope.$parent.meeting).then(function(todo) {
-                    $scope.todos = todo;
-                    $scope.status = 'saved';
-                });
+            _.pull($scope.todos, tempTodoToDelete);
+            toDoService.remove($scope.$parent.meeting, tempTodoToDelete).then(function() {
+                $scope.status = 'saved';
             });
-        };
-
-        //Render Output
-        $scope.todoIsDone = function(todo) {
-            if(todo.status === 'closed') {
-                return true;
-            }
-            else {
-                return false;
-            }
-        };
-        $scope.todoIsImportant = function(todo) {
-            if(todo.priority) {
-                return true;
-            }
-            else {
-                return false;
-            }
         };
 }]);
