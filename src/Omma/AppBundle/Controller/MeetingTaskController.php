@@ -24,6 +24,8 @@ class MeetingTaskController extends FOSRestController implements ClassResourceIn
      * @Security("is_granted('view', meeting)")
      *
      * @param Meeting $meeting
+     *
+     * @return Task[]
      */
     public function cgetAction(Meeting $meeting)
     {
@@ -37,7 +39,7 @@ class MeetingTaskController extends FOSRestController implements ClassResourceIn
     }
 
     /**
-     * @Security("is_granted('edit', meeting)")
+     * @Security("is_granted('view', meeting)")
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -66,7 +68,7 @@ class MeetingTaskController extends FOSRestController implements ClassResourceIn
     }
 
     /**
-     * @Security("is_granted('edit', meeting)")
+     * @Security("is_granted('view', meeting)")
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -80,7 +82,7 @@ class MeetingTaskController extends FOSRestController implements ClassResourceIn
     }
 
     /**
-     * @Security("is_granted('edit', meeting)")
+     * @Security("is_granted('view', meeting)")
      *
      * @param Meeting $meeting
      * @param Task $task

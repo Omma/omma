@@ -53,7 +53,7 @@ class MeetingAgendaController extends FOSRestController implements ClassResource
     }
 
     /**
-     * @Security("is_granted('edit', meeting)")
+     * @Security("is_granted('view', meeting)")
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -66,7 +66,7 @@ class MeetingAgendaController extends FOSRestController implements ClassResource
     }
 
     /**
-     * @Security("is_granted('edit', meeting)")
+     * @Security("is_granted('view', meeting)")
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -95,7 +95,7 @@ class MeetingAgendaController extends FOSRestController implements ClassResource
     }
 
     /**
-     * @Security("is_granted('edit', meeting)")
+     * @Security("is_granted('view', meeting)")
      *
      * @param Request $request
      * @param Meeting $meeting
@@ -109,7 +109,7 @@ class MeetingAgendaController extends FOSRestController implements ClassResource
     }
 
     /**
-     * @Security("is_granted('edit', meeting)")
+     * @Security("is_granted('view', meeting)")
      *
      * @param Meeting $meeting
      * @param Agenda  $agenda
