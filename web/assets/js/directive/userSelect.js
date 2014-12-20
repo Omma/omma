@@ -4,12 +4,14 @@
 angular.module('ommaApp').directive('userSelect', ['$http', function ($http) {
     return {
         scope: {
-            selected: '='
+            selected: '=',
+            placeholder: '@'
         },
         restrict: 'E',
-        templateUrl: 'user_select.html',
+        templateUrl: 'assets/templates/user_select.html',
         controller: function($scope) {
             $scope.users = [];
+            $scope.placeholder = $scope.placeholder || 'Select User';
 
             $scope.search = function(term) {
                 $http.get('/users.json?search=' + term).success(function(users) {

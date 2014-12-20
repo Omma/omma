@@ -56,6 +56,9 @@ module.exports = function (grunt) {
         ],
         less: [
             'web/assets/less/basic.less'
+        ],
+        templates: [
+            'assets/templates/*.html'
         ]
     };
 
@@ -84,29 +87,27 @@ module.exports = function (grunt) {
             },
             all: files.js.concat(['Gruntfile.js'])
         },
-        /*jshint camelcase: false */
-        concat_sourcemap: {
-            libs: {
-                files: {
-                    'web/assets/build/libs.js': files.jsLibs
-                }
-            },
-            main: {
-                files: {
-                    'web/assets/build/main.js': files.js
-                }
-            }
-        },
         concat: {
             build: {
                 src: files.jsLibs.concat([
-                    'web/assets/build/main.min.js'
+                    'web/assets/build/main.min.js',
+                    'web/assets/build/templates.js'
                 ]),
                 dest: 'web/assets/build/build.js'
             },
-            dist: {
-                src: ['web/assets/js/ctrl/*.js', 'web/assets/js/model/*.js'],
-                dest: 'web/assets/js/view_controller.js'
+            libs: {
+                src: files.jsLibs,
+                dest: 'web/assets/build/libs.js',
+                options: {
+                    sourceMap: true
+                }
+            },
+            main: {
+                src: files.js.concat(['web/assets/build/templates.js']),
+                dest: 'web/assets/build/main.js',
+                options: {
+                    sourceMap: true
+                }
             }
         },
         uglify: {
@@ -156,6 +157,16 @@ module.exports = function (grunt) {
                 }
             }
         },
+        ngtemplates: {
+            app: {
+                src: files.templates,
+                dest: 'web/assets/build/templates.js',
+                options: {
+                    module: 'ommaApp'
+                },
+                cwd: 'web'
+            }
+        },
         watch: {
             // Watch less files for linting
             less: {
@@ -171,7 +182,16 @@ module.exports = function (grunt) {
                 files: files.js,
                 tasks: [
                     'newer:jshint',
-                    'concat_sourcemap:main'
+                    'concat:main'
+                ]
+            },
+            ngtemplates: {
+                files: files.templates,
+                options: {
+                    cwd: 'web'
+                },
+                tasks: [
+                    'ngtemplates:app'
                 ]
             },
 
@@ -200,8 +220,9 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', [
         'newer:jshint',
-        'concat_sourcemap:libs',
-        'concat_sourcemap:main',
+        'ngtemplates',
+        'concat:libs',
+        'concat:main',
         'less:dev',
         'cssmin:dev',
         'serve'
@@ -209,6 +230,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'newer:jshint',
+        'ngtemplates',
         'less:prod',
         'cssmin:prod',
         'uglify:prod',

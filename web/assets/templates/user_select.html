@@ -1,0 +1,12 @@
+    <ui-select ng-model="$parent.selected" theme="select2" class="form-control">
+        <ui-select-match placeholder="{{placeholder}}">
+        {{ $select.selected.username }}
+        </ui-select-match>
+        <ui-select-choices refresh="search($select.search)" refresh-delay="1000" repeat="item in users | filter: $select.search">
+            <div ng-bind-html="item.username | highlight: $select.search"></div>
+            <small>
+                <span ng-bind-html="item.firstname | highlight: $select.search"></span>
+                <span ng-bind-html="item.lastname | highlight: $select.search"></span>
+            </small>
+        </ui-select-choices>
+    </ui-select>
