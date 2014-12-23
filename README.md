@@ -1,5 +1,30 @@
 # Open Meeting Manager
 
+## Struktur
+
+- app:
+  - config: Konfiguration der Anwendung und verwendeten Bundles
+  - Resources: Globale Templates
+  - serializer: Überschreibung von Einstellungen der Serialisierung von Entities
+    aus Third Party Bundles
+- bin: Ausführbare Dateien von Third Party Bundles
+- node_modules: Node.js Abhängigkeiten
+- src: PHP Anwendungscode
+  - Application: Erweiterung/Überschreibung von Third Party Bundles
+  - Omma: PHP Anwendungscode
+- vendor: PHP Abhängigkeiten
+- vm: Vagrant-VM Konfiguration
+- web: Auf dem Webserver öffentlich zugängliche Dateien (DocumentRoot)
+  - assets: Javascript- & CSS-Dateien
+    - build: Mit Grunt generierte Dateien
+    - components: Über Bower installierte Abhängigkeiten
+    - fonts: Schriftarten für den Browser (Icon-Fonts)
+    - img: Bilder
+    - js: Frontend Javascript-Code
+    - less: Less-Dateien, aus denen CSS generiert wird
+    - templates: AngularJS Templates
+
+
 ## Installation
 
 Composer installieren:
@@ -20,10 +45,12 @@ JavaScript Abhänigkeiten installieren:
 npm install
 ```
 
-Bower installieren:
+Bower und Grunt installieren:
 
 ```
 npm install -g bower
+npm install -g grunt-cli
+
 ```
 
 Bower Abhängigkeiten installieren
@@ -32,13 +59,7 @@ Bower Abhängigkeiten installieren
 bower install
 ```
 
-Grunt installieren:
-
-```
-npm install -g grunt-cli
-```
-
-Grunt aussführen:
+Javascript und CSS Dateien mit Grunt generieren:
 
 ```
 grunt
@@ -84,7 +105,7 @@ vagrant provision
 
 ausgeführt werden, dass dann ohne Fehlermeldung beendet werden sollte.
 
-### In VM einloggen
+### Auf VM zugreifen
 Über SSH kann auf die VM zugegriffen werden:
 
 ```

@@ -23,31 +23,31 @@ class AppKernel extends Kernel
             new Sonata\AdminBundle\SonataAdminBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Omma\AppBundle\OmmaAppBundle(),
             new Omma\UserBundle\OmmaUserBundle(),
             new \Application\Sonata\UserBundle\ApplicationSonataUserBundle()
         );
-        
+
         if (in_array($this->getEnvironment(), array(
             'dev',
             'test'
         ))) {
-            $bundles[] = new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
             $bundles[] = new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle();
             $bundles[] = new h4cc\AliceFixturesBundle\h4ccAliceFixturesBundle();
         }
-        
+
         if (in_array($this->getEnvironment(), array(
             'test'
         ))) {
             $bundles[] = new Liip\FunctionalTestBundle\LiipFunctionalTestBundle();
         }
-        
+
         return $bundles;
     }
 

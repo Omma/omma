@@ -3,3 +3,6 @@
 
 # remove temp meetings
 0 0  * * *  cd /var/www/praktikum-web && php app/console omma:meeting:remove_temp > /dev/null 2>&1
+
+# send mails
+*/2 *  * * * cd /var/www/omma/current && php app/console swiftmailer:spool:send > /dev/null 2>&1
