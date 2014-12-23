@@ -25,7 +25,7 @@ require_once __DIR__.'/../app/AppKernel.php';
 $kernel = new AppKernel('dev', true);
 // don't load class cache for easier debugging
 if (!isset($_GET['XDEBUG_SESSION_START'])) {
-#    $kernel->loadClassCache();
+    $kernel->loadClassCache();
 }
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
