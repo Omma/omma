@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- *
+ * Show and edit user profiles.
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

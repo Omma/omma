@@ -7,6 +7,8 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
+ * Sets the current browser locale as default.
+ * Ignores manual locale changes
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

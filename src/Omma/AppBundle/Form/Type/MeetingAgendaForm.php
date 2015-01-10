@@ -6,6 +6,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
+ * Form type for agenda items.
+ * Allows a maximum nesting level of 4 levels, as infinite nesting will
+ * cause an infinite recursion in symfony forms handling
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

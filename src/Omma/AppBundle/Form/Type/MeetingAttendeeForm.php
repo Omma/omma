@@ -6,7 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- *
+ * Form for meeting attendees
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

@@ -10,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Range;
 
 /**
+ * Form for meeting recursion config
  *
  * @author Adrian Woeltche
  * @author Florian Pfitzer <pfitzer@w3p.cc>
@@ -36,7 +37,7 @@ class MeetingRecurringForm extends AbstractType
                 "widget" => "single_text",
             ))
         ;
-
+        // config array
         $config = $builder->create("config", "form", array(
             "compound" => true,
         ));

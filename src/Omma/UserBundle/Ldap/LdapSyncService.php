@@ -9,7 +9,10 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * Sync users from LDAP directory with database
+ * Sync users from LDAP directory with database.
+ * Users and Groups which are not present in the database will be added,
+ * Users and Groups which are present in ldap an database will be updated,
+ * Users and Groups which were synced previously will be deleted or marked as deleted.
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

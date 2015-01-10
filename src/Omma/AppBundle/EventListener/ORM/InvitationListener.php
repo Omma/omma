@@ -7,7 +7,7 @@ use Omma\AppBundle\Entity\Meeting;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- *
+ * Listener for sending invitations to attendees.
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

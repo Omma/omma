@@ -23,8 +23,10 @@ class MeetingRecurringExceptionController extends FOSRestController implements C
     /**
      * @Security("is_granted('view', meeting)")
      *
-     * @param Meeting $meeting
+     * @param Meeting          $meeting
      * @param MeetingRecurring $meetingRecurring
+     *
+     * @return MeetingRecurringException[]
      */
     public function cgetAction(Meeting $meeting, MeetingRecurring $meetingRecurring)
     {
@@ -86,9 +88,11 @@ class MeetingRecurringExceptionController extends FOSRestController implements C
     /**
      * @Security("is_granted('edit', meeting)")
      *
-     * @param Meeting $meeting
-     * @param MeetingRecurring $meetingRecurring
+     * @param Meeting                   $meeting
+     * @param MeetingRecurring          $meetingRecurring
      * @param MeetingRecurringException $meetingRecurringException
+     *
+     * @return \FOS\RestBundle\View\View
      */
     public function deleteAction(Meeting $meeting, MeetingRecurring $meetingRecurring, MeetingRecurringException $meetingRecurringException)
     {

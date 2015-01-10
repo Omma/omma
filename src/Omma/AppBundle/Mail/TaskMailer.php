@@ -5,7 +5,7 @@ use Omma\AppBundle\Entity\Task;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- *
+ * Mailer for sending task notifications to users
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

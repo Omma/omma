@@ -5,7 +5,7 @@ use Omma\AppBundle\Entity\MeetingEntityManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- *
+ * Twig extension for displying upcomming meeting in the sidebar
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

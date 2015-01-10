@@ -5,7 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- *
+ * Holds a collection of {@link MeetingAgendaForm}
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

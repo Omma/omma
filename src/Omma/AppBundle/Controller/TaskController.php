@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- *
+ * Global task api for fetching tasks, which are assigned to the current user.
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
