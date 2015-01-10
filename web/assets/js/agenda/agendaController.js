@@ -8,9 +8,6 @@
  * Controller for displaying agenda tree
  *
  * Author Florian Pfitzer <pfitzer@w3p.cc>
-
- *
- *
  */
 angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Restangular', 'agendaService', function($scope, Restangular, agendaService) {
     /**
@@ -26,15 +23,22 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
      * @ngdoc property
      * @name status
      * @propertyOf ommaApp.agenda:meetingAgendaController
-     * @return {string}
+     * @return {string} current status ('saved', 'saving', 'not_saved')
      */
     $scope.status = 'saved';
 
+    // load agendas from backend
     agendaService.getAll($scope.$parent.meeting).then(function(agendas) {
         $scope.rootAgenda = agendas;
         watchAgendas();
     });
 
+    /**
+     * @ngdoc method
+     * @name $scope.newNode
+     * @methodOf ommaApp.agenda:meetingAgendaController
+     * @param {Object} parent parent agendaNode
+     */
     $scope.newNode = function(parent) {
         var node = {
             parent: parent,
