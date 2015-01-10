@@ -1,7 +1,20 @@
 /**
- * @author Florian Pfitzer <pfitzer@w3p.cc>
+ * @ngdoc controller
+ * @name ommaApp.meetingGeneral:meetingGeneralController
+ * @requires $scope
+ * @requires meetingService
+ * @description
+ * Controller for the meeting tab 'general'
+ *
+ * Aauthor: Florian Pfitzer <pfitzer@w3p.cc>
  */
 angular.module('ommaApp').controller('meetingGeneralController', ['$scope', 'meetingService', function($scope, meetingService) {
+    /**
+     * @ngdoc property
+     * @name $scope_date
+     * @propertyOf ommaApp.meetingGeneral:meetingGeneralController
+     * @returns {Object} object with default start and end date
+     */
     $scope.date = {
         startDate: undefined,
         endDate: undefined
@@ -15,6 +28,9 @@ angular.module('ommaApp').controller('meetingGeneralController', ['$scope', 'mee
         endDate: moment(meeting.date_end)
     };
 
+    // watch for changes of date and adjust start or end date accordingly
+    // - if new end date is before the start, reset the end to the current start
+    // - if new start is after end, reschedule the end by the same difference (e.g 1 Day later)
     $scope.$watch('date', function(newValue, oldValue) {
         var start = $scope.date.startDate = moment(newValue.startDate);
         var end = $scope.date.endDate = moment(newValue.endDate);
@@ -39,6 +55,13 @@ angular.module('ommaApp').controller('meetingGeneralController', ['$scope', 'mee
     $scope.nextMeeting = meeting.next;
     $scope.prevMeetings = [];
 
+    /**
+     * @ngdoc method
+     * @name $scope_editPrevMeeting
+     * @methodOf ommaApp.meetingGeneral:meetingGeneralController
+     * @description
+     * Show the edit dialog for the previous meeting
+     */
     $scope.editPrevMeeting = function() {
         $scope.editingPrevMeeting = true;
         if (0 !== $scope.prevMeetings.length) {
@@ -49,11 +72,25 @@ angular.module('ommaApp').controller('meetingGeneralController', ['$scope', 'mee
         });
     };
 
+    /**
+     * @ngdoc method
+     * @name $scope_cancelEditPrevMeeting
+     * @methodOf ommaApp.meetingGeneral:meetingGeneralController
+     * @description
+     * Cancel editing the previous meeting
+     */
     $scope.cancelEditPrevMeeting = function() {
         $scope.prevMeeting = null;
         $scope.editingPrevMeeting = false;
     };
 
+    /**
+     * @ngdoc method
+     * @name $scope_linkMeeting
+     * @methodOf ommaApp.meetingGeneral:meetingGeneralController
+     * @description
+     * Finish editing the previous meeting and persist it.
+     */
     $scope.linkMeeting = function() {
         if (null === $scope.prevMeeting) {
             return;
@@ -62,19 +99,47 @@ angular.module('ommaApp').controller('meetingGeneralController', ['$scope', 'mee
         meeting.prev = $scope.prevMeeting;
     };
 
+    /**
+     * @ngdoc method
+     * @name $scope_copyAttendees
+     * @methodOf ommaApp.meetingGeneral:meetingGeneralController
+     * @description
+     * Copy attendees from the previous meeting to the current.
+     * Broadcasts an `attendee.copy` event to the {@link ommaApp.agenda:meetingAgendaController meetingAgendaController}
+     */
     $scope.copyAttendees = function() {
         if (null === $scope.prevMeeting) {
             return;
         }
-        // broadcast copy to attendee controller
+        /**
+         * @ngdoc event
+         * @name attendee_copy
+         * @eventOf ommaApp.meetingGeneral:meetingGeneralController
+         * @description
+         * broadcast copy event to {@link ommaApp.agenda:meetingAgendaController meetingAgendaController}
+         */
         $scope.$parent.$broadcast('attendee.copy', {meeting: $scope.prevMeeting});
     };
 
+    /**
+     * @ngdoc method
+     * @name $scope_copyAgenda
+     * @methodOf ommaApp.meetingGeneral:meetingGeneralController
+     * @description
+     * Copy the agenda from the previous meeting to the current.
+     * Broadcasts an `agenda.copy` event to the {@link ommaApp.agenda:meetingAgendaController meetingAgendaController}
+     */
     $scope.copyAgenda = function() {
         if (null === $scope.prevMeeting) {
             return;
         }
-        // broadcast copy to agenda controller
+        /**
+         * @ngdoc event
+         * @name attendee_copy
+         * @eventOf ommaApp.meetingGeneral:meetingGeneralController
+         * @description
+         * broadcast copy event to {@link ommaApp.agenda:meetingAgendaController meetingAgendaController}
+         */
         $scope.$parent.$broadcast('agenda.copy', {meeting: $scope.prevMeeting});
     };
 }]);

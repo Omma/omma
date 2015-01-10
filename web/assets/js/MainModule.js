@@ -25,6 +25,7 @@ app.config(['RestangularProvider', function(RestangularProvider) {
     RestangularProvider.setRequestSuffix('.json');
 }]);
 
+// configure default date format
 app.value('dateRangePickerConfig', {
     separator: ' - ',
     format: 'DD. MMMM YYYY HH:mm'

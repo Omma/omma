@@ -1,16 +1,25 @@
 /**
+ * @ngdoc service
+ * @name ommaApp.meeting:meetingService
+ * @requires $http
+ * @description
+ * Meeting related services
+ *
  * @author Johannes Höhn <johannes.hoehn@hof-university.de>
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
     return {
         /**
-         * Create virtual meeting
+         * @ngdoc method
+         * @name _createVirtualMeeting
+         * @methodOf ommaApp.meeting:meetingService
+         * @description Create virtual meeting for a real meeting object with another date
          *
-         * @author Florian Pfitzer <pfitzer@w3p.cc>
-         * @param meeting base meeting
-         * @param date
-         * @returns {*}
+         * Author: Florian Pfitzer <pfitzer@w3p.cc>
+         * @param {Object} meeting base meeting
+         * @param {Object} date new date
+         * @returns {Object} vritual meeting
          * @private
          */
         _createVirtualMeeting: function (meeting, date) {
@@ -40,12 +49,16 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
             return newMeeting;
         },
         /**
+         * @ngdoc method
+         * @name _isDateInRange
+         * @methodOf ommaApp.meeting:meetingService
+         * @description
          * check if date is a recurring range
          *
-         * @author Florian Pfitzer <pfitzer@w3p.cc>
-         * @param recurring
-         * @param date
-         * @returns {*|boolean}
+         * Authro Florian Pfitzer <pfitzer@w3p.cc>
+         * @param {Object} recurring recurring meeting object
+         * @param {moment} date date to check
+         * @returns {boolean} whether date is recurring date range
          * @private
          */
         _isDateInRange: function (recurring, date) {
@@ -55,13 +68,17 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
                 );
         },
         /**
+         * @ngdoc method
+         * @name _getRecurrings
+         * @methodOf ommaApp.meeting:meetingService
+         * @description
          * calculate recurrings for a meeting
          *
-         * @author Florian Pfitzer <pfitzer@w3p.cc>
-         * @param meeting
-         * @param start
-         * @param end
-         * @returns {Array}
+         * Author Florian Pfitzer <pfitzer@w3p.cc>
+         * @param {Object} meeting meeting
+         * @param {moment} start start date
+         * @param {moment} end end date
+         * @returns {Array} array with all recurring (vritual) meetings
          * @private
          */
         _getRecurrings: function(meeting, start, end) {
@@ -114,14 +131,19 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
 
             return meetings;
         },
+
         /**
+         * @ngdoc method
+         * @name _getDayRecurrings
+         * @methodOf ommaApp.meeting:meetingService
+         * @description
          * Get virtual meetings for daily recurrings
          *
-         * @author Florian Pfitzer <pfitzer@w3p.cc>
-         * @param date
-         * @param recurring
-         * @param meeting
-         * @returns {Array}
+         * Author: Florian Pfitzer <pfitzer@w3p.cc>
+         * @param {moment} date date
+         * @param {Object} recurring recurring object
+         * @param {Object} meeting meeting object
+         * @returns {Array} array with all recurring (vritual) meetings
          * @private
          */
         _getDayRecurrings: function(date, recurring, meeting) {
@@ -133,12 +155,17 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
             return meetings;
         },
         /**
+         * @ngdoc method
+         * @name _getWeekRecurrings
+         * @methodOf ommaApp.meeting:meetingService
+         * @description
          * Get virtual meetings for weekly recurrings
          *
-         * @author Florian Pfitzer <pfitzer@w3p.cc>
-         * @param date
-         * @param recurring
-         * @param meeting
+         * Author Florian Pfitzer <pfitzer@w3p.cc>
+         * @param {moment} date date
+         * @param {Object} recurring recurring object
+         * @param {Object} meeting meeting object
+         * @returns {Array} array with all recurring (vritual) meetings
          * @private
          */
         _getWeekRecurrings: function(date, recurring, meeting) {
@@ -156,13 +183,17 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
             return meetings;
         },
         /**
-         * Get virtual meetings for weekly recurrings
+         * @ngdoc method
+         * @name _getWeekRecurrings
+         * @methodOf ommaApp.meeting:meetingService
+         * @description
+         * Get virtual meetings for monthly recurrings
          *
-         * @author Florian Pfitzer <pfitzer@w3p.cc>
-         * @param date
-         * @param recurring
-         * @param meeting
-         * @returns {Array}
+         * Author Florian Pfitzer <pfitzer@w3p.cc>
+         * @param {moment} date date
+         * @param {Object} recurring recurring object
+         * @param {Object} meeting meeting object
+         * @returns {Array} array with all recurring (vritual) meetings
          * @private
          */
         _getMonthRecurrings: function(date, recurring, meeting) {
@@ -207,13 +238,17 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
             return meetings;
         },
         /**
-         * Get virtual meetings for weekly recurrings
+         * @ngdoc method
+         * @name _getWeekRecurrings
+         * @methodOf ommaApp.meeting:meetingService
+         * @description
+         * Get virtual meetings for yearly recurrings
          *
-         * @author Florian Pfitzer <pfitzer@w3p.cc>
-         * @param date
-         * @param recurring
-         * @param meeting
-         * @returns {Array}
+         * Author Florian Pfitzer <pfitzer@w3p.cc>
+         * @param {moment} date date
+         * @param {Object} recurring recurring object
+         * @param {Object} meeting meeting object
+         * @returns {Array} array with all recurring (vritual) meetings
          * @private
          */
         _getYearRecurrings: function(date, recurring, meeting) {
@@ -225,12 +260,16 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
             return meetings;
         },
         /**
+         * @ngdoc method
+         * @name getByDate
+         * @methodOf ommaApp.meeting:meetingService
+         * @description
          * Get Meetings for date range
          *
-         * @author Johannes Höhn <johannes.hoehn@hof-university.de>
-         * @param {Date|moment} start date
-         * @param {Date|moment} end date
-         * @returns {*}
+         * Author Johannes Höhn <johannes.hoehn@hof-university.de>
+         * @param {(Date|moment)} start start date
+         * @param {(Date|moment)} end end date
+         * @returns {Promise} meeting in the requested date range
          */
         getByDate: function(start, end) {
             var self = this;
@@ -281,9 +320,15 @@ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
             ;
         },
         /**
-         * @author Johannes Höhn <johannes.hoehn@hof-university.de>
-         * @param term
-         * @returns {*}
+         * @ngdoc method
+         * @name search
+         * @methodOf ommaApp.meeting:meetingService
+         * @description
+         * Search for a meeting
+         *
+         * Author: Johannes Höhn <johannes.hoehn@hof-university.de>
+         * @param {String} term searchterm
+         * @returns {HttpPromise} result from http request with meeting array
          */
         search: function(term) {
             return $http.get('/meetings.json', {
