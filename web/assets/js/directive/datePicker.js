@@ -1,4 +1,15 @@
 /**
+ * @ngdoc directive
+ * @name ommaApp.directive:datePicker
+ * @restrict A
+ * @scope
+ * @description
+ * This directive displays a datepicker for a single date.
+ * The datepicker is based on the daterangepicker plugin, but configured to show a single datepicker.
+ * Changes to the date will be applied to the datepicker and vise versa.
+ *
+ * @param {(string|date|moment)} date
+ *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 angular.module('ommaApp').directive('datePicker', [function() {
@@ -16,7 +27,7 @@ angular.module('ommaApp').directive('datePicker', [function() {
                 singleDatePicker: true
             });
 
-            // allow emptying by user
+            // allow emptying by user: listen for change of input element and set date to undefined
             $element.change(function() {
                 if (0 === $element.val().length) {
                     $scope.date = undefined;
@@ -24,11 +35,13 @@ angular.module('ommaApp').directive('datePicker', [function() {
                 }
             });
 
+            // watch for date changes and set it to
             $scope.$watch('date', function(newDate) {
                 if (undefined === newDate) {
                     $element.val('');
                     return;
                 }
+                // convert to moment-js date
                 if (!moment.isMoment(newDate)) {
                     $scope.date = newDate = moment(newDate);
                 }

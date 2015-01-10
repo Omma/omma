@@ -1,4 +1,10 @@
 /**
+ * @ngdoc controller
+ * @name ommaApp.attendee:meetingAttendeeController
+ * @requires $scope
+ * @requires ommaApp.attendee:attendeeService
+ * @description controller for displaying the attendee tab in the meeting overview
+ *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 angular.module('ommaApp').controller('meetingAttendeeController', ['$scope', 'attendeeService', function($scope, attendeeService) {

@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2012 quickcue
  */
+var Dgeni = require('dgeni');
 
 module.exports = function (grunt) {
     // Load dev dependencies
@@ -167,6 +168,37 @@ module.exports = function (grunt) {
                 cwd: 'web'
             }
         },
+        ngdocs: {
+            options: {
+                dest: 'build/js-doc',
+                title: 'OMMA Documentation',
+                html5Mode: false
+            },
+            api: {
+                src: [ 'web/assets/js/**/*.js' ],
+                title: 'OMMA Documentation'
+            }
+        },
+        docular: {
+            useHtml5Mode: true,
+            docular_webapp_target: 'build/js-docs2',
+            showAngularDocs: false,
+            groupTitle: 'OMMa',
+            groups: [
+                {
+                    groupTitle: 'OMMa doc',
+                    groupId: 'api',
+                    groupIcon: 'book',
+                    groups: [
+                        {
+                            id: "api",
+                            title: "API",
+                            files: grunt.file.expand(files.js)
+                        }
+                    ]
+                }
+            ]
+        },
         watch: {
             // Watch less files for linting
             less: {
@@ -209,6 +241,12 @@ module.exports = function (grunt) {
                 ]
             }
         }
+    });
+
+    grunt.registerTask('dgeni', 'Generate docs via dgeni.', function() {
+        var done = this.async();
+        var dgeni = new Dgeni([require('./doc/dgeni')]);
+        dgeni.generate().then(done);
     });
 
     grunt.registerTask('serve', function () {

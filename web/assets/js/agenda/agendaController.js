@@ -1,5 +1,10 @@
 /**
- * Controller for displaying agenda tree
+ * @ngdoc controller
+ * @name ommaApp.agenda:meetingAgendaController
+ * @description Controller for displaying agenda tree
+ * @requires $scope
+ * @requires Restangular
+ * @requires ommaApp.agenda:agendaService
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

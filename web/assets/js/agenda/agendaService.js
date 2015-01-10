@@ -1,23 +1,40 @@
 /**
+ * @ngdoc service
+ * @name ommaApp.agenda:agendaService
+ * @requires Restangular
+ * @requires $http
+ *
+ * @description Service for loading and saving the agenda
+ *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 angular.module('ommaApp').factory('agendaService', ['Restangular', '$http', function(Restangular, $http) {
     Restangular.extendModel('agendas', function(model) {
         model.editing = false;
-        console.log(model.name);
 
         return model;
     });
     return {
+        /**
+         * @ngdoc method
+         * @name create
+         * @methodOf ommaApp.agenda:agendaService
+         * @description create new angeda element and restangularize it
+         *
+         * @param {Object} parent Parent Restangular resource (Agenda collection)
+         * @returns {Object} a new agenda object
+         */
         create: function(parent) {
             var element = {};
 
             return Restangular.restangularizeElement(parent.parentResource, element, 'agendas');
         },
         /**
-         * restangularize children
-         * @param agenda
-         * @param parent
+         *
+         * @description restangularize agenda children.
+         *
+         * @param {Object} agenda object
+         * @param {Object} parent Retangular parent resource (Agenda collection)
          */
         restangularize: function(agenda, parent) {
             var self = this;
@@ -28,11 +45,23 @@ angular.module('ommaApp').factory('agendaService', ['Restangular', '$http', func
             });
 
         },
+        /**
+         * get all agenda items for a meeting
+         *
+         * @param meeting
+         * @returns {*}
+         */
         getAll: function(meeting) {
             return $http.get('/meetings/' + meeting.id + '/agendas.json').then(function(data) {
                 return data.data;
             });
         },
+        /**
+         * update sorting_order field of all agenda items
+         *
+         * @param tree
+         * @private
+         */
         _setSortingOrder: function(tree) {
             var self = this;
             var order = 1;
@@ -44,6 +73,7 @@ angular.module('ommaApp').factory('agendaService', ['Restangular', '$http', func
         },
         /**
          * Save whole agenda tree
+         *
          * @param meeting Meeting object
          * @param rootNode
          */
@@ -57,6 +87,7 @@ angular.module('ommaApp').factory('agendaService', ['Restangular', '$http', func
         },
         /**
          * Remove properites from node that are not used for comparisson and transmission
+         *
          * @param node
          * @returns {*}
          */
