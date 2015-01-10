@@ -1,4 +1,8 @@
 // Declare app level module which depends on views, and components
+/**
+ * @ngdoc overview
+ * @name ommaApp
+ */
 var app = angular.module('ommaApp', [
     'restangular',
     'angular-loading-bar',

@@ -1,12 +1,33 @@
 /**
+ * @ngdoc controller
+ * @name ommaApp.agenda:meetingAgendaController
+ * @requires $scope
+ * @requires Restangular
+ * @requires ommaApp.agenda:agendaService
+ * @description
  * Controller for displaying agenda tree
  *
- * @author Florian Pfitzer <pfitzer@w3p.cc>
+ * Author Florian Pfitzer <pfitzer@w3p.cc>
+
+ *
+ *
  */
 angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Restangular', 'agendaService', function($scope, Restangular, agendaService) {
+    /**
+     * @ngdoc property
+     * @name $scope_rootAgenda
+     * @propertyOf ommaApp.agenda:meetingAgendaController
+     * @return {Object} root agenda node
+     */
     $scope.rootAgenda = {
         children: []
     };
+    /**
+     * @ngdoc property
+     * @name status
+     * @propertyOf ommaApp.agenda:meetingAgendaController
+     * @return {string}
+     */
     $scope.status = 'saved';
 
     agendaService.getAll($scope.$parent.meeting).then(function(agendas) {
