@@ -179,6 +179,16 @@ module.exports = function (grunt) {
                 title: 'OMMA Documentation'
             }
         },
+        dgeni: {
+            options: {
+                // Specify the base path used when resolving relative paths to source files
+                basePath: ''
+            },
+            // Process all js files in `src` and its subfolders ...
+            src: ['web/assets/js/directive/*.js'],
+            // Specify where write our generated doc files directory
+            dest: 'dgeni'
+        },
         docular: {
             useHtml5Mode: true,
             docular_webapp_target: 'build/js-docs2',
@@ -191,8 +201,8 @@ module.exports = function (grunt) {
                     groupIcon: 'book',
                     groups: [
                         {
-                            id: "api",
-                            title: "API",
+                            id: 'api',
+                            title: 'API',
                             files: grunt.file.expand(files.js)
                         }
                     ]
@@ -243,11 +253,12 @@ module.exports = function (grunt) {
         }
     });
 
+    /*
     grunt.registerTask('dgeni', 'Generate docs via dgeni.', function() {
         var done = this.async();
         var dgeni = new Dgeni([require('./doc/dgeni')]);
         dgeni.generate().then(done);
-    });
+    });*/
 
     grunt.registerTask('serve', function () {
         grunt.task.run([
