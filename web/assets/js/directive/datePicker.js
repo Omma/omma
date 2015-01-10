@@ -8,8 +8,6 @@
  * The datepicker is based on the daterangepicker plugin, but configured to show a single datepicker.
  * Changes to the date will be applied to the datepicker and vise versa.
  *
- * @param {(string|date|moment)} date
- *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 angular.module('ommaApp').directive('datePicker', [function() {
