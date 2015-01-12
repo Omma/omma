@@ -1,15 +1,15 @@
 /**
  * @ngdoc service
- * @name ommaApp.toDo:toDoController
- * @requires $scope
- * @requires toDoService
+ * @name ommaApp.meeting:meetingService
+ * @requires $http
  * @description
- * Controller for toDos of an event
+ * Meeting related services
  *
  * Author Florian Pfitzer <pfitzer@w3p.cc>
  * Author Johannes Höhn <johannes.hoehn@hof-university.de>
  */
-angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
+
+ angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
     return {
         /**
          * @ngdoc method
