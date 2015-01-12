@@ -43,7 +43,7 @@ angular.module('ommaApp')
                 function() {
                     // don't watch id
 
-                    return _.omit(todo, ['id']);
+                    return _.omit(todo, ['id', 'open']);
                 },
                 _.after(
                     3,
@@ -77,7 +77,8 @@ angular.module('ommaApp')
                 type: 1,
                 priority: 0,
                 status: 'open',
-                user:undefined
+                user:undefined,
+                open: true
             };
 
             $scope.todos.push(todo);

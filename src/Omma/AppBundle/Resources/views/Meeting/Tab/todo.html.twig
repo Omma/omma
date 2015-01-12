@@ -28,7 +28,7 @@
 
     <div ng-class="{'done': todo.status == 'closed'}">
         <accordion>
-            <accordion-group>
+            <accordion-group is-open="todo.open">
 
                 <accordion-heading>
                     <i class="fa" ng-class="{'fa-exclamation': todo.priority}"> </i>
