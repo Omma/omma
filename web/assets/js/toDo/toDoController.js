@@ -62,7 +62,7 @@ angular.module('ommaApp')
 
         /**
          * @ngdoc method
-         * @name addNewTodo
+         * @name $scope_addNewTodo
          * @methodOf ommaApp.toDo:toDoController
          * @description watch toDos for change, if changed it will be saved into database
          */
@@ -99,7 +99,7 @@ angular.module('ommaApp')
         }
 
 
-        //Delete Modal
+        //Save todo to delete in a temp var
         var tempTodoToDelete;
         $scope.setTempTodoToDelete = function(todo) {
             tempTodoToDelete = todo;
@@ -107,7 +107,7 @@ angular.module('ommaApp')
 
         /**
          * @ngdoc method
-         * @name deleteModal
+         * @name $scope_deleteModal
          * @methodOf ommaApp.toDo:toDoController
          * @description remove marked todo
          */
