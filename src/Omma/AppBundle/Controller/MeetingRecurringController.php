@@ -22,6 +22,8 @@ class MeetingRecurringController extends FOSRestController implements ClassResou
      * @Security("is_granted('view', meeting)")
      *
      * @param Meeting $meeting
+     *
+     * @return MeetingRecurring
      */
     public function cgetAction(Meeting $meeting)
     {
@@ -33,6 +35,8 @@ class MeetingRecurringController extends FOSRestController implements ClassResou
      *
      * @param Request $request
      * @param Meeting $meeting
+     *
+     * @return \FOS\RestBundle\View\View
      */
     public function cpostAction(Request $request, Meeting $meeting)
     {
@@ -72,8 +76,10 @@ class MeetingRecurringController extends FOSRestController implements ClassResou
     /**
      * @Security("is_granted('edit', meeting)")
      *
-     * @param Meeting $meeting
+     * @param Meeting          $meeting
      * @param MeetingRecurring $meetingRecurring
+     *
+     * @return \FOS\RestBundle\View\View
      */
     public function deleteAction(Meeting $meeting, MeetingRecurring $meetingRecurring)
     {

@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
- *
+ * Authenticate users with the LDAP directory
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

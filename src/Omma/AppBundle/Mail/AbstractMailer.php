@@ -5,7 +5,7 @@ use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * Abstract class for rendering twig template to mails and send them
+ * Abstract class for rendering twig template to mails and send them to users
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

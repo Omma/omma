@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- *
+ * Adds {@link LdapAuthenticationProvider} and {@link LdapSecurityListener} to symfony security framework
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Task security voter
+ * Task security voter, to decide whether a task can be edited by a certain user
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

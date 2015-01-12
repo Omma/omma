@@ -6,7 +6,7 @@ use Omma\AppBundle\Entity\TaskEntityManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- *
+ * Twig extension for displaying open tasks for a user at the sidebar
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

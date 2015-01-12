@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- *
+ * Remove temporary created meeting after 3 days.
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

@@ -6,6 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+/**
+ * Default controller, which redirects to the dashboard for logged in users.
+ * Should display general information about the app for guests.
+ *
+ * @author Florian Pfitzer <pfitzer@w3p.cc>
+ */
 class DefaultController extends Controller
 {
     /**

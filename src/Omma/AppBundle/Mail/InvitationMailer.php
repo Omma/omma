@@ -7,7 +7,7 @@ use Omma\AppBundle\Entity\Meeting;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- *
+ * Mailer for sending invitation mails to users
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

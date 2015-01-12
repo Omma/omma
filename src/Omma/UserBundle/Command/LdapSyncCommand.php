@@ -7,7 +7,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * Sync users from LDAP directory with database.
+ * Users and Groups which are not present in the database will be added,
+ * Users and Groups which are present in ldap an database will be updated,
+ * Users and Groups which were synced previously will be deleted or marked as deleted.
  *
+ * This Command is a frontend to the {@link Omma\UserBundle\Ldap\LdapSyncService}
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

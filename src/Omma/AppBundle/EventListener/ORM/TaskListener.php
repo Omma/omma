@@ -7,7 +7,7 @@ use Omma\AppBundle\Mail\TaskMailer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- *
+ * Listener for sending notifications about added tasks to the assigned users.
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */

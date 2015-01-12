@@ -35,7 +35,7 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
 
     /**
      * @ngdoc method
-     * @name $scope.newNode
+     * @name $scope_newNode
      * @methodOf ommaApp.agenda:meetingAgendaController
      * @param {Object} parent parent agendaNode
      */
@@ -50,15 +50,35 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
         parent.children.push(node);
     };
 
+    /**
+     * @ngdoc method
+     * @name $scope_edit
+     * @methodOf ommaApp.agenda:meetingAgendaController
+     * @param {Object} node node to be edited
+     */
     $scope.edit = function(node) {
         node.editing = true;
         node.oldName = node.name;
     };
 
+    /**
+     * @ngdoc method
+     * @name $scope_save
+     * @methodOf ommaApp.agenda:meetingAgendaController
+     * @description save currently edited node
+     * @param {Object} node node
+     */
     $scope.save = function(node) {
         node.editing = false;
     };
 
+    /**
+     * @ngdoc method
+     * @name $scope_cancelEditing
+     * @methodOf ommaApp.agenda:meetingAgendaController
+     * @description cancel editing, will remove node if not saved before
+     * @param {Object} node node
+     */
     $scope.cancelEditing = function(node) {
         node.editing = false;
         node.name = node.oldName;
@@ -68,6 +88,12 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
         }
     };
 
+    /**
+     * @ngdoc method
+     * @name $scope_saveTree
+     * @methodOf ommaApp.agenda:meetingAgendaController
+     * @description save whole agenda tree to the backend
+     */
     $scope.saveTree = function() {
         if (!$scope.meeting) {
             return;
@@ -78,6 +104,11 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
         });
     };
 
+    /**
+     * @ngdoc event
+     * @name agenda.copy
+     * @eventOf ommaApp.agenda:meetingAgendaController
+     */
     $scope.$on('agenda.copy', function(event, args){
         agendaService.getAll(args.meeting).then(function(root) {
             angular.forEach(root.children, function(agenda) {
@@ -87,7 +118,11 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
     });
 
     /**
-     * Watch agenda for changes
+     * @ngdoc method
+     * @name watchAgendas
+     * @methodOf ommaApp.agenda:meetingAgendaController
+     * @description
+     * Watch agenda items for changes
      */
     function watchAgendas() {
 
@@ -96,7 +131,7 @@ angular.module('ommaApp').controller('meetingAgendaController', ['$scope', 'Rest
 
             var save = true;
             angular.forEach(newModel, function(item) {
-                // new not saved item
+                // skip new not saved item
                 if (item.name === undefined) {
                     save = false;
                 }

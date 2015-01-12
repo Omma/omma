@@ -36,7 +36,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
             ->select("m, r")
             ->leftJoin("m.meetingRecurring", "r")
         ;
-
+        // Only show own meeting if not super admin
         if (!$this->get("security.context")->isGranted("ROLE_SUPER_ADMIN")) {
             $query
                 ->innerJoin("m.attendees", "a")
@@ -46,7 +46,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
                 ->setParameter("userId", $user->getId())
             ;
         }
-
+        // apply search terms
         if (null !== ($search = $request->query->get("search"))) {
             $query
                 ->andWhere("m.name LIKE :search")
@@ -88,6 +88,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
             ->setParameter("dateStart", $dateStart)
             ->setParameter("dateEnd", $dateEnd);
 
+        // Only show own meeting if not super admin
         if (! $this->get("security.context")->isGranted("ROLE_SUPER_ADMIN")) {
             $query->innerJoin("m.attendees", "a")
                 ->andWhere("a.meeting = m.id")
@@ -212,6 +213,7 @@ class MeetingController extends FOSRestController implements ClassResourceInterf
             "user"    => $this->getUser(),
             "owner"   => 0
         ));
+        // handling meeting confirmation form for attendees
         $attendeeForm = null;
         if (null !== $attendee) {
             $attendeeForm = $this->createForm(new MeetingConfirmationForm(), $attendee);

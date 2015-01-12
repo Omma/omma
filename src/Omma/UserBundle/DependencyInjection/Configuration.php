@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    private function ldapConfig(ArrayNodeDefinition $node)
+    protected function ldapConfig(ArrayNodeDefinition $node)
     {
         $node
             ->children()

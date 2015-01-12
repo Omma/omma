@@ -2,53 +2,71 @@
 namespace Omma\UserBundle\Ldap;
 
 /**
- *
+ * Ldap configuration.
+ * Used by {@link LdapDirectory}
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
 class LdapConfig
 {
     /**
+     * ldap is enabled
      * @var boolean
      */
     protected $enabled;
 
     /**
+     * ldap server hostname
      * @var string
      */
     protected $hostname;
 
     /**
+     * ldap server port
      * @var integer
      */
     protected $port;
 
     /**
+     * ldap server security, can be on of
+     * - None: no security
+     * - SSL: SSL encryption
+     * - TLS: TLS encryption
      * @var string
      */
     protected $security;
 
     /**
+     * ldap bind name
      * @var string
      */
     protected $bindName;
 
     /**
+     * ldap bind password
      * @var string
      */
     protected $bindPassword;
 
     /**
+     * base dn
      * @var string
      */
     protected $baseDn;
 
     /**
+     * configuration for user sync settings
+     *
+     * @see Omma\UserBundle\DependencyInjection\Configuration::ldapConfig
+     * @see php app/console config:dump-reference OmmaUserBundle
      * @var array
      */
     protected $userConfig;
 
     /**
+     * configuration for group sync settings
+     * @see Omma\UserBundle\DependencyInjection\Configuration::ldapConfig
+     * @see php app/console config:dump-reference OmmaUserBundle
      * @var array
      */
     protected $groupConfig;

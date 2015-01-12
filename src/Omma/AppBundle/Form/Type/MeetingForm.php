@@ -6,7 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- *
+ * General meeting form
  *
  * @author Florian Pfitzer <pfitzer@w3p.cc>
  */
