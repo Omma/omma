@@ -39,7 +39,7 @@ angular.module('ommaApp').factory('toDoService', ['$http', function($http) {
          * @methodOf ommaApp.toDo:toDoService
          * @description prepare url for getting global todos or todos relating to a specific meeting
          *
-         * @param {Object} meeting
+         * @param {Object} meeting id of meeting needed
          * @param {Object} todo check if meeting is set and get id of todo
          * @returns {Object} url to get right json
          */
@@ -79,8 +79,8 @@ angular.module('ommaApp').factory('toDoService', ['$http', function($http) {
          * @methodOf ommaApp.toDo:toDoService
          * @description add todo to a meeting
          *
-         * @param {Object} meeting
-         * @param {Object} todo
+         * @param {Object} meeting related meeting is needed
+         * @param {Object} todo object to add
          * @returns {HttpPromise} Future todo-Objects
          */
         add: function(meeting, todo) {
@@ -96,7 +96,7 @@ angular.module('ommaApp').factory('toDoService', ['$http', function($http) {
          * @description update todo in database
          *
          * @param {Object} meeting get todos of a meeting
-         * @param {Object} todo
+         * @param {Object} todo object of todo to persist
          * @returns {HttpPromise} Future todo-Objects
          */
         save: function(meeting, todo) {
@@ -119,7 +119,7 @@ angular.module('ommaApp').factory('toDoService', ['$http', function($http) {
          * @methodOf ommaApp.toDo:toDoService
          * @description remove todo of meeting in database
          *
-         * @param {Object} meeting
+         * @param {Object} meeting related meeting id needed
          * @param {Object} todo todos of a meeting
          * @returns {HttpPromise} Future todo-Objects
          */

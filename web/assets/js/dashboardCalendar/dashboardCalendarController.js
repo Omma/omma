@@ -56,12 +56,11 @@ angular.module('ommaApp').controller('dashboarCalendarController', ['$scope', '$
      */
     $scope.calendarDay = new Date();
 
-
+    //watch the scale of calendar and selected day for changes
     $scope.$watchGroup(['calendarView', 'calendarDay'], function() {
 
         var date = moment($scope.calendarDay);
         var view = $scope.calendarView;
-
 
         if ('week' === view) {
             view = 'isoWeek';
@@ -70,18 +69,12 @@ angular.module('ommaApp').controller('dashboarCalendarController', ['$scope', '$
         var start = moment(date).startOf(view);
         var end = moment(date).endOf(view);
 
-
         meetingService.getByDate(start, end).then(function(meetings) {
 
             angular.forEach(meetings, function(meeting) {
-
-
                 if (undefined !== eventsById[meeting.identifier]) {
                     return;
                 }
-
-
-
                 var event = {
                     id: meeting.id,
                     title: meeting.name,
@@ -92,9 +85,6 @@ angular.module('ommaApp').controller('dashboarCalendarController', ['$scope', '$
                     editable: false,
                     deletable: false
                 };
-
-
-
                 eventsById[meeting.identifier] = event;
                 $scope.events.push(event);
             });

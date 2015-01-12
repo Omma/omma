@@ -36,11 +36,7 @@ angular.module('ommaApp').controller('sidebarCalendarController', ['$scope', 'me
         };
     }
 
-    /**
-     * @ngdoc method
-     * @name formatDate
-     * @methodOf ommaApp.meeting:meetingService
-     */
+    //get meetings from current.start to current.end
     meetingService.getByDate(current.start, current.end).then(function(events) {
         events = _.map(events, formatDate);
 

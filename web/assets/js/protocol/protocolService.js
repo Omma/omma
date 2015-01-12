@@ -17,7 +17,7 @@ angular.module('ommaApp').factory('protocolService', ['$http', function($http) {
          * @methodOf ommaApp.protocol:protocolService
          * @description get current protocol of a meeting persisted in database
          *
-         * @param {Object} meeting
+         * @param {Object} meeting id of current meeting needed
          * @returns {Object} current protocol
          */
         load: function(meeting) {
@@ -32,8 +32,8 @@ angular.module('ommaApp').factory('protocolService', ['$http', function($http) {
          * @methodOf ommaApp.protocol:protocolService
          * @description save content of textarea in database
          *
-         * @param {Object} meeting
-         * @param {Object} protocol
+         * @param {Object} meeting id of current meeting needed
+         * @param {Object} protocol input to save
          * @returns {HttpPromise} Future protocol
          */
         save: function(meeting, protocol) {

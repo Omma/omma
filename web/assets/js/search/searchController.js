@@ -21,7 +21,7 @@ angular.module('ommaApp').controller('searchController', ['$scope', '$element', 
 
     /**
      * @ngdoc method
-     * @name watchTodo
+     * @name substringMatcher
      * @methodOf ommaApp.search:searchController
      * @description find matching eventtitles with input
      */

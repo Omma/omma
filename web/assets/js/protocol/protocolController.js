@@ -27,15 +27,7 @@ angular.module('ommaApp')
          */
         $scope.protocol = {};
 
-        /**
-         * @ngdoc method
-         * @name load
-         * @methodOf ommaApp.protocol:protocolService
-         * @description initialize protocol
-         *
-         * @param {Object} meeting
-         * @returns {Object} current protocol
-         */
+        //initialize protocol
         protocolService.load($scope.$parent.meeting).then(function(protocol) {
             $scope.protocol = protocol;
         });
@@ -80,14 +72,7 @@ angular.module('ommaApp')
 
         }, 1000);
 
-        /**
-         * @ngdoc property
-         * @name $scope_$watch
-         * @methodOf ommaApp.protocol:protocolController
-         * @param {string} protocol
-         * @param {function} function()
-         * @description execute save() function after 3 calls
-         */
+        // watch protocol for changes, if changed execute save() function after 3 calls
         $scope.$watch('protocol', _.after(3, function() {
             $scope.status = 'not_saved';
             save();

@@ -22,12 +22,7 @@ angular.module('ommaApp')
         $scope.status = 'saved';
 
 
-        /**
-         * @ngdoc method
-         * @name load
-         * @methodOf ommaApp.toDo:toDoService
-         * @param {Object} meeting load todos using toDoService
-         */
+        //load todos using toDoService
         toDoService.load($scope.$parent.meeting).then(function(todos) {
             $scope.todos = todos;
             angular.forEach($scope.todos, function(todo) {
@@ -61,14 +56,13 @@ angular.module('ommaApp')
                 ),
                 true
             );
-
         }
 
 
 
         /**
          * @ngdoc method
-         * @name watchTodo
+         * @name addNewTodo
          * @methodOf ommaApp.toDo:toDoController
          * @description watch toDos for change, if changed it will be saved into database
          */
