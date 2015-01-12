@@ -1,10 +1,31 @@
 /**
- * @author Johannes Höhn <johannes.hoehn@hof-university.de>
+ * @ngdoc controller
+ * @name ommaApp.sidebarCalendar:sidebarCalendarController
+ * @requires $scope
+ * @requires meetingService
+ * @description
+ * Controller for calendar placed in the sidebar
+ *
+ * Author Johannes Höhn <johannes.hoehn@hof-university.de>
  */
 angular.module('ommaApp').controller('sidebarCalendarController', ['$scope', 'meetingService', function ($scope, meetingService) {
     var current = utils.getCurrentMonth('');
+
+    /**
+     * @ngdoc property
+     * @name $scope_currentEvents
+     * @propertyOf ommaApp.sidebarCalendar:sidebarCalendarController
+     * @return {Array} meetings
+     */
     $scope.currentEvents = [];
 
+
+    /**
+     * @ngdoc method
+     * @name formatDate
+     * @methodOf ommaApp.sidebarCalendar:sidebarCalendarController
+     * @param {Object} date format date
+     */
     function formatDate(element) {
         var date = moment(element.date_start);
 
@@ -15,7 +36,11 @@ angular.module('ommaApp').controller('sidebarCalendarController', ['$scope', 'me
         };
     }
 
-
+    /**
+     * @ngdoc method
+     * @name formatDate
+     * @methodOf ommaApp.meeting:meetingService
+     */
     meetingService.getByDate(current.start, current.end).then(function(events) {
         events = _.map(events, formatDate);
 

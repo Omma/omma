@@ -1,19 +1,60 @@
 /**
- * @author Johannes Höhn <johannes.hoehn@hof-university.de>
+ * @ngdoc controller
+ * @name ommaApp.dashboardCalendar:dashboarCalendarController
+ * @requires $scope
+ * @requires $element
+ * @requires ommaApp.meeting:meetingService
+ * @description
+ * Controller for setting up the dashboard calendar
+ *
+ * Author Johannes Höhn <johannes.hoehn@hof-university.de>
  */
 angular.module('ommaApp').controller('dashboarCalendarController', ['$scope', '$element', 'meetingService', function($scope, $element, meetingService) {
+
+    /**
+     * @ngdoc property
+     * @name $scope_events
+     * @propertyOf ommaApp.dashboardCalendar:dashboarCalendarController
+     * @return {array} Array of displayed events in calendar
+     */
     $scope.events = [];
+
     var eventsById = {};
 
+    /**
+     * @ngdoc method
+     * @name $scope_eventClicked
+     * @methodOf ommaApp.dashboardCalendar:dashboarCalendarController
+     * @param {Object} event redirect to clicked event
+     */
     $scope.eventClicked = function(event) {
         window.location.href = event.url;
     };
 
+    /**
+     * @ngdoc method
+     * @name $scope_setCalendarToToday
+     * @methodOf ommaApp.dashboardCalendar:dashboarCalendarController
+     */
     $scope.setCalendarToToday = function() {
         $scope.calendarDay = new Date();
     };
 
+    /**
+     * @ngdoc property
+     * @name $scope_calendarView
+     * @propertyOf ommaApp.dashboardCalendar:dashboarCalendarController
+     * @return {string} initial value of calendar scale
+     */
+    $scope.calendarView = 'month';
 
+    /**
+     * @ngdoc property
+     * @name $scope_calendarDay
+     * @propertyOf ommaApp.dashboardCalendar:dashboarCalendarController
+     * @return {Date} current date for initializing the calendar
+     */
+    $scope.calendarDay = new Date();
 
 
     $scope.$watchGroup(['calendarView', 'calendarDay'], function() {
@@ -62,6 +103,4 @@ angular.module('ommaApp').controller('dashboarCalendarController', ['$scope', '$
 
 
 
-    $scope.calendarView = 'month';
-    $scope.calendarDay = new Date();
 }]);

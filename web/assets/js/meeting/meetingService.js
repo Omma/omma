@@ -1,6 +1,13 @@
 /**
- * @author Johannes Höhn <johannes.hoehn@hof-university.de>
- * @author Florian Pfitzer <pfitzer@w3p.cc>
+ * @ngdoc service
+ * @name ommaApp.toDo:toDoController
+ * @requires $scope
+ * @requires toDoService
+ * @description
+ * Controller for toDos of an event
+ *
+ * Author Florian Pfitzer <pfitzer@w3p.cc>
+ * Author Johannes Höhn <johannes.hoehn@hof-university.de>
  */
 angular.module('ommaApp').factory('meetingService', ['$http', function($http) {
     return {

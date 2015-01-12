@@ -1,7 +1,30 @@
 /**
- * @author Johannes Höhn <johannes.hoehn@hof-university.de>
+ * @ngdoc controller
+ * @name ommaApp.search:searchController
+ * @requires $scope
+ * @requires $element
+ * @requires meetingService
+ * @description
+ * Controller for the typeahead search to find events
+ *
+ * Author Johannes Höhn <johannes.hoehn@hof-university.de>
  */
 angular.module('ommaApp').controller('searchController', ['$scope', '$element', 'meetingService', function ($scope, $element, meetingService) {
+
+    /**
+     * @ngdoc property
+     * @name events
+     * @propertyOf ommaApp.search:searchController
+     * @return {Array} matching events
+     */
+    var events = [];
+
+    /**
+     * @ngdoc method
+     * @name watchTodo
+     * @methodOf ommaApp.search:searchController
+     * @description find matching eventtitles with input
+     */
     //var substringMatcher = function(strs) {
     var substringMatcher = function() {
         return function findMatches(q, cb) {
@@ -26,8 +49,6 @@ angular.module('ommaApp').controller('searchController', ['$scope', '$element', 
 
         };
     };
-
-    var events = [];
 
     $element.find('input').typeahead(
         {

@@ -1,9 +1,25 @@
 /**
- * @author Johannes Höhn <johannes.hoehn@hof-university.de>
+ * @ngdoc service
+ * @name ommaApp.toDo:toDoService
+ * @requires $http
+ * @description
+ * Service for persisting toDos into database
+ *
+ * Author Johannes Höhn <johannes.hoehn@hof-university.de>
  */
+
 angular.module('ommaApp').factory('toDoService', ['$http', function($http) {
 
     return {
+        /**
+         * @ngdoc method
+         * @name _prepareTodo
+         * @methodOf ommaApp.toDo:toDoService
+         * @description change todo format from JavaScript format into database format
+         *
+         * @param {Object} todo todo in JavaScript format
+         * @returns {Object} new todo in database format
+         */
         _prepareTodo: function(todo) {
             var newTodo = _.clone(todo);
 
@@ -17,6 +33,16 @@ angular.module('ommaApp').factory('toDoService', ['$http', function($http) {
 
             return newTodo;
         },
+        /**
+         * @ngdoc method
+         * @name _getUrl
+         * @methodOf ommaApp.toDo:toDoService
+         * @description prepare url for getting global todos or todos relating to a specific meeting
+         *
+         * @param {Object} meeting
+         * @param {Object} todo check if meeting is set and get id of todo
+         * @returns {Object} url to get right json
+         */
         _getUrl: function(meeting, todo) {
             var url = '/tasks';
             if (undefined !== meeting) {
@@ -31,6 +57,15 @@ angular.module('ommaApp').factory('toDoService', ['$http', function($http) {
             return url;
         },
 
+        /**
+         * @ngdoc method
+         * @name load
+         * @methodOf ommaApp.toDo:toDoService
+         * @description fetch todos of a meeting
+         *
+         * @param {Object} meeting get todos of a meeting
+         * @returns {Object} todos of meeting
+         */
         //e.g. http://localhost/meetings/2/tasks.json
         load: function(meeting) {
             return $http.get(this._getUrl(meeting)).then(function(data) {
@@ -38,12 +73,32 @@ angular.module('ommaApp').factory('toDoService', ['$http', function($http) {
             });
         },
 
+        /**
+         * @ngdoc method
+         * @name add
+         * @methodOf ommaApp.toDo:toDoService
+         * @description add todo to a meeting
+         *
+         * @param {Object} meeting
+         * @param {Object} todo
+         * @returns {HttpPromise} Future todo-Objects
+         */
         add: function(meeting, todo) {
             return $http.post(this._getUrl(meeting, todo), this._prepareTodo(todo)).then(function(data) {
                 return data.data;
             });
         },
 
+        /**
+         * @ngdoc method
+         * @name save
+         * @methodOf ommaApp.toDo:toDoService
+         * @description update todo in database
+         *
+         * @param {Object} meeting get todos of a meeting
+         * @param {Object} todo
+         * @returns {HttpPromise} Future todo-Objects
+         */
         save: function(meeting, todo) {
             if (undefined === todo.task) {
                 return;
@@ -58,6 +113,16 @@ angular.module('ommaApp').factory('toDoService', ['$http', function($http) {
             }
         },
 
+        /**
+         * @ngdoc method
+         * @name remove
+         * @methodOf ommaApp.toDo:toDoService
+         * @description remove todo of meeting in database
+         *
+         * @param {Object} meeting
+         * @param {Object} todo todos of a meeting
+         * @returns {HttpPromise} Future todo-Objects
+         */
         remove: function(meeting, todo) {
             return $http.delete(this._getUrl(meeting, todo));
         }
