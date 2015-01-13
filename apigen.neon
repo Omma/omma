@@ -11,6 +11,7 @@ source:
 	- vendor/symfony/symfony/src
 	- vendor/friendsofsymfony
 	- vendor/sonata-project/user-bundle
+	- vendor/twig
 
 main: Omma
 title: Omma API
