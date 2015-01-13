@@ -1,13 +1,17 @@
 extensions:
 	- php
-	
+
 destination: build/apigen
 exclude:
 	- */tests/*
-	
+	- */Tests/*
+
 source:
 	- src/
-	
+	- vendor/symfony/symfony/src
+	- vendor/friendsofsymfony
+	- vendor/sonata-project/user-bundle
+
 main: Omma
 title: Omma API
 templateTheme: default

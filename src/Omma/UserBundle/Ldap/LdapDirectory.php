@@ -30,11 +30,22 @@ class LdapDirectory implements LdapDirectoryInterface
         $this->config = $config;
     }
 
+    /**
+     * whether ldap is enabled
+     * @return boolean
+     */
     public function isEnabled()
     {
         return $this->config->isEnabled();
     }
 
+    /**
+     * Authenticate a user against the ldap directory
+     * throw an {@link Symfony\Component\Security\Core\Exception\BadCredentialsException} when failed
+     *
+     * @param User                  $user
+     * @param UsernamePasswordToken $token
+     */
     public function authenticate(User $user, UsernamePasswordToken $token)
     {
         if (!$this->config->isEnabled()) {
@@ -47,6 +58,10 @@ class LdapDirectory implements LdapDirectoryInterface
         }
     }
 
+    /**
+     * gets users from ldap
+     * @return array
+     */
     public function getUsers()
     {
         if (!$this->config->isEnabled()) {
@@ -66,6 +81,10 @@ class LdapDirectory implements LdapDirectoryInterface
         return $users;
     }
 
+    /**
+     * get groups by ldap
+     * @return array
+     */
     public function getGroups()
     {
         if (!$this->config->isEnabled()) {

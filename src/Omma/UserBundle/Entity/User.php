@@ -15,6 +15,7 @@ abstract class User extends BaseUser
     /**
      * @ORM\Column(type="string", nullable=true)
      *
+     * cn from ldap. Used for syncing
      * @var string
      */
     protected $ldapId;

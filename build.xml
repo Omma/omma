@@ -111,6 +111,7 @@
     <target name="apigen" description="Generate API documentation using apigen">
         <exec executable="${project.basedir}/bin/apigen">
             <arg line="generate" />
+            <arg line="-vvv" />
         </exec>
     </target>
 

@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
     config.hostmanager.manage_host = true
     config.hostmanager.ignore_private_ip = false
     config.hostmanager.include_offline = true
-    config.hostmanager.aliases = %w(omma.dev)
+    config.hostmanager.aliases = %w(omma.dev prod.omma.dev)
   end
 
   config.vm.provider :virtualbox do |vb|

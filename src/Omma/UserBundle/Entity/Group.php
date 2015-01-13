@@ -15,6 +15,7 @@ abstract class Group extends BaseGroup
     /**
      * @ORM\Column(type="string", nullable=true)
      *
+     * cn from ldap. used for syncing.
      * @var string
      */
     protected $ldapId;
