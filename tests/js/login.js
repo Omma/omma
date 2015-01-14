@@ -1,5 +1,4 @@
-// spec.js
-describe('angularjs homepage', function() {
+describe('login', function() {
     it('should be able log in', function() {
         browser.get(browser.params.address);
         element(by.css('input[name=_username]')).sendKeys(browser.params.user.name);

@@ -1,6 +1,6 @@
 exports.config = {
     seleniumAddress: 'http://localhost:4444/wd/hub',
-    specs: ['login.js'],
+    specs: ['login.js', 'meeting.js'],
     multiCapabilities: [{
         browserName: 'chrome'
     },
