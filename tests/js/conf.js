@@ -1,6 +1,8 @@
+var ScreenShotReporter = require('protractor-screenshot-reporter');
+
 exports.config = {
     seleniumAddress: 'http://localhost:4444/wd/hub',
-    specs: ['login.js', 'meeting.js'],
+    specs: ['login.js', 'meeting.js', 'agenda.js'],
     multiCapabilities: [{
         browserName: 'chrome'
     },
@@ -18,5 +20,11 @@ exports.config = {
             name: 'admin',
             password: 'admin'
         }
+    },
+    onPrepare: function() {
+        // Add a screenshot reporter and store screenshots to `/tmp/screnshots`:
+        jasmine.getEnv().addReporter(new ScreenShotReporter({
+            baseDirectory: __dirname + '/screenshots'
+        }));
     }
 };
