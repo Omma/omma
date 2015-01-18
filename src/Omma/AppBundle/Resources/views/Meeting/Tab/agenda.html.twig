@@ -24,9 +24,9 @@
         <div ng-show="!node.editing">
             {{ "{{ node.name }}" }}
             <div class="pull-right">
-                <a href="" class="btn btn-success btn-xs" data-nodrag ng-click="newNode(node)"><span class="glyphicon glyphicon-plus"></span></a>
-                <a href="" class="btn btn-primary btn-xs" data-nodrag ng-click="edit(node)"><i class="glyphicon glyphicon-pencil"></i></a>
-                <a href="" class="btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+                <a href="" class="btn btn-success btn-xs agenda-node-add" data-nodrag ng-click="newNode(node)"><span class="glyphicon glyphicon-plus"></span></a>
+                <a href="" class="btn btn-primary btn-xs agenda-node-edit" data-nodrag ng-click="edit(node)"><i class="glyphicon glyphicon-pencil"></i></a>
+                <a href="" class="btn btn-danger btn-xs agenda-node-delete" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
             </div>
         </div>
     </div>

@@ -1,4 +1,5 @@
 var ScreenShotReporter = require('protractor-screenshot-reporter');
+var path = require('path');
 
 exports.config = {
     seleniumAddress: 'http://localhost:4444/wd/hub',
@@ -22,9 +23,16 @@ exports.config = {
         }
     },
     onPrepare: function() {
+        var number = 0;
         // Add a screenshot reporter and store screenshots to `/tmp/screnshots`:
         jasmine.getEnv().addReporter(new ScreenShotReporter({
-            baseDirectory: __dirname + '/screenshots'
+            baseDirectory: path.join(__dirname) + '/screenshots',
+            pathBuilder: function pathBuilder(spec, descriptions, results, capabilities) {
+                // Return '<browser>/<specname>' as path for screenshots:
+                // Example: 'firefox/list-should work'.
+                number++;
+                return number + ' - ' + descriptions.join('-');
+            }
         }));
     }
 };
