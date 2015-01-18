@@ -3,7 +3,7 @@ app:
     password: Password
     remember_me: Remember me
     login: login
-    logout: logout
+    logout: Logout
     http_error: connection error
     reload_page: Reload page
     search: Search meeting
