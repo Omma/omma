@@ -34,8 +34,7 @@ angular.module('ommaApp').controller('searchController', ['$scope', '$element', 
                     var matches = [];
 
                     $.each(data, function (i, meeting) {
-
-                        var value = '<a href=\'' + meeting.url + '\'>';
+                        var value = '<a href=\'/meetings/' + meeting.id + '/details\'>';
                         value += meeting.name + '<br />';
                         value += '<small>';
                         value += moment(meeting.date_start).format('DD.MM.YYYY [um] HH:mm');
@@ -62,5 +61,9 @@ angular.module('ommaApp').controller('searchController', ['$scope', '$element', 
             source: substringMatcher(events)
         }
     );
+
+    $('body').on('click', '.tt-suggestion', function() {
+        window.location = $(this).find('a').attr('href');
+    });
 
 }]);
