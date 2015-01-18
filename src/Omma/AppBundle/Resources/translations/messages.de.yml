@@ -3,6 +3,8 @@ app:
     password: Passwort
     remember_me: Login merken
     login: einloggen
+    search: Veranstaltung suchen
+    activate_js: Bitte aktivieren Sie JavaScript in Ihrem Browser!
 
     add: hinzufügen
     save: speichern
@@ -45,6 +47,9 @@ app:
             declined: Ablehnen
             maybe: Vielleicht teilnehmen
         message: Nachricht
+
+    left_col:
+        events_this_day: Events an diesem Tag:
 
     general:
         title: Allgemein
@@ -92,6 +97,7 @@ app:
 
     todos:
         tab_title: ToDos
+
         title: Titel
         description: Beschreibung
         done: Erledigt
@@ -106,6 +112,14 @@ app:
         new_title: Neues Todo
     protocol:
         title: Protokoll
+        headline: Protokoll zu dieser Veranstaltung
+        hint: Wenn Sie das Protokoll als "Final" markieren, ist es für alle Teilnehmer sichtbar.
+        mark_final: Protokol als "final" markieren
+        final_text: Wirklich als "final" markieren? Diese Aktion kann nicht rückgängig gemacht werden!
+        final_yes: Ja, als "final" markieren.
+        final_no: Nein, doch nicht
+        content: Hier können Sie Ihr Protokoll verfassen...
+
 
     attendees:
         title: Teilnehmer

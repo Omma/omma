@@ -2,7 +2,7 @@
  # @author Johannes Höhn <johannes.hoehn@hof-university.de>
  #}
 
-<h2>Protokoll zu dieser Veranstaltung</h2>
+<h2>{{ "app.protocol.headline"|trans }}</h2>
 {% if can_edit %}
     <div class="well" ng-show="protocol.final" ng-bind-html="protocol.text"></div>
     <div ng-hide="protocol.final">
@@ -11,30 +11,29 @@
             <button ng-switch-when="saving" class="btn btn-default disabled"><span class="glyphicon glyphicon-refresh"></span> {{ "app.saving"|trans }}</button>
             <button ng-switch-when="saved" class="btn btn-default disabled"><span class="glyphicon glyphicon-ok"></span> {{ "app.saved"|trans }}</button>
         </div>
-        <p>Wenn Sie das Protokoll als "Final" markieren, ist es für alle Teilnehmer sichtbar. </p>
+        <p>{{ "app.protocol.hint"|trans }}</p>
         <hr class="invisible" />
 
         <div text-angular-toolbar name="htmlcontenttools"></div>
 
-        <div text-angular="text-angular" name="htmlcontent" ng-model="protocol.text" ta-disabled='disabled' placeholder='Hier können Sie Ihr Protokoll verfassen... ' ta-target-toolbars='htmlcontenttools,statictoolbar'></div>
+        <div text-angular="text-angular" name="htmlcontent" ng-model="protocol.text" ta-disabled='disabled' placeholder='{{ "app.protocol.content"|trans }}' ta-target-toolbars='htmlcontenttools,statictoolbar'></div>
         <hr class="invisible" />
-        <div class="btn btn-primary" data-toggle="modal" data-target=".protocolModal" ng-hide="protocol.final">Protokoll als "Final" markieren</div>
+        <div class="btn btn-primary" data-toggle="modal" data-target=".protocolModal" ng-hide="protocol.final">{{ "app.protocol.mark_final"|trans }}</div>
     </div>
-    <!-- Todo Modal -->
     <div class="modal fade protocolModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Protokoll als "Final" markieren</h4>
+                    <h4 class="modal-title">{{ "app.protocol.mark_final"|trans }}</h4>
                 </div>
                 <div class="modal-body">
-                    Wollen Sie das Protokoll wirklich als "Final" markieren?<br>Diese Aktion kann nicht rückgängig gemacht werden, Änderungen sind nicht mehr möglich.
+                    {{ "app.protocol.final_text"|trans }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Nein, doch nicht</button>
-                    <button type="button" class="btn btn-primary" ng-click="deleteModal()" data-dismiss="modal">Ja, als "Final" markieren</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ "app.protocol.final_no"|trans }}</button>
+                    <button type="button" class="btn btn-primary" ng-click="deleteModal()" data-dismiss="modal">{{ "app.protocol.final_yes"|trans }}</button>
                 </div>
             </div>
         </div>

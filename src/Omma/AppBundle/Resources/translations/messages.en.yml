@@ -3,18 +3,30 @@ app:
     password: Password
     remember_me: Remember me
     login: login
+    logout: logout
+    http_error: connection error
+    reload_page: Reload page
+    search: Search meeting
+    activate_js: Please activate JavaScript!
 
     add: add
     save: save
+    delete: delete
     saved: saved
     saving: saving...
     cancel: cancel
+    close: close
+    cancel_modal: No, please cancel
 
     today: Today
     year: Year
     month: Month
     week: Week
     day: Day
+    create_meeting: Create Meeting
+    upcomming_meetings: Previous meetings
+    upcomming_empty: There are no previous meetings at the moment
+    open_todos: Outstanding ToDos
 
     options: Options
 
@@ -32,6 +44,10 @@ app:
             maybe: Possible participant
         message: Nachricht
 
+    left_col:
+        events_this_day: Events this day:
+
+
     general:
         title: General
         date: Date
@@ -47,6 +63,7 @@ app:
             title: Repetitions
             type: Type
             types:
+                none: none
                 daily: daily
                 weekly: weekly
                 monthly: mothly
@@ -63,16 +80,45 @@ app:
             third: third
             fourth: fourth
             last: last
+            start: Start
             end: end
             after: after
+        delete:
+            title: Delete meeting
+            confirmation: |
+                Are you sure? This action can not be undone.
+            ok: Yes, delete meeting.
     agenda:
         title: Agenda
+        name: Name
 
     todos:
         title: Todos
+        tab_title: ToDos
+        title: Title
+        description: Description
+        done: Done
+        important: Important
+        date: To do until
+        user: Mark todo with a person
+        delete: Delete todo
+        delete_text: Do you really want to delete this todo?
+        do_delete: Yes, sure.
+        empty_title: "[Enter title of todo]"
+        empty_description: '[This place can be used for a description...]'
+        new_title: New todo
 
     protocol:
         title: Protocol
+        headline: Protocol to this meeting
+        hint: When you mark the protocol as final, it will be visible for all attendees.mark_final: Mark protocol as "final"
+        mark_final: Mark protocol as "final"
+        final_text: Really mark as final? This action can not be undone!
+        final_yes: Yes, I am sure.
+        final_no: No, please cancel.
+        content: You can type your protocol here...
+
+
 
     attendees:
         title: Attendees
@@ -95,3 +141,28 @@ app:
 
                 ---
                 Open Meeting Manager
+
+        task:
+            subject: New Todo has been added
+            message: |
+                Hello %username%,
+
+                the todo %taskName% in meeting %meeting% has been created.
+                Click on following link to get more details:
+
+                %meetingUrl%
+
+                ---
+                Open Meeting Manager
+    profile:
+        title: Profile
+        ldap_info: |
+            You logged in via LDAP.
+            So details on your profile can not be edited.
+        username: Username
+        email: E-Mail
+        firstname: First Name
+        lastname: Last Name
+        password: Password
+
+    all_todos: My ToDos
