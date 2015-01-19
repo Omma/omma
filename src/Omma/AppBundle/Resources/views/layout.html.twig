@@ -43,7 +43,7 @@
 {% block body %}
 
 <div class="container">
-    <div class="alert alert-danger" id="http_error" ng-show="show" ng-controller="errorController">
+    <div class="alert alert-danger" id="http_error" ng-hide="!show" ng-controller="errorController" ng-cloak>
         <div class="btn-group pull-right">
             <div class="btn btn-danger" ng-click="reload()">
                 <i class="glyphicon glyphicon-repeat"></i>
@@ -109,7 +109,7 @@
                                     </div>
 
                                 </div>
-                                <div class="day-events ng-hide" ng-show="currentEvents.length > 0">
+                                <div class="day-events ng-hide" ng-show="currentEvents.length > 0" ng-cloak>
                                     <h4>Events an diesem Tag:</h4>
                                     <div id="insert-events" class="list-group">
                                         {% verbatim %}
@@ -169,7 +169,7 @@
             {% endif %}
         </div>
 
-        <div class="col-md-8 right-col">
+        <div class="col-md-8 right-col" ng-cloak>
             {% block content %}
             {% endblock %}
         </div>
