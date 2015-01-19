@@ -6,7 +6,7 @@
 {% endif %}
 <div class="pull-right">
     {% if not standalone %}
-    <div class="btn btn-primary text-right pull-right" ng-click="addNewTodo()"><i class="glyphicon glyphicon-plus"></i> </div>
+    <div id="todo-add" class="btn btn-primary text-right pull-right" ng-click="addNewTodo()"><i class="glyphicon glyphicon-plus"></i> </div>
     {% endif %}
     <br>
     <div class="header-button" on="status" ng-switch="" style="margin-bottom: 25px;">
@@ -46,14 +46,12 @@
                             <span class="bold">{{ "app.todos.title"|trans }}: </span>
                             <span class="edit-title"><a editable-text="todo.task">{{ "{{ todo.task || '" ~ ("app.todos.empty_title"|trans) ~ "' }}" }}</a></span>
                         </p>
-                        <p>
-                            <span class="bold">{{ "app.todos.description"|trans }}: </span><br>
-                            <i class="edit-description">
-                                <a editable-textarea="todo.description" e-rows="7" e-cols="60">
-                                    <pre>{{ "{{ todo.description || '" ~ ("app.todos.empty_description"|trans) ~ "' }}" }}</pre>
-                                </a>
-                            </i>
-                        </p>
+                        <span class="bold">{{ "app.todos.description"|trans }}: </span><br>
+                        <div class="edit-description">
+                            <a editable-textarea="todo.description" e-rows="7" e-cols="60">
+                                <pre>{{ "{{ todo.description || '" ~ ("app.todos.empty_description"|trans) ~ "' }}" }}</pre>
+                            </a>
+                        </div>
                     </div>
 
 

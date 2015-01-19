@@ -3,7 +3,12 @@ var path = require('path');
 
 exports.config = {
     seleniumAddress: 'http://localhost:4444/wd/hub',
-    specs: ['login.js', 'meeting.js', 'agenda.js'],
+    specs: [
+        'login.js',
+        'meeting.js',
+        'agenda.js',
+        'todo.js',
+    ],
     multiCapabilities: [{
         browserName: 'chrome'
     },

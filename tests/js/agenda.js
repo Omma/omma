@@ -53,7 +53,7 @@ describe('agenda', function() {
         first.setName('Item 1').save();
         expect(first.name.getText()).toEqual('Item 1');
     });
-    it('shoul add a second item', function() {
+    it('should add a second item', function() {
         rootAddButton.click();
         var item = new AgendaItem(rootNodes.get(1));
         item.setName('Item 2').save();
