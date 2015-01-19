@@ -21,6 +21,9 @@
         "moment": true,
         "_": true,
         "utils": true,
-        "app": true
+        "app": true,
+        "describe": true,
+        "it": true,
+        "browser": true
     }
 }

@@ -43,7 +43,7 @@
 {% block body %}
 
 <div class="container">
-    <div class="alert alert-danger" id="http_error" ng-show="show" ng-controller="errorController">
+    <div class="alert alert-danger" id="http_error" ng-hide="!show" ng-controller="errorController" ng-cloak>
         <div class="btn-group pull-right">
             <div class="btn btn-danger" ng-click="reload()">
                 <i class="glyphicon glyphicon-repeat"></i>
@@ -70,7 +70,7 @@
                         <a class="lang de" href="{{ path("omma_switch_language", {language: 'de_DE'}) }}"></a>
                         <a class="lang us" href="{{ path("omma_switch_language", {language: 'en_US'}) }}"></a>
                     </li>
-                    <li><a href="{{ path("omma_app_meeting_create") }}"><i class="fa fa-plus"> </i> {{ "app.create_meeting"|trans }}</a></li>
+                    <li><a href="{{ path("omma_app_meeting_create") }}" id="create-meeting"><i class="fa fa-plus"> </i> {{ "app.create_meeting"|trans }}</a></li>
                     <li><a href="{{ path("omma_app_todo_index") }}"><i class="fa fa-tag"> </i> {{ "app.todos.tab_title"|trans }}</a></li>
                     <li><a href="{{ path("omma_app_profile") }}"><i class="fa fa-user"> </i> {{ "app.profile.title"|trans }}</a></li>
                     <li><a href="{{ path("omma_logout") }}"><i class="fa fa-power-off"> </i> {{ "app.logout"|trans }}</a></li>
@@ -109,7 +109,7 @@
                                     </div>
 
                                 </div>
-                                <div class="day-events ng-hide" ng-show="currentEvents.length > 0">
+                                <div class="day-events ng-hide" ng-show="currentEvents.length > 0" ng-cloak>
                                     <h4>{{ "app.left_col.events_this_day"|trans }}</h4>
                                     <div id="insert-events" class="list-group">
                                         {% verbatim %}
@@ -169,7 +169,7 @@
             {% endif %}
         </div>
 
-        <div class="col-md-8 right-col">
+        <div class="col-md-8 right-col" ng-cloak>
             {% block content %}
             {% endblock %}
         </div>

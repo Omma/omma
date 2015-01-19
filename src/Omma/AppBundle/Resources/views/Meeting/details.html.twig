@@ -5,7 +5,7 @@
     <div ng-controller="meetingController" ng-init="init({{ meeting|serialize('json') }})">
         {% if can_edit %}
             <div class="pull-right">
-                <a href="" class="btn btn-danger" data-toggle="modal" data-target="#meetingModal">
+                <a href="" class="btn btn-danger" id="meeting-delete" data-toggle="modal" data-target="#meetingModal">
                     <i class="glyphicon glyphicon-trash"></i> {{ "app.delete"|trans }}
                 </a>
             </div>
@@ -22,8 +22,8 @@
                             {{ "app.general.delete.confirmation"|trans }}
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">{{ "app.cancel_modal"|trans }}</button>
-                            <button type="button" class="btn btn-primary" ng-click="deleteMeeting()"  data-dismiss="modal">{{ "app.general.delete.ok"|trans }}</button>
+                            <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">{{ "app.cancel_modal"|trans }}</button>
+                            <button type="button" class="btn btn-primary delete-button" ng-click="deleteMeeting()"  data-dismiss="modal">{{ "app.general.delete.ok"|trans }}</button>
                         </div>
                     </div>
                 </div>

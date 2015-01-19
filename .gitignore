@@ -23,3 +23,4 @@
 deployment.*
 /web/assets/components/
 /web/assets/build/
+/tests/js/screenshots/
