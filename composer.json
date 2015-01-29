@@ -24,8 +24,7 @@
         "sonata-project/easy-extends-bundle": "~2.1",
         "raulfraile/ladybug-bundle": "~1.0",
         "friendsofsymfony/rest-bundle": "~1.4",
-        "jms/serializer-bundle": "~0.13",
-		"h4cc/alice-fixtures-bundle": "0.5.0"
+        "jms/serializer-bundle": "~0.13"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
@@ -40,7 +39,8 @@
         "apigen/apigen": "4.0.0-RC3",
         "fabpot/php-cs-fixer": "~1.0",
         "liip/functional-test-bundle": "dev-master",
-        "doctrine/doctrine-fixtures-bundle": "2.2.*"
+        "doctrine/doctrine-fixtures-bundle": "2.2.*",
+		"h4cc/alice-fixtures-bundle": "dev-master"
     },
     "scripts": {
         "post-root-package-install": [
