@@ -39,13 +39,13 @@ class AppKernel extends Kernel
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
             $bundles[] = new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle();
-            $bundles[] = new h4cc\AliceFixturesBundle\h4ccAliceFixturesBundle();
         }
 
         if (in_array($this->getEnvironment(), array(
             'test'
         ))) {
             $bundles[] = new Liip\FunctionalTestBundle\LiipFunctionalTestBundle();
+			$bundles[] = new h4cc\AliceFixturesBundle\h4ccAliceFixturesBundle();
         }
 
         return $bundles;
