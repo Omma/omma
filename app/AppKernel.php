@@ -45,7 +45,7 @@ class AppKernel extends Kernel
             'test'
         ))) {
             $bundles[] = new Liip\FunctionalTestBundle\LiipFunctionalTestBundle();
-			$bundles[] = new h4cc\AliceFixturesBundle\h4ccAliceFixturesBundle();
+		    $bundles[] = new h4cc\AliceFixturesBundle\h4ccAliceFixturesBundle();
         }
 
         return $bundles;
